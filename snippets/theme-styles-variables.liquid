@@ -229,6 +229,9 @@
     --line-height--body-tight: 1.2;
     --line-height--body-normal: 1.4;
     --line-height--body-loose: 1.6;
+    --line-height--orlune-130: 1.3;
+    --line-height--orlune-140: 1.4;
+    --line-height--orlune-150: 1.5;
 
     /* Typography presets */
     {% liquid
@@ -340,6 +343,36 @@
         echo '--font-[preset_name]--line-height: var(--line-height--[preset_line_height]);' | replace: '[preset_name]', preset_name | replace: '[preset_line_height]', settings[preset_line_height]
       endfor
     %}
+
+    /* Orlune responsive heading scale: mobile first, then Horizon tablet and desktop breakpoints. */
+    --font-size--h1: {{ settings.type_size_h1_mobile | divided_by: 16.0 }}rem;
+    --font-size--h2: {{ settings.type_size_h2_mobile | divided_by: 16.0 }}rem;
+    --font-size--h3: {{ settings.type_size_h3_mobile | divided_by: 16.0 }}rem;
+    --font-size--h4: {{ settings.type_size_h4_mobile | divided_by: 16.0 }}rem;
+    --font-size--h5: {{ settings.type_size_h5_mobile | divided_by: 16.0 }}rem;
+
+    @media screen and (min-width: 40em) {
+      --font-size--h1: {{ settings.type_size_h1_tablet | divided_by: 16.0 }}rem;
+      --font-size--h2: {{ settings.type_size_h2_tablet | divided_by: 16.0 }}rem;
+      --font-size--h3: {{ settings.type_size_h3_tablet | divided_by: 16.0 }}rem;
+      --font-size--h4: {{ settings.type_size_h4_tablet | divided_by: 16.0 }}rem;
+      --font-size--h5: {{ settings.type_size_h5_tablet | divided_by: 16.0 }}rem;
+    }
+
+    @media screen and (min-width: 60em) {
+      --font-size--h1: {{ settings.type_size_h1 | divided_by: 16.0 }}rem;
+      --font-size--h2: {{ settings.type_size_h2 | divided_by: 16.0 }}rem;
+      --font-size--h3: {{ settings.type_size_h3 | divided_by: 16.0 }}rem;
+      --font-size--h4: {{ settings.type_size_h4 | divided_by: 16.0 }}rem;
+      --font-size--h5: {{ settings.type_size_h5 | divided_by: 16.0 }}rem;
+    }
+
+    /* Shared body styles from the Orlune type specification. */
+    --font-body-12--size: 0.75rem;
+    --font-body-14--size: 0.875rem;
+    --font-body-16--size: 1rem;
+    --font-body--line-height: 1.5;
+    --font-body-p3--letter-spacing: 1.5px;
 
     /* Hardcoded font sizes */
     --font-size--3xs: 0.625rem;

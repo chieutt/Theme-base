@@ -113,7 +113,7 @@
                 "input_style": "custom",
                 "border_width": 1,
                 "border_radius": 100,
-                "input_background_color": "{{ settings.color_palette.color1 }}",
+                "input_background_color": "{{ settings.color_palette.surface_dark }}",
                 "input_border_color": "",
                 "input_type_preset": "paragraph",
                 "style_class": "button-secondary",
@@ -182,7 +182,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 40,
-        "background_color": "{{ settings.color_palette.color1 }}",
+        "background_color": "{{ settings.color_palette.surface_dark }}",
         "padding-block-start": 36,
         "padding-block-end": 36
       }
@@ -224,7 +224,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 24,
-        "background_color": "{{ settings.color_palette.color1 }}",
+        "background_color": "{{ settings.color_palette.surface_dark }}",
         "divider_thickness": 1,
         "padding-block-start": 12,
         "padding-block-end": 16
