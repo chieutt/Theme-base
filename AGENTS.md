@@ -1,5 +1,12 @@
 # Theme development workflow
 
+## Required skill before code changes
+
+- Trước khi chỉnh sửa bất kỳ code Shopify/theme nào, bắt buộc đọc và áp dụng đầy đủ skill `.agents/skills/shopify-section-builder/SKILL.md`.
+- Skill `shopify-section-builder` phải được sử dụng trước bước inventory, lựa chọn kiến trúc, và chỉnh sửa file. Không bắt đầu implementation trước khi đã áp dụng workflow của skill.
+- Khi task liên quan section, Theme Block, block schema, Liquid component, CSS/JS dùng chung, product card, form/input, background/appearance, padding hoặc responsive behavior, coi `shopify-section-builder` là workflow mặc định bắt buộc.
+- Nếu skill yêu cầu thêm skill/standard khác (ví dụ `section-editor-standards`), phải tiếp tục load và tuân theo yêu cầu đó trước khi hoàn tất thay đổi.
+
 ## Branches
 
 - Mặc định mọi công việc phát triển thực hiện trên nhánh `dev`.
