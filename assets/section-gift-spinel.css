@@ -25,6 +25,24 @@
   max-width: none;
 }
 
+@media screen and (min-width: 768px) {
+  .gift-spinel--sticky {
+    --gift-spinel-sticky-height: max(100svh, 680px);
+    min-height: calc(var(--gift-spinel-sticky-height) + 100svh);
+  }
+
+  .gift-spinel--sticky .gift-spinel__spacing {
+    position: sticky;
+    top: 0;
+    height: var(--gift-spinel-sticky-height);
+    overflow: clip;
+  }
+
+  .gift-spinel--sticky .gift-spinel__inner {
+    min-height: 100%;
+  }
+}
+
 .gift-spinel__inner {
   display: grid;
   width: 100%;

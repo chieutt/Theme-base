@@ -18,11 +18,26 @@
   #shopify-section-{{ section.id }} {
     background: {{ gift_spinel_background }};
   }
+
+  {% if section.settings.sticky_on_scroll %}
+    @media screen and (min-width: 768px) {
+      #shopify-section-{{ section.id }} {
+        position: relative;
+        z-index: 0;
+      }
+
+      #shopify-section-{{ section.id }} + .shopify-section {
+        position: relative;
+        z-index: 1;
+        margin-top: -100svh;
+      }
+    }
+  {% endif %}
 {% endstyle %}
 
 <gift-spinel
   id="gift-spinel-{{ section.id }}"
-  class="gift-spinel gift-spinel--layout-{{ section.settings.layout_ratio }} gift-spinel--image-{{ image_column_position }} gift-spinel--choices-{{ section.settings.choice_style }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width gift-spinel--full{% endif %}"
+  class="gift-spinel gift-spinel--layout-{{ section.settings.layout_ratio }} gift-spinel--image-{{ image_column_position }} gift-spinel--choices-{{ section.settings.choice_style }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width gift-spinel--full{% endif %}{% if section.settings.sticky_on_scroll %} gift-spinel--sticky{% endif %}"
   data-deferred-module="{{ 'gift-spinel.js' | asset_url }}"
   data-editor-mode="{% if request.design_mode %}true{% else %}false{% endif %}"
   style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
@@ -115,6 +130,8 @@
     { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page", "label": "Page width" }, { "value": "full", "label": "Full width" }], "default": "page" },
     { "type": "select", "id": "layout_ratio", "label": "Panel ratio", "options": [{ "value": "balanced", "label": "Balanced" }, { "value": "editorial", "label": "Larger intro" }, { "value": "finder", "label": "Larger gift finder" }], "default": "balanced" },
     { "type": "select", "id": "choice_style", "label": "Choice style", "options": [{ "value": "outline", "label": "Outlined cards" }, { "value": "soft", "label": "Soft fill" }, { "value": "pill", "label": "Rounded pills" }], "default": "outline" },
+    { "type": "header", "content": "Scroll behavior" },
+    { "type": "checkbox", "id": "sticky_on_scroll", "label": "Sticky on scroll", "default": false, "info": "Keeps this section in view while the following section moves over it on desktop." },
     { "type": "header", "content": "Cart action" },
     { "type": "text", "id": "bundle_name", "label": "Bundle name", "default": "Gift finder edit", "info": "Added to bundle line-item properties for order identification." },
     { "type": "text", "id": "bundle_add_label", "label": "Add all label", "default": "Add all to cart" },

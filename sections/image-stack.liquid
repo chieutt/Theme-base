@@ -43,6 +43,23 @@
   </style>
 {% endif %}
 
+{% style %}
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      position: relative;
+      z-index: 0;
+    }
+
+    /* Reserve one final viewport so the last scene remains pinned while the
+       following Shopify section moves over it. */
+    #shopify-section-{{ section.id }} + .shopify-section {
+      position: relative;
+      z-index: 1;
+      margin-top: -100svh;
+    }
+  }
+{% endstyle %}
+
 <sticky-scroll
   class="sticky-scroll image-stack image-stack--effect-{{ section.settings.scroll_effect_style }} image-stack--scroll-speed-{{ section.settings.scroll_animation_speed }} image-stack--content-{{ section.settings.content_side }} image-stack--mobile-image-{{ mobile_image_position }} sticky-scroll--width-page sticky-scroll--mobile-sticky color-scheme color-{{ section.settings.color_scheme.id }} full-width"
   role="region"
@@ -53,7 +70,7 @@
   data-sticky-scroll-ignore-header-offset="true"
   data-scroll-effect-style="{{ section.settings.scroll_effect_style }}"
   data-scroll-animation-speed="{{ section.settings.scroll_animation_speed }}"
-  style="--sticky-scroll-panel-count: {{ section.blocks.size }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+  style="--sticky-scroll-panel-count: {{ section.blocks.size }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --image-stack-final-hold: 100svh;"
 >
   {% if section.settings.use_custom_background_image and section_background_image == blank %}
     <div class="image-stack__section-placeholder" aria-hidden="true">
