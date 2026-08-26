@@ -7,6 +7,7 @@ if (!customElements.get('theme-marquee')) {
 
       this.originalChildren = Array.from(this.sourceGroup.children);
       this.queueRefresh = this.queueRefresh.bind(this);
+      this.queueParallax = this.queueParallax.bind(this);
       this.resizeObserver = new ResizeObserver(this.queueRefresh);
       this.resizeObserver.observe(this);
       this.refresh();
@@ -20,17 +21,36 @@ if (!customElements.get('theme-marquee')) {
       } else {
         this.classList.add('is-active');
       }
+
+      this.sectionRoot = this.closest('.marquee-section');
+      this.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.parallaxEnabled = this.sectionRoot?.dataset.marqueeParallax === 'true';
+      this.parallaxFrame = 0;
+
+      if (this.parallaxEnabled) {
+        window.addEventListener('scroll', this.queueParallax, { passive: true });
+        window.addEventListener('resize', this.queueParallax);
+        this.reduceMotion.addEventListener?.('change', this.queueParallax);
+        this.queueParallax();
+      }
     }
 
     disconnectedCallback() {
       this.resizeObserver?.disconnect();
       this.visibilityObserver?.disconnect();
+      window.removeEventListener('scroll', this.queueParallax);
+      window.removeEventListener('resize', this.queueParallax);
+      this.reduceMotion?.removeEventListener?.('change', this.queueParallax);
       cancelAnimationFrame(this.refreshFrame);
+      cancelAnimationFrame(this.parallaxFrame);
     }
 
     queueRefresh() {
       cancelAnimationFrame(this.refreshFrame);
-      this.refreshFrame = requestAnimationFrame(() => this.refresh());
+      this.refreshFrame = requestAnimationFrame(() => {
+        this.refresh();
+        this.queueParallax();
+      });
     }
 
     refresh() {
@@ -54,6 +74,34 @@ if (!customElements.get('theme-marquee')) {
       const duplicate = this.cloneForAnimation(this.sourceGroup);
       duplicate.setAttribute('data-marquee-duplicate', '');
       this.track.appendChild(duplicate);
+    }
+
+    queueParallax() {
+      if (!this.parallaxEnabled || this.parallaxFrame) return;
+      this.parallaxFrame = requestAnimationFrame(() => this.renderParallax());
+    }
+
+    renderParallax() {
+      this.parallaxFrame = 0;
+      if (!this.track || !this.sectionRoot) return;
+
+      if (this.reduceMotion?.matches) {
+        this.track.style.translate = 'none';
+        return;
+      }
+
+      const rect = this.sectionRoot.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const progress = Math.min(1, Math.max(0, (viewportHeight - rect.top) / (viewportHeight + rect.height)));
+      const normalized = (progress - 0.5) * 2;
+      const desktopStrength = Number.parseFloat(this.sectionRoot.dataset.marqueeParallaxStrength) || 0;
+      const mobileStrength = Number.parseFloat(this.sectionRoot.dataset.marqueeParallaxStrengthMobile) || 0;
+      const strength = viewportWidth <= 767 ? mobileStrength : desktopStrength;
+      const direction = this.classList.contains('marquee--direction-right') ? 1 : -1;
+      const x = normalized * strength * direction;
+
+      this.track.style.translate = `${x.toFixed(2)}px 0`;
     }
 
     cloneForAnimation(element) {

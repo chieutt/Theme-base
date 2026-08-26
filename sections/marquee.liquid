@@ -4,6 +4,9 @@
   class="marquee-section color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
   style="--marquee-section-gap: {{ section.settings.marquee_gap }}px; --marquee-section-padding-top: {{ section.settings.padding_top }}px; --marquee-section-padding-bottom: {{ section.settings.padding_bottom }}px;"
   data-deferred-module="{{ 'section-marquee.js' | asset_url }}"
+  data-marquee-parallax="{{ section.settings.enable_parallax }}"
+  data-marquee-parallax-strength="{{ section.settings.parallax_strength }}"
+  data-marquee-parallax-strength-mobile="{{ section.settings.parallax_strength_mobile }}"
   aria-label="{{ 'marquee.announcements' | t | escape }}"
 >
   <div class="marquee-section__inner{% if section.settings.section_width == 'page' %} marquee-section__inner--page{% endif %}">
@@ -55,6 +58,38 @@
     },
     {
       "type": "header",
+      "content": "Scroll motion"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable scroll parallax",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "parallax_strength",
+      "min": 0,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "label": "Desktop parallax strength",
+      "default": 180,
+      "visible_if": "{{ section.settings.enable_parallax }}"
+    },
+    {
+      "type": "range",
+      "id": "parallax_strength_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "label": "Mobile parallax strength",
+      "default": 72,
+      "visible_if": "{{ section.settings.enable_parallax }}"
+    },
+    {
+      "type": "header",
       "content": "Section padding"
     },
     {
@@ -95,32 +130,38 @@
       "blocks": [
         {
           "type": "marquee",
+          "settings": {
+            "direction": "left",
+            "speed": 30,
+            "pause_on_hover": false
+          },
           "blocks": [
             {
               "type": "text",
               "settings": {
-                "text": "<p>Comfort Products</p>",
-                "type_preset": "md"
+                "text": "<p>Objects of light · Made to order</p>",
+                "type_preset": "custom",
+                "font_size": 56,
+                "font_size_mobile": 34
               }
-            },
-            {
-              "type": "marquee-media"
-            },
+            }
+          ]
+        },
+        {
+          "type": "marquee",
+          "settings": {
+            "direction": "right",
+            "speed": 35,
+            "pause_on_hover": false
+          },
+          "blocks": [
             {
               "type": "text",
               "settings": {
-                "text": "<p>PEBBLE</p>",
-                "type_preset": "md"
-              }
-            },
-            {
-              "type": "marquee-media"
-            },
-            {
-              "type": "text",
-              "settings": {
-                "text": "<p>Organic Cotton</p>",
-                "type_preset": "md"
+                "text": "<p>Natural spinel · Sculpted gold · Quietly made</p>",
+                "type_preset": "custom",
+                "font_size": 30,
+                "font_size_mobile": 20
               }
             }
           ]

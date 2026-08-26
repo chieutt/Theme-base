@@ -1336,6 +1336,114 @@
         "padding_bottom": 80
       }
     },
+    "marquee_parallax_interlude": {
+      "type": "marquee",
+      "blocks": {
+        "marquee_primary": {
+          "type": "marquee",
+          "settings": {
+            "enable_scrolling": true,
+            "direction": "left",
+            "pause_on_hover": false,
+            "speed": 30,
+            "item_gap": 48,
+            "item_alignment": "center",
+            "height_desktop": 104,
+            "height_mobile": 72,
+            "color_scheme": "scheme-2"
+          },
+          "blocks": {
+            "primary_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>SPINEL / OBJECTS OF LIGHT · PARIS 8E · SCULPTED IN GOLD · MADE TO ORDER ·</p>",
+                "type_preset": "custom",
+                "font_size": 56,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "primary_text"
+          ]
+        },
+        "marquee_secondary": {
+          "type": "marquee",
+          "settings": {
+            "enable_scrolling": true,
+            "direction": "right",
+            "pause_on_hover": false,
+            "speed": 35,
+            "item_gap": 36,
+            "item_alignment": "center",
+            "height_desktop": 72,
+            "height_mobile": 52,
+            "color_scheme": "scheme-2"
+          },
+          "blocks": {
+            "secondary_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · QUIETLY SCULPTED · MADE TO BE REMEMBERED ·</p>",
+                "type_preset": "custom",
+                "font_size": 22,
+                "font_size_mobile": 16,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "secondary_text"
+          ]
+        }
+      },
+      "block_order": [
+        "marquee_primary",
+        "marquee_secondary"
+      ],
+      "name": "Marquee — parallax",
+      "settings": {
+        "section_width": "full",
+        "marquee_gap": 0,
+        "enable_parallax": true,
+        "parallax_strength": 220,
+        "parallax_strength_mobile": 72,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "color_scheme": "scheme-2"
+      }
+    },
     "image_stack_editorial": {
       "type": "image-stack",
       "blocks": {
@@ -3431,6 +3539,7 @@
     "video_banner_WqekhF",
     "collection_list_njBdKJ",
     "editorial_collection_tabs_96mr9Q",
+    "marquee_parallax_interlude",
     "image_stack_editorial",
     "gift_spinel_cwBatX",
     "shoppable_video_qa",
