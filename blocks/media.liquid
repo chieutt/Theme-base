@@ -6,21 +6,33 @@
 {% enddoc %}
 
 <div
-  class="content-media content-media--{{ block.settings.ratio }}"
-  style="--content-media-position: {{ block.settings.focal_point }}"
+  class="content-media content-media--{{ block.settings.ratio }}{% if block.settings.enable_custom_width %} content-media--custom-width{% endif %}"
+  style="--content-media-position: {{ block.settings.focal_point }}; --content-media-width: {{ block.settings.image_width }}px; --content-media-width-mobile: {{ block.settings.image_width_mobile }}px;"
   {{ block.shopify_attributes }}
 >
   {% render 'responsive-media',
     image: block.settings.image,
     max_width: 2000,
-    widths: '320, 480, 750, 960, 1200, 1600, 2000',
-    sizes: '(min-width: 1600px) 1600px, 100vw',
+    widths: '160, 240, 320, 480, 750, 960, 1200, 1600, 2000',
+    sizes: '(max-width: 767px) 50vw, (min-width: 1600px) 1600px, 100vw',
     class: 'content-media__image',
     alt: block.settings.alt,
     placeholder_asset: 'placeholder-image-default-1.svg',
     placeholder_class: 'content-media__placeholder'
   %}
 </div>
+
+{% stylesheet %}
+  .content-media--custom-width {
+    width: min(100%, var(--content-media-width));
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .content-media--custom-width {
+      width: min(100%, var(--content-media-width-mobile));
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -39,6 +51,10 @@
       "type": "text",
       "id": "alt",
       "label": "Alt text"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
     },
     {
       "type": "select",
@@ -84,6 +100,34 @@
         }
       ],
       "default": "center center"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_width",
+      "label": "Use custom image width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 32,
+      "max": 600,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop image width",
+      "default": 96,
+      "visible_if": "{{ block.settings.enable_custom_width }}"
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "min": 24,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile image width",
+      "default": 72,
+      "visible_if": "{{ block.settings.enable_custom_width }}"
     }
   ],
   "presets": [
