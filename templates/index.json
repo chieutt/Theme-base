@@ -217,8 +217,8 @@
             "editorial_equinox_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>Light, held<br>in balance.</h1>",
-                "type_preset": "h1",
+                "heading": "<h1>Light, held<br/>in balance.</h1>",
+                "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
                 "text_color": "",
