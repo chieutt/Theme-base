@@ -1,6 +1,9 @@
-.icon-with-text {
+  .section-icon-with-text {
     position: relative;
     z-index: 3;
+  }
+
+  .icon-with-text {
     display: block;
     background: transparent;
     color: var(--color-text);
