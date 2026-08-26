@@ -1,8 +1,8 @@
 {% doc %}
-  Renders one independently configurable marquee row containing nested typography blocks.
+  Renders one independently configurable marquee row containing nested content blocks.
 
-  Each phrase or label is its own Theme Block so merchants can reorder and style
-  marquee content without editing a combined text string.
+  Each phrase, label or media item is its own Theme Block so merchants can reorder and style
+  marquee content without editing a combined content string.
 
   @example
   {% content_for 'block', type: 'marquee', id: 'marquee' %}
@@ -34,6 +34,9 @@
     },
     {
       "type": "text"
+    },
+    {
+      "type": "media"
     }
   ],
   "settings": [
