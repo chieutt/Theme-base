@@ -168,6 +168,9 @@ export class Slideshow extends Component {
       this.#intersectionObserver.disconnect();
       this.#intersectionObserver = null;
     }
+
+    this.#progressAnimation?.cancel();
+    this.#progressAnimation = undefined;
   }
 
   /** Indicates whether the slideshow is nested inside another slideshow. */
@@ -344,6 +347,7 @@ export class Slideshow extends Component {
     if (this.#interval) return;
 
     this.paused = false;
+    this.#resetAutoplayProgress();
 
     this.#interval = setInterval(() => {
       if (this.matches(':hover') || document.hidden) return;
@@ -378,6 +382,7 @@ export class Slideshow extends Component {
   suspend() {
     clearInterval(this.#interval);
     this.#interval = undefined;
+    this.#progressAnimation?.pause();
   }
 
   /**
@@ -419,6 +424,7 @@ export class Slideshow extends Component {
    */
   set current(value) {
     const { current, thumbnails, dots, slides, previous, next } = this.refs;
+    const changed = this.#current !== value;
 
     this.#current = value;
 
@@ -430,7 +436,41 @@ export class Slideshow extends Component {
 
     if (previous) previous.disabled = Boolean(!this.infinite && value === 0);
     if (next) next.disabled = Boolean(!this.infinite && slides && this.nextIndex >= slides.length);
+
+    if (changed) this.#restartAutoplay();
   }
+
+  /** Restarts the autoplay interval so the visual progress and slide timing stay synchronized. */
+  #restartAutoplay() {
+    if (!this.autoplay || this.paused || !this.#interval) return;
+
+    this.suspend();
+    this.play();
+  }
+
+  /** Restarts the active pagination animation without replacing the controls. */
+  #resetAutoplayProgress() {
+    this.#progressAnimation?.cancel();
+    this.#progressAnimation = undefined;
+
+    const progressFill = this.querySelector(
+      '.slideshow-controls--full-frame button[aria-selected="true"] .slideshow-controls__progress-fill'
+    );
+
+    if (!(progressFill instanceof HTMLElement) || prefersReducedMotion()) return;
+
+    this.#progressAnimation = progressFill.animate(
+      [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+      {
+        duration: this.autoplayInterval,
+        easing: 'linear',
+        fill: 'forwards',
+      }
+    );
+  }
+
+  /** Active Full frame pagination progress animation. */
+  #progressAnimation;
 
   get infinite() {
     return this.getAttribute('infinite') != null;

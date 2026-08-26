@@ -170,6 +170,12 @@
                   aria-selected="true"
                 {% endif %}
               >
+                {% if class == 'slideshow-controls--full-frame' %}
+                  <span
+                    class="slideshow-controls__progress-fill"
+                    aria-hidden="true"
+                  ></span>
+                {% endif %}
                 {{ forloop.index }}
               </button>
             </li>

@@ -1,12 +1,15 @@
 {% if section.blocks.size > 1 %}
   {% if section.settings.display_mode == 'full_frame' %}
     {% assign autoplay = section.settings.autoplay %}
+    {% assign controls_class = 'slideshow-controls--full-frame' %}
   {% else %}
     {% assign autoplay = false %}
+    {% assign controls_class = '' %}
   {% endif %}
   {% capture controls %}
     {%- render 'slideshow-controls',
       style: section.settings.slideshow_controls_style,
+      class: controls_class,
       autoplay: autoplay,
       item_count: section.blocks.size,
       show_arrows: false,
@@ -99,6 +102,106 @@
 
     slideshow-arrows .slideshow-control:last-of-type {
       margin-inline-end: var(--padding-xs);
+    }
+
+    .slideshow-controls--full-frame[controls-on-media] {
+      --progress-bar-width: 2rem;
+
+      min-height: var(--minimum-touch-target);
+      mix-blend-mode: normal;
+      pointer-events: none;
+    }
+
+    .slideshow-controls--full-frame[controls-on-media] > * {
+      pointer-events: auto;
+    }
+
+    .slideshow-controls--full-frame .slideshow-controls__dots {
+      position: absolute;
+      left: 50%;
+      gap: 0;
+      padding: 0;
+      overflow: visible;
+      transform: translateX(-50%);
+    }
+
+    .slideshow-controls--full-frame .slideshow-controls__dots li {
+      display: flex;
+    }
+
+    .slideshow-controls--full-frame .slideshow-controls__dots button {
+      position: relative;
+      width: calc(var(--progress-bar-width) + 0.75rem);
+      height: var(--minimum-touch-target);
+      margin: 0;
+      border-radius: 0;
+      animation-timeline: auto !important;
+    }
+
+    .slideshow-controls--full-frame .slideshow-controls__dots button::before,
+    .slideshow-controls--full-frame .slideshow-controls__progress-fill {
+      content: '';
+      position: absolute;
+      top: calc(50% - 1px);
+      left: 0.375rem;
+      display: block;
+      width: var(--progress-bar-width);
+      height: 2px;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .slideshow-controls--full-frame .slideshow-controls__dots button::before {
+      background: rgb(var(--color-white-rgb) / 35%);
+    }
+
+    .slideshow-controls--full-frame .slideshow-controls__progress-fill {
+      background: var(--color-white);
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    .slideshow-controls--full-frame
+      .slideshow-controls__dots
+      button[aria-selected='true']
+      .slideshow-controls__progress-fill {
+      transform: scaleX(1);
+    }
+
+    slideshow-component[autoplay]
+      .slideshow-controls--full-frame
+      .slideshow-controls__dots
+      button[aria-selected='true']
+      .slideshow-controls__progress-fill {
+      transform: scaleX(0);
+    }
+
+    .slideshow-controls--full-frame .slideshow-control:is(.icon-pause, .icon-play) {
+      position: absolute;
+      right: max(var(--page-margin), var(--padding-xs));
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+    }
+
+    .slideshow-controls--full-frame .slideshow-control:is(.icon-pause, .icon-play) svg {
+      display: block;
+    }
+
+    slideshow-component[autoplay]:not([paused]) .slideshow-controls--full-frame .icon-pause,
+    slideshow-component[autoplay][paused] .slideshow-controls--full-frame .icon-play {
+      display: inline-flex;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      slideshow-component[autoplay]
+        .slideshow-controls--full-frame
+        .slideshow-controls__dots
+        button[aria-selected='true']
+        .slideshow-controls__progress-fill {
+        transform: scaleX(1);
+      }
     }
 
     .slideshow--with-hints--mobile-with-hints {
