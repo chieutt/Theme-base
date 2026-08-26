@@ -1,0 +1,194 @@
+name: Apply exact marquee homepage structure
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - .github/workflows/apply-marquee-exact.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Update marquee homepage instance and presets
+        shell: python
+        run: |
+          from pathlib import Path
+          import json
+
+          def heading(text):
+              return {
+                  'type': 'heading',
+                  'settings': {
+                      'heading': f'<p>{text}</p>',
+                      'type_preset': 'custom',
+                      'font_size': 24,
+                      'font_size_mobile': 20,
+                      'text_color': '',
+                      'width': 'fit-content',
+                      'width_mobile': 'fit-content',
+                      'reveal_type': 'none'
+                  },
+                  'blocks': {}
+              }
+
+          def label(text):
+              return {
+                  'type': 'label',
+                  'settings': {
+                      'text': f'<p>{text}</p>',
+                      'text_color': '',
+                      'width': 'fit-content',
+                      'width_mobile': 'fit-content',
+                      'reveal_type': 'none'
+                  },
+                  'blocks': {}
+              }
+
+          primary_items = [
+              ('primary_permanence', heading('Objects of permanence')),
+              ('primary_spinel', label('SPINEL')),
+              ('primary_slowly', heading('Made to be noticed slowly')),
+              ('primary_paris', label('PARIS')),
+              ('primary_form', heading('Form · light · movement · memory')),
+              ('primary_hand_finished', label('HAND FINISHED')),
+              ('primary_years', heading('Jewelry for the years ahead')),
+              ('primary_gold', label('18K GOLD')),
+              ('primary_quietly', heading('Quietly made, closely worn')),
+              ('primary_nocturne', label('NOCTURNE')),
+          ]
+
+          secondary_items = [
+              ('secondary_sourced', heading('Responsibly sourced, finished by hand')),
+              ('secondary_drawing', label('DRAWING')),
+              ('secondary_line', heading('A line becomes a form')),
+              ('secondary_form', label('FORM')),
+              ('secondary_weight', heading('Weight gives the line presence')),
+              ('secondary_light_label', label('LIGHT')),
+              ('secondary_light', heading('Light reveals the final object')),
+              ('secondary_paris', label('PARIS')),
+              ('secondary_quantities', heading('Made in limited quantities')),
+              ('secondary_material', label('MATERIAL')),
+          ]
+
+          path = Path('templates/index.json')
+          raw = path.read_text()
+          json_start = raw.index('{')
+          prefix = raw[:json_start]
+          data = json.loads(raw[json_start:])
+          section = data['sections']['marquee_parallax_interlude']
+          section['name'] = 'Marquee — parallax'
+          section['settings'] = {
+              'section_width': 'full',
+              'marquee_gap': 0,
+              'enable_parallax': True,
+              'parallax_strength': 180,
+              'parallax_strength_mobile': 72,
+              'color_scheme': 'scheme-4',
+              'padding_top': 12,
+              'padding_bottom': 12,
+          }
+          section['blocks'] = {
+              'marquee_primary': {
+                  'type': 'marquee',
+                  'settings': {
+                      'enable_scrolling': True,
+                      'direction': 'left',
+                      'pause_on_hover': False,
+                      'speed': 35,
+                      'item_gap': 48,
+                      'item_alignment': 'center',
+                      'height_desktop': 54,
+                      'height_mobile': 46,
+                      'color_scheme': 'scheme-4',
+                  },
+                  'blocks': dict(primary_items),
+                  'block_order': [key for key, _ in primary_items],
+              },
+              'marquee_secondary': {
+                  'type': 'marquee',
+                  'settings': {
+                      'enable_scrolling': True,
+                      'direction': 'right',
+                      'pause_on_hover': False,
+                      'speed': 38,
+                      'item_gap': 48,
+                      'item_alignment': 'center',
+                      'height_desktop': 54,
+                      'height_mobile': 46,
+                      'color_scheme': 'scheme-4',
+                  },
+                  'blocks': dict(secondary_items),
+                  'block_order': [key for key, _ in secondary_items],
+              },
+          }
+          section['block_order'] = ['marquee_primary', 'marquee_secondary']
+          path.write_text(prefix + json.dumps(data, indent=2, ensure_ascii=False) + '\n')
+
+          def update_schema_file(file_path, updater):
+              path = Path(file_path)
+              text = path.read_text()
+              start_token = '{% schema %}'
+              end_token = '{% endschema %}'
+              start = text.index(start_token) + len(start_token)
+              end = text.index(end_token, start)
+              schema = json.loads(text[start:end].strip())
+              updater(schema)
+              payload = json.dumps(schema, indent=2, ensure_ascii=False)
+              path.write_text(text[:start] + '\n' + payload + '\n' + text[end:])
+
+          def update_section_schema(schema):
+              for setting in schema.get('settings', []):
+                  if setting.get('id') == 'color_scheme':
+                      setting['default'] = 'scheme-4'
+              preset = schema['presets'][0]
+              preset['settings']['color_scheme'] = 'scheme-4'
+              preset['blocks'] = [
+                  {
+                      'type': 'marquee',
+                      'settings': {
+                          'direction': 'left', 'speed': 35, 'pause_on_hover': False,
+                          'item_gap': 48, 'height_desktop': 54, 'height_mobile': 46,
+                          'color_scheme': 'scheme-4'
+                      },
+                      'blocks': [item for _, item in primary_items]
+                  },
+                  {
+                      'type': 'marquee',
+                      'settings': {
+                          'direction': 'right', 'speed': 38, 'pause_on_hover': False,
+                          'item_gap': 48, 'height_desktop': 54, 'height_mobile': 46,
+                          'color_scheme': 'scheme-4'
+                      },
+                      'blocks': [item for _, item in secondary_items]
+                  }
+              ]
+
+          def update_row_schema(schema):
+              for setting in schema.get('settings', []):
+                  if setting.get('id') == 'color_scheme':
+                      setting['default'] = 'scheme-4'
+              schema['presets'][0]['blocks'] = [item for _, item in primary_items[:4]]
+
+          update_schema_file('sections/marquee.liquid', update_section_schema)
+          update_schema_file('blocks/marquee.liquid', update_row_schema)
+
+      - name: Commit marquee changes
+        run: |
+          if git diff --quiet -- templates/index.json sections/marquee.liquid blocks/marquee.liquid; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/index.json sections/marquee.liquid blocks/marquee.liquid
+          git commit -m "Fix marquee reference block structure and scheme"
+          git push origin dev
