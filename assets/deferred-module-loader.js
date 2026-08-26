@@ -1,5 +1,6 @@
 (() => {
   const pending = new WeakSet();
+  const loadedSources = new Map();
   const isMobileViewport = window.matchMedia('(max-width: 767.98px)').matches;
   const deferredModuleRootMargin = isMobileViewport ? '800px 0px' : '480px 0px';
   const observer = 'IntersectionObserver' in window
@@ -12,12 +13,35 @@
       }, { rootMargin: deferredModuleRootMargin })
     : null;
 
+  function shouldReloadRuntime(element, source) {
+    const tagName = element.localName;
+    if (!tagName?.includes('-')) return false;
+
+    const previousSource = loadedSources.get(tagName);
+    loadedSources.set(tagName, source);
+    if (!previousSource || previousSource === source) return false;
+
+    const isLocalThemeDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const isEditor = Boolean(window.Shopify?.designMode);
+    if (!isEditor && !isLocalThemeDev) return false;
+
+    return Boolean(window.customElements?.get(tagName));
+  }
+
   function load(element) {
     const source = element.dataset.deferredModule;
     if (!source || pending.has(element)) return;
+
+    const moduleUrl = new URL(source, document.baseURI).href;
+    if (shouldReloadRuntime(element, moduleUrl)) {
+      window.location.reload();
+      return;
+    }
+
+    if (!loadedSources.has(element.localName)) loadedSources.set(element.localName, moduleUrl);
     pending.add(element);
     element.removeAttribute('data-deferred-module');
-    import(new URL(source, document.baseURI).href);
+    import(moduleUrl);
   }
 
   function loadAfterWindowLoad(element) {
