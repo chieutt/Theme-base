@@ -125,6 +125,10 @@ class GiftSpinel extends HTMLElement {
     this.initializeFrame = window.requestAnimationFrame(() => this.initialize());
   }
 
+  waitForLayoutFrame() {
+    return new Promise((resolve) => window.requestAnimationFrame(resolve));
+  }
+
   handleSectionLoad(event) {
     const section = this.closest('[id^="shopify-section-"]');
     if (event.target === section || event.target?.contains(this)) this.scheduleInitialize();
@@ -334,7 +338,7 @@ class GiftSpinel extends HTMLElement {
     this.questions.hidden = true;
     if (!isGiftPath) this.result.replaceChildren(content);
     this.result.hidden = false;
-    window.ThemeAnimations?.refresh(this.result);
+    window.ThemeAnimations?.init(this.result);
     if (this.status) this.status.textContent = this.result.querySelector('.content-block--heading')?.textContent?.trim() || '';
     this.result.dispatchEvent(
       new CustomEvent('gift-spinel:products-loaded', {
@@ -365,7 +369,7 @@ class GiftSpinel extends HTMLElement {
     return Math.ceil(Math.max(panelHeight, introMinHeight));
   }
 
-  transitionToResult() {
+  async transitionToResult() {
     if (this.isPanelTransitioning) return;
 
     const path = this.findMatchingPath();
@@ -396,45 +400,69 @@ class GiftSpinel extends HTMLElement {
     );
     this.panelAnimations = [exitAnimation];
 
-    exitAnimation.finished.catch(() => null).then(() => {
+    await exitAnimation.finished.catch(() => null);
+    if (!this.isPanelTransitioning) return;
+
+    this.showResult(path, false);
+    exitAnimation.cancel();
+
+    const resultContent = this.result.querySelector('.gift-spinel__result-content');
+    if (resultContent) resultContent.style.animation = 'none';
+
+    const incomingPanel = this.result.firstElementChild || this.result;
+    const enterAnimation = incomingPanel.animate(
+      [
+        { opacity: 0, transform: 'translateY(10px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ],
+      {
+        duration: 300,
+        delay: 20,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        fill: 'both',
+      },
+    );
+    this.panelAnimations = [enterAnimation];
+
+    // Let the DOM move, hidden-state swap and finder padding change settle into
+    // a render frame before reading the result height. This avoids forcing a
+    // synchronous layout exactly at the visual hand-off.
+    await this.waitForLayoutFrame();
+    if (!this.isPanelTransitioning) return;
+
+    const targetHeight = this.getFinderTargetHeight(this.result);
+    const resizeAnimation = this.finder.animate(
+      [
+        { height: `${startHeight}px` },
+        { height: `${targetHeight}px` },
+      ],
+      {
+        duration: 340,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        fill: 'forwards',
+      },
+    );
+    this.panelAnimations.push(resizeAnimation);
+
+    await Promise.allSettled([resizeAnimation.finished, enterAnimation.finished]);
+    if (!this.isPanelTransitioning) return;
+
+    this.finder.style.height = `${targetHeight}px`;
+    this.panelAnimations.forEach((animation) => animation.cancel());
+    this.panelAnimations = [];
+
+    window.requestAnimationFrame(() => {
       if (!this.isPanelTransitioning) return;
-
-      this.showResult(path, false);
-      const targetHeight = this.getFinderTargetHeight(this.result);
-      const resizeAnimation = this.finder.animate(
-        [
-          { height: `${startHeight}px` },
-          { height: `${targetHeight}px` },
-        ],
-        {
-          duration: 320,
-          easing: 'cubic-bezier(.22, 1, .36, 1)',
-          fill: 'forwards',
-        },
-      );
-      this.panelAnimations.push(resizeAnimation);
-
-      resizeAnimation.finished.catch(() => null).then(() => {
-        if (!this.isPanelTransitioning) return;
-
-        this.finder.style.height = `${targetHeight}px`;
-        this.panelAnimations.forEach((animation) => animation.cancel());
-        this.panelAnimations = [];
-        this.finder.style.removeProperty('overflow');
-        this.finder.style.removeProperty('will-change');
-
-        window.requestAnimationFrame(() => {
-          if (!this.isPanelTransitioning) return;
-          this.finder.style.removeProperty('height');
-          this.isPanelTransitioning = false;
-          this.result.querySelector('.content-block--heading')?.focus({ preventScroll: true });
-          this.releaseScrollAnchoring();
-        });
-      });
+      this.finder.style.removeProperty('height');
+      this.finder.style.removeProperty('overflow');
+      this.finder.style.removeProperty('will-change');
+      this.isPanelTransitioning = false;
+      this.result.querySelector('.content-block--heading')?.focus({ preventScroll: true });
+      this.releaseScrollAnchoring();
     });
   }
 
-  changeRecipient() {
+  async changeRecipient() {
     if (this.isPanelTransitioning) return;
     window.clearTimeout(this.transitionTimer);
 
@@ -467,59 +495,63 @@ class GiftSpinel extends HTMLElement {
     );
     this.panelAnimations = [exitAnimation];
 
-    exitAnimation.finished.catch(() => null).then(() => {
+    await exitAnimation.finished.catch(() => null);
+    if (!this.isPanelTransitioning) return;
+
+    // The animated path is the real Theme Block node, so clear its fill state
+    // before returning it to the choice grid.
+    exitAnimation.cancel();
+    this.resetRecipientView(false);
+
+    const enterAnimation = this.questions.animate(
+      [
+        { opacity: 0, transform: 'translateY(10px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ],
+      {
+        duration: 300,
+        delay: 20,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        fill: 'both',
+      },
+    );
+    this.panelAnimations = [enterAnimation];
+
+    // resetRecipientView moves the Theme Block back into the choices grid and
+    // restores finder padding. Measure on the next frame instead of forcing a
+    // layout immediately after those writes.
+    await this.waitForLayoutFrame();
+    if (!this.isPanelTransitioning) return;
+
+    const targetHeight = this.getFinderTargetHeight(this.questions);
+    const resizeAnimation = this.finder.animate(
+      [
+        { height: `${startHeight}px` },
+        { height: `${targetHeight}px` },
+      ],
+      {
+        duration: 340,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        fill: 'forwards',
+      },
+    );
+    this.panelAnimations.push(resizeAnimation);
+
+    await Promise.allSettled([resizeAnimation.finished, enterAnimation.finished]);
+    if (!this.isPanelTransitioning) return;
+
+    this.finder.style.height = `${targetHeight}px`;
+    this.panelAnimations.forEach((animation) => animation.cancel());
+    this.panelAnimations = [];
+
+    window.requestAnimationFrame(() => {
       if (!this.isPanelTransitioning) return;
-
-      // This animation runs on the actual Gift path root (rather than a clone)
-      // so its `fill: forwards` state must be cleared before that root returns
-      // to the recipient choice grid. Otherwise the choice remains clickable
-      // but inherits opacity: 0 after "Change recipient".
-      exitAnimation.cancel();
-      this.resetRecipientView(false);
-      const targetHeight = this.getFinderTargetHeight(this.questions);
-
-      const resizeAnimation = this.finder.animate(
-        [
-          { height: `${startHeight}px` },
-          { height: `${targetHeight}px` },
-        ],
-        {
-          duration: 320,
-          easing: 'cubic-bezier(.22, 1, .36, 1)',
-          fill: 'forwards',
-        },
-      );
-      const enterAnimation = this.questions.animate(
-        [
-          { opacity: 0, transform: 'translateY(10px)' },
-          { opacity: 1, transform: 'translateY(0)' },
-        ],
-        {
-          duration: 280,
-          delay: 50,
-          easing: 'cubic-bezier(.22, 1, .36, 1)',
-          fill: 'both',
-        },
-      );
-      this.panelAnimations = [resizeAnimation, enterAnimation];
-
-      Promise.allSettled([resizeAnimation.finished, enterAnimation.finished]).then(() => {
-        if (!this.isPanelTransitioning) return;
-
-        this.finder.style.height = `${targetHeight}px`;
-        this.panelAnimations.forEach((animation) => animation.cancel());
-        this.panelAnimations = [];
-        this.finder.style.removeProperty('overflow');
-        this.finder.style.removeProperty('will-change');
-
-        window.requestAnimationFrame(() => {
-          if (!this.isPanelTransitioning) return;
-          this.finder.style.removeProperty('height');
-          this.isPanelTransitioning = false;
-          this.question.focus({ preventScroll: true });
-          this.releaseScrollAnchoring();
-        });
-      });
+      this.finder.style.removeProperty('height');
+      this.finder.style.removeProperty('overflow');
+      this.finder.style.removeProperty('will-change');
+      this.isPanelTransitioning = false;
+      this.question.focus({ preventScroll: true });
+      this.releaseScrollAnchoring();
     });
   }
 
