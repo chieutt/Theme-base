@@ -1237,13 +1237,6 @@ if (!window.SpinelHeaderMenus) {
     const panel = getDesktopMegaMenuPanel(details);
     if (!panel) return 0;
     const availableHeight = Math.max(0, document.documentElement.clientHeight - panel.getBoundingClientRect().top);
-    if (
-      details.matches('.header__submenu-disclosure:not(.header__submenu-disclosure--mega)')
-      && panel.matches('.header__submenu')
-      && panel.querySelector('.header__submenu-nested-disclosure')
-    ) {
-      return Math.ceil(Math.min(288, availableHeight));
-    }
     return Math.ceil(Math.min(Math.max(0, panel.scrollHeight), availableHeight));
   };
 
@@ -2018,12 +2011,6 @@ if (!window.SpinelHeaderMenus) {
     if (overflowsInlineEnd) details.dataset.flyoutReverse = 'true';
   };
 
-  const openDefaultNestedHeaderSubmenu = (details) => {
-    if (!details.matches('.header__submenu-disclosure:not(.header__submenu-disclosure--mega)')) return;
-    const firstNested = details.querySelector(':scope > .header__submenu > .header__submenu-item--has-children > .header__submenu-nested-disclosure');
-    if (firstNested && !firstNested.open) openHeaderSubmenu(firstNested);
-  };
-
   const closeOtherHeaderSubmenus = (details, closeImmediately = false) => {
     const header = details.closest('[data-header]');
     const openMenus = details.matches('.header__submenu-nested-disclosure')
@@ -2176,7 +2163,6 @@ if (!window.SpinelHeaderMenus) {
     }
     if (desktopHandoff) runDesktopTopLevelMenuHandoff(details, desktopHandoff, isMobileHeaderViewport());
     else animateMegaMenuOpen(details, isMobileHeaderViewport());
-    if (isDesktopTopLevelMenu) openDefaultNestedHeaderSubmenu(details);
     if (isDesktopAnimatedMenu) {
       closeOtherHeaderSubmenus(details);
     }
@@ -2236,7 +2222,6 @@ if (!window.SpinelHeaderMenus) {
     if (nestedDetails && !nestedDetails.contains(event.relatedTarget)) {
       clearMegaMenuHoverTimer(nestedDetails);
       const parentDetails = nestedDetails.closest('.header__submenu-disclosure--hover');
-      if (parentDetails?.matches(':hover')) return;
       megaMenuHoverTimers.set(nestedDetails, window.setTimeout(() => closeMegaMenu(nestedDetails), headerHoverCloseDelay));
       if (parentDetails && !parentDetails.contains(event.relatedTarget)) scheduleMegaMenuClose(parentDetails);
       return;
