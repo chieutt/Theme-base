@@ -12,7 +12,11 @@
   if email_label == blank
     assign email_label = 'footer.email' | t
   endif
-  assign button_label = settings.button_label | default: 'Subscribe'
+  assign button_label = settings.button_label
+  assign has_button_label = false
+  if button_label != blank
+    assign has_button_label = true
+  endif
   assign message_id = form_id | append: '-message'
 %}
 
@@ -46,10 +50,10 @@
       </div>
 
       <button
-        class="btn-{{ settings.button_style }} newsletter-form__submit{% if settings.icon != 'none' %} newsletter-form__submit--with-icon{% endif %}"
+        class="btn-{{ settings.button_style }} newsletter-form__submit{% if settings.icon != 'none' %} newsletter-form__submit--with-icon{% endif %}{% unless has_button_label %} newsletter-form__submit--icon-only{% endunless %}"
         type="submit"
       >
-        <span>{{ button_label | escape }}</span>
+        {% if has_button_label %}<span>{{ button_label | escape }}</span>{% endif %}
         {% if settings.icon != 'none' %}
           <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
         {% endif %}

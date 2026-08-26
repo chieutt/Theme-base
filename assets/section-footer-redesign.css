@@ -84,8 +84,13 @@
   border-color: var(--footer-divider);
 }
 
+.footer__newsletter-form .newsletter-form__fields--inline {
+  align-items: flex-end;
+}
+
 .footer__newsletter-form .newsletter-form__field input {
-  min-height: 54px;
+  height: 56px;
+  min-height: 56px;
   padding-inline: 20px;
 }
 
@@ -105,6 +110,13 @@
 .footer__newsletter-form .newsletter-form__submit--with-icon {
   justify-content: space-between;
   gap: 20px;
+}
+
+.footer__newsletter-form .newsletter-form__submit--icon-only {
+  width: 56px;
+  min-width: 56px;
+  padding-inline: 0;
+  justify-content: center;
 }
 
 .footer__newsletter-form .newsletter-form__submit.btn-tertiary {
@@ -419,12 +431,14 @@
 
   .footer__newsletter-form .newsletter-form__fields--inline {
     flex-direction: row;
+    align-items: flex-end;
     min-height: 52px;
     border: 1px solid var(--footer-divider);
   }
 
   .footer__newsletter-form .newsletter-form__field input {
-    min-height: 50px;
+    height: 52px;
+    min-height: 52px;
     padding-inline: 14px;
     border: 0;
   }
@@ -432,6 +446,7 @@
   .footer__newsletter-form .newsletter-form__submit {
     width: auto;
     min-width: 128px;
+    height: 52px;
     min-height: 52px;
     margin: -1px;
     padding-inline: 16px;
@@ -708,13 +723,7 @@
   }
 
   .footer__newsletter-form .newsletter-form__submit > span:first-child {
-    position: absolute;
-    overflow: hidden;
-    width: 1px;
-    height: 1px;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    white-space: nowrap;
+    position: static;
   }
 
   .footer__newsletter-note {
