@@ -2235,8 +2235,9 @@ if (!window.SpinelHeaderMenus) {
     const nestedDetails = event.target.closest?.('.header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested-disclosure');
     if (nestedDetails && !nestedDetails.contains(event.relatedTarget)) {
       clearMegaMenuHoverTimer(nestedDetails);
-      megaMenuHoverTimers.set(nestedDetails, window.setTimeout(() => closeMegaMenu(nestedDetails), headerHoverCloseDelay));
       const parentDetails = nestedDetails.closest('.header__submenu-disclosure--hover');
+      if (parentDetails?.matches(':hover')) return;
+      megaMenuHoverTimers.set(nestedDetails, window.setTimeout(() => closeMegaMenu(nestedDetails), headerHoverCloseDelay));
       if (parentDetails && !parentDetails.contains(event.relatedTarget)) scheduleMegaMenuClose(parentDetails);
       return;
     }
