@@ -1350,9 +1350,59 @@
             "item_alignment": "center",
             "height_desktop": 54,
             "height_mobile": 46,
-            "color_scheme": "scheme-5"
+            "color_scheme": "scheme-4"
           },
           "blocks": {
+            "primary_permanence": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Objects of permanence</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_spinel": {
+              "type": "label",
+              "settings": {
+                "text": "<p>SPINEL</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_slowly": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Made to be noticed slowly</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_paris": {
+              "type": "label",
+              "settings": {
+                "text": "<p>PARIS</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
             "primary_form": {
               "type": "heading",
               "settings": {
@@ -1427,69 +1477,19 @@
                 "reveal_type": "none"
               },
               "blocks": {}
-            },
-            "primary_permanence": {
-              "type": "heading",
-              "settings": {
-                "heading": "<p>Objects of permanence</p>",
-                "type_preset": "custom",
-                "font_size": 24,
-                "font_size_mobile": 20,
-                "text_color": "",
-                "width": "fit-content",
-                "width_mobile": "fit-content",
-                "reveal_type": "none"
-              },
-              "blocks": {}
-            },
-            "primary_spinel": {
-              "type": "label",
-              "settings": {
-                "text": "<p>SPINEL</p>",
-                "text_color": "",
-                "width": "fit-content",
-                "width_mobile": "fit-content",
-                "reveal_type": "none"
-              },
-              "blocks": {}
-            },
-            "primary_slowly": {
-              "type": "heading",
-              "settings": {
-                "heading": "<p>Made to be noticed slowly</p>",
-                "type_preset": "custom",
-                "font_size": 24,
-                "font_size_mobile": 20,
-                "text_color": "",
-                "width": "fit-content",
-                "width_mobile": "fit-content",
-                "reveal_type": "none"
-              },
-              "blocks": {}
-            },
-            "primary_paris": {
-              "type": "label",
-              "settings": {
-                "text": "<p>PARIS</p>",
-                "text_color": "",
-                "width": "fit-content",
-                "width_mobile": "fit-content",
-                "reveal_type": "none"
-              },
-              "blocks": {}
             }
           },
           "block_order": [
+            "primary_permanence",
+            "primary_spinel",
+            "primary_slowly",
+            "primary_paris",
             "primary_form",
             "primary_hand_finished",
             "primary_years",
             "primary_gold",
             "primary_quietly",
-            "primary_nocturne",
-            "primary_permanence",
-            "primary_spinel",
-            "primary_slowly",
-            "primary_paris"
+            "primary_nocturne"
           ]
         },
         "marquee_secondary": {
@@ -1503,7 +1503,7 @@
             "item_alignment": "center",
             "height_desktop": 54,
             "height_mobile": 46,
-            "color_scheme": "scheme-5"
+            "color_scheme": "scheme-4"
           },
           "blocks": {
             "secondary_sourced": {
@@ -1650,14 +1650,14 @@
         "marquee_primary",
         "marquee_secondary"
       ],
-      "name": "Marquee — editorial parallax",
+      "name": "Marquee — parallax",
       "settings": {
         "section_width": "full",
         "marquee_gap": 0,
         "enable_parallax": true,
         "parallax_strength": 180,
         "parallax_strength_mobile": 72,
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-4",
         "padding_top": 12,
         "padding_bottom": 12
       }
