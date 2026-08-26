@@ -1,5 +1,9 @@
 <div class="product-usp-list__item" {{ block.shopify_attributes }}>
-  {% if block.settings.icon != 'none' %}
+  {% if block.settings.custom_icon != blank %}
+    <span class="product-usp-list__icon">
+      {{ block.settings.custom_icon | image_url: width: 96 | image_tag: widths: '48, 96', loading: 'lazy', alt: '' }}
+    </span>
+  {% elsif block.settings.icon != 'none' %}
     {% assign benefit_icon_asset = blank %}
     {% case block.settings.icon %}
       {% when 'truck' %}{% assign benefit_icon_asset = 'product-benefit-shipped.png' %}
@@ -77,11 +81,33 @@
           "label": "Sustainability"
         },
         {
+          "value": "note",
+          "label": "Support"
+        },
+        {
+          "value": "document",
+          "label": "Certificate"
+        },
+        {
+          "value": "tag",
+          "label": "Offer"
+        },
+        {
+          "value": "discount",
+          "label": "Discount"
+        },
+        {
           "value": "none",
           "label": "None"
         }
       ],
       "default": "truck"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_icon",
+      "label": "Custom icon",
+      "info": "Overrides the selected icon. Upload a square SVG or PNG for best results."
     },
     {
       "type": "richtext",
