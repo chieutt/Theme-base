@@ -17,10 +17,10 @@
   assign mobile_language_form_id = 'HeaderMobileLanguageSelector-' | append: section.id
   assign mobile_country_sheet_title_id = 'HeaderMobileCountrySheetTitle-' | append: section.id
   assign mobile_language_sheet_title_id = 'HeaderMobileLanguageSheetTitle-' | append: section.id
-  assign desktop_visible_items = 3
+  assign desktop_visible_items = section.settings.desktop_visible_items | default: 3
   assign use_desktop_more_menu = false
   assign desktop_more_menu_active = false
-  if is_mobile_navigation == false and menu_links.size > 4
+  if is_mobile_navigation == false and menu_links.size > desktop_visible_items
     assign use_desktop_more_menu = true
     for overflow_state_link in menu_links offset: desktop_visible_items
       if overflow_state_link.current or overflow_state_link.child_active

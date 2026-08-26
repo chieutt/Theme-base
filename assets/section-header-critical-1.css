@@ -577,7 +577,13 @@ html[scroll-lock] .header__menu-overlay {
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested .header__submenu-link {
       min-height: 24px;
     }
+    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li {
+      padding-block: 6px;
+    }
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) > .header__submenu > .header__submenu-item--has-children:is(:hover, :focus-within) {
+      background: color-mix(in srgb, var(--color-heading) 6%, transparent);
+    }
+    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li:is(:hover, :focus-within) {
       background: color-mix(in srgb, var(--color-heading) 6%, transparent);
     }
   }
