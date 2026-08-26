@@ -1345,42 +1345,151 @@
             "enable_scrolling": true,
             "direction": "left",
             "pause_on_hover": false,
-            "speed": 30,
+            "speed": 35,
             "item_gap": 48,
             "item_alignment": "center",
-            "height_desktop": 104,
-            "height_mobile": 72,
-            "color_scheme": "scheme-2"
+            "height_desktop": 54,
+            "height_mobile": 46,
+            "color_scheme": "scheme-5"
           },
           "blocks": {
-            "primary_text": {
-              "type": "text",
+            "primary_form": {
+              "type": "heading",
               "settings": {
-                "text": "<p>SPINEL / OBJECTS OF LIGHT · PARIS 8E · SCULPTED IN GOLD · MADE TO ORDER ·</p>",
+                "heading": "<p>Form · light · movement · memory</p>",
                 "type_preset": "custom",
-                "font_size": 56,
-                "font_size_mobile": 30,
+                "font_size": 24,
+                "font_size_mobile": 20,
                 "text_color": "",
-                "color": "text",
-                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "alignment": "left",
-                "enable_mobile_alignment": false,
-                "alignment_mobile": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "reveal_type": "none",
-                "reveal_duration": 650,
-                "reveal_delay": 0
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_hand_finished": {
+              "type": "label",
+              "settings": {
+                "text": "<p>HAND FINISHED</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_years": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Jewelry for the years ahead</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_gold": {
+              "type": "label",
+              "settings": {
+                "text": "<p>18K GOLD</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_quietly": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Quietly made, closely worn</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_nocturne": {
+              "type": "label",
+              "settings": {
+                "text": "<p>NOCTURNE</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_permanence": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Objects of permanence</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_spinel": {
+              "type": "label",
+              "settings": {
+                "text": "<p>SPINEL</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_slowly": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Made to be noticed slowly</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "primary_paris": {
+              "type": "label",
+              "settings": {
+                "text": "<p>PARIS</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "primary_text"
+            "primary_form",
+            "primary_hand_finished",
+            "primary_years",
+            "primary_gold",
+            "primary_quietly",
+            "primary_nocturne",
+            "primary_permanence",
+            "primary_spinel",
+            "primary_slowly",
+            "primary_paris"
           ]
         },
         "marquee_secondary": {
@@ -1389,42 +1498,151 @@
             "enable_scrolling": true,
             "direction": "right",
             "pause_on_hover": false,
-            "speed": 35,
-            "item_gap": 36,
+            "speed": 38,
+            "item_gap": 48,
             "item_alignment": "center",
-            "height_desktop": 72,
-            "height_mobile": 52,
-            "color_scheme": "scheme-2"
+            "height_desktop": 54,
+            "height_mobile": 46,
+            "color_scheme": "scheme-5"
           },
           "blocks": {
-            "secondary_text": {
-              "type": "text",
+            "secondary_sourced": {
+              "type": "heading",
               "settings": {
-                "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · QUIETLY SCULPTED · MADE TO BE REMEMBERED ·</p>",
+                "heading": "<p>Responsibly sourced, finished by hand</p>",
                 "type_preset": "custom",
-                "font_size": 22,
-                "font_size_mobile": 16,
+                "font_size": 24,
+                "font_size_mobile": 20,
                 "text_color": "",
-                "color": "text",
-                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "alignment": "left",
-                "enable_mobile_alignment": false,
-                "alignment_mobile": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "reveal_type": "none",
-                "reveal_duration": 650,
-                "reveal_delay": 0
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_drawing": {
+              "type": "label",
+              "settings": {
+                "text": "<p>DRAWING</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_line": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>A line becomes a form</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_form": {
+              "type": "label",
+              "settings": {
+                "text": "<p>FORM</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_weight": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Weight gives the line presence</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_light_label": {
+              "type": "label",
+              "settings": {
+                "text": "<p>LIGHT</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_light": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Light reveals the final object</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_paris": {
+              "type": "label",
+              "settings": {
+                "text": "<p>PARIS</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_quantities": {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Made in limited quantities</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20,
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
+              },
+              "blocks": {}
+            },
+            "secondary_material": {
+              "type": "label",
+              "settings": {
+                "text": "<p>MATERIAL</p>",
+                "text_color": "",
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "reveal_type": "none"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "secondary_text"
+            "secondary_sourced",
+            "secondary_drawing",
+            "secondary_line",
+            "secondary_form",
+            "secondary_weight",
+            "secondary_light_label",
+            "secondary_light",
+            "secondary_paris",
+            "secondary_quantities",
+            "secondary_material"
           ]
         }
       },
@@ -1432,16 +1650,16 @@
         "marquee_primary",
         "marquee_secondary"
       ],
-      "name": "Marquee — parallax",
+      "name": "Marquee — editorial parallax",
       "settings": {
         "section_width": "full",
         "marquee_gap": 0,
         "enable_parallax": true,
-        "parallax_strength": 220,
+        "parallax_strength": 180,
         "parallax_strength_mobile": 72,
-        "padding_top": 28,
-        "padding_bottom": 28,
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-5",
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "image_stack_editorial": {
