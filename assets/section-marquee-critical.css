@@ -23,7 +23,7 @@
   display: block;
   min-height: var(--marquee-min-height-mobile);
   overflow: hidden;
-  background: var(--gradient-background, var(--color-background));
+  background: transparent;
   color: var(--color-text);
 }
 
@@ -58,29 +58,36 @@
   flex-shrink: 0;
 }
 
-.marquee .content-block,
-.marquee .content-block p,
-.marquee-interlude__text {
+.marquee .content-block {
+  width: max-content;
+  max-width: none;
+  padding: 0;
   white-space: nowrap;
 }
 
-.marquee-interlude__text {
-  display: block;
-  width: max-content;
+.marquee .content-block p,
+.marquee .content-block h1,
+.marquee .content-block h2,
+.marquee .content-block h3,
+.marquee .content-block h4,
+.marquee .content-block h5,
+.marquee .content-block h6 {
   margin: 0;
-  font-family: var(--font-heading--family, inherit);
-  font-size: clamp(2.125rem, 3.9vw, 3.5rem);
-  font-weight: var(--font-heading--weight, 400);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  white-space: nowrap;
 }
 
-.marquee-interlude__text--secondary {
-  font-family: var(--font-body--family, inherit);
-  font-size: clamp(1.125rem, 2vw, 1.875rem);
-  font-weight: var(--font-body--weight, 400);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.marquee .content-block--heading {
+  line-height: 1;
+}
+
+.marquee .content-block--label {
+  opacity: 0.62;
+}
+
+.marquee .content-block--label,
+.marquee .content-block--label p {
+  line-height: 1;
+  letter-spacing: 0.18em;
 }
 
 .marquee.is-active:not(.marquee--static) .marquee__track {
@@ -100,10 +107,6 @@
   animation-play-state: paused;
 }
 
-.marquee .content-button {
-  width: max-content;
-}
-
 @keyframes marquee-scroll {
   to {
     transform: translateX(calc(-50% - var(--marquee-item-gap) / 2));
@@ -116,13 +119,14 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-  .marquee-interlude__text {
-    font-size: 2.125rem;
+@media screen and (max-width: 767.98px) {
+  .marquee-section__inner {
+    padding-block: calc(var(--marquee-section-padding-top) * 0.5) calc(var(--marquee-section-padding-bottom) * 0.5);
   }
 
-  .marquee-interlude__text--secondary {
-    font-size: 1.125rem;
+  .marquee .content-block--label,
+  .marquee .content-block--label p {
+    letter-spacing: 0.14em;
   }
 }
 
