@@ -40,28 +40,35 @@
 %}
 
 <section class="footer__newsletter" data-reveal {{ block.shopify_attributes }}>
-  <div class="footer__eyebrow footer__newsletter-eyebrow">
-    {% content_for 'block', type: 'label', id: 'newsletter_eyebrow' %}
+  <div class="footer__newsletter-intro">
+    <div class="footer__eyebrow footer__newsletter-eyebrow">
+      {% content_for 'block', type: 'label', id: 'newsletter_eyebrow' %}
+    </div>
+
+    <div class="footer__newsletter-heading">
+      {% content_for 'block', type: 'heading', id: 'newsletter_heading' %}
+    </div>
+
+    <div class="footer__newsletter-text">
+      {% content_for 'block', type: 'text', id: 'newsletter_text' %}
+    </div>
   </div>
 
-  <div class="footer__newsletter-heading">
-    {% content_for 'block', type: 'heading', id: 'newsletter_heading' %}
-  </div>
+  <div class="footer__newsletter-signup">
+    <div class="footer__newsletter-signup-heading">
+      <p>{{ section.settings.newsletter_signup_heading | escape }}</p>
+    </div>
 
-  <div class="footer__newsletter-text">
-    {% content_for 'block', type: 'text', id: 'newsletter_text' %}
-  </div>
+    <div class="footer__newsletter-form">
+      {% content_for 'block', type: 'newsletter-form', id: 'newsletter_form' %}
+    </div>
 
-  <div class="footer__newsletter-form">
-    {% content_for 'block', type: 'newsletter-form', id: 'newsletter_form' %}
-  </div>
+    <div class="footer__newsletter-note">
+      {% content_for 'block', type: 'label', id: 'newsletter_note' %}
+    </div>
 
-  <div class="footer__newsletter-note">
-    {% content_for 'block', type: 'label', id: 'newsletter_note' %}
-  </div>
-
-  {% if footer_social_count > 0 %}
-    <nav class="footer__social" aria-label="{{ 'footer.social_links' | t | escape }}">
+    {% if footer_social_count > 0 %}
+      <nav class="footer__social" aria-label="{{ 'footer.social_links' | t | escape }}">
       <ul class="footer__social-list" role="list">
         {% if settings.facebook_url != blank %}
           <li>
@@ -134,8 +141,9 @@
           </li>
         {% endif %}
       </ul>
-    </nav>
-  {% endif %}
+      </nav>
+    {% endif %}
+  </div>
 </section>
 
 {% schema %}

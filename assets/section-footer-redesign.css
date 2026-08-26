@@ -646,12 +646,9 @@
     align-items: start;
   }
 
-  .footer__newsletter :is(.footer__newsletter-eyebrow, .footer__newsletter-heading, .footer__newsletter-text) {
-    grid-column: 1;
-  }
-
-  .footer__newsletter :is(.footer__newsletter-form, .footer__newsletter-note, .footer__social) {
-    grid-column: 2;
+  .footer__newsletter-intro,
+  .footer__newsletter-signup {
+    min-width: 0;
   }
 
   .footer__newsletter-heading .content-block {
@@ -659,10 +656,25 @@
     line-height: .94 !important;
   }
 
+  .footer__newsletter-signup {
+    padding-block-start: 74px;
+  }
+
+  .footer__newsletter-signup-heading p {
+    margin: 0;
+    color: var(--color-heading);
+    font-family: var(--heading-font-family);
+    font-size: clamp(22px, 1.7vw, 30px);
+    font-style: var(--heading-font-style);
+    font-weight: var(--heading-font-weight);
+    letter-spacing: -.015em;
+    line-height: 1.1;
+  }
+
   .footer__newsletter-form {
     width: 100%;
     max-width: none;
-    margin-block: 70px 0;
+    margin-block: 30px 0;
   }
 
   .footer__newsletter-form .newsletter-form__fields {
@@ -685,7 +697,7 @@
     color: var(--color-heading);
   }
 
-  .footer__newsletter-form .newsletter-form__submit :is(.button__label, .button__text) {
+  .footer__newsletter-form .newsletter-form__submit > span:first-child {
     position: absolute;
     overflow: hidden;
     width: 1px;
