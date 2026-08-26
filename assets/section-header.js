@@ -1140,7 +1140,7 @@ if (!window.SpinelHeaderMenus) {
     const type = isMobileDrawerMenu
       ? 'mobile_slide'
       : isNestedMenu
-      ? 'cascading_flyout'
+      ? 'none'
       : isTopLevelMenu
         ? 'cascading_root'
         : isDesktopLocalization
@@ -2198,7 +2198,7 @@ if (!window.SpinelHeaderMenus) {
     const nestedDetails = event.target.closest?.('.header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested-disclosure');
     if (nestedDetails && !nestedDetails.contains(event.relatedTarget)) {
       clearMegaMenuHoverTimer(nestedDetails);
-      megaMenuHoverTimers.set(nestedDetails, window.setTimeout(() => openHeaderSubmenu(nestedDetails), 120));
+      openHeaderSubmenu(nestedDetails);
       return;
     }
 

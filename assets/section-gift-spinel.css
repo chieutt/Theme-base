@@ -28,7 +28,7 @@
 @media screen and (min-width: 768px) {
   .gift-spinel--sticky {
     --gift-spinel-sticky-height: max(100svh, 680px);
-    min-height: calc(var(--gift-spinel-sticky-height) + 100svh);
+    min-height: calc(var(--gift-spinel-sticky-height) + 250svh);
   }
 
   .gift-spinel--sticky .gift-spinel__spacing {
