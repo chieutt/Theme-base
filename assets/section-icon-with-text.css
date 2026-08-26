@@ -1,6 +1,6 @@
 .icon-with-text {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     display: block;
     background: transparent;
     color: var(--color-text);
