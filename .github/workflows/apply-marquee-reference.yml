@@ -1,0 +1,147 @@
+name: Apply marquee reference block composition
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - .github/workflows/apply-marquee-reference.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Replace marquee homepage instance
+        shell: python
+        run: |
+          from pathlib import Path
+          import json
+
+          path = Path('templates/index.json')
+          raw = path.read_text()
+          prefix, json_body = raw.split('{', 1)
+          data = json.loads('{' + json_body)
+
+          def heading(text):
+              return {
+                  'type': 'heading',
+                  'settings': {
+                      'heading': f'<p>{text}</p>',
+                      'type_preset': 'custom',
+                      'font_size': 24,
+                      'font_size_mobile': 20,
+                      'text_color': '',
+                      'width': 'fit-content',
+                      'width_mobile': 'fit-content',
+                      'reveal_type': 'none'
+                  },
+                  'blocks': {}
+              }
+
+          def label(text):
+              return {
+                  'type': 'label',
+                  'settings': {
+                      'text': f'<p>{text}</p>',
+                      'text_color': '',
+                      'width': 'fit-content',
+                      'width_mobile': 'fit-content',
+                      'reveal_type': 'none'
+                  },
+                  'blocks': {}
+              }
+
+          primary_items = [
+              ('primary_form', heading('Form · light · movement · memory')),
+              ('primary_hand_finished', label('HAND FINISHED')),
+              ('primary_years', heading('Jewelry for the years ahead')),
+              ('primary_gold', label('18K GOLD')),
+              ('primary_quietly', heading('Quietly made, closely worn')),
+              ('primary_nocturne', label('NOCTURNE')),
+              ('primary_permanence', heading('Objects of permanence')),
+              ('primary_spinel', label('SPINEL')),
+              ('primary_slowly', heading('Made to be noticed slowly')),
+              ('primary_paris', label('PARIS')),
+          ]
+
+          secondary_items = [
+              ('secondary_sourced', heading('Responsibly sourced, finished by hand')),
+              ('secondary_drawing', label('DRAWING')),
+              ('secondary_line', heading('A line becomes a form')),
+              ('secondary_form', label('FORM')),
+              ('secondary_weight', heading('Weight gives the line presence')),
+              ('secondary_light_label', label('LIGHT')),
+              ('secondary_light', heading('Light reveals the final object')),
+              ('secondary_paris', label('PARIS')),
+              ('secondary_quantities', heading('Made in limited quantities')),
+              ('secondary_material', label('MATERIAL')),
+          ]
+
+          section = data['sections']['marquee_parallax_interlude']
+          section['name'] = 'Marquee — editorial parallax'
+          section['settings'] = {
+              'section_width': 'full',
+              'marquee_gap': 0,
+              'enable_parallax': True,
+              'parallax_strength': 180,
+              'parallax_strength_mobile': 72,
+              'color_scheme': 'scheme-5',
+              'padding_top': 12,
+              'padding_bottom': 12,
+          }
+          section['blocks'] = {
+              'marquee_primary': {
+                  'type': 'marquee',
+                  'settings': {
+                      'enable_scrolling': True,
+                      'direction': 'left',
+                      'pause_on_hover': False,
+                      'speed': 35,
+                      'item_gap': 48,
+                      'item_alignment': 'center',
+                      'height_desktop': 54,
+                      'height_mobile': 46,
+                      'color_scheme': 'scheme-5',
+                  },
+                  'blocks': dict(primary_items),
+                  'block_order': [key for key, _ in primary_items],
+              },
+              'marquee_secondary': {
+                  'type': 'marquee',
+                  'settings': {
+                      'enable_scrolling': True,
+                      'direction': 'right',
+                      'pause_on_hover': False,
+                      'speed': 38,
+                      'item_gap': 48,
+                      'item_alignment': 'center',
+                      'height_desktop': 54,
+                      'height_mobile': 46,
+                      'color_scheme': 'scheme-5',
+                  },
+                  'blocks': dict(secondary_items),
+                  'block_order': [key for key, _ in secondary_items],
+              },
+          }
+          section['block_order'] = ['marquee_primary', 'marquee_secondary']
+
+          path.write_text(prefix + json.dumps(data, indent=2, ensure_ascii=False) + '\n')
+
+      - name: Commit template update
+        run: |
+          if git diff --quiet -- templates/index.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/index.json
+          git commit -m "Build editorial marquee block composition"
+          git push origin dev
