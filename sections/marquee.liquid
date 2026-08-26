@@ -19,7 +19,10 @@
   "name": "Marquee",
   "tag": "section",
   "class": "section-marquee",
-  "max_blocks": 8,
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "max_blocks": 2,
   "blocks": [
     {
       "type": "marquee"
@@ -90,6 +93,16 @@
     },
     {
       "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "header",
       "content": "Section padding"
     },
     {
@@ -99,8 +112,8 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "label": "Top",
-      "default": 0
+      "label": "Top padding",
+      "default": 12
     },
     {
       "type": "range",
@@ -109,40 +122,109 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "label": "Bottom",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-2"
+      "label": "Bottom padding",
+      "default": 12
     }
   ],
   "presets": [
     {
       "name": "Marquee",
       "category": "Marketing",
+      "settings": {
+        "section_width": "full",
+        "marquee_gap": 0,
+        "enable_parallax": true,
+        "parallax_strength": 180,
+        "parallax_strength_mobile": 72,
+        "color_scheme": "scheme-2",
+        "padding_top": 12,
+        "padding_bottom": 12
+      },
       "blocks": [
         {
           "type": "marquee",
           "settings": {
             "direction": "left",
-            "speed": 30,
-            "pause_on_hover": false
+            "speed": 35,
+            "pause_on_hover": false,
+            "item_gap": 48,
+            "height_desktop": 54,
+            "height_mobile": 46
           },
           "blocks": [
             {
-              "type": "text",
+              "type": "heading",
               "settings": {
-                "text": "<p>Objects of light · Made to order</p>",
+                "heading": "<p>Form · light · movement · memory</p>",
                 "type_preset": "custom",
-                "font_size": 56,
-                "font_size_mobile": 34
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>HAND FINISHED</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Jewelry for the years ahead</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>18K GOLD</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Quietly made, closely worn</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>NOCTURNE</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Objects of permanence</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>SPINEL</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Made to be noticed slowly</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>PARIS</p>"
               }
             }
           ]
@@ -151,17 +233,86 @@
           "type": "marquee",
           "settings": {
             "direction": "right",
-            "speed": 35,
-            "pause_on_hover": false
+            "speed": 38,
+            "pause_on_hover": false,
+            "item_gap": 48,
+            "height_desktop": 54,
+            "height_mobile": 46
           },
           "blocks": [
             {
-              "type": "text",
+              "type": "heading",
               "settings": {
-                "text": "<p>Natural spinel · Sculpted gold · Quietly made</p>",
+                "heading": "<p>Responsibly sourced, finished by hand</p>",
                 "type_preset": "custom",
-                "font_size": 30,
+                "font_size": 24,
                 "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>DRAWING</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>A line becomes a form</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>FORM</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Weight gives the line presence</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>LIGHT</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Light reveals the final object</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>PARIS</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>Made in limited quantities</p>",
+                "type_preset": "custom",
+                "font_size": 24,
+                "font_size_mobile": 20
+              }
+            },
+            {
+              "type": "label",
+              "settings": {
+                "text": "<p>MATERIAL</p>"
               }
             }
           ]
