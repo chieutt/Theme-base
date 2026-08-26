@@ -727,7 +727,8 @@ html[scroll-lock] .header__menu-overlay {
       display: none;
     }
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega):has(.header__submenu-nested-disclosure)[open][data-mega-panel-visible='true']:not([data-opening='true']):not([data-closing='true']) > .header__submenu {
-      min-height: 90px;
+      height: 288px;
+      min-height: 288px;
       overflow: visible;
     }
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) > .header__submenu > li:not(.header__mobile-submenu-back-item) {
