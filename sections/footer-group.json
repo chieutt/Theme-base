@@ -1,1 +1,601 @@
-{"type":"footer","name":"t:general.footer","sections":{"icon_with_text_trust":{"type":"icon-with-text","blocks":{"delivery":{"type":"item","settings":{"heading":"Delivery, clearly stated","title":"","anchor_id":"","text":"<p>Shipping options and timing are shown before purchase.<\/p>"}},"returns":{"type":"item","settings":{"heading":"Returns, without surprises","title":"","anchor_id":"","text":"<p>Simple policies and eligibility are easy to find.<\/p>"}},"care":{"type":"item","settings":{"heading":"Care after purchase","title":"","anchor_id":"","text":"<p>Care guidance and repair routes remain close at hand.<\/p>"}},"materials":{"type":"item","settings":{"heading":"Material transparency","title":"","anchor_id":"","text":"<p>Details are attached to each piece, from origin to finish.<\/p>"}}},"block_order":["delivery","returns","care","materials"],"settings":{"columns_desktop":4,"columns_mobile":"2","section_width":"full","column_gap":20,"mobile_column_gap":12,"row_gap":28,"item_style":"default","content_alignment":"center","icon_size":"medium","content_gap":8,"heading_size":"h7","heading_tag":"h3","text_size":"x-small","color_scheme":"scheme-1","background_color":"","padding_top":48,"padding_bottom":48}},"footer":{"type":"footer","blocks":{"shop_menu":{"type":"footer-menu","settings":{"menu":"footer-shop","show_external_indicator":true,"maximum_width":320,"show_as_accordion_mobile":false,"open_accordions_by_default":false,"heading":"<h3>SHOP<\/h3>","font":"body","type_preset":"h7","body_type_preset":"sm","font_size":50,"font_size_mobile":30,"text_color":"#b96578","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left"},"blocks":{}},"house_menu":{"type":"footer-menu","settings":{"menu":"footer-about","show_external_indicator":true,"maximum_width":320,"show_as_accordion_mobile":false,"open_accordions_by_default":false,"heading":"<h3>THE HOUSE<\/h3>","font":"body","type_preset":"h7","body_type_preset":"sm","font_size":50,"font_size_mobile":30,"text_color":"#b96578","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left"},"blocks":{}},"care_menu":{"type":"footer-menu","settings":{"menu":"footer-help","show_external_indicator":true,"maximum_width":320,"show_as_accordion_mobile":false,"open_accordions_by_default":false,"heading":"<h3>CLIENT CARE<\/h3>","font":"body","type_preset":"h7","body_type_preset":"sm","font_size":50,"font_size_mobile":30,"text_color":"#B96578","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left"},"blocks":{}},"connect_menu":{"type":"footer-menu","settings":{"menu":"footer","show_external_indicator":true,"maximum_width":320,"show_as_accordion_mobile":false,"open_accordions_by_default":false,"heading":"<h3>CONNECT<\/h3>","font":"body","type_preset":"h7","body_type_preset":"sm","font_size":50,"font_size_mobile":30,"text_color":"#B96578","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left"},"blocks":{}},"newsletter":{"type":"_footer-newsletter","static":true,"settings":{},"blocks":{"newsletter_eyebrow":{"type":"label","static":true,"settings":{"text":"<p>PRIVATE NOTES \/ OCCASIONAL LETTERS<\/p>","text_color":"#b96578","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"newsletter_heading":{"type":"heading","static":true,"settings":{"heading":"<h2>Keep close to<br>what endures.<\/h2>","type_preset":"h1","font_size":50,"font_size_mobile":30,"text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"newsletter_text":{"type":"text","static":true,"settings":{"text":"<p>Notes on rare stones and atelier work.<br>Objects made to endure.<\/p>","type_preset":"md","font_size":16,"font_size_mobile":14,"text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"newsletter_form":{"type":"newsletter-form","static":true,"settings":{"email_label":"Email address","email_placeholder":"YOUR EMAIL ADDRESS","hide_label":true,"show_required_marker":false,"button_label":"JOIN THE LIST","button_style":"primary","icon":"arrow-right","form_layout":"inline","success_message":"Thank you for subscribing."},"blocks":{}},"newsletter_note":{"type":"label","static":true,"settings":{"text":"<p>OCCASIONAL LETTERS. UNSUBSCRIBE AT ANY TIME.<\/p>","text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}}},"block_order":[]},"appointment":{"type":"_footer-appointment","static":true,"settings":{"color_scheme":"scheme-5","background_color":"#28111e","padding_top":28,"padding_right":32,"padding_bottom":30,"padding_left":32},"blocks":{"appointment_eyebrow":{"type":"label","static":true,"settings":{"text":"<p>PRIVATE APPOINTMENTS<\/p>","text_color":"#ce8f9c","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"appointment_heading":{"type":"heading","static":true,"settings":{"heading":"<h2>Discover Spinel,<br>one stone at a time.<\/h2>","type_preset":"xl","font_size":50,"font_size_mobile":30,"text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"appointment_text":{"type":"text","static":true,"settings":{"text":"<p>Private consultations shaped around your intention,<br>timing and next piece.<\/p>","type_preset":"sm","font_size":16,"font_size_mobile":14,"text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"appointment_button":{"type":"button","static":true,"settings":{"label":"BOOK AN APPOINTMENT","link":"\/pages\/contact","style":"secondary","open_in_new_tab":false,"icon":"arrow-right","reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}}},"block_order":[]},"signature":{"type":"_footer-signature","static":true,"settings":{"image_opacity":100,"show_image_mobile":true},"blocks":{"signature_eyebrow":{"type":"label","static":true,"settings":{"text":"<p>THE HOUSE OF SPINEL \/ NEW YORK<\/p>","text_color":"#b96578","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"signature_wordmark":{"type":"heading","static":true,"settings":{"heading":"<p>SPINEL<\/p>","type_preset":"h1","font_size":50,"font_size_mobile":30,"text_color":"","color":"text","disable_line_break_mobile":false,"width":"100%","width_mobile":"100%","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"signature_principles":{"type":"label","static":true,"settings":{"text":"<p>NATURAL STONES<br>SCULPTURAL GOLD<br>MADE WITH INTENT<\/p>","text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}},"signature_tagline":{"type":"label","static":true,"settings":{"text":"<p>OBJECTS OF COLOUR, CHARACTER AND CONSEQUENCE.<\/p>","text_color":"","color":"text","disable_line_break_mobile":false,"width":"fit-content","width_mobile":"fit-content","alignment":"left","enable_mobile_alignment":false,"alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"reveal_type":"none","reveal_duration":650,"reveal_delay":0},"blocks":{}}},"block_order":[]}},"block_order":["shop_menu","house_menu","care_menu","connect_menu"],"settings":{"section_width":"full","color_scheme":"scheme-5","background_color":"","show_country_selector":true,"show_language_selector":false,"copyright_name":"SPINEL","legal_menu":"","show_payment_icons":false,"show_follow_on_shop":false,"padding_top":64,"padding_bottom":24}},"offer_flyout":{"type":"offer-flyout","blocks":{"preference_rings":{"type":"preference","settings":{"label":"Rings","customer_tag":"Preference: Rings"}},"preference_earrings":{"type":"preference","settings":{"label":"Earrings","customer_tag":"Preference: Earrings"}},"preference_necklaces":{"type":"preference","settings":{"label":"Necklaces","customer_tag":"Preference: Necklaces"}},"preference_bracelets":{"type":"preference","settings":{"label":"Bracelets","customer_tag":"Preference: Bracelets"}},"newsletter":{"type":"newsletter","settings":{"email_label":"Email address","email_placeholder":"Email address","button_label":"Subscribe"}}},"block_order":["preference_rings","preference_earrings","preference_necklaces","preference_bracelets","newsletter"],"disabled":true,"settings":{"hide_for_customers":true,"badge":"Newsletter","heading":"Join the Spinel newsletter","heading_size":"h3","preference_heading":"Which pieces are you drawn to?","description":"<p>Subscribe for updates and exclusive offers. Unsubscribe anytime.<\/p>","description_size":"small","center_text":true,"show_image_mobile":false,"image_ratio":"original","image_link":"","image_new_tab":false,"tab_label":"Newsletter","invert_tab_colors":true,"color_scheme":"scheme-2","show_delay":10,"frequency":"1_day"}}},"order":["icon_with_text_trust","footer","offer_flyout"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:general.footer",
+  "sections": {
+    "icon_with_text_trust": {
+      "type": "icon-with-text",
+      "blocks": {
+        "delivery": {
+          "type": "item",
+          "settings": {
+            "heading": "Delivery, clearly stated",
+            "title": "",
+            "anchor_id": "",
+            "text": "<p>Shipping options and timing are shown before purchase.</p>"
+          }
+        },
+        "returns": {
+          "type": "item",
+          "settings": {
+            "heading": "Returns, without surprises",
+            "title": "",
+            "anchor_id": "",
+            "text": "<p>Simple policies and eligibility are easy to find.</p>"
+          }
+        },
+        "care": {
+          "type": "item",
+          "settings": {
+            "heading": "Care after purchase",
+            "title": "",
+            "anchor_id": "",
+            "text": "<p>Care guidance and repair routes remain close at hand.</p>"
+          }
+        },
+        "materials": {
+          "type": "item",
+          "settings": {
+            "heading": "Material transparency",
+            "title": "",
+            "anchor_id": "",
+            "text": "<p>Details are attached to each piece, from origin to finish.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "delivery",
+        "returns",
+        "care",
+        "materials"
+      ],
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "section_width": "full",
+        "column_gap": 20,
+        "mobile_column_gap": 12,
+        "row_gap": 28,
+        "item_style": "default",
+        "content_alignment": "center",
+        "icon_size": "medium",
+        "content_gap": 8,
+        "heading_size": "h7",
+        "heading_tag": "h3",
+        "text_size": "x-small",
+        "color_scheme": "scheme-1",
+        "background_color": "",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop_menu": {
+          "type": "footer-menu",
+          "settings": {
+            "menu": "",
+            "show_external_indicator": true,
+            "maximum_width": 320,
+            "show_as_accordion_mobile": false,
+            "open_accordions_by_default": false,
+            "heading": "<h3>SHOP</h3>",
+            "font": "body",
+            "type_preset": "h7",
+            "body_type_preset": "sm",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "#b96578",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left"
+          },
+          "blocks": {}
+        },
+        "house_menu": {
+          "type": "footer-menu",
+          "settings": {
+            "menu": "",
+            "show_external_indicator": true,
+            "maximum_width": 320,
+            "show_as_accordion_mobile": false,
+            "open_accordions_by_default": false,
+            "heading": "<h3>THE HOUSE</h3>",
+            "font": "body",
+            "type_preset": "h7",
+            "body_type_preset": "sm",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "#b96578",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left"
+          },
+          "blocks": {}
+        },
+        "care_menu": {
+          "type": "footer-menu",
+          "settings": {
+            "menu": "",
+            "show_external_indicator": true,
+            "maximum_width": 320,
+            "show_as_accordion_mobile": false,
+            "open_accordions_by_default": false,
+            "heading": "<h3>CLIENT CARE</h3>",
+            "font": "body",
+            "type_preset": "h7",
+            "body_type_preset": "sm",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "#b96578",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left"
+          },
+          "blocks": {}
+        },
+        "connect_menu": {
+          "type": "footer-menu",
+          "settings": {
+            "menu": "footer",
+            "show_external_indicator": true,
+            "maximum_width": 320,
+            "show_as_accordion_mobile": false,
+            "open_accordions_by_default": false,
+            "heading": "<h3>CONNECT</h3>",
+            "font": "body",
+            "type_preset": "h7",
+            "body_type_preset": "sm",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "#b96578",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left"
+          },
+          "blocks": {}
+        },
+        "newsletter": {
+          "type": "_footer-newsletter",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "newsletter_eyebrow": {
+              "type": "label",
+              "static": true,
+              "settings": {
+                "text": "<p>PRIVATE NOTES / OCCASIONAL LETTERS</p>",
+                "text_color": "#b96578",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "newsletter_heading": {
+              "type": "heading",
+              "static": true,
+              "settings": {
+                "heading": "<h2>Keep close to<br/>what endures.</h2>",
+                "type_preset": "h2",
+                "font_size": 50,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "newsletter_text": {
+              "type": "text",
+              "static": true,
+              "settings": {
+                "text": "<p>Notes on rare stones and atelier work.<br>Objects made to endure.</p>",
+                "type_preset": "md",
+                "font_size": 16,
+                "font_size_mobile": 14,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "newsletter_form": {
+              "type": "newsletter-form",
+              "static": true,
+              "settings": {
+                "email_label": "Email address",
+                "email_placeholder": "YOUR EMAIL ADDRESS",
+                "hide_label": true,
+                "show_required_marker": false,
+                "button_label": "JOIN THE LIST",
+                "button_style": "primary",
+                "icon": "arrow-right",
+                "form_layout": "inline",
+                "success_message": "Thank you for subscribing."
+              },
+              "blocks": {}
+            },
+            "newsletter_note": {
+              "type": "label",
+              "static": true,
+              "settings": {
+                "text": "<p>OCCASIONAL LETTERS. UNSUBSCRIBE AT ANY TIME.</p>",
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "appointment": {
+          "type": "_footer-appointment",
+          "static": true,
+          "settings": {
+            "color_scheme": "scheme-5",
+            "background_color": "#28111e",
+            "padding_top": 28,
+            "padding_right": 32,
+            "padding_bottom": 30,
+            "padding_left": 32
+          },
+          "blocks": {
+            "appointment_eyebrow": {
+              "type": "label",
+              "static": true,
+              "settings": {
+                "text": "<p>PRIVATE APPOINTMENTS</p>",
+                "text_color": "#ce8f9c",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "appointment_heading": {
+              "type": "heading",
+              "static": true,
+              "settings": {
+                "heading": "<h2>Discover Spinel,<br>one stone at a time.</h2>",
+                "type_preset": "xl",
+                "font_size": 50,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "appointment_text": {
+              "type": "text",
+              "static": true,
+              "settings": {
+                "text": "<p>Private consultations shaped around your intention,<br>timing and next piece.</p>",
+                "type_preset": "sm",
+                "font_size": 16,
+                "font_size_mobile": 14,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "appointment_button": {
+              "type": "button",
+              "static": true,
+              "settings": {
+                "label": "BOOK AN APPOINTMENT",
+                "link": "/pages/contact",
+                "style": "secondary",
+                "open_in_new_tab": false,
+                "icon": "arrow-right",
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "signature": {
+          "type": "_footer-signature",
+          "static": true,
+          "settings": {
+            "image_opacity": 100,
+            "show_image_mobile": true
+          },
+          "blocks": {
+            "signature_eyebrow": {
+              "type": "label",
+              "static": true,
+              "settings": {
+                "text": "<p>THE HOUSE OF SPINEL / NEW YORK</p>",
+                "text_color": "#b96578",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "signature_wordmark": {
+              "type": "heading",
+              "static": true,
+              "settings": {
+                "heading": "<p>SPINEL</p>",
+                "type_preset": "h1",
+                "font_size": 50,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "width_mobile": "100%",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "signature_principles": {
+              "type": "label",
+              "static": true,
+              "settings": {
+                "text": "<p>NATURAL STONES<br>SCULPTURAL GOLD<br>MADE WITH INTENT</p>",
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "signature_tagline": {
+              "type": "label",
+              "static": true,
+              "settings": {
+                "text": "<p>OBJECTS OF COLOUR, CHARACTER AND CONSEQUENCE.</p>",
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [
+        "shop_menu",
+        "house_menu",
+        "care_menu",
+        "connect_menu"
+      ],
+      "settings": {
+        "section_width": "full",
+        "show_appointment": false,
+        "newsletter_signup_heading": "Private notes from the atelier.",
+        "color_scheme": "scheme-5",
+        "background_color": "",
+        "show_country_selector": true,
+        "show_language_selector": false,
+        "copyright_name": "SPINEL",
+        "legal_menu": "",
+        "show_payment_icons": false,
+        "show_follow_on_shop": false,
+        "padding_top": 64,
+        "padding_bottom": 24
+      }
+    },
+    "offer_flyout": {
+      "type": "offer-flyout",
+      "blocks": {
+        "preference_rings": {
+          "type": "preference",
+          "settings": {
+            "label": "Rings",
+            "customer_tag": "Preference: Rings"
+          }
+        },
+        "preference_earrings": {
+          "type": "preference",
+          "settings": {
+            "label": "Earrings",
+            "customer_tag": "Preference: Earrings"
+          }
+        },
+        "preference_necklaces": {
+          "type": "preference",
+          "settings": {
+            "label": "Necklaces",
+            "customer_tag": "Preference: Necklaces"
+          }
+        },
+        "preference_bracelets": {
+          "type": "preference",
+          "settings": {
+            "label": "Bracelets",
+            "customer_tag": "Preference: Bracelets"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "email_label": "Email address",
+            "email_placeholder": "Email address",
+            "button_label": "Subscribe"
+          }
+        }
+      },
+      "block_order": [
+        "preference_rings",
+        "preference_earrings",
+        "preference_necklaces",
+        "preference_bracelets",
+        "newsletter"
+      ],
+      "disabled": true,
+      "settings": {
+        "hide_for_customers": true,
+        "badge": "Newsletter",
+        "heading": "Join the Spinel newsletter",
+        "heading_size": "h3",
+        "preference_heading": "Which pieces are you drawn to?",
+        "description": "<p>Subscribe for updates and exclusive offers. Unsubscribe anytime.</p>",
+        "description_size": "small",
+        "center_text": true,
+        "show_image_mobile": false,
+        "image_ratio": "original",
+        "image_link": "",
+        "image_new_tab": false,
+        "tab_label": "Newsletter",
+        "invert_tab_colors": true,
+        "color_scheme": "scheme-2",
+        "show_delay": 10,
+        "frequency": "1_day"
+      }
+    }
+  },
+  "order": [
+    "icon_with_text_trust",
+    "footer",
+    "offer_flyout"
+  ]
+}
