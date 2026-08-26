@@ -107,11 +107,15 @@ if (!customElements.get('theme-marquee')) {
     cloneForAnimation(element) {
       const clone = element.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
+      const preserveEditorMetadata = Boolean(window.Shopify?.designMode);
+
       [clone, ...clone.querySelectorAll('*')].forEach((node) => {
         node.removeAttribute('id');
-        Array.from(node.attributes).forEach((attribute) => {
-          if (attribute.name.startsWith('data-shopify-editor')) node.removeAttribute(attribute.name);
-        });
+        if (!preserveEditorMetadata) {
+          Array.from(node.attributes).forEach((attribute) => {
+            if (attribute.name.startsWith('data-shopify-editor')) node.removeAttribute(attribute.name);
+          });
+        }
       });
       clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach((control) => {
         control.tabIndex = -1;

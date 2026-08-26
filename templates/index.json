@@ -1344,7 +1344,7 @@
           "settings": {
             "enable_scrolling": true,
             "direction": "left",
-            "pause_on_hover": false,
+            "pause_on_hover": true,
             "speed": 35,
             "item_gap": 48,
             "item_alignment": "center",
@@ -1497,7 +1497,7 @@
           "settings": {
             "enable_scrolling": true,
             "direction": "right",
-            "pause_on_hover": false,
+            "pause_on_hover": true,
             "speed": 38,
             "item_gap": 48,
             "item_alignment": "center",
