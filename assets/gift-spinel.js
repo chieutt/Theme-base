@@ -387,14 +387,15 @@ class GiftSpinel extends HTMLElement {
     this.finder.style.overflow = 'hidden';
     this.finder.style.willChange = 'height';
 
+    const handoffOpacity = 0.42;
     const exitAnimation = this.questions.animate(
       [
         { opacity: 1, transform: 'translateY(0)' },
-        { opacity: 0, transform: 'translateY(-8px)' },
+        { opacity: handoffOpacity, transform: 'translateY(-4px)' },
       ],
       {
-        duration: 160,
-        easing: 'cubic-bezier(.4, 0, 1, 1)',
+        duration: 120,
+        easing: 'cubic-bezier(.4, 0, .2, 1)',
         fill: 'forwards',
       },
     );
@@ -412,12 +413,11 @@ class GiftSpinel extends HTMLElement {
     const incomingPanel = this.result.firstElementChild || this.result;
     const enterAnimation = incomingPanel.animate(
       [
-        { opacity: 0, transform: 'translateY(10px)' },
+        { opacity: handoffOpacity, transform: 'translateY(6px)' },
         { opacity: 1, transform: 'translateY(0)' },
       ],
       {
-        duration: 300,
-        delay: 20,
+        duration: 260,
         easing: 'cubic-bezier(.22, 1, .36, 1)',
         fill: 'both',
       },
@@ -425,8 +425,9 @@ class GiftSpinel extends HTMLElement {
     this.panelAnimations = [enterAnimation];
 
     // Let the DOM move, hidden-state swap and finder padding change settle into
-    // a render frame before reading the result height. This avoids forcing a
-    // synchronous layout exactly at the visual hand-off.
+    // a render frame before reading the result height. The incoming panel is
+    // already visible at the same opacity as the outgoing panel, so there is
+    // no empty frame while that layout settles.
     await this.waitForLayoutFrame();
     if (!this.isPanelTransitioning) return;
 
@@ -437,7 +438,7 @@ class GiftSpinel extends HTMLElement {
         { height: `${targetHeight}px` },
       ],
       {
-        duration: 340,
+        duration: 320,
         easing: 'cubic-bezier(.22, 1, .36, 1)',
         fill: 'forwards',
       },
@@ -482,14 +483,15 @@ class GiftSpinel extends HTMLElement {
     this.finder.style.overflow = 'hidden';
     this.finder.style.willChange = 'height';
 
+    const handoffOpacity = 0.42;
     const exitAnimation = outgoingPanel.animate(
       [
         { opacity: 1, transform: 'translateY(0)' },
-        { opacity: 0, transform: 'translateY(-8px)' },
+        { opacity: handoffOpacity, transform: 'translateY(-4px)' },
       ],
       {
-        duration: 160,
-        easing: 'cubic-bezier(.4, 0, 1, 1)',
+        duration: 120,
+        easing: 'cubic-bezier(.4, 0, .2, 1)',
         fill: 'forwards',
       },
     );
@@ -505,12 +507,11 @@ class GiftSpinel extends HTMLElement {
 
     const enterAnimation = this.questions.animate(
       [
-        { opacity: 0, transform: 'translateY(10px)' },
+        { opacity: handoffOpacity, transform: 'translateY(6px)' },
         { opacity: 1, transform: 'translateY(0)' },
       ],
       {
-        duration: 300,
-        delay: 20,
+        duration: 260,
         easing: 'cubic-bezier(.22, 1, .36, 1)',
         fill: 'both',
       },
@@ -518,8 +519,8 @@ class GiftSpinel extends HTMLElement {
     this.panelAnimations = [enterAnimation];
 
     // resetRecipientView moves the Theme Block back into the choices grid and
-    // restores finder padding. Measure on the next frame instead of forcing a
-    // layout immediately after those writes.
+    // restores finder padding. Measure on the next frame, while the questions
+    // remain visible at the hand-off opacity instead of flashing to empty.
     await this.waitForLayoutFrame();
     if (!this.isPanelTransitioning) return;
 
@@ -530,7 +531,7 @@ class GiftSpinel extends HTMLElement {
         { height: `${targetHeight}px` },
       ],
       {
-        duration: 340,
+        duration: 320,
         easing: 'cubic-bezier(.22, 1, .36, 1)',
         fill: 'forwards',
       },
