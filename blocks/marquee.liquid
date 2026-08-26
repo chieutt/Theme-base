@@ -1,5 +1,8 @@
 {% doc %}
-  Renders one independently configurable marquee row containing nested theme blocks.
+  Renders one independently configurable marquee row containing nested typography blocks.
+
+  Each phrase or label is its own Theme Block so merchants can reorder and style
+  marquee content without editing a combined text string.
 
   @example
   {% content_for 'block', type: 'marquee', id: 'marquee' %}
@@ -24,16 +27,13 @@
   "name": "Marquee",
   "blocks": [
     {
-      "type": "marquee-media"
-    },
-    {
       "type": "heading"
     },
     {
-      "type": "text"
+      "type": "label"
     },
     {
-      "type": "button"
+      "type": "text"
     }
   ],
   "settings": [
@@ -94,7 +94,7 @@
       "step": 4,
       "unit": "px",
       "label": "Item gap",
-      "default": 24
+      "default": 40
     },
     {
       "type": "select",
@@ -124,7 +124,7 @@
       "step": 4,
       "unit": "px",
       "label": "Desktop height",
-      "default": 64
+      "default": 60
     },
     {
       "type": "range",
@@ -152,20 +152,27 @@
       "name": "Marquee",
       "blocks": [
         {
-          "type": "text",
+          "type": "heading",
           "settings": {
-            "text": "<p>Comfort Products</p>",
-            "type_preset": "md"
+            "heading": "<p>Jewelry for the years ahead</p>",
+            "type_preset": "custom",
+            "font_size": 24,
+            "font_size_mobile": 20
           }
         },
         {
-          "type": "marquee-media"
+          "type": "label",
+          "settings": {
+            "text": "<p>HAND FINISHED</p>"
+          }
         },
         {
-          "type": "text",
+          "type": "heading",
           "settings": {
-            "text": "<p>PEBBLE</p>",
-            "type_preset": "md"
+            "heading": "<p>Quietly made, closely worn</p>",
+            "type_preset": "custom",
+            "font_size": 24,
+            "font_size_mobile": 20
           }
         }
       ]
