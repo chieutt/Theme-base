@@ -538,7 +538,7 @@ html[scroll-lock] .header__menu-overlay {
       position: relative;
     }
     .header__submenu-item--has-children > .header__submenu-nested-disclosure > .header__submenu-link {
-      width: 100%;
+      width: calc(100% + 56px);
       padding-inline-end: 44px;
     }
     .header__submenu-caret {
