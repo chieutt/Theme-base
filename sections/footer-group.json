@@ -83,7 +83,7 @@
         "shop_menu": {
           "type": "footer-menu",
           "settings": {
-            "menu": "",
+            "menu": "footer-shop",
             "show_external_indicator": true,
             "maximum_width": 320,
             "show_as_accordion_mobile": false,
@@ -105,12 +105,12 @@
         "house_menu": {
           "type": "footer-menu",
           "settings": {
-            "menu": "",
+            "menu": "footer-visit",
             "show_external_indicator": true,
             "maximum_width": 320,
             "show_as_accordion_mobile": false,
             "open_accordions_by_default": false,
-            "heading": "<h3>THE HOUSE</h3>",
+            "heading": "<h3>VISIT</h3>",
             "font": "body",
             "type_preset": "h7",
             "body_type_preset": "sm",
@@ -127,12 +127,12 @@
         "care_menu": {
           "type": "footer-menu",
           "settings": {
-            "menu": "",
+            "menu": "footer-house",
             "show_external_indicator": true,
             "maximum_width": 320,
             "show_as_accordion_mobile": false,
             "open_accordions_by_default": false,
-            "heading": "<h3>CLIENT CARE</h3>",
+            "heading": "<h3>HOUSE</h3>",
             "font": "body",
             "type_preset": "h7",
             "body_type_preset": "sm",
@@ -149,12 +149,12 @@
         "connect_menu": {
           "type": "footer-menu",
           "settings": {
-            "menu": "footer",
+            "menu": "footer-follow",
             "show_external_indicator": true,
             "maximum_width": 320,
             "show_as_accordion_mobile": false,
             "open_accordions_by_default": false,
-            "heading": "<h3>CONNECT</h3>",
+            "heading": "<h3>FOLLOW</h3>",
             "font": "body",
             "type_preset": "h7",
             "body_type_preset": "sm",
