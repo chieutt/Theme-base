@@ -33,7 +33,9 @@
     <div class="footer__inner">
       <div class="footer__lead">
         {% content_for 'block', type: '_footer-newsletter', id: 'newsletter' %}
-        {% content_for 'block', type: '_footer-appointment', id: 'appointment' %}
+        {% if section.settings.show_appointment %}
+          {% content_for 'block', type: '_footer-appointment', id: 'appointment' %}
+        {% endif %}
       </div>
 
       <div class="footer__menus">
@@ -154,6 +156,16 @@
         }
       ],
       "default": "full"
+    },
+    {
+      "type": "header",
+      "content": "Content display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_appointment",
+      "label": "Show private appointment callout",
+      "default": false
     },
     {
       "type": "header",
