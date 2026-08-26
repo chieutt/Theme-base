@@ -524,12 +524,12 @@ html[scroll-lock] .header__menu-overlay {
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-link {
       position: relative;
       display: flex;
-      width: calc(100% + 20px);
+      width: calc(100% + 56px);
       min-height: 34px;
       align-items: center;
-      margin-inline: -10px;
-      padding: 6px 10px;
-      border-radius: calc(var(--style-border-radius-inputs) * .65);
+      margin-inline: -28px;
+      padding: 6px 28px;
+      border-radius: 0;
       background: transparent;
       color: var(--color-text);
       transition: color 160ms ease, background-color 160ms ease;
@@ -544,7 +544,7 @@ html[scroll-lock] .header__menu-overlay {
     .header__submenu-caret {
       position: absolute;
       top: 50%;
-      inset-inline-end: 0;
+      inset-inline-end: 28px;
       transform: translateY(-50%);
     }
     .header__submenu-item--has-children {
@@ -552,8 +552,8 @@ html[scroll-lock] .header__menu-overlay {
     }
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested {
       position: absolute;
-      top: -28px;
-      inset-inline-start: calc(100% + 30px);
+      top: 0;
+      inset-inline-start: 100%;
       inset-inline-end: auto;
       display: grid;
       width: min(260px, calc(100vw - 40px));
@@ -562,16 +562,16 @@ html[scroll-lock] .header__menu-overlay {
       margin: 0;
       padding: 28px;
       border: 1px solid var(--color-variant-border);
-      border-radius: 20px;
+      border-radius: 0;
       background: var(--color-background);
       box-shadow: 0 18px 30px color-mix(in srgb, var(--color-shadow) 10%, transparent);
     }
     [dir='rtl'] .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested {
-      border-radius: 20px;
+      border-radius: 0;
     }
     .header__submenu-nested-disclosure[data-flyout-reverse='true'] > .header__submenu-nested {
       inset-inline-start: auto;
-      inset-inline-end: calc(100% + 30px);
+      inset-inline-end: 100%;
     }
     .header__submenu-nested-disclosure:not([open]) > .header__submenu-nested {
       display: none;
