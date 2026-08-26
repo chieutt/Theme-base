@@ -14,12 +14,12 @@
       assign rounded_image_corners = true
     endif
 
-    if block_settings.background_color != blank
+    if block_settings.background_color != blank or block_settings.text_color != blank
       assign skip_slide_contrast = false
-      if section.settings.content_position == 'on-media'
+      if section.settings.content_position == 'on-media' and block_settings.text_color == blank
         assign skip_slide_contrast = true
       endif
-      render 'contrast-override', background_color: block_settings.background_color, section_id: block.id, skip_contrast: skip_slide_contrast
+      render 'contrast-override', background_color: block_settings.background_color, text_color: block_settings.text_color, section_id: block.id, skip_contrast: skip_slide_contrast
       assign class = 'color-custom-' | append: block.id
     endif
   %}
@@ -394,6 +394,12 @@
       "type": "color",
       "id": "background_color",
       "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
       "placeholder": "t:settings.default"
     },
     {
