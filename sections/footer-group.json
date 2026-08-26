@@ -254,7 +254,7 @@
               "settings": {
                 "email_label": "Email address",
                 "email_placeholder": "YOUR EMAIL ADDRESS",
-                "hide_label": true,
+                "hide_label": false,
                 "show_required_marker": false,
                 "button_label": "JOIN THE LIST",
                 "button_style": "primary",

@@ -107,6 +107,16 @@
   gap: 20px;
 }
 
+.footer__newsletter-form .newsletter-form__submit.btn-tertiary {
+  --button-surface: transparent;
+  --button-label: var(--color-tertiary-button);
+
+  min-width: auto;
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-tertiary-button);
+}
+
 .footer__newsletter-note {
   margin-block-start: 22px;
 }
