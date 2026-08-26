@@ -112,8 +112,8 @@
   animation: none;
 }
 
-.marquee--pause-on-hover:hover .marquee__track,
-.marquee--pause-on-hover:focus-within .marquee__track {
+.marquee.is-active.marquee--pause-on-hover:hover .marquee__track,
+.marquee.is-active.marquee--pause-on-hover:focus-within .marquee__track {
   animation-play-state: paused;
 }
 
