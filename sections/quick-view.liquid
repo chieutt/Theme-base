@@ -1,0 +1,326 @@
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+{% render 'swiper-stylesheet' %}
+
+{% assign form_id = 'product-form-' | append: section.id %}
+{% if template.suffix != blank %}{% assign form_id = form_id | append: '-' | append: template.suffix %}{% endif %}
+{% assign quick_view_ratio = section.settings.media_ratio | default: '4-5' %}
+{% assign quick_view_mobile_ratio = section.settings.mobile_media_ratio | default: '4-5' %}
+{% case quick_view_ratio %}
+  {% when 'original', 'auto' %}{% assign quick_view_ratio = 'adapt' %}
+  {% when 'narrow-portrait' %}{% assign quick_view_ratio = 'narrow-portrait' %}
+  {% when 'wide-landscape' %}{% assign quick_view_ratio = 'wide-landscape' %}
+  {% when 'wide' %}{% assign quick_view_ratio = 'wide' %}
+  {% when 'super-wide' %}{% assign quick_view_ratio = 'super-wide' %}
+{% endcase %}
+
+{% capture quick_view_style %}
+  --quick-view-content-padding: {{ section.settings.content_padding | default: 40 }}px;
+  --quick-view-media-width: {{ section.settings.media_width | default: 50 }}%;
+  --quick-view-column-gap: {{ section.settings.desktop_gap | default: 0 }}px;
+  --quick-view-mobile-gap: {{ section.settings.mobile_gap | default: 16 }}px;
+  {% if section.settings.background_color != blank %}--quick-view-background: {{ section.settings.background_color }};{% endif %}
+{% endcapture %}
+
+<product-page
+  class="product-page quick-view quick-view-product quick-view--width-{{ section.settings.modal_width | default: 'standard' }} quick-view--radius-{{ section.settings.corner_radius | default: 'square' }} quick-view--media-{{ section.settings.media_position | default: 'left' }} quick-view--ratio-{{ quick_view_ratio }}{% unless section.settings.show_media %} quick-view--without-media{% endunless %}"
+  data-quick-view
+  data-product-context="quick-view"
+  data-update-url="false"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-product-url="{{ product.url | escape }}"
+  data-product-handle="{{ product.handle }}"
+  data-form-id="{{ form_id }}"
+  data-currency="{{ cart.currency.iso_code | default: shop.currency }}"
+  data-show-currency-code="{{ settings.show_currency_code }}"
+  data-add-to-cart-label="{{ 'product.add_to_cart' | t | escape }}"
+  data-sold-out-label="{{ 'product.sold_out' | t | escape }}"
+  data-unavailable-label="{{ 'product.unavailable' | t | escape }}"
+  data-adding-to-cart-label="{{ 'product.adding_to_cart' | t | escape }}"
+  data-add-to-cart-error="{{ 'product.add_to_cart_error' | t | escape }}"
+  data-in-stock-label="{{ 'product.in_stock' | t | escape }}"
+  data-only-items-left-label="{{ 'product.only_items_left' | t: count: '[count]' | escape }}"
+  data-deferred-module="{{ 'product-page.js' | asset_url }}"
+  style="{{ quick_view_style | strip_newlines | strip }}"
+>
+  <div class="quick-view__handle" data-quick-view-handle aria-hidden="true"></div>
+  {% if section.settings.show_close_button != false %}
+    <button class="quick-view__close modal-close-button close-icon" type="button" aria-label="{{ 'product_card.close_quick_view' | t | escape }}" data-quick-view-close></button>
+  {% endif %}
+
+  <div class="quick-view__body theme-scrollbar">
+    <div class="quick-view__layout">
+      <div class="quick-view__media">
+        {% if section.settings.show_media != false %}
+          {% render 'quick-view-media-gallery',
+            product: product,
+            media_ratio: quick_view_ratio,
+            mobile_media_ratio: quick_view_mobile_ratio,
+            media_fit: section.settings.media_fit,
+            image_zoom: section.settings.image_zoom,
+            show_pagination: section.settings.show_mobile_pagination,
+            show_thumbnails: section.settings.show_mobile_thumbnails,
+            thumbnail_size: section.settings.thumbnail_size,
+            thumbnail_gap: section.settings.thumbnail_gap
+          %}
+        {% endif %}
+      </div>
+      <div class="quick-view__information">
+        <div class="quick-view__details-scroll theme-scrollbar">
+          {% content_for 'blocks' %}
+        </div>
+        <footer class="quick-view__footer">
+          <a class="quick-view__full-details" href="{{ product.url | escape }}">
+            <span>{{ 'product_card.view_full_details' | t }}</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14.43 5.93 20.5 12l-6.07 6.07M3.5 12h16.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-product-variants>{{ product.variants | json }}</script>
+  <script type="application/json" data-product-media>{{ product.media | json }}</script>
+  <p class="visually-hidden" data-product-status role="status" aria-live="polite"></p>
+</product-page>
+
+{% schema %}
+{
+  "name": "Quick view",
+  "tag": "section",
+  "class": "section-quick-view",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "blocks": [
+    {
+      "type": "_product-details"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "modal_width",
+      "label": "Modal width",
+      "options": [
+        { "value": "compact", "label": "Compact" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "wide", "label": "Wide" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "select",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        },
+        {
+          "value": "theme",
+          "label": "Theme default"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Media position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Media width",
+      "min": 40,
+      "max": 65,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "label": "Desktop column gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile column gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Optional. Clear it to use the theme color scheme."
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "select",
+      "id": "image_zoom",
+      "label": "Image zoom",
+      "options": [
+        {
+          "value": "open_lightbox",
+          "label": "Open lightbox"
+        },
+        {
+          "value": "click_hover",
+          "label": "Click and hover"
+        },
+        {
+          "value": "none",
+          "label": "No zoom"
+        }
+      ],
+      "default": "open_lightbox"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Desktop media ratio",
+      "options": [
+        {
+          "value": "adapt", "label": "Adapt"
+        },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "2-3", "label": "2:3" },
+        { "value": "3-4", "label": "3:4" },
+        { "value": "4-5", "label": "4:5" },
+        { "value": "6-7", "label": "6:7" },
+        { "value": "3-2", "label": "3:2" },
+        { "value": "4-3", "label": "4:3" },
+        { "value": "16-9", "label": "16:9" }
+      ],
+      "default": "4-5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_media_ratio",
+      "label": "Mobile media ratio",
+      "options": [
+        {
+          "value": "adapt", "label": "Adapt"
+        },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "2-3", "label": "2:3" },
+        { "value": "3-4", "label": "3:4" },
+        { "value": "4-5", "label": "4:5" },
+        { "value": "6-7", "label": "6:7" },
+        { "value": "3-2", "label": "3:2" },
+        { "value": "4-3", "label": "4:3" },
+        { "value": "16-9", "label": "16:9" }
+      ],
+      "default": "4-5"
+    },
+    {
+      "type": "select",
+      "id": "media_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Crop to fill"
+        },
+        {
+          "value": "contain",
+          "label": "Full image"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_thumbnails",
+      "label": "Show thumbnails",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_size",
+      "label": "Thumbnail size",
+      "min": 48,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_gap",
+      "label": "Thumbnail gap",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_media",
+      "label": "Product media",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "label": "Close button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 20,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ]
+}
+{% endschema %}

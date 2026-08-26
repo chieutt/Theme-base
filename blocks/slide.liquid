@@ -1,0 +1,248 @@
+{% doc %}
+  Renders a slideshow slide with responsive media and nested content blocks.
+
+  @example
+  {% content_for 'block', type: 'slide', id: 'slide' %}
+{% enddoc %}
+
+{% liquid
+  assign slide_image = block.settings.image | default: block.settings.mobile_image
+  assign slide_image_alt = block.settings.image_alt | default: slide_image.alt
+  if slide_image_alt == blank
+    assign slide_image_alt = 'accessibility.image' | t
+  endif
+
+  assign image_loading = 'lazy'
+  assign image_priority = 'auto'
+  assign first_slide = section.blocks | first
+  if first_slide.id == block.id
+    if request.page_type != 'index' or section.index == 1
+      assign image_loading = 'eager'
+      assign image_priority = 'high'
+    endif
+  endif
+%}
+
+<article
+  class="slideshow__slide swiper-slide color-scheme color-{{ block.settings.color_scheme.id }} slideshow__slide--desktop-{{ block.settings.content_position | default: 'bottom-left' }} slideshow__slide--mobile-{{ block.settings.content_position_mobile | default: 'bottom-left' }} slideshow__slide--align-{{ block.settings.content_alignment | default: 'left' }}"
+  style="
+    --slideshow-overlay-color: {{ block.settings.overlay_color | default: '#000000' }};
+    --slideshow-overlay-opacity: {{ block.settings.overlay_opacity | default: 30 | divided_by: 100.0 }};
+    --slideshow-content-width: {{ block.settings.content_width | default: 520 }}px;
+    --slideshow-image-position: {{ block.settings.image_position | default: 'center center' }};
+  "
+  data-block-id="{{ block.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="slideshow__media" data-swiper-parallax-x="100%">
+    {% render 'responsive-media',
+      image: slide_image,
+      mobile_image: block.settings.mobile_image,
+      mobile_breakpoint: 749,
+      max_width: 2400,
+      mobile_max_width: 1280,
+      widths: '750, 960, 1200, 1600, 1920, 2400',
+      mobile_widths: '375, 550, 750, 960, 1280',
+      sizes: '100vw',
+      class: 'slideshow__image',
+      loading: image_loading,
+      fetchpriority: image_priority,
+      alt: slide_image_alt,
+      placeholder_asset: 'placeholder-image-default-2.svg',
+      placeholder_class: 'slideshow__placeholder'
+    %}
+  </div>
+
+  <div class="slideshow__overlay" aria-hidden="true"></div>
+
+  <div
+    class="slideshow__content-positioner"
+    data-swiper-parallax-x="30%"
+    data-swiper-parallax-opacity="0"
+    data-swiper-parallax-duration="1000"
+  >
+    <div class="slideshow__content">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Slide",
+  "tag": null,
+  "blocks": [
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "spacer" },
+    { "type": "button-group" },
+    { "type": "@app" }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "1920 x 1080px recommended for desktop."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Image (mobile)",
+      "info": "1280 x 1780px recommended for mobile."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt text",
+      "info": "Leave blank to use the image alt text."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Content layout"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 280,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "label": "Content width",
+      "default": 520
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "Content position mobile",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slide",
+      "category": "Banners",
+      "settings": {
+        "content_width": 520,
+        "content_alignment": "left",
+        "content_position": "bottom-left",
+        "content_position_mobile": "bottom-left",
+        "color_scheme": "scheme-3"
+      },
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "<h1>Designed for every day</h1>",
+            "type_preset": "h1",
+            "alignment": "left"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Discover pieces designed to bring a refined finish to every day.</p>",
+            "type_preset": "md",
+            "alignment": "left"
+          }
+        },
+        {
+          "type": "button-group",
+          "settings": {
+            "layout_direction": "horizontal",
+            "alignment": "left",
+            "gap": 12
+          },
+          "blocks": [
+            {
+              "type": "button",
+              "settings": {
+                "label": "Shop all",
+                "link": "/collections/all",
+                "style": "primary"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

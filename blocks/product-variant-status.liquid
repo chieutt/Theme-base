@@ -1,0 +1,14 @@
+{% doc %}
+  Renders the selected variant availability state.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+{% assign variant = product.selected_or_first_available_variant %}
+<p class="product-variant-status" {{ block.shopify_attributes }}>
+  {% if variant.available %}Available{% else %}Unavailable{% endif %}
+</p>
+{% schema %}
+{
+  "name": "Variant status",
+  "settings": []
+}
+{% endschema %}

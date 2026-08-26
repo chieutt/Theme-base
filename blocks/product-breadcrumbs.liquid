@@ -1,0 +1,20 @@
+{% doc %}
+  Renders product breadcrumb navigation.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+<nav class="product-breadcrumbs" aria-label="{{ 'accessibility.breadcrumb' | t | escape }}" {{ block.shopify_attributes }}>
+  <a href="{{ routes.root_url | escape }}">{{ 'product.breadcrumb_home' | t }}</a>
+  <span aria-hidden="true">/</span>
+  {% if collection != blank %}
+    <a href="{{ collection.url | escape }}">{{ collection.title | escape }}</a>
+  {% else %}
+    <a href="{{ routes.all_products_collection_url | escape }}">{{ 'product.breadcrumb_products' | t }}</a>
+  {% endif %}
+  <span aria-hidden="true">/</span><span aria-current="page">{{ product.title | escape }}</span>
+</nav>
+{% schema %}
+{
+  "name": "Product breadcrumbs",
+  "settings": []
+}
+{% endschema %}

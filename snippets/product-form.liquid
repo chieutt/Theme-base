@@ -1,0 +1,5 @@
+{% doc %}
+  Renders the authoritative variant field for the owning product form.
+  @param {product} product
+{% enddoc %}
+<input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>

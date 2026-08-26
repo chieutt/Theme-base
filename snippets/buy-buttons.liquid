@@ -1,0 +1,41 @@
+{% doc %}
+  Renders the product purchase controls.
+
+  @param {product} product
+  @param {variant} variant
+  @param {block} block
+  @param {form} form
+  @param {string} form_id
+  @param {string} section_id
+{% enddoc %}
+{% assign purchase_available = variant.available %}
+{% if variant.requires_selling_plan and variant.selling_plan_allocations.size == 0 %}{% assign purchase_available = false %}{% endif %}
+{% assign has_selling_plans = false %}
+{% if product.selling_plan_groups.size > 0 %}{% assign has_selling_plans = true %}{% endif %}
+<div class="product-buy-buttons product-buy-buttons--{{ block.settings.button_layout | default: 'inline' }}{% unless block.settings.show_quantity %} product-buy-buttons--without-quantity{% endunless %}{% if has_selling_plans %} product-buy-buttons--has-selling-plans{% endif %}" {{ block.shopify_attributes }} data-product-buy-buttons>
+  {% render 'selling-plan-picker', product: product %}
+  {% render 'gift-card-recipient-form', product: product, form_id: form_id, section_id: section_id, block_id: block.id %}
+  {% if block.settings.show_quantity != false %}
+    {% render 'quantity-selector', variant: variant, block: block, form_id: form_id, section_id: section_id %}
+  {% endif %}
+  <button class="product-buy-buttons__add" type="submit" name="add" data-add-to-cart{% unless purchase_available %} disabled{% endunless %}>
+    <span data-add-to-cart-label data-add-to-cart-added-label="{{ 'product.added' | t | escape }}">{% if purchase_available %}{{ 'product.add_to_cart' | t }}{% elsif variant.available %}{{ 'product.unavailable' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</span>
+    <span class="product-buy-buttons__spinner" data-add-to-cart-spinner aria-hidden="true"></span>
+  </button>
+  {% if block.settings.show_dynamic_checkout != false %}
+    {% unless product.gift_card? %}
+      <div class="product-buy-buttons__dynamic-checkout" data-dynamic-checkout{% unless purchase_available %} hidden{% endunless %}>
+        {{ form | payment_button }}
+      </div>
+    {% endunless %}
+  {% endif %}
+  <p
+    class="product-buy-buttons__inventory-warning"
+    data-product-inventory-warning
+    data-message-one="{{ 'product.inventory_warning_one' | t | escape }}"
+    data-message-other="{{ 'product.inventory_warning_other' | t | escape }}"
+    role="alert"
+    aria-live="assertive"
+    hidden
+  ></p>
+</div>

@@ -1,0 +1,106 @@
+.gallery { background: var(--gradient-background, var(--color-background)); color: var(--color-text); }
+.gallery__inner { width: 100%; margin-inline: auto; }
+.gallery__inner.page-width { max-width: var(--page-width); }
+.gallery--full-width .gallery__inner { max-width: none; padding-inline: var(--page-margin); }
+
+.gallery__header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 32%); align-items: end; gap: 32px; margin-block-end: var(--gallery-header-gap); }
+.gallery__header-title, .gallery__header-aside { display: flex; min-width: 0; flex-direction: column; }
+.gallery__header-title { align-items: flex-start; gap: 16px; }
+.gallery__header-aside { align-items: flex-end; gap: 16px; text-align: right; }
+.gallery__header :is(.content-label, .content-heading, .content-text, .content-button), .instagram-gallery-content :is(.content-label, .content-heading, .content-text, .content-button) { margin: 0; }
+
+.gallery__grid { display: grid; grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-auto-rows: clamp(210px, 19vw, 310px); gap: var(--gallery-grid-gap); }
+.gallery__grid > .shopify-block { display: contents; }
+.gallery__grid > .shopify-block:nth-child(1) { --reveal-order: 0; }
+.gallery__grid > .shopify-block:nth-child(2) { --reveal-order: 1; }
+.gallery__grid > .shopify-block:nth-child(3) { --reveal-order: 2; }
+.gallery__grid > .shopify-block:nth-child(4) { --reveal-order: 3; }
+.gallery__grid > .shopify-block:nth-child(5) { --reveal-order: 4; }
+.gallery__grid > .shopify-block:nth-child(6) { --reveal-order: 5; }
+.gallery__grid > .shopify-block:nth-child(7) { --reveal-order: 6; }
+.gallery__grid > .shopify-block:nth-child(8) { --reveal-order: 7; }
+.gallery__grid > .shopify-block:nth-child(9) { --reveal-order: 8; }
+.gallery__grid > .shopify-block:nth-child(10) { --reveal-order: 9; }
+.gallery__grid > .shopify-block:nth-child(11) { --reveal-order: 10; }
+.gallery__grid > .shopify-block:nth-child(12) { --reveal-order: 11; }
+.gallery__grid > .shopify-block:nth-child(13) { --reveal-order: 12; }
+.gallery__item, .instagram-gallery-content { min-width: 0; }
+.gallery__item { position: relative; }
+.gallery__item-link, .gallery__media { display: block; height: 100%; }
+.gallery__item-link { color: inherit; text-decoration: none; }
+.gallery__media { position: relative; overflow: hidden; background: var(--color-variant-component-background); }
+.gallery__image, .gallery__placeholder { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gallery__image { transition: transform 500ms cubic-bezier(.22, 1, .36, 1), filter 360ms ease; }
+.gallery__media::before { position: absolute; z-index: 1; inset: 0; background: rgb(0 0 0 / .44); content: ''; opacity: 0; pointer-events: none; transition: opacity 300ms ease; }
+.gallery__item-overlay { position: absolute; z-index: 2; top: 50%; left: 50%; display: flex; flex-direction: column; align-items: center; gap: 14px; color: #fff; opacity: 0; pointer-events: none; transform: translate(-50%, calc(-50% + 14px)); transition: opacity 260ms ease, transform 360ms cubic-bezier(.22, 1, .36, 1); }
+.gallery__instagram-icon { display: grid; width: 28px; height: 28px; place-items: center; }
+.gallery__instagram-icon svg { width: 100%; height: 100%; }
+.gallery__instagram-label { font: var(--font-label); font-size: 10px; letter-spacing: .12em; text-align: center; text-transform: uppercase; white-space: nowrap; }
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery__item:hover .gallery__image, .gallery__item-link:focus-visible .gallery__image { filter: brightness(.78); transform: scale(1.045); }
+  .gallery__item:hover .gallery__media::before, .gallery__item-link:focus-visible .gallery__media::before, .gallery__item:hover .gallery__item-overlay, .gallery__item-link:focus-visible .gallery__item-overlay { opacity: 1; }
+  .gallery__item:hover .gallery__item-overlay, .gallery__item-link:focus-visible .gallery__item-overlay { transform: translate(-50%, -50%); }
+}
+
+.gallery__item-link:focus-visible { outline: 2px solid currentcolor; outline-offset: 4px; }
+.gallery__grid > .instagram-gallery-content {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: var(--group-padding-top) var(--group-padding-right) var(--group-padding-bottom) var(--group-padding-left);
+  background: var(--gradient-background, var(--color-background));
+  color: var(--color-text);
+  --reveal-delay: 300ms;
+  --reveal-duration: 1000ms;
+  --reveal-translate-y: 32px;
+}
+.gallery__content-card-primary,
+.gallery__content-card-secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.gallery__content-card-primary { gap: 18px; }
+.gallery__content-card-secondary { gap: 20px; }
+
+@media screen and (min-width: 768px) and (max-width: 1149.98px) {
+  .gallery__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: clamp(190px, 27vw, 300px); }
+  .gallery__grid > .instagram-gallery-content { grid-column: 2; grid-row: span 2; }
+}
+
+/* The editorial card is a fixed visual role, not a ninth image. Keep the
+ * configured eight image blocks around it in the intended five-column story. */
+@media screen and (min-width: 1150px) {
+  .gallery__grid > .shopify-block:nth-child(1) > .gallery__item { grid-column: 1; grid-row: 1; }
+  .gallery__grid > .shopify-block:nth-child(2) > .gallery__item { grid-column: 2; grid-row: 1; }
+  .gallery__grid > .instagram-gallery-content { grid-column: 3; grid-row: 1 / span 2; }
+  .gallery__grid > .shopify-block:nth-child(3) > .gallery__item { grid-column: 4; grid-row: 1; }
+  .gallery__grid > .shopify-block:nth-child(4) > .gallery__item { grid-column: 5; grid-row: 1; }
+  .gallery__grid > .shopify-block:nth-child(5) > .gallery__item { grid-column: 1; grid-row: 2; }
+  .gallery__grid > .shopify-block:nth-child(6) > .gallery__item { grid-column: 2; grid-row: 2; }
+  .gallery__grid > .shopify-block:nth-child(7) > .gallery__item { grid-column: 4; grid-row: 2; }
+  .gallery__grid > .shopify-block:nth-child(8) > .gallery__item { grid-column: 5; grid-row: 2; }
+}
+
+@media screen and (max-width: 767.98px) {
+  .gallery__header { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 22px; margin-block-end: calc(var(--gallery-header-gap) * .5); }
+  .gallery__header-aside { align-items: flex-start; text-align: left; }
+  .gallery__grid { gap: var(--gallery-mobile-grid-gap); grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
+  .gallery__item { aspect-ratio: 1; }
+  /* Two image rows, then the full-width editorial card, followed by two image
+     rows. The DOM order is preserved for Theme Editor selection/reordering. */
+  .gallery__grid > .shopify-block:nth-child(1) > .gallery__item { grid-column: 1; grid-row: 1; }
+  .gallery__grid > .shopify-block:nth-child(2) > .gallery__item { grid-column: 2; grid-row: 1; }
+  .gallery__grid > .shopify-block:nth-child(3) > .gallery__item { grid-column: 1; grid-row: 2; }
+  .gallery__grid > .shopify-block:nth-child(4) > .gallery__item { grid-column: 2; grid-row: 2; }
+  .gallery__grid > .instagram-gallery-content { grid-column: 1 / -1; grid-row: 3; min-height: 360px; }
+  .gallery__grid > .shopify-block:nth-child(5) > .gallery__item { grid-column: 1; grid-row: 4; }
+  .gallery__grid > .shopify-block:nth-child(6) > .gallery__item { grid-column: 2; grid-row: 4; }
+  .gallery__grid > .shopify-block:nth-child(7) > .gallery__item { grid-column: 1; grid-row: 5; }
+  .gallery__grid > .shopify-block:nth-child(8) > .gallery__item { grid-column: 2; grid-row: 5; }
+}
+
+@media (prefers-reduced-motion: reduce) { .gallery__image, .gallery__media::before, .gallery__item-overlay { transition: none; } }

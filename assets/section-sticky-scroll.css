@@ -1,0 +1,228 @@
+.sticky-scroll {
+  --sticky-scroll-active-height: 100svh;
+  position: relative;
+  width: 100%;
+  padding-block: var(--section-padding-top) var(--section-padding-bottom);
+  background: var(--gradient-background, var(--color-background));
+}
+
+.sticky-scroll__stage {
+  position: relative;
+}
+
+.sticky-scroll__panel {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sticky-scroll__content {
+  display: flex;
+  width: min(100%, var(--sticky-scroll-content-width));
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sticky-scroll-content-gap);
+}
+
+.sticky-scroll__content > .content-block,
+.sticky-scroll__content > .content-button,
+.sticky-scroll__content > .shopify-block {
+  margin: 0;
+}
+
+.sticky-scroll__content :is(.content-block, .content-button) {
+  color: inherit;
+}
+
+.sticky-scroll__ghost-number {
+  position: absolute;
+  right: clamp(36px, 7vw, 112px);
+  bottom: var(--section-padding-bottom);
+  color: color-mix(in srgb, var(--color-heading) 14%, transparent);
+  font-family: var(--heading-font-family);
+  font-size: clamp(96px, 11vw, 176px);
+  font-variant-numeric: lining-nums;
+  line-height: .75;
+  pointer-events: none;
+}
+
+.sticky-scroll__steps {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: var(--page-margin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transform: translateY(-50%);
+}
+
+.sticky-scroll__step {
+  display: block;
+  width: 1px;
+  height: 32px;
+  border: 0;
+  padding: 0;
+  background: rgb(255 255 255 / 20%);
+  cursor: pointer;
+  transition: background-color 300ms ease, transform 300ms ease;
+}
+
+.sticky-scroll__step:hover,
+.sticky-scroll__step:focus-visible {
+  background: rgb(255 255 255 / 60%);
+  outline: 0;
+  transform: scaleX(2);
+}
+
+.sticky-scroll__step.is-active {
+  background: var(--color-primary-button, #b38945);
+}
+
+.sticky-scroll__step:focus-visible {
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.sticky-scroll.is-enhanced {
+  min-height: calc(var(--sticky-scroll-scroll-height) + var(--section-padding-top) + var(--section-padding-bottom));
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__stage {
+  position: sticky;
+  top: 0;
+  height: var(--sticky-scroll-active-height);
+  overflow: hidden;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel {
+  position: absolute;
+  inset: 0;
+  min-height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 5vh, 0);
+  pointer-events: none;
+  transition:
+    opacity 700ms ease,
+    transform 1000ms cubic-bezier(.2, .7, .2, 1),
+    visibility 700ms ease;
+  will-change: opacity, transform;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-before {
+  transform: translate3d(0, -5vh, 0);
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-after {
+  transform: translate3d(0, 5vh, 0);
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__content {
+  opacity: 1;
+  transform: none;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 700ms ease,
+    transform 900ms cubic-bezier(.2, .7, .2, 1);
+  transition-delay: 0ms;
+  will-change: opacity, transform;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-before .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+  transform: translate3d(0, -28px, 0);
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-after .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+  transform: translate3d(0, 28px, 0);
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(1) {
+  transition-delay: 100ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(2) {
+  transition-delay: 250ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(3) {
+  transition-delay: 400ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(4) {
+  transition-delay: 550ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(5) {
+  transition-delay: 700ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(6) {
+  transition-delay: 850ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(7) {
+  transition-delay: 1000ms;
+}
+
+.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :nth-child(8) {
+  transition-delay: 1150ms;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1149.98px) {
+  .sticky-scroll {
+    padding-block: calc(var(--section-padding-top) * .75) calc(var(--section-padding-bottom) * .75);
+  }
+
+  .sticky-scroll.is-enhanced {
+    min-height: calc(var(--sticky-scroll-scroll-height) + var(--section-padding-top) * .75 + var(--section-padding-bottom) * .75);
+  }
+
+  .sticky-scroll__ghost-number {
+    bottom: calc(var(--section-padding-bottom) * .75);
+  }
+}
+
+@media screen and (max-width: 767.98px) {
+  .sticky-scroll {
+    padding-block: calc(var(--section-padding-top) * .5) calc(var(--section-padding-bottom) * .5);
+  }
+
+  .sticky-scroll.is-enhanced {
+    min-height: calc(var(--sticky-scroll-scroll-height) + var(--section-padding-top) * .5 + var(--section-padding-bottom) * .5);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-scroll__step,
+  .sticky-scroll.is-enhanced .sticky-scroll__panel,
+  .sticky-scroll.is-enhanced .sticky-scroll__content,
+  .sticky-scroll.is-enhanced .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+    transition: none;
+  }
+
+  .sticky-scroll.is-enhanced .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+    opacity: 1;
+    transform: none;
+  }
+}

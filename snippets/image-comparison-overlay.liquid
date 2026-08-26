@@ -1,0 +1,19 @@
+{% doc %}
+  Renders optional overlay copy for one side of the image comparison section.
+
+  @param {object} block - Image comparison image block.
+  @param {string} position - Semantic comparison side: before or after.
+{% enddoc %}
+
+{% if block != blank %}
+  <div class="image-comparison__overlay image-comparison__overlay--{{ position }} image-comparison__overlay--{{ block.settings.content_position }}" style="--image-comparison-overlay-color: {{ block.settings.text_color }};">
+    {% if block.settings.subheading == blank and block.settings.heading == blank and block.settings.button_label == blank %}
+      <span class="image-comparison__overlay-label">{{ position | capitalize }}</span>
+    {% endif %}
+    {% if block.settings.subheading != blank %}<div class="image-comparison__overlay-subheading">{{ block.settings.subheading }}</div>{% endif %}
+    {% if block.settings.heading != blank %}<div class="image-comparison__overlay-heading">{% render 'typography-content', content: block.settings.heading %}</div>{% endif %}
+    {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+      <a class="image-comparison__overlay-button" href="{{ block.settings.button_link | escape }}">{{ block.settings.button_label | escape }}</a>
+    {% endif %}
+  </div>
+{% endif %}

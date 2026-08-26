@@ -1,0 +1,429 @@
+{% render 'section-stylesheet', asset: 'section-editorial-slideshow.css' %}
+{% render 'swiper-stylesheet' %}
+
+{% liquid
+  assign desktop_height = section.settings.desktop_height | default: 'full'
+  assign mobile_height = section.settings.mobile_height | default: 'full'
+  assign slideshow_description = section.settings.slideshow_description | default: 'Slideshow about our brand'
+  assign autoplay_delay_display = section.settings.autoplay_delay
+  if section.settings.autoplay_delay < 10
+    assign autoplay_delay_display = '0' | append: section.settings.autoplay_delay
+  endif
+%}
+
+<editorial-slideshow
+  class="editorial-slideshow editorial-slideshow--desktop-height-{{ desktop_height }} editorial-slideshow--mobile-height-{{ mobile_height }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}{% if section.settings.enable_image_zoom %} editorial-slideshow--image-zoom{% endif %}{% if request.visual_preview_mode %} editorial-slideshow--visual-preview{% endif %}"
+  role="region"
+  aria-label="{{ slideshow_description | escape }}"
+  data-section-id="{{ section.id }}"
+  data-motion-enabled="{{ settings.enable_motion }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | times: 1000 }}"
+  {% unless request.visual_preview_mode %}
+    data-deferred-module="{{ 'editorial-slideshow.js' | asset_url }}"
+  {% endunless %}
+  style="--editorial-navigator-background-opacity: {{ section.settings.navigator_background_opacity | default: 80 }}%;"
+>
+  <div class="editorial-slideshow__viewport swiper" data-editorial-slideshow-slider>
+    <div class="editorial-slideshow__wrapper swiper-wrapper">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+
+  <div class="editorial-slideshow__lower-rail" data-editorial-lower-rail>
+    <div class="editorial-slideshow__product-stage" data-editorial-product-stage></div>
+
+    {% if section.settings.show_slideshow_controls %}
+      <nav
+      id="EditorialSlideshowNavigator-{{ section.id }}"
+      class="editorial-slideshow__navigator{% if request.visual_preview_mode %} editorial-slideshow__navigator--preview{% endif %}"
+      aria-label="{{ 'slideshow.pagination' | t | escape }}"
+      data-editorial-navigator
+      {% unless request.visual_preview_mode %}hidden{% endunless %}
+    >
+      <button
+        class="editorial-slideshow__navigator-arrow editorial-slideshow__navigator-arrow--previous"
+        type="button"
+        aria-label="{{ 'slideshow.previous' | t | escape }}"
+        data-editorial-previous
+        {% if request.visual_preview_mode %}disabled{% endif %}
+      >
+        {% render 'icon', name: 'chevron-left' %}
+        <span class="editorial-slideshow__navigator-arrow-label">{{ 'slideshow.previous_short' | t | escape }}</span>
+      </button>
+
+      <span class="editorial-slideshow__mobile-count" aria-hidden="true">
+        <span data-editorial-mobile-current>01</span>
+        <span>/</span>
+        <span data-editorial-mobile-total>01</span>
+      </span>
+
+      <div class="editorial-slideshow__tabs" role="tablist" data-editorial-slide-tabs></div>
+
+      <span class="editorial-slideshow__mobile-label" data-editorial-mobile-label aria-hidden="true">Slide</span>
+
+      <button
+        class="editorial-slideshow__navigator-arrow editorial-slideshow__navigator-arrow--next"
+        type="button"
+        aria-label="{{ 'slideshow.next' | t | escape }}"
+        data-editorial-next
+        {% if request.visual_preview_mode %}disabled{% endif %}
+      >
+        <span class="editorial-slideshow__navigator-arrow-label">{{ 'slideshow.next_short' | t | escape }}</span>
+        {% render 'icon', name: 'chevron-right' %}
+      </button>
+
+      {% if section.settings.autoplay and section.blocks.size > 1 %}
+        <button
+          class="editorial-slideshow__autoplay"
+          type="button"
+          aria-label="{{ 'slideshow.pause' | t | escape }}"
+          aria-pressed="true"
+          data-label-pause="{{ 'slideshow.pause' | t | escape }}"
+          data-label-resume="{{ 'slideshow.resume' | t | escape }}"
+          data-editorial-autoplay-toggle
+        >
+          <span class="editorial-slideshow__autoplay-icon" aria-hidden="true">
+            {% render 'icon', name: 'pause', class: 'editorial-slideshow__autoplay-icon--pause' %}
+            {% render 'icon', name: 'play-outline', class: 'editorial-slideshow__autoplay-icon--play' %}
+          </span>
+          <span class="editorial-slideshow__autoplay-copy">
+            <span class="editorial-slideshow__autoplay-label">{{ 'slideshow.autoplay' | t | escape }}</span>
+            <span class="editorial-slideshow__autoplay-value" data-editorial-autoplay-value>{{ autoplay_delay_display }} {{ 'slideshow.seconds_short' | t | escape }}</span>
+          </span>
+        </button>
+      {% endif %}
+
+      </nav>
+    {% endif %}
+  </div>
+</editorial-slideshow>
+
+{% schema %}
+{
+  "name": "Editorial slideshow",
+  "tag": "section",
+  "class": "section-editorial-slideshow",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "select",
+      "id": "desktop_height",
+      "label": "Desktop height",
+      "options": [
+        { "value": "650", "label": "650px" },
+        { "value": "750", "label": "750px" },
+        { "value": "850", "label": "850px" },
+        { "value": "adapt", "label": "Adapt to first image" },
+        { "value": "full", "label": "Full screen" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "options": [
+        { "value": "450", "label": "450px" },
+        { "value": "550", "label": "550px" },
+        { "value": "650", "label": "650px" },
+        { "value": "adapt", "label": "Adapt to first image" },
+        { "value": "full", "label": "Full screen" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "header",
+      "content": "Slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay interval",
+      "default": 6,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_slideshow_controls",
+      "label": "Show slideshow controls",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Accessibility"
+    },
+    {
+      "type": "textarea",
+      "id": "slideshow_description",
+      "label": "Slideshow description",
+      "info": "Describe the slideshow for those using screen readers. This text will not be visible on the page.",
+      "default": "Slideshow about our brand"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "range",
+      "id": "navigator_background_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Navigator opacity",
+      "default": 80
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image_zoom",
+      "label": "Enable image zoom animation",
+      "info": "Inactive images are enlarged and smoothly return to their original size when active.",
+      "default": true
+    }
+  ],
+  "blocks": [
+    { "type": "editorial-slide" }
+  ],
+  "presets": [
+    {
+      "name": "Editorial slideshow",
+      "category": "Banners",
+      "settings": {
+        "desktop_height": "full",
+        "mobile_height": "full",
+        "autoplay": true,
+        "autoplay_delay": 6,
+        "show_slideshow_controls": true,
+        "enable_image_zoom": true,
+        "slideshow_description": "Editorial slideshow",
+        "section_width": "full",
+        "color_scheme": "scheme-4",
+        "navigator_background_opacity": 80
+      },
+      "blocks": [
+        {
+          "type": "editorial-slide",
+          "settings": {
+            "content_width": 520,
+            "gap": 24,
+            "content_alignment": "left",
+            "content_position": "top-left",
+            "content_position_mobile": "middle-left",
+            "nav_label": "Story",
+            "nav_detail": "FEATURED EDIT",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "render_visual_preview": true
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>FEATURED STORY</p>",
+                "type_preset": "h7"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>This is a heading</h1>",
+                "type_preset": "h1"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Use this space to introduce your brand, product, or promotion.</p>",
+                "type_preset": "md"
+              }
+            },
+            {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 0
+              },
+              "blocks": [
+                {
+                  "type": "button",
+                  "settings": {
+                    "label": "SHOP NOW",
+                    "link": "/collections/all",
+                    "style": "primary",
+                    "icon": "arrow-right"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>DESIGNED TO BE CUSTOMIZED</p>",
+                "type_preset": "h7"
+              }
+            }
+          ]
+        },
+        {
+          "type": "editorial-slide",
+          "settings": {
+            "content_width": 520,
+            "gap": 24,
+            "content_alignment": "left",
+            "content_position": "top-left",
+            "content_position_mobile": "middle-left",
+            "nav_label": "Collection",
+            "nav_detail": "NEW ARRIVALS",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>FEATURED COLLECTION</p>",
+                "type_preset": "h7"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>Highlight your collection</h1>",
+                "type_preset": "h1"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Share a short message to guide customers to your featured collection.</p>",
+                "type_preset": "md"
+              }
+            },
+            {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 0
+              },
+              "blocks": [
+                {
+                  "type": "button",
+                  "settings": {
+                    "label": "VIEW COLLECTION",
+                    "link": "/collections/all",
+                    "style": "primary",
+                    "icon": "arrow-right"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>FLEXIBLE CONTENT · EDITABLE LAYOUT</p>",
+                "type_preset": "h7"
+              }
+            }
+          ]
+        },
+        {
+          "type": "editorial-slide",
+          "settings": {
+            "content_width": 520,
+            "gap": 24,
+            "content_alignment": "left",
+            "content_position": "top-left",
+            "content_position_mobile": "middle-left",
+            "nav_label": "Campaign",
+            "nav_detail": "BRAND MOMENT",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>FEATURED CAMPAIGN</p>",
+                "type_preset": "h7"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>Tell your next story</h1>",
+                "type_preset": "h1"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Use this slide to feature a campaign, launch, or seasonal message.</p>",
+                "type_preset": "md"
+              }
+            },
+            {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 0
+              },
+              "blocks": [
+                {
+                  "type": "button",
+                  "settings": {
+                    "label": "DISCOVER MORE",
+                    "link": "/collections/all",
+                    "style": "primary",
+                    "icon": "arrow-right"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>MAKE IT YOUR OWN</p>",
+                "type_preset": "h7"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,22 +1,7 @@
-{% doc %}
-  Renders all meta tags for the page including Open Graph, Twitter Cards, and SEO tags.
-
-  @param {object} [product] - The product object, available on product pages for price meta tags.
-{% enddoc %}
-
 <meta charset="utf-8">
-<meta
-  http-equiv="X-UA-Compatible"
-  content="IE=edge"
->
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-<meta
-  name="theme-color"
-  content=""
->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="{{ settings.background_color | default: '#ffffff' | escape }}" data-spinel-theme-color>
 
 {%- liquid
   assign og_title = page_title | default: shop.name
@@ -35,11 +20,11 @@
 
 <meta
   property="og:site_name"
-  content="{{ shop.name }}"
+  content="{{ shop.name | escape }}"
 >
 <meta
   property="og:url"
-  content="{{ og_url }}"
+  content="{{ og_url | escape }}"
 >
 <meta
   property="og:title"
@@ -57,11 +42,11 @@
 {%- if page_image -%}
   <meta
     property="og:image"
-    content="http:{{ page_image | image_url }}"
+    content="{{ page_image | image_url | escape }}"
   >
   <meta
     property="og:image:secure_url"
-    content="https:{{ page_image | image_url }}"
+    content="{{ page_image | image_url | escape }}"
   >
   <meta
     property="og:image:width"
@@ -74,6 +59,10 @@
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
+  <script type="application/ld+json">
+    {{ product | structured_data }}
+  </script>
+
   <meta
     property="og:price:amount"
     content="{{ product.price | money_without_currency | strip_html }}"
@@ -84,12 +73,6 @@
   >
 {%- endif -%}
 
-{%- if settings.social_twitter_link != blank -%}
-  <meta
-    name="twitter:site"
-    content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}"
-  >
-{%- endif -%}
 <meta
   name="twitter:card"
   content="summary_large_image"
@@ -104,20 +87,18 @@
 >
 
 <title>
-  {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+  {{ page_title | escape }}
+  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' | escape }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- unless page_title contains shop.name %} &ndash; {{ shop.name | escape }}{% endunless -%}
 </title>
 
 <link
   rel="canonical"
-  href="{{ canonical_url }}"
+  href="{{ canonical_url | escape }}"
 >
 
-{% if page_description %}
-  <meta
-    name="description"
-    content="{{ page_description | escape }}"
-  >
-{% endif %}
+<meta
+  name="description"
+  content="{{ og_description | escape }}"
+>

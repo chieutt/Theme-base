@@ -1,0 +1,59 @@
+{% liquid
+  assign desktop_thumbnail_ratio = '4 / 5'
+  assign mobile_thumbnail_ratio = '4 / 5'
+
+  case block.settings.media_ratio
+    when 'square'
+      assign desktop_thumbnail_ratio = '1 / 1'
+    when 'landscape'
+      assign desktop_thumbnail_ratio = '4 / 3'
+    when 'auto'
+      assign desktop_thumbnail_ratio = product.featured_media.preview_image.aspect_ratio | default: 1
+  endcase
+
+  case block.settings.mobile_media_ratio
+    when 'square'
+      assign mobile_thumbnail_ratio = '1 / 1'
+    when 'landscape'
+      assign mobile_thumbnail_ratio = '4 / 3'
+    when 'auto'
+      assign mobile_thumbnail_ratio = product.featured_media.preview_image.aspect_ratio | default: 1
+  endcase
+%}
+<div class="product-gallery product-gallery--{{ block.settings.desktop_layout }} product-gallery--grid-{{ block.settings.grid_layout | default: 'editorial' }} product-gallery--zoom-{{ block.settings.image_zoom | default: 'open_lightbox' }}{% if block.settings.desktop_layout == 'carousel' %} product-gallery--thumbs-{{ block.settings.carousel_thumbnails }}{% endif %} product-gallery--mobile-thumbnails-{{ block.settings.show_mobile_thumbnails }} product-gallery--ratio-{{ block.settings.media_ratio }} product-gallery--mobile-ratio-{{ block.settings.mobile_media_ratio }}" data-image-zoom="{{ block.settings.image_zoom | default: 'open_lightbox' }}" style="--gallery-columns: {% if product.media.size == 1 %}1{% else %}{{ block.settings.grid_columns | default: 2 }}{% endif %}; --gallery-gap: {{ block.settings.gap }}px; --gallery-fit: {{ block.settings.media_fit }}; --gallery-thumbnail-size: {{ block.settings.thumbnail_size }}px; --gallery-thumbnail-gap: {{ block.settings.thumbnail_gap }}px; --gallery-thumbnail-desktop-ratio: {{ desktop_thumbnail_ratio }}; --gallery-thumbnail-mobile-ratio: {{ mobile_thumbnail_ratio }};" {{ block.shopify_attributes }} data-product-gallery>
+  <div class="product-gallery__media">
+    <div class="swiper product-gallery__main" aria-label="{{ 'product_gallery.label' | t: product: product.title | escape }}" data-product-main-gallery>
+      <div class="swiper-wrapper">
+        {% for media in product.media %}
+          <div class="swiper-slide" data-media-id="{{ media.id }}">
+            {% if forloop.first and section.index == 1 %}
+              {% render 'product-media', media: media, product: product, layout: 'slider', zoom_mode: block.settings.image_zoom, loading: 'eager', fetchpriority: 'high' %}
+            {% else %}
+              {% render 'product-media', media: media, product: product, layout: 'slider', zoom_mode: block.settings.image_zoom %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% if block.settings.show_mobile_pagination %}<div class="swiper-pagination" data-product-gallery-pagination></div>{% endif %}
+    </div>
+    {% if product.media.size > 1 %}
+      {% if block.settings.desktop_layout == 'carousel' or block.settings.show_mobile_thumbnails %}
+        <div class="swiper product-gallery__thumbnails" data-product-thumbnail-gallery aria-label="{{ 'product_gallery.media_thumbnails' | t | escape }}">
+          <div class="swiper-wrapper">
+            {% for media in product.media %}
+              <button class="swiper-slide product-gallery__thumbnail" type="button" data-media-thumbnail data-media-id="{{ media.id }}" aria-label="{{ 'product_gallery.view_media' | t: index: forloop.index | escape }}">
+                {% render 'product-media-thumbnail', media: media %}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+  {% assign product_models = product.media | where: 'media_type', 'model' %}
+  {% if product_models.size > 0 %}
+    <script type="application/json" data-shopify-models>{{ product_models | json }}</script>
+  {% endif %}
+</div>
+
+{% render 'product-lightbox', product: product %}

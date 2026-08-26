@@ -1,0 +1,248 @@
+{% doc %}
+  Renders the shared Heading and Text theme-block UI with size-based typography,
+  responsive layout and spacing.
+
+  @param {object} block - The theme block object.
+  @param {string} content - Rich text to render.
+  @param {string} kind - Either "heading", "text", or "label".
+  @param {string} default_preset - Fallback typography preset.
+  @param {string} default_font - Font role used by custom typography.
+  @param {string} [force_font_role] - Optional font role override supplied by a custom block.
+  @param {string} [force_preset] - Optional typography preset that overrides saved block settings.
+  @param {boolean} [include_shopify_attributes] - Whether to attach editor attributes to the rendered typography block.
+
+  @example
+  {% render 'content-block',
+    block: block,
+    content: block.settings.text,
+    kind: 'text',
+    default_preset: 'md',
+    default_font: 'body'
+  %}
+{% enddoc %}
+
+{% liquid
+  assign preset = block.settings.type_preset | default: default_preset
+  if force_preset != blank
+    assign preset = force_preset
+  endif
+
+  assign font_role = force_font_role | default: block.settings.font | default: default_font
+  assign heading_role_class = 'heading-text'
+  if font_role == 'body'
+    assign heading_role_class = 'body-text'
+  endif
+
+  assign typography_class = ''
+  assign use_inline_typography = false
+  if kind == 'heading'
+    if font_role == 'body'
+      case preset
+        when 'lg'
+          assign typography_class = 'body-p0 body-text'
+        when 'md', 'paragraph'
+          assign typography_class = 'body-p1 body-text'
+        when 'sm'
+          assign typography_class = 'body-p2 body-text'
+        when 'xs'
+          assign typography_class = 'body-p3 body-text'
+        when 'custom'
+          assign typography_class = 'body-custom body-text'
+          assign use_inline_typography = true
+      endcase
+    else
+      case preset
+        when 'h0', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'
+          assign typography_class = 'heading-' | append: preset | append: ' ' | append: heading_role_class
+        when 'subheading'
+          assign typography_class = 'subheading-text'
+        when 'custom'
+          assign typography_class = 'heading-custom ' | append: heading_role_class
+          assign use_inline_typography = true
+      endcase
+    endif
+  elsif kind == 'text' or kind == 'label'
+    case preset
+      when 'lg'
+        assign typography_class = 'body-p0 body-text'
+      when 'md', 'paragraph'
+        assign typography_class = 'body-p1 body-text'
+      when 'sm'
+        assign typography_class = 'body-p2 body-text'
+      when 'xs'
+        assign typography_class = 'body-p3 body-text'
+      when 'label'
+        assign typography_class = 'label-text'
+      when 'subheading'
+        assign typography_class = 'subheading-text'
+      when 'custom'
+        assign typography_class = 'body-custom body-text'
+        assign use_inline_typography = true
+    endcase
+  endif
+
+  assign font_family = 'var(--body-font-family)'
+  assign font_style = 'var(--body-font-style)'
+  assign font_weight = 'var(--body-font-weight)'
+  assign font_size = 'var(--p1-size-md)'
+  assign font_size_mobile = 'var(--p1-size-md)'
+  assign line_height = 'var(--body-line-height)'
+  assign letter_spacing = 'var(--body-letter-spacing)'
+  assign text_case = 'none'
+  assign heading_tag = block.settings.heading_tag | default: 'h2'
+
+  if preset == 'custom'
+    if font_role == 'heading'
+      assign font_family = 'var(--heading-font-family)'
+      assign font_style = 'var(--heading-font-style)'
+      assign font_weight = 'var(--heading-font-weight)'
+    else
+      assign font_family = 'var(--body-font-family)'
+      assign font_style = 'var(--body-font-style)'
+      assign font_weight = 'var(--body-font-weight)'
+    endif
+
+    if block.settings.font_weight != blank
+      if block.settings.font_weight != 'inherit'
+        assign font_weight = block.settings.font_weight
+      endif
+    endif
+
+    assign font_size = block.settings.font_size | default: 15 | append: 'px'
+    assign font_size_mobile = block.settings.font_size_mobile | default: 15 | append: 'px'
+    assign custom_line_height = block.settings.line_height | default: 'normal'
+    assign line_height = 'var(--line-height-' | append: custom_line_height | append: ')'
+  endif
+
+  assign width = block.settings.width | default: 'fit-content'
+  assign width_mobile = block.settings.width_mobile | default: width
+  assign width_class = 'fit'
+  if width == '100%'
+    assign width_class = 'fill'
+  endif
+  assign width_mobile_class = 'fit'
+  if width_mobile == '100%'
+    assign width_mobile_class = 'fill'
+  endif
+
+  assign text_color = block.settings.text_color
+  if text_color == blank
+    if block.settings.color == 'subtext'
+      assign text_color = 'var(--color-text)'
+    elsif block.settings.color == 'text'
+      assign text_color = 'var(--color-heading)'
+    endif
+  endif
+
+  assign alignment = block.settings.alignment | default: 'left'
+  assign alignment_mobile = block.settings.alignment_mobile | default: 'inherit'
+  assign enable_mobile_alignment = block.settings.enable_mobile_alignment | default: false
+  assign padding_block_start = block.settings['padding-block-start']
+  assign padding_block_end = block.settings['padding-block-end']
+  assign padding_inline_start = block.settings['padding-inline-start']
+  assign padding_inline_end = block.settings['padding-inline-end']
+  assign has_spacing_settings = false
+  if padding_block_start != blank or padding_block_end != blank or padding_inline_start != blank or padding_inline_end != blank
+    assign has_spacing_settings = true
+  endif
+  assign padding_top = block.settings.padding_top | default: 0
+  assign padding_bottom = block.settings.padding_bottom | default: 0
+  assign padding_left = block.settings.padding_left | default: 0
+  assign padding_right = block.settings.padding_right | default: 0
+  assign mobile_scale = block.settings.mobile_scale | default: 100
+  assign padding_scale = block.settings.mobile_scale | default: 100 | divided_by: 100.0
+  assign padding_top_mobile = padding_top | times: padding_scale
+  assign padding_bottom_mobile = padding_bottom | times: padding_scale
+  assign padding_left_mobile = padding_left | times: padding_scale
+  assign padding_right_mobile = padding_right | times: padding_scale
+
+  assign has_padding = false
+  if padding_top != 0 or padding_bottom != 0 or padding_left != 0 or padding_right != 0
+    assign has_padding = true
+  endif
+
+  assign has_mobile_padding = false
+  if has_padding and mobile_scale != 100
+    assign has_mobile_padding = true
+  endif
+
+  assign has_mobile_font_size = false
+  if use_inline_typography and font_size_mobile != font_size
+    assign has_mobile_font_size = true
+  endif
+
+  assign responsive_scope = block.id | default: kind
+  if kind == 'heading' and typography_class != blank
+    capture rendered_content
+      render 'typography-content', content: content, heading_class: typography_class
+    endcapture
+  else
+    assign rendered_content = content
+  endif
+  if block.settings.disable_line_break_mobile
+    assign line_break_markup = '<span class="content-block__line-break"><br></span>'
+    assign rendered_content = rendered_content | replace: '<br>', line_break_markup
+    assign rendered_content = rendered_content | replace: '<br/>', line_break_markup
+    assign rendered_content = rendered_content | replace: '<br />', line_break_markup
+  endif
+
+  assign has_block_markup = false
+  if content contains '<p' or content contains '<h1' or content contains '<h2' or content contains '<h3'
+    assign has_block_markup = true
+  elsif content contains '<h4' or content contains '<h5' or content contains '<h6'
+    assign has_block_markup = true
+  elsif content contains '<ul' or content contains '<ol' or content contains '<blockquote'
+    assign has_block_markup = true
+  endif
+  assign needs_heading_wrapper = false
+  if kind == 'heading' and has_block_markup == false
+    assign needs_heading_wrapper = true
+  endif
+%}
+
+{% if content != blank %}
+  <div
+    class="content-block spacing-style content-block--{{ kind }} content-block--preset-{{ preset }} content-block--width-{{ width_class }} content-block--width-mobile-{{ width_mobile_class }}{% if kind == 'heading' %} content-heading content-heading--{{ alignment }}{% else %} text-block content-text content-text--{{ alignment }} rte{% endif %}{% if enable_mobile_alignment and alignment_mobile != 'inherit' %} content-block--alignment-mobile-{{ alignment_mobile }}{% endif %}{% if typography_class != blank %} {{ typography_class }}{% endif %}{% if use_inline_typography %} content-block--inline-typography{% endif %}{% if has_mobile_padding %} content-block--has-mobile-padding{% endif %}{% if has_mobile_font_size %} content-block--has-mobile-font-size{% endif %}{% if block.settings.disable_line_break_mobile %} content-block--disable-mobile-breaks{% endif %}"
+    {% if has_mobile_padding or has_mobile_font_size %}data-type-block-id="{{ responsive_scope | escape }}"{% endif %}
+    {% if has_spacing_settings or has_padding or use_inline_typography or text_color != blank or has_mobile_padding or has_mobile_font_size %}
+      style="
+        {% if text_color != blank %}
+          --content-block-color: {{ text_color }};
+        {% endif %}
+        {% if has_spacing_settings %}
+          {% render 'spacing-style', settings: block.settings %}
+        {% endif %}
+        {% if has_padding %}
+          padding: {{ padding_top }}px {{ padding_right }}px {{ padding_bottom }}px {{ padding_left }}px;
+        {% endif %}
+        {% if has_mobile_padding %}
+          --content-block-mobile-padding: {{ padding_top_mobile }}px {{ padding_right_mobile }}px {{ padding_bottom_mobile }}px {{ padding_left_mobile }}px;
+        {% endif %}
+        {% if has_mobile_font_size %}
+          --content-block-mobile-font-size: {{ font_size_mobile }};
+        {% endif %}
+        {% if use_inline_typography %}
+          font-family: {{ font_family }};
+          font-style: {{ font_style }};
+          font-weight: {{ font_weight }};
+          font-size: {{ font_size }};
+          line-height: {{ line_height }};
+          letter-spacing: {{ letter_spacing }};
+          text-transform: {{ text_case }};
+        {% endif %}
+      "
+    {% endif %}
+    {% if include_shopify_attributes != false %}{{ block.shopify_attributes }}{% endif %}
+    {% render 'reveal-attributes', settings: block.settings %}
+  >
+    {% if kind == 'heading' %}
+      {% if needs_heading_wrapper %}
+        <{{ heading_tag }} class="{{ typography_class }}">{{ rendered_content }}</{{ heading_tag }}>
+      {% else %}
+        {{ rendered_content }}
+      {% endif %}
+    {% else %}
+      {{ rendered_content }}
+    {% endif %}
+  </div>
+{% endif %}

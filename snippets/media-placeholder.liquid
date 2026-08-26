@@ -1,0 +1,51 @@
+{% doc %}
+  Renders a lightweight decorative Shopify placeholder SVG.
+
+  @param {string} class_name - CSS class applied to the placeholder.
+  @param {string} [placeholder_name] - Shopify placeholder name, such as `product-1` or `lifestyle-1`.
+  @param {string} [asset_name] - Deprecated legacy asset filename. It is mapped to the equivalent Shopify placeholder name.
+
+  @example
+  {% render 'media-placeholder', class_name: 'product-card__placeholder', placeholder_name: 'product-1' %}
+{% enddoc %}
+
+{% liquid
+  assign media_placeholder_name = placeholder_name | default: asset_name | default: 'image'
+
+  case media_placeholder_name
+    when 'placeholder-image-product-1.svg'
+      assign media_placeholder_name = 'product-1'
+    when 'placeholder-image-product-2.svg'
+      assign media_placeholder_name = 'product-2'
+    when 'placeholder-image-product-3.svg'
+      assign media_placeholder_name = 'product-3'
+    when 'placeholder-image-product-4.svg'
+      assign media_placeholder_name = 'product-4'
+    when 'placeholder-image-collection-1.svg'
+      assign media_placeholder_name = 'collection-1'
+    when 'placeholder-image-collection-2.svg'
+      assign media_placeholder_name = 'collection-2'
+    when 'placeholder-image-collection-3.svg'
+      assign media_placeholder_name = 'collection-3'
+    when 'product'
+      assign media_placeholder_name = 'product-1'
+    when 'collection'
+      assign media_placeholder_name = 'collection-1'
+    when 'video'
+      assign media_placeholder_name = 'image'
+    when 'placeholder-image-default-1.svg'
+      assign media_placeholder_name = 'image'
+    when 'placeholder-image-default-2.svg'
+      assign media_placeholder_name = 'lifestyle-1'
+    when 'placeholder-image-default-3.svg'
+      assign media_placeholder_name = 'lifestyle-2'
+    when 'placeholder-image-default-4.svg'
+      assign media_placeholder_name = 'collection-1'
+    when 'placeholder-image-default-5.svg'
+      assign media_placeholder_name = 'detailed-apparel-1'
+    when 'placeholder-image-video.svg'
+      assign media_placeholder_name = 'lifestyle-2'
+  endcase
+%}
+
+{{ media_placeholder_name | placeholder_svg_tag: class_name }}

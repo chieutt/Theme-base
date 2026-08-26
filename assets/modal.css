@@ -1,0 +1,19 @@
+/* Shared modal interaction contract. Modal-specific files own placement and layout. */
+.modal-drag-target.is-handle-dragging,
+.modal-drag-target.is-handle-settling,
+.modal-drag-target.is-handle-closing {
+  animation: none !important;
+}
+
+.modal-drag-target.is-handle-dragging {
+  transition: none !important;
+}
+
+.modal-drag-target.is-handle-settling,
+.modal-drag-target.is-handle-closing {
+  transition: transform 240ms cubic-bezier(.22, 1, .36, 1), opacity 200ms ease;
+}
+
+.modal-backdrop-pointer.close-icon {
+  position: absolute;
+}

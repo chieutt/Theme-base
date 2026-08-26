@@ -1,0 +1,105 @@
+{% doc %}
+  Renders a reusable section header with optional subheading, text and action.
+
+  @param {string} heading - Heading text.
+  @param {string} [heading_tag] - Semantic heading tag.
+  @param {string} [heading_size] - Visual heading scale.
+  @param {string} [heading_class] - Section-specific heading classes.
+  @param {string} [heading_html] - Optional sanitized heading markup.
+  @param {string} [subheading] - Subheading text.
+  @param {string} [subheading_class] - Section-specific subheading classes.
+  @param {string} [subheading_html] - Optional sanitized subheading markup.
+  @param {string} [copy_class] - Section-specific copy wrapper classes.
+  @param {string} [title_group_class] - Section-specific title group classes.
+  @param {string} [text] - Rich text content.
+  @param {string} [text_class] - Section-specific text classes.
+  @param {string} [action_label] - Action label.
+  @param {string} [action_url] - Action URL.
+  @param {string} [action_style] - Theme button style.
+  @param {string} [action_class] - Section-specific action classes.
+  @param {string} [action_group_class] - Section-specific action wrapper classes.
+  @param {boolean} [action_open_in_new_tab] - Opens the action destination in a new tab.
+  @param {string} [alignment] - Header alignment.
+  @param {string} [class] - Section-specific wrapper classes.
+  @param {string} [tag] - Wrapper tag.
+  @param {string} [attributes] - Theme Editor attributes.
+{% enddoc %}
+
+{% liquid
+  assign wrapper_tag = tag | default: 'header'
+  assign header_alignment = alignment | default: 'left'
+  assign title_tag = heading_tag | default: 'h2'
+  assign title_size = heading_size | default: 'h2'
+  assign text_content = text | strip_html | strip
+  assign has_title = false
+  if subheading != blank or heading != blank
+    assign has_title = true
+  endif
+  assign has_copy = has_title
+  if text_content != blank
+    assign has_copy = true
+  endif
+%}
+
+<{{ wrapper_tag }}
+  class="section-header section-header--{{ header_alignment }}{% if class != blank %} {{ class }}{% endif %}"
+  {{ attributes }}
+>
+  {% if copy_class != blank or title_group_class != blank %}
+    {% if has_copy %}
+      <div class="{{ copy_class }}">
+        {% if has_title %}
+          <div class="{{ title_group_class }}">
+            {% if subheading != blank %}
+              <p class="section-header__subheading subheading-text{% if subheading_class != blank %} {{ subheading_class }}{% endif %}">
+                {% if subheading_html != blank %}{{ subheading_html }}{% else %}{{ subheading | escape }}{% endif %}
+              </p>
+            {% endif %}
+
+            {% if heading != blank %}
+              <{{ title_tag }} class="section-header__heading {% render 'typography-class', preset: title_size, fallback: 'h2' %}{% if heading_class != blank %} {{ heading_class }}{% endif %}">
+                {% if heading_html != blank %}{{ heading_html }}{% else %}{{ heading | escape }}{% endif %}
+              </{{ title_tag }}>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if text_content != blank %}
+          <div class="section-header__text rte{% if text_class != blank %} {{ text_class }}{% endif %}">
+            {{ text }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% else %}
+    {% if subheading != blank %}
+      <p class="section-header__subheading subheading-text{% if subheading_class != blank %} {{ subheading_class }}{% endif %}">
+        {% if subheading_html != blank %}{{ subheading_html }}{% else %}{{ subheading | escape }}{% endif %}
+      </p>
+    {% endif %}
+
+    {% if heading != blank %}
+      <{{ title_tag }} class="section-header__heading {% render 'typography-class', preset: title_size, fallback: 'h2' %}{% if heading_class != blank %} {{ heading_class }}{% endif %}">
+        {% if heading_html != blank %}{{ heading_html }}{% else %}{{ heading | escape }}{% endif %}
+      </{{ title_tag }}>
+    {% endif %}
+
+    {% if text != blank %}
+      <div class="section-header__text rte{% if text_class != blank %} {{ text_class }}{% endif %}">
+        {{ text }}
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if action_label != blank and action_url != blank %}
+    {% if action_group_class != blank %}<div class="{{ action_group_class }}">{% endif %}
+      {% render 'cta',
+        label: action_label,
+        url: action_url,
+        style: action_style,
+        class: action_class,
+        open_in_new_tab: action_open_in_new_tab
+      %}
+    {% if action_group_class != blank %}</div>{% endif %}
+  {% endif %}
+</{{ wrapper_tag }}>

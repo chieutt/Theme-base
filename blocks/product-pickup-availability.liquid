@@ -1,0 +1,8 @@
+{% assign product = closest.product | default: product %}
+<div class="product-pickup-availability" {{ block.shopify_attributes }} data-pickup-availability data-variant-id="{{ product.selected_or_first_available_variant.id }}"></div>
+{% schema %}
+{
+  "name": "Pickup availability",
+  "settings": []
+}
+{% endschema %}

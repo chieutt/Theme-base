@@ -1,0 +1,919 @@
+{% comment %}
+  Social and appointment destinations are intentionally optional. Blank URLs
+  hide their controls so a fresh install never links to a generic homepage or
+  presents a false affordance.
+{% endcomment %}
+
+{% liquid
+  assign announcement_item_count = 0
+
+  for block in section.blocks
+    case block.type
+      when 'announcement', 'text_slide'
+        if block.settings.text != blank
+          assign announcement_item_count = announcement_item_count | plus: 1
+        endif
+    endcase
+  endfor
+
+  assign announcement_x_url = section.settings.x_url
+  assign announcement_facebook_url = section.settings.facebook_url
+  assign announcement_pinterest_url = section.settings.pinterest_url
+  assign announcement_instagram_url = section.settings.instagram_url
+  assign announcement_social_count = 0
+  if announcement_x_url != blank
+    assign announcement_social_count = announcement_social_count | plus: 1
+  endif
+  if announcement_facebook_url != blank
+    assign announcement_social_count = announcement_social_count | plus: 1
+  endif
+  if announcement_pinterest_url != blank
+    assign announcement_social_count = announcement_social_count | plus: 1
+  endif
+  if announcement_instagram_url != blank
+    assign announcement_social_count = announcement_social_count | plus: 1
+  endif
+  assign announcement_type = section.settings.layout | default: 'slider'
+  assign announcement_layout = announcement_type
+  assign announcement_section_width = 'full'
+  assign announcement_module = blank
+  assign announcement_marquee_tag = 'div'
+  assign show_side_content = false
+
+  if announcement_type == 'slider_social'
+    assign announcement_layout = 'slider'
+    assign announcement_section_width = 'page'
+    assign show_side_content = true
+  elsif announcement_type == 'slider' and section.settings.section_width == 'page'
+    comment
+      Keep legacy Slider + Page width configurations working after Section width
+      is removed from the editor.
+    endcomment
+    assign announcement_section_width = 'page'
+    assign show_side_content = true
+  endif
+
+  if announcement_layout == 'marquee' and settings.enable_motion and announcement_item_count > 1
+    assign announcement_module = 'section-marquee.js'
+    assign announcement_marquee_tag = 'theme-marquee'
+  endif
+
+  assign show_navigation = false
+  if announcement_layout == 'slider' and announcement_item_count > 1
+    assign show_navigation = true
+    assign announcement_module = 'section-announcement-bar.js'
+  endif
+
+%}
+
+{% if show_navigation %}
+  {% render 'swiper-stylesheet' %}
+{% endif %}
+
+{% if announcement_item_count > 0 %}
+  <announcement-bar
+    class="announcement-bar announcement-bar--{{ announcement_layout }} announcement-bar--{{ announcement_section_width }}{% if announcement_layout == 'marquee' and announcement_module == blank %} announcement-bar--static-motion{% endif %} color-scheme color-{{ section.settings.color_scheme.id }} full-width"
+    style="--announcement-bar-height: {{ section.settings.height_desktop }}px; --announcement-bar-height-mobile: {{ section.settings.height_mobile }}px;"
+    data-section-id="{{ section.id }}"
+    data-behavior="{% if section.settings.enable_rotation %}rotate{% else %}show_all{% endif %}"
+    data-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
+    data-layout="{{ announcement_layout }}"
+    data-motion-enabled="{{ settings.enable_motion }}"
+    {% if announcement_module != blank %}data-deferred-module="{{ announcement_module | asset_url }}"{% endif %}
+    role="region"
+    aria-label="{{ 'announcement_bar.announcement' | t | escape }}"
+  >
+    <div class="announcement-bar__inner{% if show_side_content %} announcement-bar__inner--contained{% endif %}">
+      {% if announcement_layout == 'marquee' %}
+        <{{ announcement_marquee_tag }}
+          class="announcement-bar__marquee marquee marquee--direction-{{ section.settings.marquee_direction }} marquee--pause-on-hover{% if announcement_module == blank %} marquee--static{% endif %}"
+          style="--marquee-duration: {{ section.settings.marquee_speed }}s; --marquee-item-gap: 32px; --marquee-min-height: var(--announcement-bar-height); --marquee-min-height-mobile: var(--announcement-bar-height-mobile); --marquee-item-alignment: center;"
+        >
+          <div class="marquee__viewport">
+            <div class="marquee__track">
+              <div class="marquee__group">
+                {% for block in section.blocks %}
+                  {% if block.type == 'announcement' or block.type == 'text_slide' %}
+                    {% if block.settings.text != blank %}
+                      {% liquid
+                        assign announcement_custom_size = block.settings.font_size | default: 16 | at_least: 10 | at_most: 24
+                        assign announcement_custom_size_mobile = block.settings.font_size_mobile | default: 14 | at_least: 10 | at_most: 20
+                      %}
+                      <div
+                        class="announcement-bar__marquee-item"
+                        style="--announcement-custom-size: {{ announcement_custom_size }}px; --announcement-custom-size-mobile: {{ announcement_custom_size_mobile }}px;"
+                        {{ block.shopify_attributes }}
+                      >
+                        {% render 'content-block',
+                          block: block,
+                          content: block.settings.text,
+                          kind: 'text',
+                          default_preset: 'subheading',
+                          default_font: 'body',
+                          include_shopify_attributes: false
+                        %}
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </{{ announcement_marquee_tag }}>
+      {% else %}
+      {% if show_side_content and announcement_social_count > 0 %}
+        <nav class="announcement-bar__social" aria-label="{{ 'footer.social_links' | t | escape }}">
+          <ul class="announcement-bar__social-list" role="list">
+            {% if announcement_x_url != blank %}
+              <li>
+                <a class="announcement-bar__social-link" href="{{ announcement_x_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'footer.x_twitter' | t | escape }}">
+                  {% render 'social-icon', name: 'x' %}
+                </a>
+              </li>
+            {% endif %}
+            {% if announcement_facebook_url != blank %}
+              <li>
+                <a class="announcement-bar__social-link" href="{{ announcement_facebook_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'footer.facebook' | t | escape }}">
+                  {% render 'social-icon', name: 'facebook' %}
+                </a>
+              </li>
+            {% endif %}
+            {% if announcement_pinterest_url != blank %}
+              <li>
+                <a class="announcement-bar__social-link" href="{{ announcement_pinterest_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'footer.pinterest' | t | escape }}">
+                  {% render 'social-icon', name: 'pinterest' %}
+                </a>
+              </li>
+            {% endif %}
+            {% if announcement_instagram_url != blank %}
+              <li>
+                <a class="announcement-bar__social-link" href="{{ announcement_instagram_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'footer.instagram' | t | escape }}">
+                  {% render 'social-icon', name: 'instagram' %}
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+
+      {% if announcement_item_count > 0 %}
+        <div class="announcement-bar__content">
+          <div
+            class="announcement-bar__message-row{% if show_navigation %} announcement-bar__message-row--with-controls{% endif %}"
+            {% if show_navigation %}data-announcement-navigator role="group" aria-label="{{ 'announcement_bar.slide_navigation' | t | escape }}"{% endif %}
+          >
+            {% if show_navigation %}
+              <button class="announcement-bar__navigator-arrow" type="button" data-announcement-step="-1" aria-label="{{ 'announcement_bar.previous_slide' | t | escape }}">
+                {% render 'icon', name: 'chevron-left' %}
+              </button>
+            {% endif %}
+
+            <div class="announcement-bar__messages{% if show_navigation %} swiper{% endif %}"{% if show_navigation %} data-announcement-slider{% endif %}>
+              <div class="announcement-bar__slides{% if show_navigation %} swiper-wrapper{% endif %}">
+                {% assign announcement_item_index = 0 %}
+                {% for block in section.blocks %}
+                  {% case block.type %}
+                    {% when 'announcement', 'text_slide' %}
+                      {% if block.settings.text != blank %}
+                        {% liquid
+                          assign announcement_custom_size = block.settings.font_size | default: 16 | at_least: 10 | at_most: 24
+                          assign announcement_custom_size_mobile = block.settings.font_size_mobile | default: 14 | at_least: 10 | at_most: 20
+                        %}
+                        <div
+                          class="announcement-bar__item{% if show_navigation %} swiper-slide{% endif %}"
+                          data-announcement-item
+                          data-block-id="{{ block.id }}"
+                          style="--announcement-custom-size: {{ announcement_custom_size }}px; --announcement-custom-size-mobile: {{ announcement_custom_size_mobile }}px;"
+                          {% if show_navigation %}data-swiper-slide-index="{{ announcement_item_index }}"{% endif %}
+                          {{ block.shopify_attributes }}
+                        >
+                          {% render 'content-block',
+                            block: block,
+                            content: block.settings.text,
+                            kind: 'text',
+                            default_preset: 'subheading',
+                            default_font: 'body',
+                            include_shopify_attributes: false
+                          %}
+                        </div>
+                        {% assign announcement_item_index = announcement_item_index | plus: 1 %}
+                      {% endif %}
+                  {% endcase %}
+                {% endfor %}
+              </div>
+            </div>
+
+            {% if show_navigation %}
+              <button class="announcement-bar__navigator-arrow" type="button" data-announcement-step="1" aria-label="{{ 'announcement_bar.next_slide' | t | escape }}">
+                {% render 'icon', name: 'chevron-right' %}
+              </button>
+              <span
+                class="visually-hidden"
+                data-announcement-status
+                data-status-template="{{ 'announcement_bar.slide_status' | t: current: '[current]', total: '[total]' | escape }}"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if show_side_content and section.settings.appointment_label != blank and section.settings.appointment_link != blank %}
+        <a class="announcement-bar__appointment" href="{{ section.settings.appointment_link | escape }}">
+          {{ section.settings.appointment_label | escape }} <span aria-hidden="true">↗</span>
+        </a>
+      {% endif %}
+      {% endif %}
+    </div>
+  </announcement-bar>
+{% elsif request.design_mode %}
+  <announcement-bar
+    class="announcement-bar announcement-bar--empty color-scheme color-{{ section.settings.color_scheme.id }} full-width"
+    role="region"
+    aria-label="{{ 'announcement_bar.announcement' | t | escape }}"
+  >
+    <p class="announcement-bar__empty-message">{{ 'announcement_bar.empty' | t }}</p>
+  </announcement-bar>
+{% else %}
+  <announcement-bar class="announcement-bar" hidden aria-hidden="true"></announcement-bar>
+{% endif %}
+
+{% stylesheet %}
+  .announcement-bar {
+    --announcement-letter-spacing: 1.2px;
+
+    position: relative;
+    z-index: 22;
+    display: block;
+    width: 100%;
+    min-height: var(--announcement-bar-height);
+    background: var(--color-secondary-button, var(--gradient-background, var(--color-background)));
+    color: var(--color-secondary-button-label, var(--color-text));
+    font-family: var(--label-font-family);
+    font-style: var(--label-font-style);
+    font-weight: var(--label-font-weight);
+    font-size: var(--label-size);
+    line-height: 14px;
+    letter-spacing: var(--announcement-letter-spacing);
+    text-transform: uppercase;
+  }
+
+  .announcement-bar[hidden] { display: none; }
+
+  .announcement-bar__empty-message {
+    min-height: var(--announcement-bar-height, 37px);
+    margin: 0;
+    padding: 8px 16px;
+    text-align: center;
+  }
+
+  .announcement-bar__inner {
+    position: relative;
+    display: grid;
+    min-height: var(--announcement-bar-height);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    padding-inline: 24px;
+  }
+
+  .announcement-bar__inner--contained {
+    width: min(100%, var(--page-width));
+    margin-inline: auto;
+  }
+
+  .announcement-bar--full .announcement-bar__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .announcement-bar__content {
+    display: block;
+    min-width: 0;
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+  }
+
+  .announcement-bar--full .announcement-bar__content {
+    width: 100%;
+    grid-column: 1;
+  }
+
+  .announcement-bar--full .announcement-bar__message-row--with-controls {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+  }
+
+  .announcement-bar--full .announcement-bar__messages { width: 100%; }
+
+  .announcement-bar--marquee .announcement-bar__inner {
+    display: block;
+    overflow: hidden;
+    padding-inline: 0;
+  }
+
+  .announcement-bar__marquee,
+  .announcement-bar__marquee .marquee__viewport {
+    display: block;
+    width: 100%;
+    min-height: var(--announcement-bar-height-mobile);
+    overflow: hidden;
+  }
+
+  .announcement-bar__marquee .marquee__track,
+  .announcement-bar__marquee .marquee__group {
+    display: flex;
+    width: max-content;
+    min-height: inherit;
+    align-items: center;
+  }
+
+  .announcement-bar__marquee .marquee__track {
+    gap: var(--marquee-item-gap);
+    animation: announcement-bar-marquee-scroll var(--marquee-duration) linear infinite;
+    animation-play-state: paused;
+    will-change: transform;
+  }
+
+  .announcement-bar__marquee .marquee__group {
+    flex-shrink: 0;
+    gap: var(--marquee-item-gap);
+  }
+
+  .announcement-bar__marquee.is-active .marquee__track { animation-play-state: running; }
+  .announcement-bar__marquee.marquee--direction-right .marquee__track { animation-direction: reverse; }
+  .announcement-bar__marquee.marquee--pause-on-hover:hover .marquee__track,
+  .announcement-bar__marquee.marquee--pause-on-hover:focus-within .marquee__track { animation-play-state: paused; }
+
+  .announcement-bar__marquee-item {
+    display: block;
+    flex-shrink: 0;
+    padding-inline: 4px;
+    color: inherit;
+  }
+
+  .announcement-bar__marquee-item .content-block {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .announcement-bar__item .content-block {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .announcement-bar__marquee-item .content-block--inline-typography,
+  .announcement-bar__item .content-block--inline-typography {
+    font-size: var(--announcement-custom-size) !important;
+  }
+
+  .announcement-bar__marquee-item .content-block > p,
+  .announcement-bar__item .content-block > p {
+    display: inline;
+  }
+
+  @keyframes announcement-bar-marquee-scroll {
+    to { transform: translateX(calc(-50% - var(--marquee-item-gap) / 2)); }
+  }
+
+  .announcement-bar__appointment {
+    min-width: 0;
+    overflow: hidden;
+    color: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .announcement-bar__social { grid-column: 1; justify-self: start; }
+  .announcement-bar__appointment { grid-column: 3; justify-self: end; }
+  a.announcement-bar__appointment { cursor: pointer; }
+  .announcement-bar__appointment:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .announcement-bar__appointment:focus-visible { outline: 1px solid currentcolor; outline-offset: 3px; }
+
+  .announcement-bar__social-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .announcement-bar__social-link {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    transition: opacity var(--motion-duration) ease;
+  }
+
+  .announcement-bar__social-link svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+
+  .announcement-bar__social-link:hover { opacity: 0.72; }
+  .announcement-bar__social-link:focus-visible { outline: 1px solid currentcolor; outline-offset: 3px; }
+
+  .announcement-bar__message-row {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .announcement-bar__messages {
+    flex: 1 1 auto;
+    width: min(62vw, 560px);
+    min-height: var(--announcement-bar-height);
+    min-width: 0;
+  }
+
+  .announcement-bar__messages.swiper { overflow: hidden; }
+
+  .announcement-bar__messages .announcement-bar__slides {
+    align-items: center;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .announcement-bar:not(.is-ready) .announcement-bar__messages .announcement-bar__item:not(:first-child) {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .announcement-bar__messages.swiper-vertical .announcement-bar__item {
+    visibility: visible;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 280ms cubic-bezier(.215, .61, .355, 1);
+    will-change: opacity;
+  }
+
+  .announcement-bar__messages.swiper-vertical .announcement-bar__item.swiper-slide-active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Fade the active message while the track remains still for the opening beat. */
+  .announcement-bar__messages.swiper-vertical.is-slide-preparing .announcement-bar__item.swiper-slide-active {
+    opacity: 0.72;
+    transition-duration: 100ms;
+    transition-timing-function: ease-out;
+  }
+
+  .announcement-bar__messages .announcement-bar__item {
+    display: flex;
+    width: 100%;
+    min-height: var(--announcement-bar-height);
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 4px;
+    color: inherit;
+    overflow: visible;
+  }
+
+  .announcement-bar__item > .content-block {
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .announcement-bar__item .content-block {
+    width: 100%;
+    text-align: center;
+  }
+
+  .announcement-bar__navigator-arrow {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    place-items: center;
+    opacity: 1;
+    transition: opacity var(--motion-duration) ease, transform var(--motion-duration) ease;
+  }
+
+  .announcement-bar__navigator-arrow:hover {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  .announcement-bar__navigator-arrow svg { width: 14px; height: 14px; stroke-width: 1.75; }
+
+  .announcement-bar__navigator-arrow:focus-visible {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+
+  .announcement-bar[data-motion-enabled='false'] .announcement-bar__marquee .marquee__viewport,
+  .announcement-bar__marquee.marquee--static .marquee__viewport {
+    overflow: visible;
+  }
+
+  .announcement-bar--static-motion .announcement-bar__inner,
+  .announcement-bar[data-motion-enabled='false'] .announcement-bar__inner {
+    overflow: visible;
+  }
+
+  .announcement-bar[data-motion-enabled='false'] .announcement-bar__marquee .marquee__track,
+  .announcement-bar[data-motion-enabled='false'] .announcement-bar__marquee .marquee__group,
+  .announcement-bar__marquee.marquee--static .marquee__track,
+  .announcement-bar__marquee.marquee--static .marquee__group {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: none;
+    transform: none;
+  }
+
+  .announcement-bar--static-motion :is([data-marquee-clone], [data-marquee-duplicate]),
+  .announcement-bar[data-motion-enabled='false'] :is([data-marquee-clone], [data-marquee-duplicate]) {
+    display: none;
+  }
+
+  .announcement-bar--static-motion .announcement-bar__marquee-item,
+  .announcement-bar[data-motion-enabled='false'] .announcement-bar__marquee-item {
+    max-width: 100%;
+    flex: 1 1 100%;
+    overflow: visible;
+    text-align: center;
+  }
+
+  .announcement-bar--static-motion .announcement-bar__marquee-item .content-block,
+  .announcement-bar[data-motion-enabled='false'] .announcement-bar__marquee-item .content-block {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .no-js .announcement-bar__message-row--with-controls {
+    display: block;
+  }
+
+  .no-js .announcement-bar__navigator-arrow {
+    display: none;
+  }
+
+  .no-js .announcement-bar__messages {
+    width: 100%;
+  }
+
+  @media (max-width: 899px) {
+    .announcement-bar__social,
+    .announcement-bar__appointment { display: none; }
+  }
+
+  @media (max-width: 767.98px) {
+    .announcement-bar { --announcement-letter-spacing: 1.1px; }
+
+    .announcement-bar,
+    .announcement-bar__inner {
+      min-height: var(--announcement-bar-height-mobile);
+    }
+
+    .announcement-bar__inner {
+      grid-template-columns: minmax(0, 1fr);
+      padding-inline: 12px;
+    }
+
+    .announcement-bar__content {
+      width: 100%;
+      grid-column: 1;
+      overflow: visible;
+    }
+
+    .announcement-bar__messages {
+      width: auto;
+      min-height: var(--announcement-bar-height-mobile);
+    }
+
+    .announcement-bar__message-row { gap: 6px; }
+
+    .announcement-bar__message-row--with-controls {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr) 32px;
+    }
+
+    .announcement-bar--full .announcement-bar__message-row--with-controls {
+      grid-template-columns: 32px minmax(0, 1fr) 32px;
+    }
+
+    .announcement-bar__message-row--with-controls .announcement-bar__messages { grid-column: 2; }
+
+    .announcement-bar__navigator-arrow { width: 32px; height: 32px; flex-basis: 32px; }
+    .announcement-bar__navigator-arrow svg { width: 12px; height: 12px; }
+
+    .announcement-bar__messages .announcement-bar__item {
+      min-height: var(--announcement-bar-height-mobile);
+      padding-block: 7px;
+    }
+
+    .announcement-bar__marquee-item .content-block--inline-typography,
+    .announcement-bar__item .content-block--inline-typography {
+      font-size: var(--announcement-custom-size-mobile) !important;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .announcement-bar__marquee,
+    .announcement-bar__marquee .marquee__viewport { min-height: var(--announcement-bar-height); }
+  }
+
+  @media screen and (min-width: 1150px) {
+    html:not(.no-js) .announcement-bar--full .announcement-bar__message-row--with-controls {
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      margin-inline: auto;
+    }
+
+    html:not(.no-js)
+      .announcement-bar--full
+      .announcement-bar__message-row--with-controls
+      .announcement-bar__messages {
+      width: min(62vw, 560px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-bar__navigator-arrow,
+    .announcement-bar__social-link,
+    .announcement-bar__messages.swiper-vertical .announcement-bar__item,
+    .announcement-bar__marquee .marquee__track {
+      transition: none;
+      animation-play-state: paused;
+    }
+
+    .announcement-bar__marquee .marquee__viewport { overflow: visible; }
+
+    .announcement-bar--marquee .announcement-bar__inner { overflow: visible; }
+
+    .announcement-bar__marquee .marquee__track,
+    .announcement-bar__marquee .marquee__group {
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: none;
+      transform: none;
+    }
+
+    .announcement-bar :is([data-marquee-clone], [data-marquee-duplicate]) { display: none; }
+
+    .announcement-bar__marquee-item {
+      max-width: 100%;
+      flex: 1 1 100%;
+      overflow: visible;
+      text-align: center;
+    }
+
+    .announcement-bar__marquee-item .content-block {
+      overflow: visible;
+      overflow-wrap: anywhere;
+      text-overflow: clip;
+      white-space: normal;
+    }
+  }
+{% endstylesheet %}
+
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "enabled_on": { "groups": ["header"] },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Type",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Slideshow"
+        },
+        {
+          "value": "slider_social",
+          "label": "Slideshow with social links"
+        },
+        {
+          "value": "marquee",
+          "label": "Infinite marquee"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "text",
+      "id": "appointment_label",
+      "label": "Link label",
+      "default": "PRIVATE APPOINTMENTS",
+      "visible_if": "{{ section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "url",
+      "id": "appointment_link",
+      "label": "Right link",
+      "visible_if": "{{ section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "url",
+      "id": "x_url",
+      "label": "X / Twitter",
+      "visible_if": "{{ section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook",
+      "visible_if": "{{ section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_url",
+      "label": "Pinterest",
+      "visible_if": "{{ section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram",
+      "visible_if": "{{ section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "min": 37,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop height",
+      "default": 37
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 32,
+      "max": 52,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile height",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Slideshow behavior",
+      "visible_if": "{{ section.settings.layout == 'slider' or section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_rotation",
+      "label": "Auto-rotate",
+      "default": false,
+      "visible_if": "{{ section.settings.layout == 'slider' or section.settings.layout == 'slider_social' }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change every",
+      "default": 5,
+      "visible_if": "{{ section.settings.enable_rotation and section.settings.layout != 'marquee' }}"
+    },
+    {
+      "type": "header",
+      "content": "Marquee behavior",
+      "visible_if": "{{ section.settings.layout == 'marquee' }}"
+    },
+    {
+      "type": "select",
+      "id": "marquee_direction",
+      "label": "Marquee direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.layout == 'marquee' }}"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "label": "Marquee duration",
+      "default": 35,
+      "visible_if": "{{ section.settings.layout == 'marquee' }}"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "t:typography_blocks.text",
+          "default": "Shipping options and pricing are calculated at checkout."
+        },
+        {
+          "type": "select",
+          "id": "type_preset",
+          "label": "t:typography_blocks.text_size",
+          "options": [
+            { "value": "lg", "label": "t:typography_options.body_large" },
+            { "value": "md", "label": "t:typography_options.body_medium" },
+            { "value": "sm", "label": "t:typography_options.body_small" },
+            { "value": "xs", "label": "t:typography_options.body_extra_small" },
+            { "value": "custom", "label": "t:typography_options.custom" }
+          ],
+          "default": "sm"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "t:typography_blocks.size",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 16,
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "t:typography_blocks.mobile_size",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 14,
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "category": "Marketing",
+      "settings": {
+        "appointment_label": "PRIVATE APPOINTMENTS",
+        "height_desktop": 37,
+        "height_mobile": 32,
+        "color_scheme": "scheme-3"
+      },
+      "blocks": [
+        { "type": "announcement" }
+      ]
+    }
+  ]
+}
+{% endschema %}

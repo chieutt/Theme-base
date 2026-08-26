@@ -1,0 +1,74 @@
+{% liquid
+  assign product = block.settings.product
+  assign variant = product.selected_or_first_available_variant
+  assign title = block.settings.title | default: product.title
+  assign product_url = product.url
+  assign cta_url = product_url | default: routes.all_products_collection_url
+  assign price = block.settings.price
+  if variant != blank
+    assign price = variant.price
+  endif
+  assign is_placeholder = false
+  if product == blank and title == blank and block.settings.meta == blank and price == blank and block.settings.cta_label == blank
+    assign is_placeholder = true
+  endif
+%}
+
+  <aside class="editorial-slideshow__product-card{% if is_placeholder %} editorial-slideshow__product-card--placeholder{% endif %}"{% if title != blank %} aria-label="{{ title | escape }}"{% endif %} {{ block.shopify_attributes }}>
+    <div class="editorial-slideshow__product-copy">
+      {% if title != blank %}
+        {% if product_url != blank %}<a class="editorial-slideshow__product-title product-title-text" href="{{ product_url | escape }}">{{ title | escape }}</a>{% else %}<span class="editorial-slideshow__product-title product-title-text">{{ title | escape }}</span>{% endif %}
+      {% else %}
+        <span class="editorial-slideshow__product-title product-title-text">{{ 'onboarding.product_title' | t }}</span>
+      {% endif %}
+      {% if block.settings.meta != blank %}
+        <span class="editorial-slideshow__product-meta">{{ block.settings.meta | escape }}</span>
+      {% elsif is_placeholder %}
+        <span class="editorial-slideshow__product-meta">{{ 'onboarding.product_title' | t }}</span>
+      {% endif %}
+    </div>
+    <div class="editorial-slideshow__product-actions">
+      {% if price != blank %}
+        <div class="editorial-slideshow__product-price">
+          <span class="editorial-slideshow__product-price-label">{{ block.settings.price_label | escape }}</span>
+          <span class="editorial-slideshow__product-price-value">{% if variant != blank %}{% render 'money', amount: price %}{% else %}{{ price | escape }}{% endif %}</span>
+        </div>
+      {% elsif is_placeholder %}
+        <div class="editorial-slideshow__product-price">
+          <span class="editorial-slideshow__product-price-label">{{ 'onboarding.product_title' | t }}</span>
+          <span class="editorial-slideshow__product-price-value">{% render 'money', amount: 1999 %}</span>
+        </div>
+      {% endif %}
+      {% if block.settings.cta_label != blank %}
+        <a class="editorial-slideshow__product-link btn-{{ block.settings.button_style }}" href="{{ cta_url | escape }}">
+          <span class="editorial-slideshow__product-link-label">{{ block.settings.cta_label | escape }}</span>
+          <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+        </a>
+      {% endif %}
+    </div>
+  </aside>
+
+{% schema %}
+{
+  "name": "Editorial product card",
+  "tag": null,
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "title", "label": "Product title" },
+    { "type": "text", "id": "meta", "label": "Product meta" },
+    { "type": "text", "id": "price_label", "label": "Price label" },
+    { "type": "text", "id": "price", "label": "Product price", "info": "Used when no product is selected." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "info": "Links to the selected product, or All products when no product is selected." },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" }
+      ],
+      "default": "primary"
+    }
+  ]
+}
+{% endschema %}

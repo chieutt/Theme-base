@@ -1,154 +1,136 @@
-{% render 'button', link: block.settings.link %}
+{% doc %}
+  Renders a reusable button theme block.
+
+  @example
+  {% content_for 'block', type: 'button', id: 'button' %}
+{% enddoc %}
+
+{% liquid
+  assign button_url = block.settings.link | default: routes.all_products_collection_url
+%}
+
+{% if block.settings.label != blank %}
+  <div
+    class="content-button"
+    {{ block.shopify_attributes }}
+    {% render 'reveal-attributes', settings: block.settings %}
+  >
+    {% render 'cta',
+      label: block.settings.label,
+      url: button_url,
+      style: block.settings.style,
+      icon: block.settings.icon,
+      open_in_new_tab: block.settings.open_in_new_tab
+    %}
+  </div>
+{% endif %}
 
 {% schema %}
 {
-  "name": "t:names.button",
-  "tag": null,
+  "name": "Button",
   "settings": [
+    {
+      "type": "header",
+      "content": "Button"
+    },
     {
       "type": "text",
       "id": "label",
-      "label": "t:settings.label",
-      "default": "t:text_defaults.button_label"
+      "label": "Label",
+      "default": "Learn more"
     },
     {
       "type": "url",
       "id": "link",
-      "label": "t:settings.link"
+      "label": "Link"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "Tertiary"
+        }
+      ],
+      "default": "primary"
     },
     {
       "type": "checkbox",
       "id": "open_in_new_tab",
-      "label": "t:settings.open_new_tab",
+      "label": "Open in a new tab",
       "default": false
     },
     {
       "type": "select",
-      "id": "style_class",
-      "label": "t:settings.style",
+      "id": "icon",
+      "label": "Icon",
       "options": [
         {
-          "value": "button",
-          "label": "t:options.primary"
+          "value": "none",
+          "label": "None"
         },
         {
-          "value": "button-secondary",
-          "label": "t:options.secondary"
-        },
-        {
-          "value": "button-unstyled",
-          "label": "t:options.link"
-        },
-        {
-          "value": "button-custom",
-          "label": "t:options.custom"
+          "value": "arrow-right",
+          "label": "Arrow right"
         }
       ],
-      "default": "button",
-      "info": "t:info.edit_button_style_in_theme_settings"
+      "default": "none"
     },
     {
       "type": "header",
-      "content": "t:content.button_colors",
-      "visible_if": "{{ block.settings.style_class == \"button-custom\" }}"
-    },
-    {
-      "type": "color",
-      "id": "custom_button_background",
-      "label": "t:settings.background",
-      "default": "{{ settings.color_palette.foreground }}",
-      "alpha": true,
-      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
-    },
-    {
-      "type": "color",
-      "id": "custom_button_text",
-      "label": "t:settings.text",
-      "default": "{{ settings.color_palette.background }}",
-      "alpha": true,
-      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
-    },
-    {
-      "type": "color",
-      "id": "custom_button_border",
-      "label": "t:settings.borders",
-      "default": "{{ settings.color_palette.background }}",
-      "alpha": true,
-      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
-    },
-    {
-      "type": "color",
-      "id": "link_text_color",
-      "label": "t:settings.link_text_color",
-      "placeholder": "t:settings.default",
-      "visible_if": "{{ block.settings.style_class == 'button-unstyled' }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.size"
+      "content": "Animation"
     },
     {
       "type": "select",
-      "id": "width",
-      "label": "t:settings.width_desktop",
+      "id": "reveal_type",
+      "label": "Type",
       "options": [
-        {
-          "value": "fit-content",
-          "label": "t:options.fit_content"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.custom"
-        }
+        { "value": "none", "label": "None" },
+        { "value": "fade", "label": "Fade" },
+        { "value": "fade-up", "label": "Fade up" },
+        { "value": "fade-down", "label": "Fade down" },
+        { "value": "fade-left", "label": "Fade left" },
+        { "value": "fade-right", "label": "Fade right" },
+        { "value": "zoom", "label": "Zoom" }
       ],
-      "default": "fit-content"
+      "default": "none"
     },
     {
       "type": "range",
-      "id": "custom_width",
-      "label": "t:settings.custom_width",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 100,
-      "visible_if": "{{ block.settings.width == \"custom\" }}"
-    },
-    {
-      "type": "select",
-      "id": "width_mobile",
-      "label": "t:settings.width_mobile",
-      "options": [
-        {
-          "value": "fit-content",
-          "label": "t:options.fit_content"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.custom"
-        }
-      ],
-      "default": "fit-content"
+      "id": "reveal_duration",
+      "label": "Duration",
+      "min": 300,
+      "max": 1500,
+      "step": 50,
+      "unit": "ms",
+      "default": 650,
+      "visible_if": "{{ block.settings.reveal_type != 'none' }}"
     },
     {
       "type": "range",
-      "id": "custom_width_mobile",
-      "label": "t:settings.custom_width",
+      "id": "reveal_delay",
+      "label": "Delay",
       "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 100,
-      "visible_if": "{{ block.settings.width_mobile == \"custom\" }}"
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0,
+      "visible_if": "{{ block.settings.reveal_type != 'none' }}"
     }
   ],
   "presets": [
     {
-      "name": "t:names.button",
-      "category": "t:categories.basic",
-      "settings": {
-        "link": "shopify://collections/all"
-      }
+      "name": "Button"
     }
   ]
 }

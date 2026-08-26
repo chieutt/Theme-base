@@ -1,0 +1,135 @@
+{% doc %}
+  Renders an image block inside the image comparison slider.
+
+  @example
+  {% content_for 'block', type: '_image-comparison-image', id: 'image' %}
+{% enddoc %}
+
+{% liquid
+  assign image_blocks = section.blocks | where: 'type', '_image-comparison-image'
+  assign first_image_block = image_blocks | first
+  assign image_position = 'after'
+  if first_image_block.id == block.id
+    assign image_position = 'before'
+  endif
+
+  assign comparison_image = block.settings.image | default: block.settings.mobile_image
+  assign placeholder_asset = 'placeholder-image-default-1.svg'
+  if image_position == 'after'
+    assign placeholder_asset = 'placeholder-image-default-2.svg'
+  endif
+  assign page_width_pixels = settings.max_page_width | remove: 'rem' | times: 16
+  assign desktop_page_margin = settings.page_margin_desktop | at_least: settings.min_page_margin
+  assign tablet_page_margin = settings.page_margin_tablet | at_least: settings.min_page_margin
+  assign mobile_page_margin = settings.page_margin_mobile | at_least: settings.min_page_margin
+  assign desktop_horizontal_margin = desktop_page_margin | times: 2
+  assign tablet_horizontal_margin = tablet_page_margin | times: 2
+  assign mobile_horizontal_margin = mobile_page_margin | times: 2
+  assign comparison_max_width = page_width_pixels | minus: desktop_horizontal_margin
+  capture comparison_image_sizes
+    echo '(min-width: '
+    echo page_width_pixels
+    echo 'px) '
+    echo comparison_max_width
+    echo 'px, (min-width: 1150px) calc(100vw - '
+    echo desktop_horizontal_margin
+    echo 'px), (min-width: 768px) calc(100vw - '
+    echo tablet_horizontal_margin
+    echo 'px), calc(100vw - '
+    echo mobile_horizontal_margin
+    echo 'px)'
+  endcapture
+%}
+
+<div class="image-comparison__media image-comparison__media--{{ image_position }}" {{ block.shopify_attributes }}>
+  {% render 'responsive-media',
+    image: comparison_image,
+    mobile_image: block.settings.mobile_image,
+    mobile_breakpoint: 749,
+    max_width: 2400,
+    mobile_max_width: 1200,
+    widths: '480, 750, 1100, 1500, 1920, 2400',
+    mobile_widths: '480, 750, 1100, 1200',
+    sizes: comparison_image_sizes,
+    class: 'image-comparison__image',
+    loading: 'lazy',
+    alt: block.settings.image_alt,
+    placeholder_asset: placeholder_asset,
+    placeholder_class: 'image-comparison__placeholder'
+  %}
+  {% render 'image-comparison-overlay', block: block, position: image_position %}
+</div>
+
+{% schema %}
+{
+  "name": "Image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add two image blocks. The first is Before; the second is After."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave the label blank to hide the button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "end", "label": "End" }
+      ],
+      "default": "end"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image"
+    }
+  ]
+}
+{% endschema %}

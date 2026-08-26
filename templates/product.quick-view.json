@@ -1,0 +1,200 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "quick-view",
+      "blocks": {
+        "details": {
+          "type": "_product-details",
+          "settings": {
+            "enable_sticky": false,
+            "desktop_top_offset": 0
+          },
+          "blocks": {
+            "title": {
+              "type": "product-title",
+              "settings": {
+                "heading_size": "h3",
+                "html_tag": "h2"
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "product-price",
+              "settings": {
+                "price_size": "medium",
+                "show_discount_percentage": false
+              },
+              "blocks": {}
+            },
+            "rating": {
+              "type": "product-rating",
+              "settings": {
+                "show_when_empty": false,
+                "empty_label": "No reviews yet"
+              },
+              "blocks": {}
+            },
+            "description": {
+              "type": "product-metafield",
+              "settings": {
+                "namespace": "custom",
+                "key": "summary",
+                "style": "compact"
+              },
+              "blocks": {}
+            },
+            "options": {
+              "type": "product-option-picker",
+              "settings": {
+                "show_variant_labels": true,
+                "picker_type": "button",
+                "enable_color_swatches": true,
+                "swatch_type": "color",
+                "enable_size_chart": false,
+                "size_guide": "Size guide",
+                "size_chart": "Size chart",
+                "size_chart_page": ""
+              },
+              "blocks": {}
+            },
+            "inventory": {
+              "type": "product-inventory",
+              "settings": {},
+              "blocks": {}
+            },
+            "buttons": {
+              "type": "product-buy-buttons",
+              "settings": {
+                "button_layout": "inline",
+                "show_quantity": true,
+                "show_dynamic_checkout": true
+              },
+              "blocks": {}
+            },
+            "benefits": {
+              "type": "product-usp-list",
+              "settings": {
+                "columns_desktop": "4",
+                "columns_mobile": "2",
+                "text_size": "small",
+                "icon_size": "small"
+              },
+              "blocks": {
+                "benefit_1": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "truck",
+                    "text": "<p>Shipping options and pricing are calculated at checkout.</p>",
+                    "page": "",
+                    "show_page_popup": false
+                  },
+                  "blocks": {}
+                },
+                "benefit_2": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "return",
+                    "text": "<p>See our returns policy for eligibility and details.</p>",
+                    "page": "",
+                    "show_page_popup": false
+                  },
+                  "blocks": {}
+                },
+                "benefit_3": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "shield",
+                    "text": "<p>Lifetime Warranty</p>",
+                    "page": "",
+                    "show_page_popup": false
+                  },
+                  "blocks": {}
+                },
+                "benefit_4": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "sparkles",
+                    "text": "<p>Sustainably Made</p>",
+                    "page": "",
+                    "show_page_popup": false
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "benefit_1",
+                "benefit_2",
+                "benefit_3",
+                "benefit_4"
+              ]
+            },
+            "payment": {
+              "type": "product-payment",
+              "settings": {
+                "heading": "Pay With",
+                "heading_size": "h5",
+                "html_tag": "h2",
+                "text_size": "small",
+                "note": "Your transaction is protected with advanced security measures to keep your information confidential."
+              },
+              "blocks": {}
+            },
+            "share": {
+              "type": "product-share",
+              "settings": {
+                "label": "Share"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "title",
+            "price",
+            "rating",
+            "description",
+            "options",
+            "inventory",
+            "buttons",
+            "benefits",
+            "payment",
+            "share"
+          ]
+        }
+      },
+      "block_order": [
+        "details"
+      ],
+      "settings": {
+        "modal_width": "standard",
+        "corner_radius": "square",
+        "media_position": "left",
+        "media_width": 50,
+        "desktop_gap": 0,
+        "mobile_gap": 16,
+        "image_zoom": "open_lightbox",
+        "media_ratio": "4-5",
+        "mobile_media_ratio": "4-5",
+        "media_fit": "cover",
+        "show_mobile_pagination": true,
+        "show_mobile_thumbnails": false,
+        "thumbnail_size": 64,
+        "thumbnail_gap": 8,
+        "show_media": true,
+        "show_close_button": true,
+        "content_padding": 40
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

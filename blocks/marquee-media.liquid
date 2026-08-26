@@ -1,0 +1,93 @@
+{% doc %}
+  Renders an image or icon inside a marquee.
+
+  @example
+  {% content_for 'block', type: 'marquee-media', id: 'marquee-media' %}
+{% enddoc %}
+
+{% if block.settings.image != blank %}
+  <span
+    class="marquee-media"
+    style="--marquee-media-width: {{ block.settings.width }}px; --marquee-media-width-mobile: {{ block.settings.width_mobile }}px;"
+    {{ block.shopify_attributes }}
+  >
+    {% render 'responsive-image',
+      image: block.settings.image,
+      max_width: 240,
+      widths: '16, 24, 32, 48, 64, 96, 128, 160, 200, 240',
+      sizes: '(min-width: 768px) var(--marquee-media-width), var(--marquee-media-width-mobile)',
+      class: 'marquee-media__image',
+      alt: block.settings.alt,
+      loading: 'lazy'
+    %}
+  </span>
+{% endif %}
+
+{% stylesheet %}
+  .marquee-media {
+    display: grid;
+    width: var(--marquee-media-width);
+    flex: 0 0 var(--marquee-media-width);
+    place-items: center;
+  }
+
+  .marquee-media__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .marquee-media {
+      width: var(--marquee-media-width-mobile);
+      flex-basis: var(--marquee-media-width-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Icon / image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Icon or image"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Alt text"
+    },
+    {
+      "type": "header",
+      "content": "Size"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "min": 12,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop width",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "width_mobile",
+      "min": 12,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile width",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon / image"
+    }
+  ]
+}
+{% endschema %}

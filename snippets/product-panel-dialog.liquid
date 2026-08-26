@@ -1,0 +1,27 @@
+{% doc %}
+  Renders a product side-sheet or bottom-sheet dialog.
+
+  @param {string} dialog_id - Unique dialog id.
+  @param {string} title_id - Unique title id referenced by aria-labelledby.
+  @param {string} title - Dialog heading.
+  @param {string} dialog_content - Trusted HTML content for the dialog body.
+  @param {string} [dialog_class] - Additional dialog class names.
+  @param {string} [close_label_key] - Translation key for close controls.
+{% enddoc %}
+
+{% liquid
+  assign product_panel_dialog_close_label = close_label_key | default: 'size_chart.close' | t
+%}
+
+<dialog class="product-size-chart{% if dialog_class != blank %} {{ dialog_class }}{% endif %}" id="{{ dialog_id | escape }}" data-product-panel-dialog aria-labelledby="{{ title_id | escape }}">
+  <button type="button" class="product-size-chart__backdrop modal-backdrop" data-product-panel-close aria-label="{{ product_panel_dialog_close_label | escape }}"></button>
+  <span class="product-size-chart__backdrop-pointer modal-backdrop-pointer modal-close-button close-icon" aria-hidden="true"></span>
+  <div class="product-size-chart__panel modal-drag-target theme-scrollbar">
+    <div class="quick-view__handle product-size-chart__handle" data-size-chart-handle aria-hidden="true"></div>
+    <header class="product-size-chart__header">
+      <h2 id="{{ title_id | escape }}" class="product-size-chart__title heading-h2 heading-text">{{ title | escape }}</h2>
+      <button type="button" class="product-size-chart__close modal-close-button close-icon" data-product-panel-close aria-label="{{ product_panel_dialog_close_label | escape }}"></button>
+    </header>
+    <div class="product-size-chart__content rte">{% render 'typography-content', content: dialog_content %}</div>
+  </div>
+</dialog>

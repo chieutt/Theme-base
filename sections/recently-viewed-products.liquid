@@ -1,0 +1,124 @@
+<div class="recently-viewed-products" data-section-id="{{ section.id }}" data-recently-viewed data-limit="{{ section.settings.limit }}"{% unless request.design_mode %} hidden{% endunless %}>
+  {% if section.settings.heading != blank %}
+    <{{ section.settings.heading_tag | default: 'h2' }} class="recently-viewed-products__heading {% render 'typography-class', preset: section.settings.heading_size, fallback: 'h3' %}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag | default: 'h2' }}>
+  {% endif %}
+  <div class="recently-viewed-products__list" data-recently-viewed-list data-reveal-group>
+    {% if request.design_mode %}
+      {% for placeholder_index in (1..section.settings.limit) %}
+        <div class="recently-viewed-products__item">
+          <div class="recently-viewed-products__item-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+            {% render 'product-card', placeholder_index: placeholder_index %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Recently viewed products",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "HTML Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Product limit",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed products",
+      "category": "Product discovery"
+    }
+  ]
+}
+{% endschema %}

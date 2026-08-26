@@ -1,0 +1,119 @@
+{% doc %}
+  Renders a reusable static section header.
+
+  @example
+  {% content_for 'block', type: '_section-header', id: 'section_header' %}
+{% enddoc %}
+
+<header
+  class="section-header section-header-block"
+  style="--section-header-padding-bottom-desktop: {{ block.settings.padding_bottom_desktop | default: 0 }}px; --section-header-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile | default: 0 }}px;"
+  {{ block.shopify_attributes }}
+>
+  <div class="section-header-block__content">
+    {% content_for 'blocks' %}
+  </div>
+</header>
+
+{% stylesheet %}
+  .section-header-block {
+    padding-bottom: var(--section-header-padding-bottom-desktop, 0px);
+  }
+
+  .section-header-block__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @media screen and (max-width: 1149.98px) {
+    .section-header-block {
+      padding-bottom: var(--section-header-padding-bottom-mobile, 0px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Section header",
+  "blocks": [
+    {
+      "type": "text"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "spacer"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "select",
+      "id": "padding_device",
+      "label": "Devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.padding_device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.padding_device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section header",
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>What customers say</p>",
+            "type_preset": "h7",
+            "alignment": "center"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>Over 500 Happy Reviews</h2>",
+            "type_preset": "h1",
+            "alignment": "center"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

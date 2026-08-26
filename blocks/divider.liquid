@@ -1,0 +1,145 @@
+{% doc %}
+  Renders a responsive divider with configurable thickness, length and spacing.
+
+  @example
+  {% content_for 'block', type: 'divider', id: 'divider' %}
+{% enddoc %}
+
+<div
+  class="divider{% if block.settings.disable_on_desktop %} divider--disable-on-desktop{% endif %}{% if block.settings.disable_on_mobile %} divider--disable-on-mobile{% endif %}"
+  style="--divider-thickness: {{ block.settings.thickness }}px; --divider-length: {{ block.settings.length }}%; --divider-padding-top-desktop: {{ block.settings.padding_top_desktop }}px; --divider-padding-bottom-desktop: {{ block.settings.padding_bottom_desktop }}px; --divider-padding-top-mobile: {{ block.settings.padding_top_mobile }}px; --divider-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile }}px;"
+  aria-hidden="true"
+  {{ block.shopify_attributes }}
+></div>
+
+{% stylesheet %}
+  .divider {
+    width: min(100%, var(--divider-length));
+    height: var(--divider-thickness);
+    margin: var(--divider-padding-top-desktop) auto var(--divider-padding-bottom-desktop);
+    background: currentColor;
+    color: var(--color-text);
+  }
+
+  .divider--disable-on-desktop {
+    display: none;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .divider {
+      margin-block-start: var(--divider-padding-top-mobile);
+      margin-block-end: var(--divider-padding-bottom-mobile);
+    }
+
+    .divider--disable-on-desktop {
+      display: block;
+    }
+
+    .divider--disable-on-mobile {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Divider",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "thickness",
+      "label": "Thickness",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "length",
+      "label": "Length",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_on_desktop",
+      "label": "Disable on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_on_mobile",
+      "label": "Disable on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "select",
+      "id": "padding_device",
+      "label": "Devices",
+      "options": [
+        { "value": "desktop", "label": "Desktop" },
+        { "value": "mobile", "label": "Mobile" }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.padding_device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 4,
+      "visible_if": "{{ block.settings.padding_device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.padding_device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ block.settings.padding_device == 'mobile' }}"
+    }
+  ]
+}
+{% endschema %}

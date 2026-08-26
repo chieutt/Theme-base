@@ -1,0 +1,264 @@
+.review-parallax {
+  display: block;
+  overflow-x: clip;
+  overflow-y: visible;
+  background: var(--gradient-background, var(--color-background));
+  color: var(--color-text);
+}
+
+.review-parallax__scene {
+  position: relative;
+  padding: 72px var(--page-margin);
+}
+
+.review-parallax__viewport {
+  position: relative;
+  width: min(var(--page-width), 100%);
+  margin-inline: auto;
+}
+
+.review-parallax__header-track {
+  position: relative;
+  z-index: 2;
+}
+
+.review-parallax__header-track > .shopify-block {
+  display: contents;
+}
+
+.review-parallax .section-header-block {
+  position: relative;
+  width: min(100%, 32rem);
+  margin: 0 auto 40px;
+  color: var(--color-heading);
+  text-align: center;
+}
+
+.review-parallax .section-header-block__content :is(.text-block, .content-heading) {
+  margin: 0;
+  color: currentcolor;
+}
+
+.review-parallax .section-header-block__content .text-block {
+  color: var(--color-text);
+  font-style: var(--heading-font-style);
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--subheading-letter-spacing);
+  line-height: var(--subheading-line-height);
+  text-transform: var(--subheading-text-transform);
+}
+
+.review-parallax .section-header-block__content .content-block--text,
+.review-parallax .section-header-block__content .content-block--text p {
+  letter-spacing: var(--subheading-letter-spacing) !important;
+  line-height: var(--subheading-line-height) !important;
+  text-transform: var(--subheading-text-transform) !important;
+}
+
+.review-parallax .section-header-block__content .text-block > :first-child {
+  margin-top: 0;
+}
+
+.review-parallax .section-header-block__content .text-block > :last-child {
+  margin-bottom: 0;
+}
+
+.review-parallax .section-header-block__content .content-heading {
+  color: var(--color-heading);
+}
+
+.review-parallax__reviews {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+.review-parallax__reviews > .shopify-block {
+  display: contents;
+}
+
+.review-parallax__card {
+  display: flex;
+  width: min(100%, 292px);
+  flex-direction: column;
+  padding: 16px;
+  border-radius: var(--radius-card);
+  background: var(--color-secondary-button, var(--color-background));
+  color: var(--color-secondary-button-label, var(--color-heading));
+  overflow: hidden;
+}
+
+.review-parallax__card--lane-1 {
+  justify-self: end;
+}
+
+.review-parallax__card--lane-2 {
+  justify-self: center;
+}
+
+.review-parallax:not(.is-scroll-linked) .review-parallax__card {
+  justify-self: center;
+}
+
+.review-parallax__media {
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 1;
+  border-radius: max(0px, calc(var(--radius-card) * 0.667));
+  background: var(--color-variant-component-background);
+}
+
+.review-parallax__image,
+.review-parallax__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.review-parallax__placeholder {
+  color: color-mix(in srgb, currentcolor 18%, transparent);
+}
+
+.review-parallax__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.review-parallax__content :is(.text-block, .content-heading) {
+  margin: 0;
+  color: currentcolor;
+}
+
+.review-parallax__content .text-block,
+.review-parallax__content .text-block p {
+  color: var(--color-text);
+}
+
+.review-parallax__content .text-block > :first-child {
+  margin-top: 0;
+}
+
+.review-parallax__content .text-block > :last-child {
+  margin-bottom: 0;
+}
+
+.review-parallax.is-scroll-linked .review-parallax__scene {
+  padding: 100px 0;
+}
+
+.review-parallax.is-scroll-linked .review-parallax__viewport {
+  width: 100%;
+  max-width: var(--page-width);
+}
+
+.review-parallax.is-scroll-linked .review-parallax__header-track {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.review-parallax.is-scroll-linked .section-header-block {
+  position: sticky;
+  top: 50vh;
+  width: min(calc(100% - var(--page-margin) * 2), 32rem);
+  margin: 0;
+  margin-inline: auto;
+}
+
+.review-parallax.is-scroll-linked .review-parallax__reviews {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-auto-flow: row;
+  column-gap: clamp(16px, 2.2vw, 32px);
+  row-gap: 0;
+  padding-inline: max(var(--page-margin), 3.51vw);
+}
+
+.review-parallax.is-scroll-linked .review-parallax__card {
+  position: relative;
+  grid-row: var(--review-row-start) / span 4;
+  align-self: start;
+  width: 292px;
+  max-width: 100%;
+  margin: 0;
+  transform: translate3d(0, var(--review-card-offset, 0px), 0);
+  will-change: transform;
+}
+
+.review-parallax.is-scroll-linked .review-parallax__card--lane-0 {
+  grid-column: 1 / span 2;
+  justify-self: start;
+}
+
+.review-parallax.is-scroll-linked .review-parallax__card--lane-1 {
+  grid-column: 7 / span 2;
+  justify-self: end;
+}
+
+.review-parallax.is-scroll-linked .review-parallax__card--lane-2 {
+  grid-column: 4 / span 2;
+  justify-self: center;
+}
+
+@media screen and (max-width: 1149.98px) {
+  .review-parallax__scene {
+    padding: 56px 0;
+  }
+
+  .review-parallax__viewport {
+    width: 100%;
+  }
+
+  .review-parallax .section-header-block {
+    width: min(calc(100% - var(--page-margin) * 2), 32rem);
+    margin-bottom: 32px;
+  }
+
+  .review-parallax__reviews {
+    display: grid;
+    grid-auto-columns: calc(
+      (100% - (var(--review-mobile-cards-per-view) - 1) * 16px) / var(--review-mobile-cards-per-view)
+    );
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-template-rows: repeat(var(--review-mobile-rows), auto);
+    align-items: start;
+    gap: 16px;
+    padding-inline: var(--page-margin);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: var(--page-margin);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .review-parallax__reviews::-webkit-scrollbar {
+    display: none;
+  }
+
+  .review-parallax__card,
+  .review-parallax__card--lane-1,
+  .review-parallax__card--lane-2 {
+    width: 100%;
+    min-height: 0;
+    align-self: start;
+    justify-self: auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-parallax .section-header-block,
+  .review-parallax__card {
+    will-change: auto;
+  }
+}

@@ -1,0 +1,46 @@
+{% doc %}
+  Renders one fixed archive link card for the Why choose us section.
+{% enddoc %}
+
+{% liquid
+  assign card_image = block.settings.image
+  assign card_alt = block.settings.alt | default: card_image.alt
+  assign card_label = block.settings.label | default: 'ARCHIVE'
+  assign card_title = block.settings.title | default: 'Archive title'
+  assign card_description = block.settings.description
+  assign card_action_label = block.settings.action_label | default: 'Enter'
+%}
+
+{% if block.settings.link != blank %}
+  <a class="why-choose-us__archive-card" href="{{ block.settings.link | escape }}" {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %} aria-label="{{ block.settings.accessibility_label | default: card_title | escape }}" role="listitem" data-reveal-item {{ block.shopify_attributes }}>
+{% else %}
+  <article class="why-choose-us__archive-card" role="listitem" data-reveal-item {{ block.shopify_attributes }}>
+{% endif %}
+  <div class="why-choose-us__archive-media">
+    {% render 'responsive-media', image: card_image, max_width: 560, widths: '120, 180, 240, 360, 480, 560', sizes: '(min-width: 1150px) 9vw, 28vw', class: 'why-choose-us__archive-image', alt: card_alt, loading: 'lazy', placeholder_asset: 'image', placeholder_class: 'why-choose-us__archive-placeholder' %}
+  </div>
+  <div class="why-choose-us__archive-content">
+    <p class="why-choose-us__archive-label">{{ card_label | escape }}</p>
+    <p class="why-choose-us__archive-title heading-text">{{ card_title | escape }}</p>
+    {% if card_description != blank %}<div class="why-choose-us__archive-description body-text rte">{{ card_description }}</div>{% endif %}
+    {% if card_action_label != blank %}<span class="why-choose-us__archive-action"><span>{{ card_action_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></span>{% endif %}
+  </div>
+{% if block.settings.link != blank %}</a>{% else %}</article>{% endif %}
+
+{% schema %}
+{
+  "name": "Why choose us archive",
+  "tag": null,
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "alt", "label": "Alt text" },
+    { "type": "text", "id": "label", "label": "Label", "default": "ARCHIVE N° 01" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "The Necklaces" },
+    { "type": "richtext", "id": "description", "label": "Text" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "text", "id": "action_label", "label": "Button label", "default": "Enter" },
+    { "type": "checkbox", "id": "open_in_new_tab", "label": "Open link in new tab", "default": false },
+    { "type": "text", "id": "accessibility_label", "label": "Accessibility label" }
+  ]
+}
+{% endschema %}

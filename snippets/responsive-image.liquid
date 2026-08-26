@@ -1,0 +1,92 @@
+{% doc %}
+  Renders one responsive Shopify image without imposing a wrapper.
+
+  @param {image} image - Image object to render.
+  @param {number} [max_width] - Largest generated image width.
+  @param {string} [widths] - Responsive source widths.
+  @param {string} [sizes] - Responsive sizes attribute.
+  @param {string} [class] - Image class names.
+  @param {string} [alt] - Alternative text override.
+  @param {boolean} [decorative] - Whether the image is decorative and must render an empty alt attribute.
+  @param {string} [loading] - Browser loading behavior.
+  @param {string} [fetchpriority] - Browser fetch priority.
+  @param {boolean} [preload] - Whether Shopify should emit an early preload hint.
+  @param {string} [decoding] - Browser image decoding behavior.
+  @param {string} [style] - Inline style declarations.
+
+  @example
+  {% render 'responsive-image',
+    image: product.featured_image,
+    max_width: 1200,
+    widths: '320, 480, 750, 960, 1200',
+    sizes: '(min-width: 768px) 50vw, 100vw',
+    class: 'media-cover'
+  %}
+{% enddoc %}
+
+{% liquid
+  assign image_max_width = max_width | default: image.width
+  assign image_loading = loading | default: 'lazy'
+  assign image_fetchpriority = fetchpriority | default: 'auto'
+  assign image_decoding = decoding | default: 'async'
+  assign image_alt = alt | default: image.alt
+  assign image_is_decorative = decorative | default: false
+  assign responsive_image_style = blank
+  if image.presentation.focal_point != blank
+    assign responsive_image_style = 'object-position: ' | append: image.presentation.focal_point | append: ';'
+  endif
+  if style != blank
+    assign responsive_image_style = responsive_image_style | append: style
+  endif
+  if image_is_decorative == false and image_alt == blank
+    assign image_alt = 'accessibility.image' | t
+  endif
+%}
+
+{% if image != blank %}
+  {% if image_is_decorative %}
+    {% liquid
+      assign responsive_widths = widths | default: image_max_width | split: ','
+      capture image_srcset
+        for responsive_width in responsive_widths
+          assign responsive_width_value = responsive_width | strip
+          echo image | image_url: width: responsive_width_value
+          echo ' '
+          echo responsive_width_value
+          echo 'w'
+          unless forloop.last
+            echo ', '
+          endunless
+        endfor
+      endcapture
+    %}
+    <img
+      src="{{ image | image_url: width: image_max_width }}"
+      {% if image_srcset != blank %}srcset="{{ image_srcset | strip }}"{% endif %}
+      {% if sizes != blank %}sizes="{{ sizes }}"{% endif %}
+      {% if class != blank %}class="{{ class }}"{% endif %}
+      alt=""
+      width="{{ image.width }}"
+      height="{{ image.height }}"
+      loading="{{ image_loading }}"
+      fetchpriority="{{ image_fetchpriority }}"
+      decoding="{{ image_decoding }}"
+      {% if responsive_image_style != blank %}style="{{ responsive_image_style }}"{% endif %}
+    >
+  {% else %}
+    {{
+      image
+      | image_url: width: image_max_width
+      | image_tag:
+        class: class,
+        widths: widths,
+        sizes: sizes,
+        loading: image_loading,
+        fetchpriority: image_fetchpriority,
+        decoding: image_decoding,
+        alt: image_alt,
+        style: responsive_image_style,
+        preload: preload
+    }}
+  {% endif %}
+{% endif %}

@@ -1,0 +1,121 @@
+{% doc %}
+  Renders a reusable customer newsletter form.
+
+  @example
+  {% content_for 'block', type: 'newsletter-form', id: 'newsletter_form' %}
+{% enddoc %}
+
+{% liquid
+  assign newsletter_form_id = 'NewsletterForm-' | append: section.id | append: '-' | append: block.id
+  capture newsletter_form_attributes
+    echo block.shopify_attributes
+  endcapture
+%}
+
+{% render 'newsletter-form', settings: block.settings, form_id: newsletter_form_id, attributes: newsletter_form_attributes %}
+
+{% stylesheet %}
+  .newsletter-form,
+  .newsletter-form__fields {
+    width: 100%;
+  }
+
+  .newsletter-form__fields {
+    display: flex;
+    gap: 12px;
+  }
+
+  .newsletter-form__fields--stacked {
+    flex-direction: column;
+  }
+
+  .newsletter-form__field {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .newsletter-form__label {
+    margin-block-end: 8px;
+  }
+
+  .newsletter-form__field input {
+    width: 100%;
+  }
+
+  .newsletter-form__message {
+    margin-block: 12px 0;
+  }
+
+  .newsletter-form__message--error {
+    color: currentcolor;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .newsletter-form__fields--inline {
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Newsletter form",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Newsletter form"
+    },
+    { "type": "text", "id": "email_label", "label": "Email label", "default": "Email" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder" },
+    { "type": "checkbox", "id": "hide_label", "label": "Hide email label", "default": false },
+    {
+      "type": "checkbox",
+      "id": "show_required_marker",
+      "label": "Required marker",
+      "default": true,
+      "visible_if": "{{ block.settings.hide_label == false }}"
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "arrow-right", "label": "Arrow right" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "form_layout",
+      "label": "Form layout",
+      "options": [
+        { "value": "stacked", "label": "Stacked" },
+        { "value": "inline", "label": "Inline" }
+      ],
+      "default": "stacked"
+    },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you for subscribing." }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter form",
+      "category": "Marketing"
+    }
+  ]
+}
+{% endschema %}

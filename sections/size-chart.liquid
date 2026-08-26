@@ -1,0 +1,53 @@
+<div class="size-chart-page">
+  <div class="size-chart-page__inner">
+    <header class="size-chart-page__header">
+      {% if section.settings.subheading != blank %}<p class="size-chart-page__subheading subheading-text">{{ section.settings.subheading | escape }}</p>{% endif %}
+      <h1 class="heading-h1 heading-text">{{ section.settings.heading | default: page.title | default: 'Size guide' | escape }}</h1>
+      {% if section.settings.intro != blank %}<p>{{ section.settings.intro | escape }}</p>{% endif %}
+    </header>
+
+    {% if page.content != blank %}
+      <div class="size-chart-page__content rte theme-scrollbar">{% render 'typography-content', content: page.content %}</div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .size-chart-page { background: var(--color-background); color: var(--color-text); }
+  .size-chart-page__inner { width: min(100%, 1080px); margin-inline: auto; padding: clamp(56px, 9vw, 120px) var(--page-margin); }
+  .size-chart-page__header { max-width: 700px; margin-bottom: clamp(48px, 7vw, 88px); }
+  .size-chart-page__subheading { margin: 0 0 14px; font-size: var(--subheading-size); letter-spacing: var(--subheading-letter-spacing); text-transform: var(--subheading-text-transform); }
+  .size-chart-page__header h1, .size-chart-page__group h2 { margin: 0; color: var(--color-heading); font-family: var(--heading-font-family); font-weight: var(--heading-font-weight); }
+  .size-chart-page__header h1 { font-size: clamp(40px, 6vw, 72px); line-height: 1; }
+  .size-chart-page__header p:not(.size-chart-page__subheading) { max-width: 62ch; margin: 20px 0 0; line-height: 1.65; }
+  .size-chart-page__content { margin-top: 48px; }
+  .size-chart-page__content .size-chart-content__group { padding-block: clamp(32px, 5vw, 56px); border-top: 1px solid var(--color-variant-border); }
+  .size-chart-page__content .size-chart-content__heading { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1.3fr); gap: 28px; margin-bottom: 28px; }
+  .size-chart-page__content h2 { margin: 0; color: var(--color-heading); font-family: var(--heading-font-family); font-size: clamp(26px, 3vw, 38px); font-weight: var(--heading-font-weight); line-height: 1.1; }
+  .size-chart-page__content .size-chart-content__heading p { max-width: 58ch; margin: 0; line-height: 1.65; }
+  .size-chart-page__content .size-chart-content__table-wrap { overflow-x: auto; scrollbar-width: thin; }
+  .size-chart-page__content table { width: 100%; min-width: 580px; border-collapse: collapse; text-align: left; }
+  .size-chart-page__content th, .size-chart-page__content td { border-bottom: 1px solid var(--color-variant-border); padding: 16px 12px; font-size: var(--p2-size-sm); line-height: 1.45; }
+  .size-chart-page__content th { color: var(--color-heading); font-size: var(--label-size); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .size-chart-page__content td:first-child { color: var(--color-heading); font-weight: 600; }
+  @media screen and (max-width: 767.98px) { .size-chart-page__inner { padding-block: 56px; } .size-chart-page__content .size-chart-content__heading { grid-template-columns: 1fr; gap: 16px; } .size-chart-page__content th, .size-chart-page__content td { padding: 14px 10px; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Size chart",
+  "tag": "section",
+  "class": "section-size-chart",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Jewellery sizing" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Size guide" },
+    { "type": "textarea", "id": "intro", "label": "Text", "default": "Use the measurements below to find the right fit. Product pages show the sizes available for each individual piece." }
+  ],
+  "presets": [{ "name": "Size chart" }]
+}
+{% endschema %}

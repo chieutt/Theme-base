@@ -1,0 +1,79 @@
+{% render 'section-stylesheet', asset: 'section-why-choose-us.css', defer_on_home: true %}
+
+{% liquid
+  assign section_background = section.settings.background_color
+  if section_background == blank
+    assign section_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} { background: {{ section_background }}; }
+  #shopify-section-{{ section.id }} .why-choose-us { background: transparent; }
+{% endstyle %}
+
+<div
+  class="why-choose-us color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="why-choose-us__inner section-spacing{% if section.settings.section_width == 'page' %} page-width{% endif %}">
+    <header class="why-choose-us__header" data-reveal-group>
+      <div class="why-choose-us__header-content">
+        {% content_for 'block', type: 'label', id: 'section_label' %}
+        {% content_for 'block', type: 'heading', id: 'section_heading' %}
+      </div>
+    </header>
+
+    {% content_for 'block', type: 'why-choose-us-statistics', id: 'statistics' %}
+    {% content_for 'block', type: 'why-choose-us-archives', id: 'archives' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Why choose us",
+  "tag": "section",
+  "class": "section-why-choose-us",
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "page"
+    },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-4" },
+    { "type": "color", "id": "background_color", "label": "Background color", "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme." },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "presets": [
+    {
+      "name": "Why choose us",
+      "category": "Editorial content",
+      "settings": { "section_width": "page", "color_scheme": "scheme-4", "padding_top": 80, "padding_bottom": 80 },
+      "blocks": [
+        { "type": "label", "id": "section_label", "static": true, "settings": { "text": "<p>03 / WHY SPINEL</p>", "reveal_type": "fade-up", "reveal_delay": 0 } },
+        { "type": "heading", "id": "section_heading", "static": true, "settings": { "heading": "<h2>In fine red, scarcer than the ruby it named.</h2>", "type_preset": "h4", "reveal_type": "fade-up", "reveal_delay": 150 } },
+        { "type": "why-choose-us-statistics", "id": "statistics", "static": true, "settings": { "columns_desktop": "3", "columns_mobile": "1", "item_gap": 40, "heading_size": "h2", "text_size": "xs" }, "blocks": [
+          { "type": "why-choose-us-stat", "settings": { "value": "8 MM", "description": "<p>NATURAL, UNTREATED<br>MOGOK, BURMA</p>" } },
+          { "type": "why-choose-us-stat", "settings": { "value": "42 HOURS", "description": "<p>SETTING AND HAND-FINISHING<br>18K HALLMARKED</p>" } },
+          { "type": "why-choose-us-stat", "settings": { "value": "600 YEARS", "description": "<p>CATALOGUED AS RUBY UNTIL GEMOLOGY SETTLED IT —<br>THE NAME NEVER CAUGHT UP</p>" } }
+        ] },
+        { "type": "why-choose-us-archives", "id": "archives", "static": true, "settings": { "columns_desktop": "3", "columns_mobile": "1", "item_gap": 40, "image_width": 104, "image_ratio": "4-3", "label_size": "label", "heading_size": "h5", "text_size": "sm", "button_style": "tertiary", "button_size": "small" }, "blocks": [
+          { "type": "why-choose-us-archive-card", "settings": { "label": "ARCHIVE N° 01", "title": "The Necklaces", "action_label": "Enter" } },
+          { "type": "why-choose-us-archive-card", "settings": { "label": "ARCHIVE N° 02", "title": "The Rings", "action_label": "Enter" } },
+          { "type": "why-choose-us-archive-card", "settings": { "label": "ARCHIVE N° 03", "title": "The Art of Giving", "action_label": "Enter" } }
+        ] }
+      ]
+    }
+  ]
+}
+{% endschema %}

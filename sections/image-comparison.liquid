@@ -1,0 +1,115 @@
+{% render 'section-stylesheet', asset: 'section-image-comparison.css', defer_on_home: true %}
+
+{% comment %}
+  Theme blocks are manually rendered below so section.blocks can provide the
+  image count, before-image detection and aspect ratio metadata.
+{% endcomment %}
+{% liquid
+  assign image_blocks = section.blocks | where: 'type', '_image-comparison-image'
+  assign comparison_image_count = image_blocks.size
+  assign before_block = image_blocks | first
+  assign has_comparison_images = false
+  if comparison_image_count == 2
+    assign has_comparison_images = true
+  endif
+
+  assign before_image = before_block.settings.image | default: before_block.settings.mobile_image
+  assign comparison_ratio = before_image.aspect_ratio | default: 1.333333
+%}
+
+<div
+  class="image-comparison color-scheme color-{{ section.settings.color_scheme.id }} image-comparison--{{ section.settings.layout }} full-width"
+  style="--image-comparison-ratio: {{ comparison_ratio }}; --image-comparison-layout-gap: {{ section.settings.layout_gap }}px; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="image-comparison__inner section-spacing">
+    {% content_for 'block', type: '_section-header', id: 'image_comparison_header' %}
+
+    <image-comparison-slider
+      class="image-comparison__slider image-comparison__slider--{{ section.settings.layout }} image-comparison__slider--desktop-height-{{ section.settings.desktop_height }} image-comparison__slider--mobile-height-{{ section.settings.mobile_height }}{% unless has_comparison_images %} image-comparison__slider--incomplete{% endunless %}"
+      style="--comparison-position: 20%;"
+      data-orientation="{{ section.settings.layout }}"
+      data-deferred-module="{{ 'section-image-comparison.js' | asset_url }}"
+      aria-label="{{ 'image_comparison.comparison_label' | t | escape }}"
+    >
+      {% for block in section.blocks %}
+        {% render block %}
+      {% endfor %}
+
+      <button
+        class="image-comparison__handle"
+        type="button"
+        data-image-comparison-handle
+        role="slider"
+        aria-label="{{ 'image_comparison.handle_label' | t | escape }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="20"
+        aria-orientation="{% if section.settings.layout == 'vertical' %}vertical{% else %}horizontal{% endif %}"
+      >
+        <span class="visually-hidden" data-image-comparison-value>20%</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="m11 9-7 7 7 7M21 9l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+      </button>
+    </image-comparison-slider>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image comparison",
+  "tag": "section",
+  "class": "section-image-comparison",
+  "max_blocks": 2,
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [{ "value": "horizontal", "label": "Horizontal" }, { "value": "vertical", "label": "Vertical" }], "default": "horizontal" },
+    { "type": "select", "id": "desktop_height", "label": "Desktop height", "options": [{ "value": "adapt", "label": "Adapt to first image" }, { "value": "small", "label": "Small" }, { "value": "medium", "label": "Medium" }, { "value": "large", "label": "Large" }], "default": "adapt" },
+    { "type": "range", "id": "layout_gap", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Heading to image gap", "default": 44 },
+    { "type": "header", "content": "Mobile layout" },
+    { "type": "select", "id": "mobile_height", "label": "Mobile height", "options": [{ "value": "adapt", "label": "Adapt to first image" }, { "value": "small", "label": "Small" }, { "value": "medium", "label": "Medium" }, { "value": "large", "label": "Large" }], "default": "adapt" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 72 }
+  ],
+  "blocks": [
+    { "type": "_image-comparison-image" }
+  ],
+  "presets": [
+    {
+      "name": "Image comparison",
+      "category": "Banners",
+      "blocks": [
+        {
+          "type": "_section-header",
+          "id": "image_comparison_header",
+          "static": true,
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h2>The Making of Timeless Beauty</h2>",
+                "type_preset": "h2",
+                "alignment": "center"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Discover the precision behind every handcrafted piece</p>",
+                "type_preset": "md",
+                "alignment": "center"
+              }
+            }
+          ]
+        },
+        { "type": "_image-comparison-image" },
+        { "type": "_image-comparison-image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+[data-animated-details] > [data-accordion-content] {
+  transform-origin: top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animated-details],
+  [data-animated-details] > [data-accordion-content] {
+    animation: none !important;
+    transition: none !important;
+  }
+}

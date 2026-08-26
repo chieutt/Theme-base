@@ -1,0 +1,68 @@
+{% assign product = closest.product | default: product %}
+{% assign form_id = 'product-form-' | append: section.id %}
+{% if template.suffix != blank %}{% assign form_id = form_id | append: '-' | append: template.suffix %}{% endif %}
+{% if product != blank %}
+  {% form 'product', product, id: form_id, novalidate: 'novalidate', data-product-form: '' %}
+    {% render 'product-form', product: product %}
+    {% render 'buy-buttons',
+      product: product,
+      variant: product.selected_or_first_available_variant,
+      block: block,
+      form: form,
+      form_id: form_id,
+      section_id: section.id
+    %}
+  {% endform %}
+{% else %}
+  <div class="product-buy-buttons product-buy-buttons--placeholder" {{ block.shopify_attributes }}>
+    {% if block.settings.show_quantity %}
+      <div class="quantity-selector">
+        <div class="quantity-selector__control" aria-label="Quantity">
+          <span aria-hidden="true">−</span>
+          <span>1</span>
+          <span aria-hidden="true">+</span>
+        </div>
+      </div>
+    {% endif %}
+    <span class="product-buy-buttons__add" aria-disabled="true">{{ 'product.sold_out' | t }}</span>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Product buy buttons",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product buy buttons"
+    },
+    {
+      "type": "select",
+      "id": "button_layout",
+      "label": "Button layout",
+      "options": [
+        {
+          "value": "inline",
+          "label": "Quantity and Add to cart in one row"
+        },
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        }
+      ],
+      "default": "inline"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Quantity selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

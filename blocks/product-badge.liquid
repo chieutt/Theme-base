@@ -1,0 +1,26 @@
+{% doc %}
+  Renders a merchant-configurable product badge above product information.
+{% enddoc %}
+{% if block.settings.label != blank %}
+  <div class="product-badges product-badges--custom" {{ block.shopify_attributes }}>
+    <span class="product-badge product-badge--best-seller">{{ block.settings.label | escape }}</span>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product badge",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product badge"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Badge label",
+      "default": "Bestseller"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,7 @@
+{% if media.preview_image != blank %}
+  {% assign media_thumbnail_alt = media.alt %}
+  {% if media_thumbnail_alt == blank %}
+    {% assign media_thumbnail_alt = 'accessibility.image' | t %}
+  {% endif %}
+  {{ media.preview_image | image_url: width: 160 | image_tag: widths: '80, 120, 160', sizes: '72px', loading: 'lazy', alt: media_thumbnail_alt }}
+{% endif %}

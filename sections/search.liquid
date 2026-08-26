@@ -1,0 +1,454 @@
+{% liquid
+  assign search_results_per_page = settings.search_results_per_page | default: 20
+  assign search_sort_by = search.sort_by | default: search.default_sort_by
+  assign active_filter_count = 0
+  assign desktop_card_width = 100.0 | divided_by: section.settings.columns_desktop
+  assign tablet_card_width = 100.0 | divided_by: section.settings.columns_desktop
+  assign mobile_card_width = 100.0 | divided_by: section.settings.columns_mobile
+
+  for filter in search.filters
+    assign active_filter_count = active_filter_count | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      if filter.min_value.value != nil or filter.max_value.value != nil
+        assign active_filter_count = active_filter_count | plus: 1
+      endif
+    endif
+  endfor
+%}
+
+{% capture product_card_sizes %}(min-width: 1150px) {{ desktop_card_width }}vw, (min-width: 768px) {{ tablet_card_width }}vw, {{ mobile_card_width }}vw{% endcapture %}
+
+<div
+  class="search-page color-scheme color-{{ section.settings.color_scheme.id }}"
+  style="--search-columns-desktop: {{ section.settings.columns_desktop }}; --search-columns-tablet: {{ section.settings.columns_desktop }}; --search-columns-mobile: {{ section.settings.columns_mobile }}; --search-column-gap: {{ section.settings.column_gap }}px; --search-mobile-column-gap: {{ section.settings.mobile_column_gap }}px; --search-row-gap: {{ section.settings.row_gap }}px; --search-padding-top: {{ section.settings.padding_top }}px; --search-padding-bottom: {{ section.settings.padding_bottom }}px;"
+  data-deferred-module="{{ 'section-search.js' | asset_url }}"
+>
+  <div class="search-page__intro">
+    <h1 class="search-page__title heading-h1 heading-text">
+      {% if search.performed %}
+        {{ 'search.results_heading_html' | t: count: search.results_count, terms: search.terms }}
+      {% else %}
+        {{ 'search.title' | t }}
+      {% endif %}
+    </h1>
+
+    <form class="search-page__form search-field" action="{{ routes.search_url | escape }}" method="get" role="search" data-search-form>
+      {% if section.settings.enable_prefix_search %}<input type="hidden" name="options[prefix]" value="last">{% endif %}
+      <label class="visually-hidden" for="SearchInput-{{ section.id }}">{{ 'search.label' | t }}</label>
+      <input id="SearchInput-{{ section.id }}" class="search-page__input search-field__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'search.placeholder' | t }}" autocomplete="off" data-search-input>
+      <button class="search-page__clear search-field__clear" type="button" aria-label="{{ 'search.clear_search' | t | escape }}" data-search-clear{% if search.terms == blank %} hidden{% endif %}>
+        {% render 'icon', name: 'close' %}
+      </button>
+      <button class="search-page__submit search-field__submit" type="submit" aria-label="{{ 'search.submit' | t | escape }}">
+        {% render 'icon', name: 'search' %}
+      </button>
+    </form>
+  </div>
+
+  {% if search.performed %}
+    <search-results class="search-page__results" data-search-results>
+      {% if search.results_count > 0 %}
+        {% if section.settings.enable_filtering or section.settings.enable_sorting %}
+          <div class="search-page__toolbar">
+            <button class="search-page__filter-button btn-{{ section.settings.filter_button_style }}" type="button" aria-haspopup="dialog" aria-controls="SearchFilters-{{ section.id }}" data-search-filter-open>
+              {% render 'icon', name: 'filter' %}
+              <span>{{ 'search.filter_and_sort' | t }}</span>{% if active_filter_count > 0 %}<span>({{ active_filter_count }})</span>{% endif %}
+            </button>
+          </div>
+
+          <dialog scroll-lock class="search-page__filter-dialog" id="SearchFilters-{{ section.id }}" aria-labelledby="SearchFiltersTitle-{{ section.id }}" data-search-filter-dialog>
+            <form class="search-page__filter-form" action="{{ routes.search_url | escape }}" method="get">
+              <input type="hidden" name="q" value="{{ search.terms | escape }}">
+              {% if section.settings.enable_prefix_search %}<input type="hidden" name="options[prefix]" value="last">{% endif %}
+              <header class="search-page__filter-header">
+                <h2 id="SearchFiltersTitle-{{ section.id }}" class="heading-h2 heading-text">{{ 'search.filter_and_sort' | t }}</h2>
+                <button class="close-icon" type="button" aria-label="{{ 'search.close_filters' | t | escape }}" data-search-filter-close></button>
+              </header>
+
+              <div class="search-page__filter-body">
+                {% if active_filter_count > 0 %}
+                  <div class="search-page__active-filters">
+                    {% for filter in search.filters %}
+                      {% for value in filter.active_values %}<a href="{{ value.url_to_remove | escape }}"><span>{{ value.label | escape }}</span><span aria-hidden="true">×</span></a>{% endfor %}
+                      {% if filter.type == 'price_range' %}
+                        {% if filter.min_value.value != nil or filter.max_value.value != nil %}<a href="{{ filter.url_to_remove | escape }}"><span>{{ filter.label | escape }}</span><span aria-hidden="true">×</span></a>{% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    <a class="search-page__clear-link" href="{{ routes.search_url | escape }}?q={{ search.terms | url_encode }}{% if section.settings.enable_prefix_search %}&amp;options[prefix]=last{% endif %}">{{ 'search.clear_all' | t }}</a>
+                  </div>
+                {% endif %}
+
+                {% if section.settings.enable_sorting %}
+                  <div class="search-page__sort-group">
+                    <label for="SearchSort-{{ section.id }}">{{ 'search.sort_by' | t }}</label>
+                    <div class="search-page__select-wrap"><select id="SearchSort-{{ section.id }}" name="sort_by">{% for option in search.sort_options %}<option value="{{ option.value }}"{% if option.value == search_sort_by %} selected{% endif %}>{{ option.name }}</option>{% endfor %}</select>{% render 'icon', name: 'chevron-down-wide' %}</div>
+                  </div>
+                {% endif %}
+
+                {% if section.settings.enable_filtering %}
+                  <div class="search-page__filter-groups">
+                    {% for filter in search.filters %}
+                      {% liquid
+                        assign filter_open = false
+                        assign filter_names = section.settings.open_filter_groups | downcase | split: ','
+                        assign filter_label = filter.label | downcase
+                        for filter_name in filter_names
+                          assign normalized_filter_name = filter_name | strip
+                          if normalized_filter_name == filter_label
+                            assign filter_open = true
+                            break
+                          endif
+                        endfor
+                        assign is_swatch_filter = false
+                        if filter.presentation == 'swatch'
+                          assign is_swatch_filter = true
+                        endif
+                      %}
+                      <details class="search-page__filter-group"{% if filter_open %} open{% endif %}>
+                        <summary><span>{{ filter.label | escape }}</span>{% render 'icon', name: 'minus' %}</summary>
+                        {% if filter.type == 'price_range' %}
+                          <div class="search-page__price-filter">
+                            <div><label for="SearchFilter-{{ filter.label | handle }}-Min-{{ section.id }}">{{ 'search.price_from' | t }}</label><input id="SearchFilter-{{ filter.label | handle }}-Min-{{ section.id }}" type="number" name="{{ filter.min_value.param_name }}" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}" placeholder="0"{% if filter.min_value.value != nil %} value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}></div>
+                            <span aria-hidden="true">–</span>
+                            <div><label for="SearchFilter-{{ filter.label | handle }}-Max-{{ section.id }}">{{ 'search.price_to' | t }}</label><input id="SearchFilter-{{ filter.label | handle }}-Max-{{ section.id }}" type="number" name="{{ filter.max_value.param_name }}" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}" placeholder="{{ filter.range_max | money_without_currency }}"{% if filter.max_value.value != nil %} value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}></div>
+                          </div>
+                        {% else %}
+                          <ul class="search-page__filter-values{% if is_swatch_filter %} search-page__filter-values--swatches{% endif %}" role="list">
+                            {% for value in filter.values limit: 50 %}
+                              <li><label class="search-page__filter-value{% if value.active %} is-active{% endif %}"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %}>{% if is_swatch_filter %}<span class="search-page__swatch"{% if value.swatch.color != blank %} style="--search-swatch-color: {{ value.swatch.color }};"{% endif %}></span>{% endif %}<span>{{ value.label | escape }}</span><span>({{ value.count }})</span></label></li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </details>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <footer class="search-page__filter-footer"><button class="btn-primary" type="submit">{{ 'search.apply_filters' | t: count: search.results_count }}</button><a class="btn-secondary" href="{{ routes.search_url | escape }}?q={{ search.terms | url_encode }}{% if section.settings.enable_prefix_search %}&amp;options[prefix]=last{% endif %}">{{ 'search.clear_all' | t }}</a></footer>
+            </form>
+          </dialog>
+        {% endif %}
+
+        {% paginate search.results by search_results_per_page %}
+          <ul class="search-page__grid" role="list">
+            {% for result in search.results %}
+              <li class="search-page__result">
+                {% if result.object_type == 'product' %}
+                  {% liquid
+                    assign card_loading = 'lazy'
+                    if paginate.current_page == 1 and forloop.index <= section.settings.columns_desktop
+                      assign card_loading = 'eager'
+                    endif
+                  %}
+                  {% render 'product-card',
+                    product: result,
+                    heading_tag: 'h2',
+                    sizes: product_card_sizes,
+                    loading: card_loading,
+                    show_media_actions: true,
+                    enable_quick_view: true
+                  %}
+                {% else %}
+                  {% liquid
+                    assign result_image = result.featured_image | default: result.image
+                    assign result_type = 'search.page_result' | t
+                    assign article_meta = false
+                    if result.object_type == 'article'
+                      assign result_type = 'search.article_result' | t
+                      if section.settings.show_article_date or section.settings.show_article_author
+                        assign article_meta = true
+                      endif
+                    endif
+                  %}
+                  <article class="search-page__content-card">
+                    {% if result_image != blank and section.settings.show_article_image %}{% assign result_image_alt = result_image.alt | default: result.title %}<a class="search-page__content-media search-page__content-media--{{ section.settings.article_image_ratio }}" href="{{ result.url | escape }}" aria-label="{{ result.title | escape }}">{% render 'responsive-image', image: result_image, max_width: 960, widths: '240, 360, 480, 640, 800, 960', sizes: product_card_sizes, class: 'search-page__content-image', loading: 'lazy', alt: result_image_alt %}</a>{% endif %}
+                    <div class="search-page__content-details"><span class="search-page__content-type">{{ result_type }}</span>{% if article_meta %}<p class="search-page__content-meta">{% if section.settings.show_article_date %}{{ result.published_at | date: '%B %d, %Y' }}{% endif %}{% if section.settings.show_article_date and section.settings.show_article_author %}<span aria-hidden="true"> · </span>{% endif %}{% if section.settings.show_article_author %}{{ result.author | escape }}{% endif %}</p>{% endif %}<h2 class="search-page__content-title heading-h2 heading-text"><a href="{{ result.url | escape }}">{{ result.title | escape }}</a></h2><a class="search-page__content-link" href="{{ result.url | escape }}">{{ 'search.view_result' | t }}</a></div>
+                  </article>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+          {% if paginate.pages > 1 %}<nav class="search-page__pagination" aria-label="{{ 'search.pagination' | t | escape }}">{% if paginate.previous %}<a href="{{ paginate.previous.url | escape }}" aria-label="{{ 'search.previous_page' | t | escape }}">←</a>{% endif %}{% for part in paginate.parts %}{% if part.is_link %}<a href="{{ part.url | escape }}">{{ part.title }}</a>{% else %}<span{% if part.title == paginate.current_page %} class="is-current" aria-current="page"{% endif %}>{{ part.title }}</span>{% endif %}{% endfor %}{% if paginate.next %}<a href="{{ paginate.next.url | escape }}" aria-label="{{ 'search.next_page' | t | escape }}">→</a>{% endif %}</nav>{% endif %}
+        {% endpaginate %}
+      {% else %}
+        <div class="search-page__empty"><h2 class="heading-h3 heading-text">{{ 'search.no_results_heading' | t }}</h2><p>{{ 'search.no_results_html' | t: terms: search.terms }}</p><a class="btn-primary" href="{{ routes.all_products_collection_url | escape }}">{{ 'search.continue_shopping' | t }}</a></div>
+      {% endif %}
+    </search-results>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .search-page { padding: var(--search-padding-top) var(--page-margin) var(--search-padding-bottom); background: var(--gradient-background, var(--color-background)); color: var(--color-text); }
+  .search-page__intro { width: min(100%, 880px); margin-inline: auto; }
+  .search-page__title { margin: 0 0 44px; color: var(--color-heading); font-size: var(--h1-size-display-lg); line-height: var(--heading-line-height); text-align: center; }
+  .search-page__results { display: block; margin-top: clamp(48px, 7vw, 112px); }
+  .search-page__toolbar { display: flex; justify-content: center; margin: 0 0 clamp(28px, 4vw, 56px); }
+  .search-page__filter-button { display: inline-flex; min-width: 184px; align-items: center; justify-content: center; gap: 9px; }
+  .search-page__filter-button.btn-link { min-height: auto; padding: 0 0 5px; border: 0; border-bottom: 1px solid currentcolor; background: transparent; color: var(--color-heading); }
+  .search-page__filter-button svg { width: 17px; height: 17px; }
+  .search-page__grid { display: grid; margin: 0; padding: 0; gap: var(--search-row-gap) var(--search-column-gap); grid-template-columns: repeat(var(--search-columns-desktop), minmax(0, 1fr)); list-style: none; }
+  .search-page__result { min-width: 0; }
+  .search-page__content-card { display: grid; min-height: 100%; align-content: start; }
+  .search-page__content-media { display: block; overflow: hidden; background: var(--color-variant-component-background); }
+  .search-page__content-media--square { aspect-ratio: 1 / 1; }
+  .search-page__content-media--2-3 { aspect-ratio: 2 / 3; }
+  .search-page__content-media--3-4 { aspect-ratio: 3 / 4; }
+  .search-page__content-media--4-5,
+  .search-page__content-media--portrait { aspect-ratio: 4 / 5; }
+  .search-page__content-media--6-7 { aspect-ratio: 6 / 7; }
+  .search-page__content-media--3-2 { aspect-ratio: 3 / 2; }
+  .search-page__content-media--4-3 { aspect-ratio: 4 / 3; }
+  .search-page__content-media--16-9 { aspect-ratio: 16 / 9; }
+  .search-page__content-image { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 240ms ease; }
+  .search-page__content-media:hover .search-page__content-image { transform: scale(1.02); }
+  .search-page__content-details { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding-top: 14px; }
+  .search-page__content-type, .search-page__content-meta { margin: 0; color: color-mix(in srgb, var(--color-text) 65%, transparent); font-size: var(--label-size); letter-spacing: .08em; text-transform: uppercase; }
+  .search-page__content-title { margin: 0; color: var(--color-heading); font-family: var(--heading-font-family); font-size: var(--h4-size-lg); font-style: var(--heading-font-style); font-weight: var(--heading-font-weight); line-height: var(--heading-line-height); }
+  .search-page__content-title a, .search-page__content-link { color: inherit; text-decoration: none; }
+  .search-page__content-link { margin-top: auto; padding-top: 8px; border-bottom: 1px solid currentcolor; font-size: var(--label-size); letter-spacing: .04em; text-transform: uppercase; }
+  .search-page__filter-dialog { width: min(100%, 560px); max-width: none; height: 100dvh; max-height: none; margin: 0 0 0 auto; padding: 0; border: 0; background: var(--color-background); color: var(--color-text); }
+  .search-page__filter-dialog::backdrop { background: rgb(0 0 0 / .45); }
+  .search-page__filter-form { display: grid; height: 100%; grid-template-rows: auto 1fr auto; }
+  .search-page__filter-header, .search-page__filter-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px; border-bottom: 1px solid var(--color-variant-border); }
+  .search-page__filter-header h2 { margin: 0; font-size: var(--h3-size-xl); }
+  .search-page__filter-header button { display: grid; width: 40px; height: 40px; place-items: center; border: 0; background: transparent; color: inherit; cursor: pointer; }
+  .search-page__filter-header svg { width: 20px; height: 20px; }
+  .search-page__filter-body { overflow-y: auto; padding: 24px; }
+  .search-page__active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .search-page__active-filters a { display: inline-flex; gap: 8px; padding: 7px 10px; border: 1px solid var(--color-variant-border); color: inherit; font-size: var(--label-size); text-decoration: none; }
+  .search-page__active-filters .search-page__clear-link { border: 0; text-decoration: underline; }
+  .search-page__sort-group { display: grid; gap: 9px; margin-bottom: 16px; }
+  .search-page__sort-group label, .search-page__price-filter label { font-size: var(--p2-size-sm); }
+  .search-page__select-wrap { position: relative; }
+  .search-page__select-wrap select { width: 100%; min-height: var(--control-height); padding: 0 42px 0 14px; border: 1px solid var(--color-variant-border); border-radius: var(--style-border-radius-inputs); background: transparent; color: inherit; font: inherit; appearance: none; }
+  .search-page__select-wrap svg { position: absolute; top: 50%; right: 14px; width: 12px; height: 8px; transform: translateY(-50%); pointer-events: none; }
+  .search-page__filter-group { border-top: 1px solid var(--color-variant-border); }
+  .search-page__filter-group:last-child { border-bottom: 1px solid var(--color-variant-border); }
+  .search-page__filter-group summary { display: flex; min-height: 58px; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; }
+  .search-page__filter-group summary::-webkit-details-marker { display: none; }
+  .search-page__filter-group[open] summary svg { transform: rotate(90deg); }
+  .search-page__filter-values { display: grid; gap: 12px; margin: 0 0 20px; padding: 0; list-style: none; }
+  .search-page__filter-value { display: grid; align-items: center; gap: 10px; grid-template-columns: auto 1fr auto; font-size: var(--p2-size-sm); cursor: pointer; }
+  .search-page__filter-value input { width: 16px; height: 16px; accent-color: var(--color-heading); }
+  .search-page__filter-value input:disabled + span { opacity: .45; }
+  .search-page__filter-values--swatches .search-page__filter-value { grid-template-columns: auto 18px 1fr auto; }
+  .search-page__swatch { width: 18px; height: 18px; border: 1px solid var(--color-variant-border); border-radius: 50%; background: var(--search-swatch-color, transparent); }
+  .search-page__price-filter { display: grid; align-items: end; gap: 9px; margin: 0 0 20px; grid-template-columns: 1fr auto 1fr; }
+  .search-page__price-filter div { display: grid; gap: 7px; }
+  .search-page__price-filter input { width: 100%; min-height: var(--control-height); padding: 0 10px; border: 1px solid var(--color-variant-border); border-radius: var(--style-border-radius-inputs); background: transparent; color: inherit; font: inherit; }
+  .search-page__filter-footer { border-top: 1px solid var(--color-variant-border); border-bottom: 0; }
+  .search-page__filter-footer .button { flex: 1; text-align: center; }
+  .search-page__pagination { display: flex; min-height: 88px; align-items: center; justify-content: center; gap: 6px; margin-top: 24px; }
+  .search-page__pagination a, .search-page__pagination span { display: grid; min-width: 32px; height: 32px; place-items: center; color: var(--color-text); font-size: var(--label-size); text-decoration: none; }
+  .search-page__pagination .is-current { background: var(--color-heading); color: var(--color-background); }
+  .search-page__empty { display: grid; min-height: 260px; place-items: center; align-content: center; gap: 16px; text-align: center; }
+  .search-page__empty h2, .search-page__empty p { margin: 0; }
+  .search-page__empty h2 { color: var(--color-heading); line-height: var(--heading-line-height); }
+  @media screen and (min-width: 768px) and (max-width: 1149.98px) { .search-page__grid { grid-template-columns: repeat(var(--search-columns-tablet), minmax(0, 1fr)); } }
+  @media screen and (max-width: 767.98px) { .search-page { padding-top: calc(var(--search-padding-top) * 0.5); padding-bottom: calc(var(--search-padding-bottom) * 0.5); } .search-page__title { margin-bottom: 28px; } .search-page__grid { column-gap: var(--search-mobile-column-gap); grid-template-columns: repeat(var(--search-columns-mobile), minmax(0, 1fr)); } .search-page__content-details { gap: 6px; padding-top: 10px; } .search-page__content-title { font-size: var(--p1-size-md); line-height: 1.25; } .search-page__filter-dialog { width: 100%; } .search-page__filter-header, .search-page__filter-footer, .search-page__filter-body { padding: 18px; } }
+  @media (prefers-reduced-motion: reduce) { .search-page__content-image { transition: none; } }
+{% endstylesheet %}
+
+
+{% schema %}
+{
+  "name": "Search results",
+  "tag": "section",
+  "class": "section-search-page",
+  "limit": 1,
+  "enabled_on": {
+    "templates": [
+      "search"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Search behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_prefix_search",
+      "label": "Include word prefixes in search",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Filter and sort"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_button_style",
+      "label": "Filter style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Solid"
+        },
+        {
+          "value": "secondary",
+          "label": "Outlined"
+        },
+        {
+          "value": "link",
+          "label": "Link"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "text",
+      "id": "open_filter_groups",
+      "label": "Filter groups open by default",
+      "default": "Price, Material",
+      "info": "Enter filter labels separated by commas."
+    },
+    {
+      "type": "header",
+      "content": "Article and page results"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_article_image",
+      "label": "Result image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "article_image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "adapt", "label": "Adapt"
+        },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "2-3", "label": "2:3" },
+        { "value": "3-4", "label": "3:4" },
+        { "value": "4-5", "label": "4:5" },
+        { "value": "6-7", "label": "6:7" },
+        { "value": "3-2", "label": "3:2" },
+        { "value": "4-3", "label": "4:3" },
+        { "value": "16-9", "label": "16:9" }
+      ],
+      "default": "4-5"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_article_date",
+      "label": "Article date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_article_author",
+      "label": "Article author",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Results grid"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop column gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile column gap",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "label": "Row gap",
+      "default": 56
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 96
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

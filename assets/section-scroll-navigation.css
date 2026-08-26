@@ -1,0 +1,287 @@
+:root {
+  --scroll-navigation-width: 56px;
+}
+
+@media screen and (min-width: 1150px) {
+  html.has-scroll-navigation body,
+  html:has(.scroll-navigation) body {
+    padding-inline-start: var(--scroll-navigation-width);
+  }
+
+  html.has-scroll-navigation .header--transparent.header--sticky.header--scrolled,
+  html.has-scroll-navigation .header--floating.header--scrolled,
+  html.has-scroll-navigation .header--cart-feedback-visible,
+  html:has(.scroll-navigation) .header--transparent.header--sticky.header--scrolled,
+  html:has(.scroll-navigation) .header--floating.header--scrolled,
+  html:has(.scroll-navigation) .header--cart-feedback-visible {
+    right: 0;
+    left: var(--scroll-navigation-width);
+    width: calc(100% - var(--scroll-navigation-width));
+  }
+
+  .scroll-navigation-section {
+    position: fixed;
+    z-index: 30;
+    inset: 0 auto 0 0;
+    display: block;
+    width: var(--scroll-navigation-width);
+    height: 100vh;
+    height: 100svh;
+    grid-template-columns: none;
+  }
+
+  .scroll-navigation {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--color-foreground);
+    background: var(--gradient-background, var(--color-background));
+    box-shadow: 0 0 10px 1px #ababab21;
+  }
+
+  .scroll-navigation__logo {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    color: inherit;
+    font-family: var(--label-font-family);
+    font-size: var(--scroll-navigation-logo-size, 8px);
+    font-style: var(--label-font-style);
+    font-weight: var(--label-font-weight);
+    line-height: 1;
+    letter-spacing: .18em;
+    text-decoration: none;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: translateX(-50%) rotate(180deg);
+  }
+
+  .scroll-navigation__logo--font-body {
+    font-family: var(--body-font-family);
+    font-style: var(--body-font-style);
+    font-weight: var(--body-font-weight);
+  }
+
+  .scroll-navigation__logo--font-heading {
+    font-family: var(--heading-font-family);
+    font-style: var(--heading-font-style);
+    font-weight: var(--heading-font-weight);
+  }
+
+  .scroll-navigation__nav {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline: 0;
+    transform: translateY(-50%);
+  }
+
+  .scroll-navigation__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .scroll-navigation__item {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    height: var(--scroll-navigation-item-height, 44px);
+    align-items: center;
+  }
+
+  .scroll-navigation__button {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 0 13px;
+    align-items: center;
+    color: color-mix(in srgb, var(--color-foreground) 42%, transparent);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    font-family: var(--label-font-family);
+    font-size: 10px;
+    font-style: var(--label-font-style);
+    font-weight: var(--label-font-weight);
+    line-height: 1;
+    letter-spacing: .04em;
+    transition: color 180ms ease;
+  }
+
+  .scroll-navigation__button::after {
+    position: absolute;
+    inset-inline-end: 0;
+    width: 6px;
+    height: 1px;
+    content: "";
+    background: currentColor;
+    transition: width 220ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .scroll-navigation__button:is(:hover, :focus-visible),
+  .scroll-navigation__button.is-active {
+    color: var(--scroll-navigation-accent, var(--color-primary-button));
+  }
+
+  .scroll-navigation__button.is-active::after {
+    width: 17px;
+  }
+
+  .scroll-navigation__button:focus-visible {
+    outline: none;
+    background: color-mix(in srgb, var(--scroll-navigation-accent, var(--color-primary-button)) 8%, transparent);
+  }
+
+  .scroll-navigation__gift-icon {
+    position: relative;
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    isolation: isolate;
+    transform-origin: 50% 100%;
+    animation: scroll-navigation-gift-happy 3200ms cubic-bezier(.22, 1, .36, 1) infinite;
+  }
+
+  .scroll-navigation__gift-icon::before,
+  .scroll-navigation__gift-icon::after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    pointer-events: none;
+  }
+
+  .scroll-navigation__gift-icon::before {
+    inset: -5px;
+    border: 1px solid currentcolor;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(.55);
+    animation: scroll-navigation-gift-aura 3200ms ease-out infinite;
+  }
+
+  .scroll-navigation__gift-icon::after {
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: currentcolor;
+    box-shadow:
+      0 -12px 0 currentcolor,
+      9px -8px 0 currentcolor,
+      12px 0 0 currentcolor,
+      9px 8px 0 currentcolor,
+      0 12px 0 currentcolor,
+      -9px 8px 0 currentcolor,
+      -12px 0 0 currentcolor,
+      -9px -8px 0 currentcolor;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.45) rotate(-8deg);
+    animation: scroll-navigation-gift-rays 3200ms ease-out infinite;
+  }
+
+  .scroll-navigation__gift-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .scroll-navigation__gift-box,
+  .scroll-navigation__gift-lid,
+  .scroll-navigation__gift-bow {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .scroll-navigation__gift-lid {
+    transform-origin: 50% 100%;
+    animation: scroll-navigation-gift-lid 3200ms cubic-bezier(.22, 1, .36, 1) infinite;
+  }
+
+  .scroll-navigation__gift-bow {
+    transform-origin: 50% 100%;
+    animation: scroll-navigation-gift-bow 3200ms cubic-bezier(.22, 1, .36, 1) infinite;
+  }
+
+  .scroll-navigation__counter {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    margin: 0;
+    color: color-mix(in srgb, var(--color-foreground) 68%, transparent);
+    font-family: var(--label-font-family);
+    font-size: 8px;
+    font-style: var(--label-font-style);
+    font-weight: var(--label-font-weight);
+    line-height: 1;
+    letter-spacing: .12em;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: translateX(-50%) rotate(180deg);
+  }
+}
+
+@keyframes scroll-navigation-gift-happy {
+  0%, 18%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  3% { transform: translateY(-1px) rotate(-6deg) scale(1.04); }
+  6% { transform: translateY(-2px) rotate(5deg) scale(1.06); }
+  9% { transform: translateY(-1px) rotate(-3deg) scale(1.04); }
+  12% { transform: translateY(0) rotate(2deg) scale(1, .96); }
+  15% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes scroll-navigation-gift-lid {
+  0%, 2%, 17%, 100% { transform: translateY(0) rotate(0deg); }
+  5% { transform: translateY(-1.6px) rotate(-5deg); }
+  8% { transform: translateY(-1px) rotate(4deg); }
+  12% { transform: translateY(-.4px) rotate(-2deg); }
+  15% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes scroll-navigation-gift-bow {
+  0%, 2%, 17%, 100% { transform: translateY(0) scale(1); }
+  5% { transform: translateY(-1.3px) scale(1.12, .9); }
+  9% { transform: translateY(-.6px) scale(.94, 1.08); }
+  14% { transform: translateY(0) scale(1); }
+}
+
+@keyframes scroll-navigation-gift-aura {
+  0%, 2%, 18%, 100% { opacity: 0; transform: scale(.55); }
+  6% { opacity: .42; transform: scale(.78); }
+  14% { opacity: 0; transform: scale(1.35); }
+}
+
+@keyframes scroll-navigation-gift-rays {
+  0%, 3%, 18%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.45) rotate(-8deg); }
+  7% { opacity: .72; transform: translate(-50%, -50%) scale(.72) rotate(0deg); }
+  14% { opacity: 0; transform: translate(-50%, -50%) scale(1.08) rotate(8deg); }
+}
+
+@media screen and (max-width: 1149.98px) {
+  .scroll-navigation-section {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-navigation__button,
+  .scroll-navigation__button::after {
+    transition: none;
+  }
+
+  .scroll-navigation__gift-icon,
+  .scroll-navigation__gift-icon::before,
+  .scroll-navigation__gift-icon::after,
+  .scroll-navigation__gift-lid,
+  .scroll-navigation__gift-bow {
+    animation: none;
+  }
+}

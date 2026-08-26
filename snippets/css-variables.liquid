@@ -1,0 +1,253 @@
+{% liquid
+  assign default_color_scheme = settings.color_schemes | first
+
+  assign card_radius = 0
+  if settings.media_card_radius_style == 'rounded'
+    assign card_radius = 8
+  endif
+
+  assign button_radius = 0
+  if settings.button_radius_style == 'rounded'
+    assign button_radius = 6
+  elsif settings.button_radius_style == 'pill'
+    assign button_radius = 9999
+  endif
+
+  assign badge_radius = 0
+  if settings.badge_radius_style == 'rounded'
+    assign badge_radius = 4
+  elsif settings.badge_radius_style == 'pill'
+    assign badge_radius = 9999
+  endif
+
+  assign form_radius = 0
+  if settings.form_radius_style == 'rounded'
+    assign form_radius = settings.input_corner_radius | at_least: 4
+  elsif settings.form_radius_style == 'pill'
+    assign form_radius = 9999
+  endif
+
+  assign variant_picker_radius = 0
+  if settings.variant_picker_radius_style == 'rounded'
+    assign variant_picker_radius = settings.variant_picker_corner_radius | default: 6 | at_least: 4
+  elsif settings.variant_picker_radius_style == 'pill'
+    assign variant_picker_radius = 9999
+  endif
+
+  assign primary_button_font = settings.body_font
+  if settings.primary_button_font == 'heading'
+    assign primary_button_font = settings.heading_font
+  endif
+
+  assign secondary_button_font = settings.body_font
+  if settings.secondary_button_font == 'heading'
+    assign secondary_button_font = settings.heading_font
+  endif
+
+  assign tertiary_button_font = settings.body_font
+  if settings.tertiary_button_font == 'heading'
+    assign tertiary_button_font = settings.heading_font
+  endif
+
+  assign heading_line_height = settings.heading_line_height_range | default: 1.2
+  if heading_line_height > 2
+    assign heading_line_height = heading_line_height | divided_by: 100.0
+  endif
+
+  assign product_card_title_font = settings.product_card_title_font | default: 'heading'
+  assign product_card_title_size_mobile = settings.product_card_title_size_mobile | default: 18
+  assign product_card_title_size_desktop = settings.product_card_title_size_desktop | default: 20
+  assign product_title_font = settings.heading_font
+  if product_card_title_font == 'body'
+    assign product_title_font = settings.body_font
+  elsif product_card_title_font == 'label'
+    assign product_title_font = settings.label_font
+  endif
+%}
+
+{% style %}
+  {{ settings.body_font | font_face: font_display: 'swap' }}
+  {{ settings.body_font | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+  {{ settings.body_font | font_modify: 'weight', '600' | font_face: font_display: 'swap' }}
+  {{ settings.body_font | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  {{ settings.body_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.body_font | font_modify: 'style', 'italic' | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  {{ settings.label_font | font_face: font_display: 'swap' }}
+  {{ settings.label_font | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+  {{ settings.label_font | font_modify: 'weight', '600' | font_face: font_display: 'swap' }}
+  {{ settings.label_font | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  {{ settings.label_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.label_font | font_modify: 'style', 'italic' | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  {{ settings.heading_font | font_face: font_display: 'swap' }}
+  {{ settings.heading_font | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  {{ settings.heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.heading_font | font_modify: 'style', 'italic' | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+
+  :root {
+    /* Role-first typography tokens. */
+    --heading-font-family: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+    --heading-font-style: {{ settings.heading_font.style }};
+    --heading-font-weight: {{ settings.heading_font.weight }};
+    --heading-line-height: {{ heading_line_height }};
+    --heading-letter-spacing: {{ settings.heading_tracking_range }}px;
+    --heading-text-transform: none;
+
+    --body-font-family: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+    --body-font-style: {{ settings.body_font.style }};
+    --body-font-weight: {{ settings.body_font.weight }};
+    --body-line-height: {{ settings.body_text_line_height_range | divided_by: 100.0 }};
+    --body-letter-spacing: {{ settings.body_text_tracking_range }}px;
+    --body-text-transform: none;
+
+    --label-font-family: {{ settings.label_font.family }}, {{ settings.label_font.fallback_families }};
+    --label-font-style: {{ settings.label_font.style }};
+    --label-font-weight: {{ settings.label_font.weight }};
+    --label-line-height: 1.4;
+    --label-letter-spacing: {{ settings.label_letter_spacing | default: 0 }}px;
+    --label-text-transform: none;
+
+    --subheading-font-family: {{ settings.label_font.family }}, {{ settings.label_font.fallback_families }};
+    --subheading-font-style: {{ settings.label_font.style }};
+    --subheading-font-weight: {{ settings.label_font.weight }};
+    --subheading-line-height: 1.4;
+    --subheading-letter-spacing: 0px;
+    --subheading-text-transform: none;
+
+    --product-title-font-family: {{ product_title_font.family }}, {{ product_title_font.fallback_families }};
+    --product-title-font-style: {{ product_title_font.style }};
+    --product-title-font-weight: {{ product_title_font.weight }};
+    --product-title-line-height: 1.4;
+    --product-title-letter-spacing: var(--body-letter-spacing);
+    --product-title-text-transform: none;
+
+    --h0-size-display-xl: {{ settings.display_xl_size_mobile }}px;
+    --h1-size-display-lg: {{ settings.h1_size_mobile }}px;
+    --h2-size-display-md: {{ settings.h2_size_mobile }}px;
+    --h3-size-xl: {{ settings.h3_size_mobile }}px;
+    --h4-size-lg: {{ settings.h4_size_mobile }}px;
+    --h5-size-md: {{ settings.h5_size_mobile }}px;
+    --h6-size-sm: {{ settings.h6_size_mobile }}px;
+    --h7-size-xs: {{ settings.heading_xs_size_mobile }}px;
+    --p0-size-lg: {{ settings.body_large_size_mobile }}px;
+    --p1-size-md: {{ settings.body_text_size_mobile }}px;
+    --p2-size-sm: {{ settings.body_small_size_mobile }}px;
+    --p3-size-xs: {{ settings.body_xsmall_size_mobile }}px;
+    --label-size: {{ settings.label_size_mobile }}px;
+    --subheading-size: var(--label-size);
+    --product-title-size: {{ product_card_title_size_mobile }}px;
+
+    --line-height-tight: 1.1;
+    --line-height-normal: 1.4;
+    --line-height-loose: 1.6;
+
+    --page-width: {{ settings.max_page_width }};
+    --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_mobile }}px);
+
+    --spacing-scale-sm: 0.5;
+    --spacing-scale-md: 0.75;
+    --spacing-scale-default: 1.0;
+
+    --color-background: {{ settings.background_color }};
+    --color-foreground: {{ settings.foreground_color }};
+    --color-heading: {{ settings.foreground_color }};
+    --color-text: {{ settings.foreground_color }};
+    --color-sale-price: {{ settings.sale_price_color }};
+    --color-sale-badge-background: {{ settings.sale_badge_background }};
+    --color-sale-badge-text: {{ settings.sale_badge_text }};
+    --color-sold-out-badge-background: {{ settings.sold_out_badge_background }};
+    --color-sold-out-badge-text: {{ settings.sold_out_badge_text }};
+    --color-primary-button: {{ default_color_scheme.settings.primary_button }};
+    --color-primary-button-label: {{ default_color_scheme.settings.primary_button_label }};
+    --color-primary-button-outline: {{ default_color_scheme.settings.primary_button_outline }};
+    --color-secondary-button: {{ default_color_scheme.settings.secondary_button }};
+    --color-secondary-button-label: {{ default_color_scheme.settings.secondary_button_label }};
+    --color-secondary-button-outline: {{ default_color_scheme.settings.secondary_button_outline }};
+    --color-tertiary-button: {{ default_color_scheme.settings.tertiary_button }};
+    --color-variant-border: color-mix(in srgb, {{ default_color_scheme.settings.variant_border }} 42%, {{ settings.background_color }});
+
+    --radius-card: {{ card_radius }}px;
+    --radius-button: {{ button_radius }}px;
+    --radius-badge: {{ badge_radius }}px;
+    --radius-form: {{ form_radius }}px;
+    --style-border-radius-inputs: var(--radius-form);
+    --radius-variant-picker: {{ variant_picker_radius }}px;
+    --style-border-radius-variants: var(--radius-variant-picker);
+
+    --control-height: {{ settings.control_height_mobile }}px;
+    --button-inline-padding: {{ settings.button_padding_mobile }}px;
+    --button-primary-font-family: {{ primary_button_font.family }}, {{ primary_button_font.fallback_families }};
+    --button-primary-font-style: {{ primary_button_font.style }};
+    --button-primary-font-weight: {{ primary_button_font.weight }};
+    --button-primary-text-transform: {{ settings.primary_button_text_transform }};
+    --button-primary-border-width: {{ settings.primary_button_border_width }}px;
+    --button-secondary-font-family: {{ secondary_button_font.family }}, {{ secondary_button_font.fallback_families }};
+    --button-secondary-font-style: {{ secondary_button_font.style }};
+    --button-secondary-font-weight: {{ secondary_button_font.weight }};
+    --button-secondary-text-transform: {{ settings.secondary_button_text_transform }};
+    --button-secondary-border-width: {{ settings.secondary_button_border_width }}px;
+    --button-tertiary-font-family: {{ tertiary_button_font.family }}, {{ tertiary_button_font.fallback_families }};
+    --button-tertiary-font-style: {{ tertiary_button_font.style }};
+    --button-tertiary-font-weight: {{ tertiary_button_font.weight }};
+    --button-tertiary-text-transform: {{ settings.tertiary_button_text_transform }};
+    --button-tertiary-border-color: {% if settings.tertiary_button_underline %}currentcolor{% else %}transparent{% endif %};
+    --button-tertiary-underline-offset: {{ settings.tertiary_button_underline_offset }}px;
+    --motion-duration: {% if settings.enable_motion %}160ms{% else %}0ms{% endif %};
+    --drawer-sheet-drag-transition: {% if settings.enable_motion %}transform 240ms cubic-bezier(.22, 1, .36, 1), opacity 220ms ease{% else %}none{% endif %};
+    --button-hover-duration: {% if settings.enable_motion %}400ms{% else %}0ms{% endif %};
+    --block-animation-duration: {% if settings.enable_motion %}640ms{% else %}0ms{% endif %};
+    --disabled-opacity: {{ settings.disabled_opacity | divided_by: 100.0 }};
+  }
+
+  {% for scheme in settings.color_schemes %}
+    .color-{{ scheme.id }} {
+      --color-background: {{ scheme.settings.background }};
+      --gradient-background: {{ scheme.settings.background_gradient | default: scheme.settings.background }};
+      --color-heading: {{ scheme.settings.heading }};
+      --color-text: {{ scheme.settings.text }};
+      --color-foreground: {{ scheme.settings.text }};
+      --color-variant-overlay: {{ scheme.settings.variant_overlay }};
+      --color-variant-border: color-mix(in srgb, {{ scheme.settings.variant_border }} 42%, {{ scheme.settings.background }});
+      --color-variant-bar-background: {{ scheme.settings.variant_bar_background }};
+      --color-variant-component-background: {{ scheme.settings.variant_component_background }};
+      --color-primary-button: {{ scheme.settings.primary_button }};
+      --color-primary-button-label: {{ scheme.settings.primary_button_label }};
+      --color-primary-button-outline: {{ scheme.settings.primary_button_outline }};
+      --color-secondary-button: {{ scheme.settings.secondary_button }};
+      --color-secondary-button-label: {{ scheme.settings.secondary_button_label }};
+      --color-secondary-button-outline: {{ scheme.settings.secondary_button_outline }};
+      --color-tertiary-button: {{ scheme.settings.tertiary_button }};
+      --color-shadow: {{ scheme.settings.shadow }};
+    }
+  {% endfor %}
+
+  @media screen and (min-width: 768px) {
+    :root {
+      --h0-size-display-xl: {{ settings.display_xl_size_desktop }}px;
+      --h1-size-display-lg: {{ settings.h1_size_desktop }}px;
+      --h2-size-display-md: {{ settings.h2_size_desktop }}px;
+      --h3-size-xl: {{ settings.h3_size_desktop }}px;
+      --h4-size-lg: {{ settings.h4_size_desktop }}px;
+      --h5-size-md: {{ settings.h5_size_desktop }}px;
+      --h6-size-sm: {{ settings.h6_size_desktop }}px;
+      --h7-size-xs: {{ settings.heading_xs_size_desktop }}px;
+      --p0-size-lg: {{ settings.body_large_size_desktop }}px;
+      --p1-size-md: {{ settings.body_text_size_desktop }}px;
+      --p2-size-sm: {{ settings.body_small_size_desktop }}px;
+      --p3-size-xs: {{ settings.body_xsmall_size_desktop }}px;
+      --label-size: {{ settings.label_size_desktop }}px;
+      --product-title-size: {{ product_card_title_size_desktop }}px;
+
+      --body-letter-spacing: {% if settings.body_text_tracking_range == -0.8 %}-1.5px{% elsif settings.body_text_tracking_range == -0.2 %}-0.5px{% elsif settings.body_text_tracking_range == 0 %}0px{% elsif settings.body_text_tracking_range == 0.8 %}0.8px{% elsif settings.body_text_tracking_range == 1.1 %}1.2px{% else %}{{ settings.body_text_tracking_range }}px{% endif %};
+
+      --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_tablet }}px);
+      --control-height: {{ settings.control_height_desktop }}px;
+      --button-inline-padding: {{ settings.button_padding_desktop }}px;
+    }
+  }
+
+  @media screen and (min-width: 1150px) {
+    :root {
+      --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_desktop }}px);
+    }
+  }
+{% endstyle %}

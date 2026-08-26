@@ -1,261 +1,448 @@
+{% render 'section-stylesheet', asset: 'section-footer.css', defer_on_home: true %}
+{% render 'section-stylesheet', asset: 'section-footer-redesign.css', defer_on_home: true %}
+
 {% liquid
-  if section.settings.background_color != blank
-    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  assign localization_form_id = 'FooterLocalizationForm-' | append: section.id
+  assign copyright_name = section.settings.copyright_name
+  assign footer_background = section.settings.background_color
+  if footer_background == blank
+    assign footer_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+  if copyright_name == blank
+    assign copyright_name = shop.name
   endif
 %}
 
-<div
-  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
-></div>
-<div
-  class="section section--{{ section.settings.section_width }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ footer_background }};
+  }
+{% endstyle %}
+
+<footer-house
+  class="footer-house color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+  data-deferred-module="{{ 'section-footer.js' | asset_url }}"
 >
-  {% liquid
-    assign total_blocks = section.blocks.size
-
-    # Grid layout calculations
-    assign grid_columns = total_blocks | at_most: 4
-
-    # Calculate last row counts using modulo arithmetic
-    # last_row_count = (total_blocks - 1) % N + 1
-    assign last_row_count = total_blocks | minus: 1 | modulo: 4 | plus: 1
-    assign tablet_last_row_count = total_blocks | minus: 1 | modulo: 2 | plus: 1
-
-    # Check if there are orphaned elements (single item in last row)
-    assign has_isolated_grid_item_desktop = false
-    assign has_isolated_grid_item_tablet = false
-
-    if total_blocks > 4 and last_row_count == 1
-      assign has_isolated_grid_item_desktop = true
-    endif
-
-    if total_blocks == 5
-      assign has_isolated_grid_item_tablet = true
-    endif
-  %}
-  <div
-    class="
-      footer-content
-      spacing-style
-      {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
-      {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
-    "
+  <footer
+    class="footer"
     style="
-      {%  render 'spacing-style', settings: section.settings %}
-      --footer-gap: {{ section.settings.gap }}px;
-      --grid-columns: {{ grid_columns }};
-      --last-row-count: {{ last_row_count }};
-      --tablet-last-row-count: {{ tablet_last_row_count }};
+      --footer-padding-top: {{ section.settings.padding_top }}px;
+      --footer-padding-bottom: {{ section.settings.padding_bottom }}px;
     "
   >
-    {% content_for 'blocks' %}
-  </div>
-</div>
+    <div class="footer__inner">
+      <div class="footer__lead">
+        {% content_for 'block', type: '_footer-newsletter', id: 'newsletter' %}
+        {% content_for 'block', type: '_footer-appointment', id: 'appointment' %}
+      </div>
 
-{% stylesheet %}
-  .footer-content {
-    contain: content;
-    content-visibility: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--footer-gap);
-    align-items: start;
-  }
+      <div class="footer__menus">
+        {% content_for 'blocks' %}
+      </div>
 
-  .footer-content .menu__heading__default {
-    font-weight: var(--font-heading--weight);
-  }
+      {% content_for 'block', type: '_footer-signature', id: 'signature' %}
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    .footer-content {
-      grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
-      grid-auto-flow: row;
-    }
+      <div class="footer__utility">
+        <div class="footer__utility-start">
+          {% if section.settings.show_country_selector or section.settings.show_language_selector %}
+            <footer-localization class="footer__localization">
+              {% form 'localization', id: localization_form_id %}
+                <div class="footer__region">
+                  {% if section.settings.show_country_selector %}
+                    {% if localization.available_countries.size > 1 %}
+                      <label class="visually-hidden" for="FooterCountry-{{ section.id }}">{{ 'footer.country_region' | t }}</label>
+                      <span class="footer__localization-select">
+                        <select id="FooterCountry-{{ section.id }}" name="country_code" data-footer-localization-select>
+                          {% for country in localization.available_countries %}
+                            <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+                              {{ country.name | escape }} / {{ country.currency.iso_code | escape }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                        <span class="footer__localization-select-icon" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+                      </span>
+                    {% else %}
+                      <span>{{ localization.country.name | escape }} / {{ localization.country.currency.iso_code | escape }}</span>
+                    {% endif %}
+                  {% endif %}
 
-    .footer-content[style*='--grid-columns: 4'] {
-      grid-template-columns: repeat(2, 1fr);
-    }
+                  {% if section.settings.show_language_selector and localization.available_languages.size > 1 %}
+                    {% if section.settings.show_country_selector %}<span class="footer__utility-divider" aria-hidden="true">/</span>{% endif %}
+                    <label class="visually-hidden" for="FooterLanguage-{{ section.id }}">{{ 'footer.language' | t }}</label>
+                    <span class="footer__localization-select">
+                      <select id="FooterLanguage-{{ section.id }}" name="locale_code" data-footer-localization-select>
+                        {% for language in localization.available_languages %}
+                          <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>
+                            {{ language.endonym_name | capitalize | escape }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                      <span class="footer__localization-select-icon" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+                    </span>
+                  {% endif %}
+                </div>
+                <noscript><button type="submit">{{ 'footer.apply' | t }}</button></noscript>
+              {% endform %}
+            </footer-localization>
+          {% endif %}
+        </div>
 
-    .footer-content--isolated-grid-item-tablet > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
+        <div class="footer__copyright">
+          &copy; {{ copyright_name | escape }} {{ 'now' | date: '%Y' }}
+        </div>
 
-  @media screen and (min-width: 990px) {
-    .footer-content {
-      grid-template-columns: repeat(var(--grid-columns), 1fr);
-    }
+        <div class="footer__utility-end">
+          {% if section.settings.legal_menu != blank and section.settings.legal_menu.links.size > 0 %}
+            <nav class="footer__legal" aria-label="{{ 'footer.legal' | t | escape }}">
+              {% for link in section.settings.legal_menu.links %}
+                <a href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+              {% endfor %}
+            </nav>
+          {% elsif shop.policies.size > 0 %}
+            <nav class="footer__legal" aria-label="{{ 'footer.legal' | t | escape }}">
+              {% for policy in shop.policies %}
+                {% if policy.url != blank and policy.body != blank %}
+                <a href="{{ policy.url | escape }}">{{ policy.title | escape }}</a>
+                {% endif %}
+              {% endfor %}
+            </nav>
+          {% endif %}
+        </div>
+      </div>
 
-    /* Single item centered */
-    .footer-content[style*='--grid-columns: 1'] {
-      justify-items: center;
-    }
+      {% if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 %}
+        <div class="footer__payments" aria-label="{{ 'footer.payment_methods' | t | escape }}">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag: class: 'footer__payment-icon' }}
+          {% endfor %}
+        </div>
+      {% endif %}
 
-    .footer-content--isolated-grid-item-desktop > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-{% endstylesheet %}
+      {% if section.settings.show_follow_on_shop %}
+        <div class="footer__follow-on-shop">
+          {{ shop | login_button: action: 'follow' }}
+        </div>
+      {% endif %}
+    </div>
+  </footer>
+</footer-house>
 
 {% schema %}
 {
-  "name": "t:names.footer",
-  "class": "section-wrapper",
-  "blocks": [
-    {
-      "type": "_divider"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "follow-on-shop"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "menu"
-    },
-    {
-      "type": "payment-icons"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "logo"
-    },
-    {
-      "type": "jumbo-text"
-    },
-    {
-      "type": "social-links"
-    },
-    {
-      "type": "email-signup"
-    }
-  ],
-  "enabled_on": {
-    "groups": ["footer"]
-  },
+  "name": "Footer",
+  "tag": "section",
+  "class": "section-footer",
+  "enabled_on": { "groups": ["footer"] },
+  "max_blocks": 4,
   "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
     {
       "type": "select",
       "id": "section_width",
-      "label": "t:settings.width",
+      "label": "Section width",
       "options": [
         {
-          "value": "page-width",
-          "label": "t:options.page"
+          "value": "page",
+          "label": "Page width"
         },
         {
-          "value": "full-width",
-          "label": "t:options.full"
+          "value": "full",
+          "label": "Full width"
         }
       ],
-      "default": "page-width"
+      "default": "full"
     },
     {
-      "type": "range",
-      "id": "gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
     },
     {
       "type": "color",
       "id": "background_color",
-      "label": "t:settings.background_color",
-      "default": "{{ settings.color_palette.foreground }}"
+      "label": "Background color",
+      "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme."
     },
     {
       "type": "header",
-      "content": "t:content.padding"
+      "content": "Store utilities"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "Show country/currency selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language_selector",
+      "label": "Language selector",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "Copyright name",
+      "info": "Uses the shop name when left blank.",
+      "default": "SPINEL"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal menu",
+      "default": "footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Payment icons",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_follow_on_shop",
+      "label": "Show Follow on Shop",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
     },
     {
       "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
+      "id": "padding_top",
       "min": 0,
-      "max": 100,
-      "step": 1,
+      "max": 128,
+      "step": 4,
       "unit": "px",
-      "default": 20
+      "label": "Top padding",
+      "default": 24
     },
     {
       "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
+      "id": "padding_bottom",
       "min": 0,
-      "max": 100,
-      "step": 1,
+      "max": 96,
+      "step": 4,
       "unit": "px",
-      "default": 20
+      "label": "Bottom padding",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "footer-menu"
     }
   ],
   "presets": [
     {
-      "name": "t:names.footer",
-      "category": "t:categories.footer",
-      "settings": {
-        "gap": 20,
-        "padding-block-start": 36,
-        "padding-block-end": 36
-      },
-      "blocks": {
-        "newsletter-group": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "gap": 6,
-            "width": "fill"
-          },
-          "blocks": {
-            "newsletter-heading": {
-              "type": "text",
+      "name": "Footer",
+      "category": "Theme layout",
+      "blocks": [
+        {
+          "type": "_footer-newsletter",
+          "id": "newsletter",
+          "static": true,
+          "blocks": [
+            {
+              "type": "label",
+              "id": "newsletter_eyebrow",
+              "static": true,
               "settings": {
-                "text": "t:html_defaults.join_our_email_list",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "h3"
+                "text": "<p>PRIVATE NOTES / OCCASIONAL LETTERS</p>"
               }
             },
-            "newsletter-text": {
-              "type": "text",
+            {
+              "type": "heading",
+              "id": "newsletter_heading",
+              "static": true,
               "settings": {
-                "text": "t:html_defaults.get_exclusive_deals_and_early_access_to_new_products",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "rte"
+                "heading": "<h2>Keep close to<br>what endures.</h2>",
+                "type_preset": "h1"
+              }
+            },
+            {
+              "type": "text",
+              "id": "newsletter_text",
+              "static": true,
+              "settings": {
+                "text": "<p>Notes on rare stones and atelier work.<br>Objects made to endure.</p>",
+                "type_preset": "md"
+              }
+            },
+            {
+              "type": "newsletter-form",
+              "id": "newsletter_form",
+              "static": true,
+              "settings": {
+                "email_label": "Email address",
+                "email_placeholder": "YOUR EMAIL ADDRESS",
+                "hide_label": true,
+                "show_required_marker": false,
+                "button_label": "JOIN THE LIST",
+                "button_style": "primary",
+                "icon": "arrow-right",
+                "form_layout": "inline",
+                "success_message": "Thank you for subscribing."
+              }
+            },
+            {
+              "type": "label",
+              "id": "newsletter_note",
+              "static": true,
+              "settings": {
+                "text": "<p>OCCASIONAL LETTERS. UNSUBSCRIBE AT ANY TIME.</p>"
               }
             }
-          },
-          "block_order": ["newsletter-heading", "newsletter-text"]
-        },
-        "newsletter-form": {
-          "type": "email-signup",
+              ]
+            },
+        {
+          "type": "_footer-appointment",
+          "id": "appointment",
+          "static": true,
           "settings": {
-            "width": "fill"
+            "color_scheme": "scheme-5",
+            "background_color": "",
+            "padding_top": 28,
+            "padding_right": 32,
+            "padding_bottom": 30,
+            "padding_left": 32
+          },
+          "blocks": [
+            {
+              "type": "label",
+              "id": "appointment_eyebrow",
+              "static": true,
+              "settings": {
+                "text": "<p>PRIVATE APPOINTMENTS</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "id": "appointment_heading",
+              "static": true,
+              "settings": {
+                "heading": "<h2>Discover Spinel,<br>one stone at a time.</h2>",
+                "type_preset": "xl"
+              }
+            },
+            {
+              "type": "text",
+              "id": "appointment_text",
+              "static": true,
+              "settings": {
+                "text": "<p>Private consultations shaped around your intention,<br>timing and next piece.</p>",
+                "type_preset": "sm"
+              }
+            },
+            {
+              "type": "button",
+              "id": "appointment_button",
+              "static": true,
+              "settings": {
+                "label": "BOOK AN APPOINTMENT",
+                "link": "/pages/contact",
+                "style": "secondary",
+                "icon": "arrow-right"
+              }
+            }
+          ]
+        },
+        {
+          "type": "footer-menu",
+          "settings": {
+            "heading": "<h3>SHOP</h3>",
+            "type_preset": "h7",
+            "font": "body",
+            "menu": "footer-shop",
+            "show_external_indicator": true
           }
+        },
+        {
+          "type": "footer-menu",
+          "settings": {
+            "heading": "<h3>THE HOUSE</h3>",
+            "type_preset": "h7",
+            "font": "body",
+            "menu": "footer-about",
+            "show_external_indicator": true
+          }
+        },
+        {
+          "type": "footer-menu",
+          "settings": {
+            "heading": "<h3>CLIENT CARE</h3>",
+            "type_preset": "h7",
+            "font": "body",
+            "menu": "footer-help",
+            "show_external_indicator": true
+          }
+        },
+        {
+          "type": "footer-menu",
+          "settings": {
+            "heading": "<h3>CONNECT</h3>",
+            "type_preset": "h7",
+            "font": "body",
+            "menu": "footer",
+            "show_external_indicator": true
+          }
+        },
+        {
+          "type": "_footer-signature",
+          "id": "signature",
+          "static": true,
+          "settings": {
+            "image_opacity": 100,
+            "show_image_mobile": true
+          },
+          "blocks": [
+            {
+              "type": "label",
+              "id": "signature_eyebrow",
+              "static": true,
+              "settings": {
+                "text": "<p>THE HOUSE OF SPINEL / NEW YORK</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "id": "signature_wordmark",
+              "static": true,
+              "settings": {
+                "heading": "<p>SPINEL</p>",
+                "type_preset": "h1",
+                "width": "100%",
+                "width_mobile": "100%"
+              }
+            },
+            {
+              "type": "label",
+              "id": "signature_principles",
+              "static": true,
+              "settings": {
+                "text": "<p>NATURAL STONES<br>SCULPTURAL GOLD<br>MADE WITH INTENT</p>"
+              }
+            },
+            {
+              "type": "label",
+              "id": "signature_tagline",
+              "static": true,
+              "settings": {
+                "text": "<p>OBJECTS OF COLOUR, CHARACTER AND CONSEQUENCE.</p>"
+              }
+            }
+          ]
         }
-      },
-      "block_order": ["newsletter-group", "newsletter-form"]
+      ]
     }
   ]
 }

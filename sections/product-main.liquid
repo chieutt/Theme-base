@@ -1,0 +1,145 @@
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+{% render 'swiper-stylesheet' %}
+
+{% assign form_id = 'product-form-' | append: section.id %}
+{% if template.suffix != blank %}{% assign form_id = form_id | append: '-' | append: template.suffix %}{% endif %}
+
+<product-page
+  class="product-page product-page--main section-{{ section.id }} color-scheme color-{{ section.settings.color_scheme.id }} section-spacing"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-product-url="{{ product.url | escape }}"
+  data-product-handle="{{ product.handle }}"
+  data-form-id="{{ form_id }}"
+  data-currency="{{ cart.currency.iso_code | default: shop.currency }}"
+  data-show-currency-code="{{ settings.show_currency_code }}"
+  data-add-to-cart-label="{{ 'product.add_to_cart' | t | escape }}"
+  data-sold-out-label="{{ 'product.sold_out' | t | escape }}"
+  data-unavailable-label="{{ 'product.unavailable' | t | escape }}"
+  data-adding-to-cart-label="{{ 'product.adding_to_cart' | t | escape }}"
+  data-add-to-cart-error="{{ 'product.add_to_cart_error' | t | escape }}"
+  data-in-stock-label="{{ 'product.in_stock' | t | escape }}"
+  data-only-items-left-label="{{ 'product.only_items_left' | t: count: '[count]' | escape }}"
+  data-deferred-module="{{ 'product-page.js' | asset_url }}"
+  style="--product-layout-gap: {{ section.settings.desktop_gap }}px; --product-media-width: {{ section.settings.media_width }}%; --product-mobile-gap: {{ section.settings.mobile_gap }}px; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="product-page__inner page-width">
+    <div class="product-page__layout">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+  <script type="application/json" data-product-variants>{{ product.variants | json }}</script>
+  <script type="application/json" data-product-media>{{ product.media | json }}</script>
+  <p class="visually-hidden" data-product-status role="status" aria-live="polite"></p>
+</product-page>
+
+{% stylesheet %}
+  .product-page--main {
+    margin-bottom: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product main",
+  "blocks": [
+    {
+      "type": "product-breadcrumbs"
+    },
+    {
+      "type": "_product-media-gallery"
+    },
+    {
+      "type": "_product-details"
+    },
+    {
+      "type": "product-usp-list"
+    },
+    {
+      "type": "product-sticky-add-to-cart"
+    },
+    {
+      "type": "product-custom-liquid"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "label": "Desktop column gap",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Media width",
+      "min": 50,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile column gap",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,281 @@
+{% render 'section-stylesheet', asset: 'section-review-parallax.css', defer_on_home: true %}
+
+<review-parallax
+  class="review-parallax color-scheme color-{{ section.settings.color_scheme.id }}"
+  data-deferred-module="{{ 'review-parallax.js' | asset_url }}"
+  data-section-id="{{ section.id }}"
+  data-enable-scroll="{{ section.settings.enable_scroll }}"
+  style="--review-mobile-cards-per-view: {{ section.settings.mobile_cards_per_view }}; --review-mobile-rows: {{ section.settings.mobile_rows }};"
+>
+  <div class="review-parallax__scene" data-review-scene>
+    <div class="review-parallax__viewport" data-review-viewport>
+      <div class="review-parallax__header-track" data-review-header-track>
+        {% content_for 'block', type: '_section-header', id: 'review_header' %}
+      </div>
+
+      <div class="review-parallax__reviews" data-review-list>
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</review-parallax>
+
+{% schema %}
+{
+  "name": "Review parallax",
+  "tag": "section",
+  "class": "section-review-parallax",
+  "max_blocks": 8,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Scroll animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll",
+      "label": "Animate reviews on scroll",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Mobile carousel"
+    },
+    {
+      "type": "range",
+      "id": "mobile_cards_per_view",
+      "label": "Cards per view",
+      "min": 1,
+      "max": 4,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "mobile_rows",
+      "label": "Rows",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Review parallax",
+      "category": "Brand trust",
+      "blocks": [
+        {
+          "type": "_section-header",
+          "id": "review_header",
+          "static": true,
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<p>What customers say</p>",
+                "type_preset": "h7",
+                "alignment": "center"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h2>Over 500 Happy Reviews</h2>",
+                "type_preset": "h1",
+                "alignment": "center"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "review",
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Amazing look and quality! The piece is beautiful, fits perfectly, and feels exceptionally made.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "heading": "<h6>Tony S.</h6>",
+                "type_preset": "h6",
+                "alignment": "left"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

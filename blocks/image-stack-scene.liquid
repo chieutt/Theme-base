@@ -1,0 +1,131 @@
+{% liquid
+  assign scene_background_image = block.settings.background_image
+  assign scene_mobile_background_image = block.settings.mobile_background_image
+  assign section_background_image = ''
+  assign section_mobile_background_image = ''
+  if section.settings.use_custom_background_image
+    assign section_background_image = section.settings.background_image
+    assign section_mobile_background_image = section.settings.mobile_background_image
+  endif
+
+  comment
+    Panel backdrop priority:
+    1. Background configured on this item.
+    2. Background configured on the parent section.
+    3. The section's lifestyle-1 placeholder.
+  endcomment
+  assign panel_background_image = scene_background_image
+  assign panel_mobile_background_image = scene_mobile_background_image
+  assign panel_background_alt = block.settings.background_alt
+  assign panel_uses_section_placeholder = false
+
+  if panel_background_image == blank and panel_mobile_background_image == blank
+    assign panel_background_image = section_background_image | default: section_mobile_background_image
+    assign panel_mobile_background_image = section_mobile_background_image | default: panel_background_image
+    assign panel_background_alt = section_background_image.alt | default: panel_background_image.alt
+    if panel_background_image == blank and section.settings.use_custom_background_image
+      assign panel_uses_section_placeholder = true
+    endif
+  else
+    assign panel_background_image = panel_background_image | default: panel_mobile_background_image
+    assign panel_mobile_background_image = panel_mobile_background_image | default: panel_background_image
+    assign panel_background_alt = panel_background_alt | default: panel_background_image.alt
+  endif
+  assign panel_alt = block.settings.alt | default: block.settings.image.alt
+  assign panel_index = 0
+  for section_block in section.blocks
+    if section_block.id == block.id
+      assign panel_index = forloop.index0
+      break
+    endif
+  endfor
+  assign panel_number = panel_index | plus: 1
+  assign media_placeholder_index = panel_index | modulo: 2 | plus: 1
+  assign media_placeholder_asset = 'collection-' | append: media_placeholder_index
+  if panel_number < 10
+    assign panel_number = panel_number | prepend: '0'
+  endif
+  assign card_ratio = block.settings.image_ratio | default: '4-5'
+  case card_ratio
+    when 'adapt'
+      assign card_ratio = 'auto'
+    when 'square'
+      assign card_ratio = '1 / 1'
+    else
+      assign card_ratio = card_ratio | replace: '-', ' / '
+  endcase
+%}
+
+<article
+  class="sticky-scroll__panel image-stack__scene image-stack__scene--{{ block.settings.content_position }} image-stack__scene--alignment-{{ block.settings.content_alignment }}"
+  data-sticky-scroll-panel
+  data-sticky-scroll-index="{{ panel_index }}"
+  style="--sticky-scroll-content-width: {{ block.settings.content_width }}px; --sticky-scroll-content-gap: {{ block.settings.content_gap }}px; --sticky-scroll-image-position: {{ block.settings.image_position }}; --image-stack-card-ratio: {{ card_ratio }};"
+  {{ block.shopify_attributes }}
+>
+  <div class="image-stack__scene-background" aria-hidden="true">
+    {% if panel_background_image != blank %}
+      {% render 'responsive-media', image: panel_background_image, mobile_image: panel_mobile_background_image, mobile_breakpoint: 767, max_width: 2400, mobile_max_width: 1280, widths: '750, 960, 1200, 1600, 1920, 2400', mobile_widths: '375, 550, 750, 960, 1280', sizes: '100vw', class: 'image-stack__background-image', loading: 'lazy', alt: panel_background_alt %}
+    {% elsif panel_uses_section_placeholder %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'image-stack__background-placeholder image-stack__background-placeholder--section' }}
+    {% endif %}
+  </div>
+  <div class="image-stack__overlay" aria-hidden="true"></div>
+
+  <div class="image-stack__scene-layout">
+    <div class="image-stack__content-positioner">
+      <div class="sticky-scroll__content image-stack__content" data-sticky-scroll-content>
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+
+    <div class="image-stack__media">
+      {% render 'responsive-media', image: block.settings.image, mobile_image: block.settings.mobile_image, mobile_breakpoint: 767, max_width: 1200, mobile_max_width: 960, widths: '320, 480, 640, 800, 960, 1200', mobile_widths: '375, 550, 750, 960', sizes: '(min-width: 768px) 32vw, calc(100vw - 2 * var(--page-margin))', class: 'image-stack__media-image', loading: 'lazy', alt: panel_alt, placeholder_asset: media_placeholder_asset, placeholder_class: 'image-stack__media-placeholder' %}
+    </div>
+  </div>
+
+  <span class="sticky-scroll__ghost-number" aria-hidden="true">{{ panel_number }}</span>
+</article>
+
+{% schema %}
+{
+  "name": "Image stack scene",
+  "tag": null,
+  "blocks": [
+    { "type": "label" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "button" },
+    { "type": "spacer" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile background image" },
+    { "type": "text", "id": "background_alt", "label": "Background alt text" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
+    { "type": "text", "id": "alt", "label": "Alt text" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [{ "value": "adapt", "label": "Adapt" }, { "value": "square", "label": "Square (1:1)" }, { "value": "2-3", "label": "Portrait (2:3)" }, { "value": "3-4", "label": "Standard (3:4)" }, { "value": "4-5", "label": "Portrait (4:5)" }, { "value": "6-7", "label": "Classic (6:7)" }, { "value": "3-2", "label": "Landscape (3:2)" }, { "value": "4-3", "label": "Landscape (4:3)" }, { "value": "16-9", "label": "Wide (16:9)" }], "default": "4-5" },
+    { "type": "select", "id": "image_position", "label": "Image position", "options": [{ "value": "center center", "label": "Center" }, { "value": "center top", "label": "Top" }, { "value": "center bottom", "label": "Bottom" }, { "value": "left center", "label": "Left" }, { "value": "right center", "label": "Right" }], "default": "center center" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "content_position", "label": "Content position", "options": [{ "value": "top-left", "label": "Top left" }, { "value": "top-center", "label": "Top center" }, { "value": "top-right", "label": "Top right" }, { "value": "middle-left", "label": "Middle left" }, { "value": "middle-center", "label": "Middle center" }, { "value": "middle-right", "label": "Middle right" }, { "value": "bottom-left", "label": "Bottom left" }, { "value": "bottom-center", "label": "Bottom center" }, { "value": "bottom-right", "label": "Bottom right" }], "default": "middle-left" },
+    { "type": "text_alignment", "id": "content_alignment", "label": "Alignment", "default": "left" },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 280, "max": 720, "step": 20, "unit": "px", "default": 520 },
+    { "type": "range", "id": "content_gap", "label": "Content gap", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 20 }
+  ],
+  "presets": [
+    {
+      "name": "Image stack scene",
+      "category": "Editorial content",
+      "blocks": [
+        { "type": "label", "settings": { "text": "<p>THE COLLECTION</p>", "reveal_type": "fade-up", "reveal_delay": 0 } },
+        { "type": "heading", "settings": { "heading": "<h2>Beauty in every detail.</h2>", "type_preset": "h2", "reveal_type": "fade-up", "reveal_delay": 150 } },
+        { "type": "text", "settings": { "text": "<p>Each piece is shaped through a quiet study of material, proportion and light.</p>", "type_preset": "sm", "reveal_type": "fade-up", "reveal_delay": 300 } },
+        { "type": "button", "settings": { "label": "Shop the collection", "style": "tertiary", "icon": "arrow-right", "reveal_type": "fade-up", "reveal_delay": 450 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

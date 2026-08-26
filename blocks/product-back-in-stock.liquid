@@ -1,0 +1,23 @@
+{% doc %}
+  Renders a placeholder for a back-in-stock provider integration.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+{% assign variant = product.selected_or_first_available_variant %}
+{% unless variant.available %}<div class="product-back-in-stock" {{ block.shopify_attributes }}>{{ block.settings.message | escape }}</div>{% endunless %}
+{% schema %}
+{
+  "name": "Back in stock",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Back in stock"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Notify me when available"
+    }
+  ]
+}
+{% endschema %}

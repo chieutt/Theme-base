@@ -1,0 +1,12 @@
+{% doc %}
+  Renders the selected variant SKU.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+{% assign variant = product.selected_or_first_available_variant %}
+<p class="product-sku" data-product-sku {% if variant.sku == blank %}hidden{% endif %} {{ block.shopify_attributes }}>{{ variant.sku | escape }}</p>
+{% schema %}
+{
+  "name": "Product SKU",
+  "settings": []
+}
+{% endschema %}

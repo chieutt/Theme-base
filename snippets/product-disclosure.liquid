@@ -1,0 +1,26 @@
+{% doc %}
+  Renders a product information disclosure without owning merchant settings.
+
+  @param {string} details_class - Classes for the details element.
+  @param {string} heading - Disclosure heading.
+  @param {string} heading_tag - Semantic heading tag.
+  @param {string} heading_size - Typography preset.
+  @param {string} content - Trusted HTML disclosure content.
+  @param {string} text_size - Body typography size.
+  @param {string} [heading_class] - Additional heading classes.
+  @param {string} [attributes] - Block attributes for the root details element.
+{% enddoc %}
+
+{% if content != blank %}
+  {% liquid
+    assign disclosure_details_class = details_class | default: 'product-disclosure'
+    assign disclosure_heading_tag = heading_tag | default: 'h3'
+    assign disclosure_heading_size = heading_size | default: 'medium'
+    assign disclosure_text_size = text_size | default: 'medium'
+  %}
+  {% capture disclosure_heading_typography_class %}{% render 'typography-class', preset: disclosure_heading_size, fallback: 'h4' %}{% endcapture %}
+  <details class="{{ disclosure_details_class }}" data-animated-details{% if attributes != blank %} {{ attributes }}{% endif %}>
+    <summary><{{ disclosure_heading_tag }} class="{% if heading_class != blank %}{{ heading_class }} {% endif %}{{ disclosure_heading_typography_class | strip }}">{{ heading | escape }}</{{ disclosure_heading_tag }}></summary>
+    <div class="rte spinel-text--{{ disclosure_text_size }} content-text--{{ disclosure_text_size }}" data-accordion-content>{{ content }}</div>
+  </details>
+{% endif %}

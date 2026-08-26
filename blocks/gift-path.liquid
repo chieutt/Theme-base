@@ -1,0 +1,184 @@
+{% doc %}
+  Defines one recipient-specific Gift Spinel path. The parent section renders
+  this block as both an editor-selectable choice and a curated result path.
+{% enddoc %}
+
+{% liquid
+  assign choice_label = block.settings.recipient_label | default: block.settings.recipient
+  assign path_products = block.settings.products
+  assign bundle_total = 0
+  assign bundle_product_count = 0
+  assign bundle_discount_percentage = block.settings.bundle_discount_percentage | default: 0
+%}
+
+{% capture bundle_items %}[
+  {% for product in path_products limit: 4 %}
+    {% assign product_variant = product.selected_or_first_available_variant %}
+    {% if product_variant != blank and product_variant.available %}
+      {% if bundle_product_count > 0 %},{% endif %}
+      {"id":{{ product_variant.id }},"quantity":1}
+      {% assign bundle_total = bundle_total | plus: product_variant.price %}
+      {% assign bundle_product_count = bundle_product_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+]{% endcapture %}
+
+{% assign bundle_discount_amount = bundle_total | times: bundle_discount_percentage | divided_by: 100 %}
+{% assign bundle_discounted_total = bundle_total | minus: bundle_discount_amount %}
+{% capture bundle_savings %}{% render 'money', amount: bundle_discount_amount %}{% endcapture %}
+
+<div
+  class="gift-spinel__path"
+  data-gift-spinel-path-root
+  data-block-id="{{ block.id }}"
+  data-recipient="{{ block.settings.recipient | escape }}"
+  {{ block.shopify_attributes }}
+>
+  <button
+    class="gift-spinel__choice"
+    type="button"
+    data-gift-spinel-choice="{{ block.id }}"
+    data-recipient="{{ block.settings.recipient | escape }}"
+    aria-pressed="false"
+  >
+    <span class="gift-spinel__choice-label">{{ choice_label | escape }}</span>
+    <span class="gift-spinel__choice-icon button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+  </button>
+
+  <div
+    data-gift-spinel-path
+    data-block-id="{{ block.id }}"
+    data-recipient="{{ block.settings.recipient | escape }}"
+    hidden
+  >
+  <div
+    class="gift-spinel__result-content"
+    data-gift-spinel-result-block="{{ block.id }}"
+  >
+    <div class="gift-spinel__chips" data-gift-spinel-chips></div>
+    {% if section.blocks.size > 1 %}
+      <button
+        class="gift-spinel__change modal-close-button close-icon"
+        type="button"
+        aria-label="Close gift path"
+        title="Close gift path"
+        data-gift-spinel-change
+      ></button>
+    {% endif %}
+    <div class="gift-spinel__result-blocks">
+      {% content_for 'blocks' %}
+    </div>
+
+    {% if path_products != blank %}
+      <ul class="gift-spinel__products" role="list" data-reveal-group>
+        {% for product in path_products limit: 4 %}
+          {% assign product_variant = product.selected_or_first_available_variant %}
+          <li class="gift-spinel__product" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+            <article class="gift-spinel__product-row">
+              <a class="gift-spinel__product-media" href="{{ product.url | escape }}" aria-label="{{ product.title | escape }}">
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', sizes: '72px', alt: product.featured_image.alt | default: product.title | escape }}
+                {% else %}
+                  {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'gift-spinel__product-placeholder' }}
+                {% endif %}
+              </a>
+              <div class="gift-spinel__product-details">
+                <h3 class="gift-spinel__product-title product-title-text heading-text"><a href="{{ product.url | escape }}">{{ product.title | escape }}</a></h3>
+                <p class="gift-spinel__product-price">{% render 'money', amount: product_variant.price %}</p>
+              </div>
+              <a class="gift-spinel__product-action" href="{{ product.url | escape }}" aria-label="{{ 'product_recommendations.view_product' | t: product: product.title | escape }}">{% render 'icon', name: 'bag-simple' %}</a>
+            </article>
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% if bundle_product_count > 0 %}
+        <div class="gift-spinel__bundle" data-gift-spinel-bundle>
+          {% if bundle_discount_percentage > 0 %}
+            <div class="gift-spinel__bundle-discount" aria-label="{{ 'gift_spinel.bundle_discount' | t: percentage: bundle_discount_percentage | escape }}">
+              <span>{{ 'gift_spinel.bundle_discount' | t: percentage: bundle_discount_percentage }}</span>
+              <span>{{ 'gift_spinel.bundle_savings' | t: amount: bundle_savings }}</span>
+            </div>
+          {% endif %}
+          {% if block.settings.bundle_discount_message != blank %}
+            <p class="gift-spinel__bundle-message">{{ block.settings.bundle_discount_message | escape }}</p>
+          {% endif %}
+          <div class="gift-spinel__bundle-summary">
+            <span>{{ 'gift_spinel.bundle_items' | t: count: bundle_product_count }}</span>
+            <span class="gift-spinel__bundle-total">
+              {% if bundle_discount_percentage > 0 %}<s>{% render 'money', amount: bundle_total %}</s>{% endif %}
+              <strong>{% render 'money', amount: bundle_discounted_total %}</strong>
+            </span>
+          </div>
+          <button
+            class="btn-primary gift-spinel__bundle-add"
+            type="button"
+            data-gift-spinel-bundle-add
+            data-gift-spinel-bundle-items='{{ bundle_items | strip_newlines | strip | escape }}'
+            data-gift-spinel-bundle-name="{{ section.settings.bundle_name | escape }}"
+            data-gift-spinel-bundle-label="{{ section.settings.bundle_add_label | escape }}"
+            data-gift-spinel-bundle-adding-label="{{ section.settings.bundle_adding_label | escape }}"
+            data-gift-spinel-bundle-added-label="{{ section.settings.bundle_added_label | escape }}"
+            data-gift-spinel-bundle-error-label="{{ section.settings.bundle_error_label | escape }}"
+          >
+            <span data-gift-spinel-bundle-label>{{ section.settings.bundle_add_label | escape }}</span>
+            <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'bag-simple' %}</span>
+          </button>
+        </div>
+      {% endif %}
+    {% else %}
+      <ul class="gift-spinel__products" role="list" aria-label="{{ 'gift_spinel.curated_edit' | t | escape }}" data-reveal-group>
+        {% for placeholder_number in (1..4) %}
+          <li class="gift-spinel__product" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+            <article class="gift-spinel__product-row gift-spinel__product-row--placeholder" aria-hidden="true">
+              <span class="gift-spinel__product-media">{{ 'product-' | append: placeholder_number | placeholder_svg_tag: 'gift-spinel__product-placeholder' }}</span>
+              <div class="gift-spinel__product-details">
+                <h3 class="gift-spinel__product-title product-title-text heading-text">{{ 'onboarding.product_title' | t }}</h3>
+                <p class="gift-spinel__product-price">{% render 'money', amount: 1999 %}</p>
+              </div>
+              <span class="gift-spinel__product-action">{% render 'icon', name: 'bag-simple' %}</span>
+            </article>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gift path",
+  "tag": null,
+  "blocks": [
+    { "type": "label" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "button" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Gift path" },
+    { "type": "paragraph", "content": "Select up to 4 products for this recipient's edit." },
+    { "type": "header", "content": "Recipient" },
+    { "type": "select", "id": "recipient", "label": "Recipient", "options": [{ "value": "partner", "label": "Partner" }, { "value": "mother", "label": "Mother" }, { "value": "friend", "label": "Friend" }, { "value": "myself", "label": "Myself" }], "default": "partner" },
+    { "type": "text", "id": "recipient_label", "label": "Display label", "default": "Gift recipient", "info": "Text shown on the recipient choice card." },
+    { "type": "product_list", "id": "products", "label": "Products", "limit": 4 },
+    { "type": "header", "content": "Bundle discount" },
+    { "type": "paragraph", "content": "Create the matching automatic discount in Shopify admin. This Gift path adds its selected products to the cart; Shopify applies the discount when its conditions are met." },
+    { "type": "range", "id": "bundle_discount_percentage", "label": "Bundle discount", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 15, "info": "Must match the automatic discount configured in Shopify admin." },
+    { "type": "text", "id": "bundle_discount_message", "label": "Discount message", "default": "Add this complete gift edit to receive your bundle discount." }
+  ],
+  "presets": [
+    {
+      "name": "Gift path",
+      "category": "Gifting",
+      "blocks": [
+        { "type": "label", "settings": { "text": "<p>Your curated gift edit</p>" } },
+        { "type": "heading", "settings": { "heading": "<h2>A thoughtful edit, chosen with care.</h2>", "type_preset": "h4" } },
+        { "type": "text", "settings": { "text": "<p>Chosen for its quiet symbolism and made to become part of their everyday ritual.</p>", "type_preset": "sm" } },
+        { "type": "button", "settings": { "label": "Explore this gift edit", "style": "primary", "icon": "arrow-right" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

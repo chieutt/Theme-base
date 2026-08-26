@@ -1,0 +1,274 @@
+{% liquid
+  assign current_label = collection.title
+  if section.settings.current_label_source == 'custom' and section.settings.current_label != blank
+    assign current_label = section.settings.current_label
+  endif
+%}
+
+<div
+  class="breadcrumb color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} breadcrumb--full full-width{% endif %}{% if section.settings.text_case == 'uppercase' %} breadcrumb--uppercase{% endif %}"
+  style="--breadcrumb-padding-top: {{ section.settings.padding_top }}px; --breadcrumb-padding-bottom: {{ section.settings.padding_bottom }}px; --breadcrumb-gap: {{ section.settings.item_gap }}px; --breadcrumb-align: {{ section.settings.alignment }};"
+>
+  <div class="breadcrumb__inner">
+    <nav class="breadcrumb__nav" aria-label="{{ 'accessibility.breadcrumb' | t | escape }}">
+      {% if section.settings.show_home_link %}
+        <a class="breadcrumb__link" href="{{ routes.root_url | escape }}">{{ section.settings.home_label | escape }}</a>
+        <span class="breadcrumb__separator" aria-hidden="true">
+          {% case section.settings.separator_style %}
+            {% when 'chevron' %}
+              {% render 'icon', name: 'chevron-right' %}
+            {% when 'dot' %}
+              <span>•</span>
+            {% else %}
+              <span>/</span>
+          {% endcase %}
+        </span>
+      {% endif %}
+      {% if section.settings.show_collections_link %}
+        <a class="breadcrumb__link" href="{{ routes.collections_url | escape }}">{{ section.settings.collections_label | escape }}</a>
+        <span class="breadcrumb__separator" aria-hidden="true">
+          {% case section.settings.separator_style %}
+            {% when 'chevron' %}
+              {% render 'icon', name: 'chevron-right' %}
+            {% when 'dot' %}
+              <span>•</span>
+            {% else %}
+              <span>/</span>
+          {% endcase %}
+        </span>
+      {% endif %}
+      <span class="breadcrumb__current" aria-current="page">{{ current_label | escape }}</span>
+    </nav>
+  </div>
+</div>
+
+{% stylesheet %}
+  .breadcrumb {
+    background: var(--gradient-background, var(--color-background));
+    color: var(--color-text);
+  }
+
+  .breadcrumb__inner {
+    width: min(100%, var(--page-width));
+    margin-inline: auto;
+    padding: var(--breadcrumb-padding-top) var(--page-margin) var(--breadcrumb-padding-bottom);
+  }
+
+  .breadcrumb--full .breadcrumb__inner {
+    width: 100%;
+  }
+
+  .breadcrumb__nav {
+    display: flex;
+    align-items: center;
+    justify-content: var(--breadcrumb-align);
+    gap: var(--breadcrumb-gap);
+    color: var(--color-text);
+    font-family: var(--body-font-family);
+    font-size: var(--label-size);
+    font-style: var(--body-font-style);
+    font-weight: var(--body-font-weight);
+    line-height: 1.3;
+  }
+
+  .breadcrumb--uppercase .breadcrumb__nav {
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumb__link {
+    color: inherit;
+    text-decoration: none;
+    text-underline-offset: 3px;
+    transition: color var(--motion-duration) ease;
+  }
+
+  .breadcrumb__link:hover {
+    color: var(--color-heading);
+    text-decoration: underline;
+  }
+
+  .breadcrumb__link:focus-visible {
+    outline: 2px solid var(--color-heading);
+    outline-offset: 3px;
+  }
+
+  .breadcrumb__separator {
+    display: grid;
+    min-width: 10px;
+    place-items: center;
+    color: color-mix(in srgb, var(--color-text) 48%, transparent);
+  }
+
+  .breadcrumb__separator svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .breadcrumb__current {
+    color: var(--color-heading);
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .breadcrumb__inner {
+      padding-top: calc(var(--breadcrumb-padding-top) * 0.5);
+      padding-bottom: calc(var(--breadcrumb-padding-bottom) * 0.5);
+    }
+
+    .breadcrumb__nav {
+      flex-wrap: wrap;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Breadcrumb",
+  "tag": "section",
+  "class": "section-breadcrumb",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "select",
+      "id": "text_case",
+      "label": "Text case",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_home_link",
+      "label": "Home link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "home_label",
+      "label": "Home label",
+      "default": "Home"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collections_link",
+      "label": "Collections link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "collections_label",
+      "label": "Collections label",
+      "default": "Collections"
+    },
+    {
+      "type": "select",
+      "id": "current_label_source",
+      "label": "Current page label",
+      "options": [
+        { "value": "collection", "label": "Collection title" },
+        { "value": "custom", "label": "Custom text" }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "text",
+      "id": "current_label",
+      "label": "Custom current page label"
+    },
+    {
+      "type": "select",
+      "id": "separator_style",
+      "label": "Separator style",
+      "options": [
+        { "value": "slash", "label": "Slash" },
+        { "value": "chevron", "label": "Chevron" },
+        { "value": "dot", "label": "Dot" }
+      ],
+      "default": "slash"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Item spacing",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Breadcrumb",
+      "category": "Theme layout"
+    }
+  ]
+}
+{% endschema %}

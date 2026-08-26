@@ -1,0 +1,14 @@
+{% if variant != blank %}
+  <p class="product-inventory" data-inventory-status {{ block.shopify_attributes }}>
+    {% if variant.available %}
+      <span class="product-inventory__dot" aria-hidden="true"></span>
+      {% if variant.inventory_management and variant.inventory_policy != 'continue' and variant.inventory_quantity > 0 and variant.inventory_quantity <= 10 %}
+        <span data-inventory-message>{{ 'product.only_items_left' | t: count: variant.inventory_quantity }}</span>
+      {% else %}
+        <span data-inventory-message>{{ 'product.in_stock' | t }}</span>
+      {% endif %}
+    {% else %}
+      <span data-inventory-message>{{ 'product.sold_out' | t }}</span>
+    {% endif %}
+  </p>
+{% endif %}

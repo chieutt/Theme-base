@@ -1,0 +1,52 @@
+{% doc %}
+  Owns the repeatable archive-card stream for Why choose us. Shared card
+  composition belongs here so every child card remains visually coherent.
+{% enddoc %}
+
+<div
+  class="why-choose-us__archives why-choose-us__archives--ratio-{{ block.settings.image_ratio }} why-choose-us__archives--label-{{ block.settings.label_size }} why-choose-us__archives--heading-{{ block.settings.heading_size }} why-choose-us__archives--text-{{ block.settings.text_size }} why-choose-us__archives--button-{{ block.settings.button_style }} why-choose-us__archives--button-size-{{ block.settings.button_size }}"
+  role="list"
+  aria-label="{{ block.settings.accessibility_label | escape }}"
+  data-reveal-group
+  style="--why-choose-us-archive-columns-desktop: {{ block.settings.columns_desktop }}; --why-choose-us-archive-columns-mobile: {{ block.settings.columns_mobile }}; --why-choose-us-archive-gap: {{ block.settings.item_gap }}px; --why-choose-us-archive-image-width: {{ block.settings.image_width }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Why choose us archives",
+  "tag": null,
+  "blocks": [
+    { "type": "why-choose-us-archive-card" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "columns_desktop", "label": "Desktop columns", "options": [{ "value": "1", "label": "1 column" }, { "value": "2", "label": "2 columns" }, { "value": "3", "label": "3 columns" }, { "value": "4", "label": "4 columns" }], "default": "3" },
+    { "type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{ "value": "1", "label": "1 column" }, { "value": "2", "label": "2 columns" }], "default": "1" },
+    { "type": "range", "id": "item_gap", "label": "Item gap", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Image" },
+    { "type": "range", "id": "image_width", "label": "Image width", "min": 64, "max": 240, "step": 4, "unit": "px", "default": 104 },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [{ "value": "square", "label": "Square (1:1)" }, { "value": "4-3", "label": "Landscape (4:3)" }, { "value": "3-2", "label": "Landscape (3:2)" }, { "value": "2-3", "label": "Portrait (2:3)" }, { "value": "3-4", "label": "Standard (3:4)" }, { "value": "4-5", "label": "Portrait (4:5)" }, { "value": "6-7", "label": "Classic (6:7)" }], "default": "4-3" },
+    { "type": "header", "content": "Typography" },
+    { "type": "select", "id": "label_size", "label": "Label size", "options": [{ "value": "label", "label": "Label" }, { "value": "xs", "label": "Body extra small" }, { "value": "sm", "label": "Body small" }], "default": "label" },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [{ "value": "h0", "label": "Display extra large" }, { "value": "h1", "label": "Display large" }, { "value": "h2", "label": "Display medium" }, { "value": "h3", "label": "Heading extra large" }, { "value": "h4", "label": "Heading large" }, { "value": "h5", "label": "Heading medium" }, { "value": "h6", "label": "Heading small" }, { "value": "h7", "label": "Heading extra small" }], "default": "h5" },
+    { "type": "select", "id": "text_size", "label": "Text size", "options": [{ "value": "lg", "label": "Body large" }, { "value": "md", "label": "Body medium" }, { "value": "sm", "label": "Body small" }, { "value": "xs", "label": "Body extra small" }], "default": "sm" },
+    { "type": "header", "content": "Button" },
+    { "type": "select", "id": "button_style", "label": "Button style", "options": [{ "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "tertiary", "label": "Tertiary" }], "default": "tertiary" },
+    { "type": "select", "id": "button_size", "label": "Button size", "options": [{ "value": "small", "label": "Small" }, { "value": "medium", "label": "Medium" }, { "value": "large", "label": "Large" }], "default": "small" },
+    { "type": "text", "id": "accessibility_label", "label": "Accessibility label", "default": "Explore the collection" }
+  ],
+  "presets": [
+    {
+      "name": "Why choose us archives",
+      "blocks": [
+        { "type": "why-choose-us-archive-card", "settings": { "label": "ARCHIVE N° 01", "title": "The Necklaces", "action_label": "Enter" } },
+        { "type": "why-choose-us-archive-card", "settings": { "label": "ARCHIVE N° 02", "title": "The Rings", "action_label": "Enter" } },
+        { "type": "why-choose-us-archive-card", "settings": { "label": "ARCHIVE N° 03", "title": "The Art of Giving", "action_label": "Enter" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

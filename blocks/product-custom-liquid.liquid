@@ -1,0 +1,20 @@
+{% doc %}
+  Renders merchant-supplied Liquid on a product page.
+{% enddoc %}
+<div class="product-custom-liquid" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Custom Liquid"
+    },
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid"
+    }
+  ]
+}
+{% endschema %}

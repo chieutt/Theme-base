@@ -1,0 +1,623 @@
+{% render 'section-stylesheet', asset: 'section-collection-showcase.css', defer_on_home: true %}
+
+{% liquid
+  assign link_blocks = section.blocks | where: 'type', 'collection_link'
+  assign heading_block = blank
+  for block in section.blocks
+    if block.type == 'heading' or block.type == 'subheading'
+      assign heading_block = block
+      break
+    endif
+  endfor
+%}
+
+<collection-showcase
+  data-section-id="{{ section.id }}"
+  data-deferred-module="{{ 'collection-showcase.js' | asset_url }}"
+  data-autoplay="{% if section.settings.autoplay %}true{% else %}false{% endif %}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 6 | times: 1000 }}"
+  class="collection-showcase color-scheme color-{{ section.settings.content_color_scheme.id }}{% if heading_block != blank %} collection-showcase--has-heading{% endif %}{% if section.settings.media_position_desktop == 'before' %} collection-showcase--desktop-media-before{% endif %}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+>
+  <div class="collection-showcase__inner">
+    {% if heading_block != blank %}
+      <div class="collection-showcase__heading" {{ heading_block.shopify_attributes }}>
+        <span class="collection-showcase__heading-dot" aria-hidden="true"></span>
+        {% if heading_block.type == 'heading' %}
+          {% render 'content-block',
+            block: heading_block,
+            content: heading_block.settings.heading,
+            kind: 'heading',
+            default_preset: 'h7',
+            default_font: 'heading'
+          %}
+        {% else %}
+          {% render 'content-block',
+            block: heading_block,
+            content: heading_block.settings.text,
+            kind: 'heading',
+            default_preset: 'h7',
+            default_font: 'heading'
+          %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="collection-showcase__media color-scheme color-{{ section.settings.media_color_scheme.id }}">
+      <div class="collection-showcase__panels" data-collection-showcase-panels>
+        {% if link_blocks.size > 0 %}
+          {% assign panel_index = 0 %}
+          {% for block in link_blocks %}
+            {% liquid
+              assign item_collection = block.settings.collection
+              assign item_title = block.settings.title | default: item_collection.title
+              assign item_link = block.settings.link
+              if item_link == blank and item_collection != blank
+                assign item_link = item_collection.url
+              endif
+              assign item_image = block.settings.image
+              if item_image == blank and item_collection != blank
+                assign item_image = item_collection.featured_image | default: item_collection.image
+              endif
+              assign item_mobile_image = block.settings.mobile_image
+              assign item_image_alt = block.settings.image_alt
+              if item_image_alt == blank
+                assign item_image_alt = item_image.alt | default: item_mobile_image.alt | default: item_title
+              endif
+              assign item_focal_point = block.settings.focal_point | default: 'center center'
+              assign item_image_style = 'object-position: ' | append: item_focal_point | append: ';'
+              assign item_is_preview = false
+              if item_title == blank
+                assign item_title = 'collection_showcase.preview_title' | t
+                assign item_is_preview = true
+              endif
+              assign item_color_scheme = section.settings.media_color_scheme
+              if block.settings.override_color_scheme and block.settings.color_scheme != blank
+                assign item_color_scheme = block.settings.color_scheme
+              endif
+              assign preview_product_count = 0
+              if item_collection != blank
+                for preview_product in item_collection.products limit: 2
+                  if preview_product != blank
+                    assign preview_product_count = preview_product_count | plus: 1
+                  endif
+                endfor
+              endif
+              assign capsule_slot_count = preview_product_count
+              if item_link != blank
+                assign capsule_slot_count = capsule_slot_count | plus: 1
+              endif
+              assign capsule_width = capsule_slot_count | times: 46 | plus: 6
+            %}
+            <div
+              class="collection-showcase__panel{% if panel_index == 0 %} collection-showcase__panel--active{% endif %}{% if item_is_preview %} collection-showcase__panel--preview{% endif %} color-scheme color-{{ item_color_scheme.id }}"
+              id="CollectionShowcasePanel-{{ section.id }}-{{ block.id }}"
+              role="tabpanel"
+              aria-labelledby="CollectionShowcaseTab-{{ section.id }}-{{ block.id }}"
+              aria-hidden="{% if panel_index == 0 %}false{% else %}true{% endif %}"
+              {% unless panel_index == 0 %}inert{% endunless %}
+              data-collection-showcase-panel
+              data-block-id="{{ block.id }}"
+              style="--collection-showcase-focal-point: {{ item_focal_point }}; --collection-showcase-capsule-width: {{ capsule_width }}px;"
+            >
+              {% assign panel_image = item_image | default: item_mobile_image %}
+              {% render 'responsive-media',
+                image: panel_image,
+                mobile_image: item_mobile_image,
+                max_width: 1200,
+                mobile_max_width: 960,
+                widths: '480, 720, 840, 960, 1200',
+                mobile_widths: '320, 480, 640, 800, 960',
+                sizes: '(min-width: 1200px) 509px, (min-width: 768px) 50vw, calc(100vw - 40px)',
+                class: 'collection-showcase__image',
+                loading: 'lazy',
+                alt: item_image_alt,
+                style: item_image_style,
+                placeholder_class: 'collection-showcase__placeholder'
+              %}
+
+              {% if capsule_slot_count > 0 %}
+                <div
+                  class="collection-showcase__products"
+                  style="--collection-showcase-capsule-width: {{ capsule_width }}px;"
+                  aria-label="{{ 'collection_showcase.products' | t | escape }}"
+                >
+                  <div class="collection-showcase__products-inner">
+                    {% if item_link != blank %}
+                      <a
+                        class="collection-showcase__product collection-showcase__product--more"
+                        href="{{ item_link | escape }}"
+                        aria-label="{{ 'collection_showcase.view_collection' | t: collection: item_title | escape }}"
+                      >+</a>
+                    {% endif %}
+                    {% if item_collection != blank %}
+                      {% for preview_product in item_collection.products limit: 2 %}
+                        {% if preview_product != blank %}
+                          <div
+                            class="collection-showcase__product"
+                            data-product-card
+                            data-product-card-url="{{ preview_product.url | escape }}"
+                            data-selected-variant-id="{{ preview_product.selected_or_first_available_variant.id }}"
+                          >
+                            <button
+                              type="button"
+                              class="collection-showcase__product-button"
+                              aria-label="{{ 'product_card.quick_view' | t | append: ': ' | append: preview_product.title | escape }}"
+                              aria-haspopup="dialog"
+                              data-product-card-quick-view-open
+                              data-product-card-quick-view-url="{{ preview_product.url | escape }}"
+                            >
+                              {% render 'responsive-media',
+                                image: preview_product.featured_image,
+                                max_width: 80,
+                                widths: '40, 80',
+                                sizes: '40px',
+                                class: 'collection-showcase__product-image',
+                                loading: 'lazy',
+                                alt: preview_product.title,
+                                placeholder_asset: 'placeholder-image-product-1.svg',
+                                placeholder_class: 'collection-showcase__product-image collection-showcase__product-placeholder'
+                              %}
+                            </button>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            {% assign panel_index = panel_index | plus: 1 %}
+          {% endfor %}
+        {% else %}
+          <div class="collection-showcase__panel collection-showcase__panel--active collection-showcase__panel--empty">
+            {% render 'media-placeholder', class_name: 'collection-showcase__placeholder', placeholder_name: 'collection-1' %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="collection-showcase__tabs">
+      {% if link_blocks.size > 0 %}
+        <ul
+          class="collection-showcase__list"
+          role="tablist"
+          aria-label="{{ 'collection_showcase.collections' | t | escape }}"
+        >
+          {% assign tab_index = 0 %}
+          {% for block in link_blocks %}
+            {% liquid
+              assign item_collection = block.settings.collection
+              assign item_title = block.settings.title | default: item_collection.title
+              assign item_link = block.settings.link
+              if item_link == blank and item_collection != blank
+                assign item_link = item_collection.url
+              endif
+              assign item_count = 0
+              if item_collection != blank
+                assign item_count = item_collection.products_count
+              elsif block.settings.count != blank
+                assign item_count = block.settings.count
+              endif
+              assign item_is_preview = false
+              if item_title == blank
+                assign item_title = 'collection_showcase.preview_title' | t
+                assign item_is_preview = true
+              endif
+            %}
+            <li
+              class="collection-showcase__item{% if tab_index == 0 %} collection-showcase__item--active{% endif %}{% if item_is_preview %} collection-showcase__item--preview{% endif %}"
+              role="presentation"
+              data-collection-showcase-item
+              data-block-id="{{ block.id }}"
+              {{ block.shopify_attributes }}
+            >
+              <button
+                type="button"
+                id="CollectionShowcaseTab-{{ section.id }}-{{ block.id }}"
+                class="collection-showcase__tab"
+                role="tab"
+                aria-controls="CollectionShowcasePanel-{{ section.id }}-{{ block.id }}"
+                aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
+                tabindex="{% if tab_index == 0 %}0{% else %}-1{% endif %}"
+                data-collection-showcase-tab
+              >
+                <span class="collection-showcase__title-group">
+                  <span class="collection-showcase__title">{{ item_title | escape }}</span>
+                  <span class="collection-showcase__count">{{ item_count | escape }}</span>
+                </span>
+              </button>
+              {% if item_link != blank %}
+                <a
+                  class="collection-showcase__arrow"
+                  href="{{ item_link | escape }}"
+                  aria-label="{{ 'collection_showcase.view_collection' | t: collection: item_title | escape }}"
+                  data-collection-showcase-action
+                >
+                  {% render 'icon', name: 'arrow-up-right' %}
+                </a>
+              {% else %}
+                <span class="collection-showcase__arrow" aria-hidden="true">
+                  {% render 'icon', name: 'arrow-up-right' %}
+                </span>
+              {% endif %}
+              <span class="collection-showcase__progress" aria-hidden="true">
+                <span class="collection-showcase__progress-bar" data-collection-showcase-progress></span>
+              </span>
+            </li>
+            {% assign tab_index = tab_index | plus: 1 %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</collection-showcase>
+
+{% schema %}
+{
+  "name": "Collection showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page width"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "media_position_desktop",
+      "label": "Media position",
+      "options": [
+        {
+          "value": "before",
+          "label": "Before"
+        },
+        {
+          "value": "after",
+          "label": "After"
+        }
+      ],
+      "default": "after"
+    },
+    {
+      "type": "header",
+      "content": "Slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay panels",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay delay",
+      "default": 6,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "content_color_scheme",
+      "label": "Content color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "color_scheme",
+      "id": "media_color_scheme",
+      "label": "Media color scheme",
+      "default": "scheme-4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:typography_blocks.heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "t:typography_blocks.text",
+          "default": "<p>DREAM COME TRUE — AW ‘26 COLLECTION</p>"
+        },
+        {
+          "type": "header",
+          "content": "t:typography_blocks.typography"
+        },
+        {
+          "type": "select",
+          "id": "type_preset",
+          "label": "t:typography_blocks.heading_size",
+          "options": [
+            {
+              "value": "h0",
+              "label": "t:typography_options.display_extra_large"
+            },
+            {
+              "value": "h1",
+              "label": "t:typography_options.display_large"
+            },
+            {
+              "value": "h2",
+              "label": "t:typography_options.display_medium"
+            },
+            {
+              "value": "h3",
+              "label": "t:typography_options.heading_extra_large"
+            },
+            {
+              "value": "h4",
+              "label": "t:typography_options.heading_large"
+            },
+            {
+              "value": "h5",
+              "label": "t:typography_options.heading_medium"
+            },
+            {
+              "value": "h6",
+              "label": "t:typography_options.heading_small"
+            },
+            {
+              "value": "h7",
+              "label": "t:typography_options.heading_extra_small"
+            },
+            {
+              "value": "custom",
+              "label": "t:typography_options.custom"
+            }
+          ],
+          "default": "h7"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "t:typography_blocks.size",
+          "min": 8,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 50,
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "t:typography_blocks.mobile_size",
+          "min": 8,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 30,
+          "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+        },
+        {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color"
+    },
+        {
+          "type": "checkbox",
+          "id": "disable_line_break_mobile",
+          "label": "t:typography_blocks.disable_line_break_mobile",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "t:typography_blocks.layout"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "t:typography_blocks.width",
+          "options": [
+            {
+              "value": "fit-content",
+              "label": "t:typography_options.fit"
+            },
+            {
+              "value": "100%",
+              "label": "t:typography_options.fill"
+            }
+          ],
+          "default": "fit-content"
+        },
+        {
+          "type": "select",
+          "id": "width_mobile",
+          "label": "t:typography_blocks.width_mobile",
+          "options": [
+            {
+              "value": "fit-content",
+              "label": "t:typography_options.fit"
+            },
+            {
+              "value": "100%",
+              "label": "t:typography_options.fill"
+            }
+          ],
+          "default": "fit-content"
+        },
+        {
+          "type": "text_alignment",
+          "id": "alignment",
+          "label": "t:typography_blocks.alignment",
+          "default": "left",
+          "visible_if": "{{ block.settings.width == '100%' or block.settings.width_mobile == '100%' }}"
+        },
+        {
+          "type": "header",
+          "content": "t:typography_blocks.padding"
+        },
+        {
+          "type": "range",
+          "id": "padding-block-start",
+          "label": "t:typography_blocks.top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-block-end",
+          "label": "t:typography_blocks.bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-inline-start",
+          "label": "t:typography_blocks.left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding-inline-end",
+          "label": "t:typography_blocks.right",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "collection_link",
+      "name": "Collection link",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Collection"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title override"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link override"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Fallback count (optional)",
+          "info": "The selected collection always uses its live product count."
+        },
+        {
+          "type": "header",
+          "content": "Media"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop image",
+          "info": "Falls back to the collection image when blank."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image",
+          "info": "Optional mobile-specific image."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Custom image alt text"
+        },
+        {
+          "type": "text",
+          "id": "focal_point",
+          "label": "Focal point",
+          "default": "center center",
+          "info": "CSS object-position, for example: 50% 40%"
+        },
+        {
+          "type": "header",
+          "content": "Color"
+        },
+        {
+          "type": "checkbox",
+          "id": "override_color_scheme",
+          "label": "Use a different panel color scheme",
+          "default": false
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "Panel color scheme",
+          "default": "scheme-4",
+          "visible_if": "{{ block.settings.override_color_scheme }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection showcase",
+      "category": "Collections",
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>DREAM COME TRUE — AW ‘26 COLLECTION</p>",
+            "type_preset": "h7"
+          }
+        },
+        {
+          "type": "collection_link"
+        },
+        {
+          "type": "collection_link"
+        },
+        {
+          "type": "collection_link"
+        },
+        {
+          "type": "collection_link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

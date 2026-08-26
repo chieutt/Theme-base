@@ -1,0 +1,24 @@
+{% doc %}
+  Renders automatic product badges.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+{% assign variant = product.selected_or_first_available_variant %}
+{% assign badge_allocation = variant.selected_selling_plan_allocation %}
+{% if badge_allocation == blank and variant.requires_selling_plan %}{% assign badge_allocation = variant.selling_plan_allocations | first %}{% endif %}
+{% assign badge_price = variant.price %}
+{% assign badge_compare_at_price = variant.compare_at_price %}
+{% if badge_allocation != blank %}
+  {% assign badge_price = badge_allocation.price %}
+  {% assign badge_compare_at_price = badge_allocation.compare_at_price %}
+{% endif %}
+<div class="product-badges" data-product-badges {{ block.shopify_attributes }}>
+  {% if product.tags contains 'New' %}<span class="product-badge product-badge--new">{{ 'product_card.new' | t }}</span>{% endif %}
+  {% if settings.show_sale_badge %}<span class="product-badge product-badge--sale" data-product-badge-sale{% unless badge_compare_at_price > badge_price %} hidden{% endunless %}>{{ 'product_card.sale' | t }}</span>{% endif %}
+  {% if settings.show_sold_out_badge %}<span class="product-badge product-badge--sold-out" data-product-badge-sold-out{% if variant.available %} hidden{% endif %}>{{ 'product_card.sold_out' | t }}</span>{% endif %}
+</div>
+{% schema %}
+{
+  "name": "Product badges",
+  "settings": []
+}
+{% endschema %}

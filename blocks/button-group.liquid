@@ -1,0 +1,82 @@
+{% doc %}
+  Renders a group of reusable button blocks for a slide.
+
+  @example
+  {% content_for 'block', type: 'button-group', id: 'button-group' %}
+{% enddoc %}
+
+{% liquid
+  assign button_justify = 'flex-start'
+  if block.settings.alignment == 'center'
+    assign button_justify = 'center'
+  elsif block.settings.alignment == 'right'
+    assign button_justify = 'flex-end'
+  endif
+%}
+
+<div
+  class="slideshow__button-group slideshow__button-group--{{ block.settings.layout_direction | default: 'horizontal' }}"
+  style="--slideshow-button-gap: {{ block.settings.gap | default: 12 }}px; --slideshow-button-justify: {{ button_justify }};"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Group button",
+  "tag": null,
+  "blocks": [
+    { "type": "button" }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_direction",
+      "label": "Layout",
+      "options": [
+        { "value": "horizontal", "label": "Horizontal" },
+        { "value": "vertical", "label": "Vertical" }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Group button",
+      "category": "Buttons",
+      "blocks": [
+        {
+          "type": "button",
+          "settings": {
+            "label": "Shop all",
+            "link": "/collections/all",
+            "style": "primary"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

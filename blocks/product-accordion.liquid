@@ -1,0 +1,185 @@
+{% assign product = closest.product | default: product %}
+{% if block.settings.heading != blank %}
+  <details class="product-accordion{% unless block.settings.show_divider %} product-accordion--no-divider{% endunless %}{% if block.settings.show_view_more %} product-accordion--clamped{% endif %}" data-animated-details{% if block.settings.show_view_more %} data-expandable{% endif %} {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+    <summary>
+      <{{ block.settings.html_tag | default: 'h2' }} class="product-accordion__heading {% render 'typography-class', preset: block.settings.heading_size, fallback: 'h5' %}">{{ block.settings.heading | escape }}</{{ block.settings.html_tag | default: 'h2' }}>
+      <span class="product-accordion__icon" aria-hidden="true">
+        {% render 'icon', name: 'plus', class: 'product-accordion__icon-svg product-accordion__icon-svg--plus' %}
+        {% render 'icon', name: 'chevron-up', class: 'product-accordion__icon-svg product-accordion__icon-svg--caret' %}
+      </span>
+    </summary>
+    {% if block.settings.content_source == 'description' %}
+      {% assign accordion_content = product.description %}
+    {% elsif block.settings.content_source == 'metafield' %}
+      {% assign accordion_metafield = product.metafields[block.settings.metafield_namespace][block.settings.metafield_key] %}
+      {% assign accordion_content = accordion_metafield.value %}
+    {% else %}
+      {% assign accordion_content = block.settings.content %}
+    {% endif %}
+    {% assign content_id = 'ProductAccordion-' | append: section.id | append: '-' | append: block.id %}
+    <div id="{{ content_id }}" class="product-accordion__content rte spinel-text--medium content-text--medium" data-accordion-content{% if block.settings.show_view_more %} data-expandable-content data-max-height="{{ block.settings.content_max_height }}" style="--expandable-max-height: {{ block.settings.content_max_height }}px;"{% endif %}>{{ accordion_content }}</div>
+    {% if block.settings.show_view_more %}<button class="product-accordion__toggle" type="button" data-expandable-toggle data-view-more-label="{{ 'product.view_more' | t | escape }}" data-view-less-label="{{ 'product.view_less' | t | escape }}" hidden aria-controls="{{ content_id }}" aria-expanded="false">{{ 'product.view_more' | t }}</button>{% endif %}
+  </details>
+{% endif %}
+{% schema %}
+{
+  "name": "Product accordion",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product accordion"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Details"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h5"
+    },
+    {
+      "type": "select",
+      "id": "html_tag",
+      "label": "HTML Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "content_source",
+      "label": "Content source",
+      "options": [
+        {
+          "value": "description",
+          "label": "Product description"
+        },
+        {
+          "value": "metafield",
+          "label": "Product metafield"
+        },
+        {
+          "value": "manual",
+          "label": "Custom content"
+        }
+      ],
+      "default": "description"
+    },
+    {
+      "type": "text",
+      "id": "metafield_namespace",
+      "label": "Metafield namespace",
+      "default": "custom",
+      "visible_if": "{{ block.settings.content_source == 'metafield' }}"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Metafield key",
+      "default": "summary",
+      "visible_if": "{{ block.settings.content_source == 'metafield' }}"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "visible_if": "{{ block.settings.content_source == 'manual' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "open_by_default",
+      "label": "Open by default",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_more",
+      "label": "Show View more/Less",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_max_height",
+      "label": "Content height before View more",
+      "min": 120,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 240,
+      "visible_if": "{{ block.settings.show_view_more }}"
+    }
+  ]
+}
+{% endschema %}

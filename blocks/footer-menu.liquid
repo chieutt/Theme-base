@@ -1,0 +1,303 @@
+{% doc %}
+  Renders a footer navigation column with a configurable heading.
+
+  @example
+  {% content_for 'block', type: 'footer-menu', id: 'footer_menu' %}
+{% enddoc %}
+
+{% liquid
+  assign menu_label = block.settings.menu.title
+  assign menu_heading_font = 'var(--body-font-family)'
+  if block.settings.font == 'heading'
+    assign menu_heading_font = 'var(--heading-font-family)'
+  endif
+  if menu_label == blank
+    assign menu_label = 'footer.menu' | t
+  endif
+  assign menu_type_preset = block.settings.type_preset
+  if block.settings.font == 'body'
+    assign menu_type_preset = block.settings.body_type_preset | default: 'md'
+  endif
+  assign reveal_delay = 0
+  for footer_block in section.blocks
+    if footer_block.id == block.id
+      assign reveal_delay = forloop.index0 | times: 75
+      break
+    endif
+  endfor
+%}
+
+{% if block.settings.show_as_accordion_mobile %}
+  <details
+    class="footer-menu footer-menu--accordion-mobile"
+    data-footer-menu
+    data-footer-mobile-accordion="true"
+    data-footer-default-open="{{ block.settings.open_accordions_by_default }}"
+    data-animated-details
+    data-accordion-media="(max-width: 767.98px)"
+    data-reveal
+    data-reveal-delay="{{ reveal_delay }}"
+    style="--footer-menu-max-width: {{ block.settings.maximum_width }}px; --footer-menu-heading-font-family: {{ menu_heading_font }};"
+    open
+    {{ block.shopify_attributes }}
+  >
+{% else %}
+  <div
+    class="footer-menu"
+    data-footer-menu
+    data-footer-mobile-accordion="false"
+    data-footer-default-open="true"
+    data-reveal
+    data-reveal-delay="{{ reveal_delay }}"
+    style="--footer-menu-max-width: {{ block.settings.maximum_width }}px; --footer-menu-heading-font-family: {{ menu_heading_font }};"
+    {{ block.shopify_attributes }}
+  >
+{% endif %}
+  {% if block.settings.show_as_accordion_mobile %}
+    <summary class="footer-menu__summary"{% if block.settings.heading == blank %} aria-label="{{ menu_label | escape }}"{% endif %}>
+  {% else %}
+    <div class="footer-menu__summary">
+  {% endif %}
+    <span class="footer-menu__heading">
+      {% render 'content-block',
+        block: block,
+        content: block.settings.heading,
+        kind: 'heading',
+        default_preset: 'h2',
+        force_preset: menu_type_preset,
+        default_font: 'heading',
+        force_font_role: block.settings.font,
+        include_shopify_attributes: false
+      %}
+    </span>
+    <span class="footer-menu__toggle" aria-hidden="true">
+      {% render 'icon', name: 'chevron-down' %}
+    </span>
+  {% if block.settings.show_as_accordion_mobile %}</summary>{% else %}</div>{% endif %}
+
+  <div class="footer-menu__content"{% if block.settings.show_as_accordion_mobile %} data-accordion-content{% endif %}>
+    {% if block.settings.menu != blank and block.settings.menu.links.size > 0 %}
+      <ul class="footer-menu__links" role="list">
+        {% for link in block.settings.menu.links %}
+          <li>
+            <a href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>
+              <span>{{ link.title | escape }}</span>
+              {% if block.settings.show_external_indicator and link.url contains 'http' %}
+                <span class="footer-menu__external" aria-hidden="true">↗</span>
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% elsif request.design_mode %}
+      <p class="footer-menu__empty">{{ 'footer.choose_menu' | t }}</p>
+    {% endif %}
+  </div>
+{% if block.settings.show_as_accordion_mobile %}</details>{% else %}</div>{% endif %}
+
+{% schema %}
+{
+  "name": "Footer menu",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_external_indicator",
+      "label": "Show indicator for external links",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "maximum_width",
+      "label": "Maximum width",
+      "min": 120,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 190
+    },
+    {
+      "type": "checkbox",
+      "id": "show_as_accordion_mobile",
+      "label": "Show as accordion on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "open_accordions_by_default",
+      "label": "Open accordions by default",
+      "default": false,
+      "visible_if": "{{ block.settings.show_as_accordion_mobile }}"
+    },
+    {
+      "type": "header",
+      "content": "t:typography_blocks.typography"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:typography_blocks.text",
+      "default": "t:typography_defaults.heading"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "Font",
+      "options": [
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:typography_blocks.heading_size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h2",
+      "visible_if": "{{ block.settings.font == 'heading' }}"
+    },
+    {
+      "type": "select",
+      "id": "body_type_preset",
+      "label": "t:typography_blocks.text_size",
+      "options": [
+        { "value": "lg", "label": "t:typography_options.body_large" },
+        { "value": "md", "label": "t:typography_options.body_medium" },
+        { "value": "sm", "label": "t:typography_options.body_small" },
+        { "value": "xs", "label": "t:typography_options.body_extra_small" },
+        { "value": "custom", "label": "t:typography_options.custom" }
+      ],
+      "default": "md",
+      "visible_if": "{{ block.settings.font == 'body' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:typography_blocks.size",
+      "min": 8,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ block.settings.type_preset == 'custom' or block.settings.body_type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:typography_blocks.mobile_size",
+      "min": 8,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 30,
+      "visible_if": "{{ block.settings.type_preset == 'custom' or block.settings.body_type_preset == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_line_break_mobile",
+      "label": "t:typography_blocks.disable_line_break_mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:typography_blocks.layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:typography_blocks.width",
+      "options": [
+        { "value": "fit-content", "label": "t:typography_options.fit" },
+        { "value": "100%", "label": "t:typography_options.fill" }
+      ],
+      "default": "fit-content"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:typography_blocks.width_mobile",
+      "options": [
+        { "value": "fit-content", "label": "t:typography_options.fit" },
+        { "value": "100%", "label": "t:typography_options.fill" }
+      ],
+      "default": "fit-content"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "t:typography_blocks.alignment",
+      "default": "left",
+      "visible_if": "{{ block.settings.width == '100%' or block.settings.width_mobile == '100%' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer menu",
+      "category": "Theme layout",
+      "settings": {
+        "heading": "<h3>Menu</h3>",
+        "type_preset": "h7",
+        "body_type_preset": "md",
+        "font": "body"
+      }
+    }
+  ]
+}
+{% endschema %}

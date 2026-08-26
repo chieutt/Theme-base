@@ -1,0 +1,36 @@
+{% doc %}
+  Renders an actionable theme button only when both label and URL exist.
+
+  @param {string} label - Visible link label.
+  @param {string} url - Link destination.
+  @param {string} [style] - Theme button style.
+  @param {string} [class] - Additional class names.
+  @param {string} [aria_label] - Optional accessible label.
+  @param {string} [icon] - Optional icon rendered after the label.
+  @param {boolean} [open_in_new_tab] - Opens external destination in a new tab.
+
+  @example
+  {% render 'cta', label: 'Shop now', url: routes.all_products_collection_url, style: 'primary' %}
+{% enddoc %}
+
+{% liquid
+  assign button_style = style | default: 'primary'
+  assign button_class = 'btn-' | append: button_style
+  if class != blank
+    assign button_class = button_class | append: ' ' | append: class
+  endif
+%}
+
+{% if label != blank and url != blank %}
+  <a
+    class="{{ button_class }}"
+    href="{{ url | escape }}"
+    {% if aria_label != blank %}aria-label="{{ aria_label | escape }}"{% endif %}
+    {% if open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+  >
+    <span>{{ label | escape }}</span>
+    {% if icon != blank and icon != 'none' %}
+      <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+    {% endif %}
+  </a>
+{% endif %}

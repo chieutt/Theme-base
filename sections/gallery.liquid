@@ -1,0 +1,95 @@
+{% render 'section-stylesheet', asset: 'section-gallery.css', defer_on_home: true %}
+
+{% liquid
+  assign section_background = section.settings.background_color
+  if section_background == blank
+    assign section_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} { background: {{ section_background }}; }
+  #shopify-section-{{ section.id }} .gallery { background: transparent; }
+{% endstyle %}
+
+<div
+  class="gallery color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} gallery--full-width full-width{% endif %}"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --gallery-header-gap: {{ section.settings.header_gap }}px; --gallery-grid-gap: {{ section.settings.grid_gap }}px; --gallery-mobile-grid-gap: {{ section.settings.mobile_column_gap }}px;"
+>
+  <div class="gallery__inner section-spacing{% if section.settings.section_width == 'page' %} page-width{% endif %}">
+    <header class="gallery__header" data-reveal-group>
+      <div class="gallery__header-title">
+        {% content_for 'block', type: 'label', id: 'gallery_label' %}
+        {% content_for 'block', type: 'heading', id: 'gallery_heading' %}
+      </div>
+      <div class="gallery__header-aside">
+        {% content_for 'block', type: 'text', id: 'gallery_text' %}
+        {% content_for 'block', type: 'button', id: 'gallery_button' %}
+      </div>
+    </header>
+
+    <div class="gallery__grid" data-reveal-group>
+      {% content_for 'blocks' %}
+      {% content_for 'block', type: 'instagram-gallery-content', id: 'instagram_content' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Instagram gallery",
+  "tag": "section",
+  "class": "section-gallery",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 9,
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page", "label": "Page width" }, { "value": "full", "label": "Full width" }], "default": "full" },
+    { "type": "range", "id": "header_gap", "min": 20, "max": 120, "step": 4, "unit": "px", "label": "Header to gallery gap", "default": 56 },
+    { "type": "range", "id": "grid_gap", "min": 4, "max": 40, "step": 2, "unit": "px", "label": "Desktop column gap", "default": 20 },
+    { "type": "range", "id": "mobile_column_gap", "min": 4, "max": 40, "step": 2, "unit": "px", "label": "Mobile column gap", "default": 12 },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "color", "id": "background_color", "label": "Background color", "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme." },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 }
+  ],
+  "blocks": [
+    { "type": "instagram-gallery-image" }
+  ],
+  "presets": [
+    {
+      "name": "Instagram gallery",
+      "category": "Editorial content",
+      "settings": { "section_width": "full", "color_scheme": "scheme-1" },
+      "blocks": [
+        { "type": "label", "id": "gallery_label", "static": true, "settings": { "text": "<p>COMMUNITY&nbsp;&nbsp;/&nbsp;&nbsp;CURATED BY SPINEL</p>", "reveal_type": "fade-up", "reveal_delay": 0 } },
+        { "type": "heading", "id": "gallery_heading", "static": true, "settings": { "heading": "<h2>From @spinel,<br>worn by you.</h2>", "type_preset": "h2", "reveal_type": "fade-up", "reveal_delay": 150 } },
+        { "type": "text", "id": "gallery_text", "static": true, "settings": { "text": "<p>A merchant-curated edit of studio light<br>and client-submitted styling.</p>", "type_preset": "sm", "alignment": "right", "reveal_type": "fade-up", "reveal_delay": 300 } },
+        { "type": "button", "id": "gallery_button", "static": true, "settings": { "label": "Visit @spinel", "style": "tertiary", "icon": "arrow-right", "reveal_type": "fade-up", "reveal_delay": 450 } },
+        { "type": "instagram-gallery-image" },
+        { "type": "instagram-gallery-image" },
+        {
+          "type": "instagram-gallery-content",
+          "id": "instagram_content",
+          "static": true,
+          "settings": { "gap": 18, "padding": 48, "enable_appearance": true, "color_scheme": "scheme-4" },
+          "blocks": [
+            { "type": "label", "settings": { "text": "<p>THE SPINEL CIRCLE</p>" } },
+            { "type": "heading", "settings": { "heading": "<h3>Worn close.<br>Shared softly.</h3>", "type_preset": "h3" } },
+            { "type": "text", "settings": { "text": "<p>Jewels in motion.<br>Shared by our circle.</p>", "type_preset": "sm" } },
+            { "type": "button", "settings": { "label": "Follow @spinel", "style": "tertiary", "icon": "arrow-right" } }
+          ]
+        },
+        { "type": "instagram-gallery-image" },
+        { "type": "instagram-gallery-image" },
+        { "type": "instagram-gallery-image" },
+        { "type": "instagram-gallery-image" },
+        { "type": "instagram-gallery-image" },
+        { "type": "instagram-gallery-image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

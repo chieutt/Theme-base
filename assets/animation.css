@@ -1,0 +1,87 @@
+/*
+ * Global opt-in scroll reveal.
+ *
+ * JavaScript adds data-reveal-state before the root enhancement class is
+ * enabled, so content stays visible when JavaScript is unavailable or fails.
+ */
+
+@keyframes spinel-block-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes spinel-block-fade-up {
+  from {
+    opacity: 0;
+    transform: var(--block-animation-start-transform, translate3d(0, 18px, 0));
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+:where([data-reveal], [data-reveal-group]) {
+  --reveal-duration: 800ms;
+  --reveal-delay: 120ms;
+  --reveal-stagger: 150ms;
+  --reveal-order: 0;
+  --reveal-easing: cubic-bezier(.22, 1, .36, 1);
+  --reveal-translate-x: 0;
+  --reveal-translate-y: 24px;
+  --reveal-scale: 1;
+}
+
+[data-reveal="fade"] {
+  --reveal-translate-y: 0;
+}
+
+[data-reveal="fade-down"] {
+  --reveal-translate-y: -28px;
+}
+
+[data-reveal="fade-left"] {
+  --reveal-translate-x: 28px;
+  --reveal-translate-y: 0;
+}
+
+[data-reveal="fade-right"] {
+  --reveal-translate-x: -28px;
+  --reveal-translate-y: 0;
+}
+
+[data-reveal="zoom"] {
+  --reveal-translate-y: 0;
+  --reveal-scale: .96;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .theme-animations-enabled :is([data-reveal][data-reveal-state], [data-reveal-group][data-reveal-state] [data-reveal-item]) {
+    transition:
+      opacity calc(var(--reveal-duration) + 100ms) var(--reveal-easing) calc(var(--reveal-delay) + var(--reveal-order) * var(--reveal-stagger)),
+      transform calc(var(--reveal-duration) + 100ms) var(--reveal-easing) calc(var(--reveal-delay) + var(--reveal-order) * var(--reveal-stagger));
+  }
+
+  .theme-animations-enabled :is([data-reveal][data-reveal-state="pending"], [data-reveal-group][data-reveal-state="pending"] [data-reveal-item]) {
+    opacity: 0;
+    transform: translate3d(var(--reveal-translate-x), var(--reveal-translate-y), 0) scale(var(--reveal-scale));
+    will-change: opacity, transform;
+  }
+
+  .theme-animations-enabled :is([data-reveal][data-reveal-state="visible"], [data-reveal-group][data-reveal-state="visible"] [data-reveal-item]) {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    will-change: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-group] [data-reveal-item] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

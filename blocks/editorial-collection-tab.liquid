@@ -1,0 +1,183 @@
+{% doc %}
+  Defines the merchant settings for one Editorial collection tab.
+
+  The owning section composes this block into its shared tablist, product panel,
+  carousel controls, and editorial pagination so every tab uses one controller.
+{% enddoc %}
+
+{% liquid
+  assign collection = block.settings.collection
+  assign products_to_show = section.settings.products_to_show | default: 8
+  assign visible_product_count = collection.products_count | default: 0
+  if visible_product_count > products_to_show
+    assign visible_product_count = products_to_show
+  endif
+
+  assign desktop_columns = section.settings.columns_desktop | default: 4 | plus: 0
+  assign tablet_columns = desktop_columns
+  if tablet_columns > 2
+    assign tablet_columns = 2
+  endif
+  assign mobile_columns = section.settings.columns_mobile | default: 1 | plus: 0
+
+  assign skeleton_product_count = products_to_show
+  assign rendered_product_count = visible_product_count
+  if rendered_product_count == 0
+    assign rendered_product_count = skeleton_product_count
+  endif
+  assign mobile_slides = mobile_columns
+  if mobile_columns == 1 and rendered_product_count > 1
+    assign mobile_slides = 1.2
+  endif
+
+  assign initial_showing_count = desktop_columns
+  if initial_showing_count > rendered_product_count
+    assign initial_showing_count = rendered_product_count
+  endif
+  assign tab_label = block.settings.label | default: collection.title | default: 'Collection'
+  assign collection_label = block.settings.footer_label | default: tab_label
+  assign collection_count_label = collection.products_count | default: 0
+  if collection_count_label < 10
+    assign collection_count_label = collection_count_label | prepend: '0'
+  endif
+  assign view_all_label = block.settings.view_all_label | default: section.settings.view_all_label | default: 'View all collection'
+%}
+
+<button
+  class="editorial-collection-tabs__tab"
+  id="EditorialCollectionTab-{{ section.id }}-{{ block.id }}"
+  type="button"
+  role="tab"
+  aria-selected="false"
+  aria-controls="EditorialCollectionPanel-{{ section.id }}-{{ block.id }}"
+  tabindex="-1"
+  data-editorial-collection-tab
+  data-block-id="{{ block.id }}"
+>
+  <span>{{ tab_label | escape }}</span>
+  {% if block.settings.show_product_count %}
+    <span class="editorial-collection-tabs__tab-count">{{ collection_count_label }}</span>
+  {% endif %}
+</button>
+
+<div
+  class="editorial-collection-tabs__panel"
+  id="EditorialCollectionPanel-{{ section.id }}-{{ block.id }}"
+  role="tabpanel"
+  aria-labelledby="EditorialCollectionTab-{{ section.id }}-{{ block.id }}"
+  data-editorial-collection-panel
+  data-block-id="{{ block.id }}"
+  data-collection-label="{{ collection_label | escape }}"
+  data-product-total="{{ rendered_product_count }}"
+  style="--editorial-tabs-slide-mobile: calc((100% - {{ section.settings.mobile_column_gap }}px * ({{ mobile_slides }} - 1)) / {{ mobile_slides }}); --editorial-tabs-slide-tablet: calc((100% - {{ section.settings.column_gap }}px * ({{ tablet_columns }} - 1)) / {{ tablet_columns }}); --editorial-tabs-slide-desktop: calc((100% - {{ section.settings.column_gap }}px * ({{ desktop_columns }} - 1)) / {{ desktop_columns }});"
+  {{ block.shopify_attributes }}
+>
+  <div class="editorial-collection-tabs__carousel swiper" data-editorial-collection-carousel>
+    <ul class="editorial-collection-tabs__products swiper-wrapper" role="list" data-reveal-group>
+      {% if collection != blank and collection.products_count > 0 %}
+        {% for product in collection.products limit: products_to_show %}
+          <li class="editorial-collection-tabs__product swiper-slide">
+            <div class="editorial-collection-tabs__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+              {% render 'product-card',
+                product: product,
+                media_ratio: 'global',
+                show_badges: true,
+                show_variant_dots: false,
+                show_media_actions: false,
+                show_quick_add: true,
+                enable_quick_view: true,
+                loading: 'lazy',
+                sizes: '(min-width: 1150px) 25vw, (min-width: 768px) 50vw, 84vw'
+              %}
+            </div>
+          </li>
+        {% endfor %}
+      {% else %}
+        {% for placeholder_index in (1..skeleton_product_count) %}
+          <li class="editorial-collection-tabs__product swiper-slide">
+            <div class="editorial-collection-tabs__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+              {% render 'product-card',
+                media_ratio: 'global',
+                show_badges: true,
+                show_variant_dots: false,
+                show_media_actions: false,
+                show_quick_add: false,
+                enable_quick_view: false,
+                placeholder_index: placeholder_index
+              %}
+            </div>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+
+  <button class="editorial-collection-tabs__arrow editorial-collection-tabs__arrow--previous carousel-navigator__arrow carousel-navigator__arrow--previous" type="button" aria-label="Previous products" data-editorial-collection-previous>
+    {% render 'icon', name: 'chevron-left' %}
+  </button>
+  <button class="editorial-collection-tabs__arrow editorial-collection-tabs__arrow--next carousel-navigator__arrow carousel-navigator__arrow--next" type="button" aria-label="Next products" data-editorial-collection-next>
+    {% render 'icon', name: 'chevron-right' %}
+  </button>
+
+  <footer class="editorial-collection-tabs__footer" data-editorial-collection-footer>
+    <span class="editorial-collection-tabs__showing" data-editorial-collection-showing data-total="{{ rendered_product_count }}">
+      Showing {{ initial_showing_count }} of {{ rendered_product_count }}
+    </span>
+    <div class="editorial-collection-tabs__progress" aria-hidden="true"><span data-editorial-collection-progress></span></div>
+    <span class="editorial-collection-tabs__page-label" data-editorial-collection-page-label>{{ collection_label | escape }} / Page 01</span>
+    {% if collection != blank %}
+      <a class="btn-tertiary editorial-collection-tabs__view-all" href="{{ collection.url | escape }}">
+        <span>{{ view_all_label | escape }}</span>
+        <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+      </a>
+    {% else %}
+      <span class="btn-tertiary editorial-collection-tabs__view-all">
+        <span>{{ view_all_label | escape }}</span>
+        <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+      </span>
+    {% endif %}
+  </footer>
+</div>
+
+{% schema %}
+{
+  "name": "Editorial collection tab",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Tab label",
+      "info": "Leave blank to use the collection title."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_label",
+      "label": "Footer label",
+      "info": "Leave blank to use the tab or collection title."
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "info": "Leave blank to use the section default."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial collection tab"
+    }
+  ]
+}
+{% endschema %}

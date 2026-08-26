@@ -1,328 +1,208 @@
-{% render 'product-media-gallery-content',
-  media_presentation: block.settings.media_presentation,
-  block_settings: block.settings,
-  block_id: block.id,
-  block_shopify_attributes: block.shopify_attributes,
-  block: block,
-  section: section
-%}
+{% assign product = closest.product | default: product %}
+{% if product != blank %}
+  {% render 'product-media-gallery', product: product, selected_variant: product.selected_or_first_available_variant, block: block %}
+{% else %}
+  <div class="product-gallery product-gallery--placeholder product-gallery--ratio-{{ block.settings.media_ratio | default: '4-5' }}" {{ block.shopify_attributes }}>
+    <div class="product-gallery__media">
+      <div class="product-gallery__main">
+        <figure class="product-media">
+          {% render 'media-placeholder', class_name: 'product-media__image', placeholder_name: 'product-1' %}
+        </figure>
+      </div>
+    </div>
+  </div>
+{% endif %}
 
 {% schema %}
 {
-  "name": "t:names.product_media",
-  "tag": null,
+  "name": "Product media gallery",
   "settings": [
     {
+      "type": "header",
+      "content": "Product media gallery"
+    },
+    {
       "type": "select",
-      "id": "media_presentation",
-      "label": "t:settings.type",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
       "options": [
         {
           "value": "grid",
-          "label": "t:options.grid"
+          "label": "Grid"
         },
         {
           "value": "carousel",
-          "label": "t:options.carousel"
+          "label": "Carousel"
         }
       ],
-      "default": "grid",
-      "info": "t:info.carousel_layout_on_mobile"
+      "default": "grid"
+    },
+{
+  "type": "select",
+  "id": "image_zoom",
+  "label": "Image zoom",
+  "options": [
+    {
+      "value": "open_lightbox",
+      "label": "Open lightbox"
     },
     {
-      "type": "header",
-      "content": "t:content.grid",
-      "visible_if": "{{ block.settings.media_presentation == 'grid' }}"
+      "value": "click_hover",
+      "label": "Click and hover"
     },
     {
-      "type": "select",
-      "id": "media_columns",
-      "label": "t:settings.columns",
+      "value": "none",
+      "label": "No zoom"
+    }
+  ],
+  "default": "open_lightbox"
+},
+{
+  "type": "select",
+  "id": "grid_columns",
+      "label": "Grid columns",
       "options": [
         {
-          "value": "one",
-          "label": "t:options.one_number"
+          "value": "1",
+          "label": "1 column"
         },
         {
-          "value": "two",
-          "label": "t:options.two_number"
+          "value": "2",
+          "label": "2 columns"
         }
       ],
-      "default": "one",
-      "visible_if": "{{ block.settings.media_presentation == 'grid' }}"
-    },
-    {
-      "type": "range",
-      "id": "image_gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 100,
-      "unit": "px",
-      "step": 1,
-      "default": 0,
-      "visible_if": "{{ block.settings.media_presentation == 'grid' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "large_first_image",
-      "label": "t:settings.full_width_first_image",
-      "default": false,
-      "visible_if": "{{ block.settings.media_presentation == 'grid' and block.settings.media_columns == 'two' }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.carousel"
+      "default": "2",
+      "visible_if": "{{ block.settings.desktop_layout == 'grid' }}"
     },
     {
       "type": "select",
-      "id": "icons_style",
-      "label": "t:settings.icons",
+      "id": "grid_layout",
+      "label": "Grid layout",
       "options": [
         {
-          "value": "arrow",
-          "label": "t:options.arrows"
+          "value": "editorial",
+          "label": "Editorial 1–2–1–2"
         },
         {
-          "value": "chevron",
-          "label": "t:options.chevrons"
-        },
-        {
-          "value": "arrows_large",
-          "label": "t:options.large_arrows"
-        },
-        {
-          "value": "chevron_large",
-          "label": "t:options.large_chevrons"
+          "value": "uniform",
+          "label": "Uniform columns"
         }
       ],
-      "default": "arrow",
-      "visible_if": "{{ block.settings.media_presentation == 'carousel' }}"
+      "default": "editorial",
+      "visible_if": "{{ block.settings.desktop_layout == 'grid' }}"
     },
     {
       "type": "select",
-      "id": "slideshow_controls_style",
-      "label": "t:settings.desktop_pagination",
-      "options": [
-        {
-          "value": "dots",
-          "label": "t:options.dots"
-        },
-        {
-          "value": "counter",
-          "label": "t:options.counter"
-        },
-        {
-          "value": "thumbnails",
-          "label": "t:options.thumbnails"
-        }
-      ],
-      "visible_if": "{{ block.settings.media_presentation == 'carousel' }}"
-    },
-    {
-      "type": "select",
-      "id": "slideshow_mobile_controls_style",
-      "label": "t:settings.mobile_pagination",
-      "options": [
-        {
-          "value": "dots",
-          "label": "t:options.dots"
-        },
-        {
-          "value": "counter",
-          "label": "t:options.counter"
-        },
-        {
-          "value": "hint",
-          "label": "t:options.hint"
-        },
-        {
-          "value": "thumbnails",
-          "label": "t:options.thumbnails"
-        }
-      ]
-    },
-    {
-      "type": "header",
-      "content": "t:content.thumbnails",
-      "visible_if": "{{ block.settings.slideshow_controls_style == 'thumbnails' or block.settings.slideshow_mobile_controls_style == 'thumbnails' }}"
-    },
-    {
-      "type": "select",
-      "id": "thumbnail_position",
-      "label": "t:settings.desktop_position",
+      "id": "carousel_thumbnails",
+      "label": "Carousel thumbnails",
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "Left"
         },
         {
           "value": "bottom",
-          "label": "t:options.bottom"
-        },
-        {
-          "value": "right",
-          "label": "t:options.right"
+          "label": "Bottom"
         }
       ],
-      "default": "bottom",
-      "visible_if": "{{ block.settings.slideshow_controls_style == 'thumbnails' }}"
+      "default": "left",
+      "visible_if": "{{ block.settings.desktop_layout == 'carousel' }}"
     },
     {
       "type": "range",
-      "id": "thumbnail_width",
-      "label": "t:settings.width_desktop",
-      "min": 44,
-      "max": 72,
-      "step": 1,
-      "unit": "px",
-      "default": 64,
-      "visible_if": "{{ block.settings.slideshow_controls_style == 'thumbnails' }}"
-    },
-    {
-      "type": "range",
-      "id": "thumbnail_radius",
-      "label": "t:settings.corner_radius",
+      "id": "gap",
+      "label": "Media gap",
       "min": 0,
-      "max": 50,
-      "step": 1,
+      "max": 32,
+      "step": 2,
       "unit": "px",
-      "default": 0,
-      "visible_if": "{{ block.settings.slideshow_controls_style == 'thumbnails' or block.settings.slideshow_mobile_controls_style == 'thumbnails' }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.media"
+      "default": 12
     },
     {
       "type": "select",
-      "id": "aspect_ratio",
-      "label": "t:settings.aspect_ratio",
+      "id": "media_ratio",
+      "label": "Desktop media ratio",
       "options": [
         {
-          "value": "adapt",
-          "label": "t:options.auto"
+          "value": "adapt", "label": "Adapt"
         },
-        {
-          "value": "1/1.25",
-          "label": "t:options.portrait"
-        },
-        {
-          "value": "1",
-          "label": "t:options.square"
-        },
-        {
-          "value": "2/1",
-          "label": "t:options.landscape"
-        }
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "2-3", "label": "2:3" },
+        { "value": "3-4", "label": "3:4" },
+        { "value": "4-5", "label": "4:5" },
+        { "value": "6-7", "label": "6:7" },
+        { "value": "3-2", "label": "3:2" },
+        { "value": "4-3", "label": "4:3" },
+        { "value": "16-9", "label": "16:9" }
       ],
-      "default": "adapt"
+      "default": "4-5"
     },
     {
-      "type": "checkbox",
-      "id": "constrain_to_viewport",
-      "label": "t:settings.limit_media_to_screen_height",
-      "default": false
+      "type": "select",
+      "id": "mobile_media_ratio",
+      "label": "Mobile media ratio",
+      "options": [
+        {
+          "value": "adapt", "label": "Adapt"
+        },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "2-3", "label": "2:3" },
+        { "value": "3-4", "label": "3:4" },
+        { "value": "4-5", "label": "4:5" },
+        { "value": "6-7", "label": "6:7" },
+        { "value": "3-2", "label": "3:2" },
+        { "value": "4-3", "label": "4:3" },
+        { "value": "16-9", "label": "16:9" }
+      ],
+      "default": "4-5"
     },
     {
       "type": "select",
       "id": "media_fit",
-      "label": "t:settings.media_fit",
+      "label": "Image fit",
       "options": [
         {
           "value": "cover",
-          "label": "t:options.cover"
+          "label": "Crop to fill"
         },
         {
           "value": "contain",
-          "label": "t:options.contain"
+          "label": "Full image"
         }
       ],
-      "default": "cover",
-      "visible_if": "{{ block.settings.aspect_ratio == 'adapt' and block.settings.constrain_to_viewport == true }}"
-    },
-    {
-      "type": "range",
-      "id": "media_radius",
-      "label": "t:settings.border_radius",
-      "min": 0,
-      "max": 32,
-      "step": 1,
-      "unit": "px",
-      "default": 4
+      "default": "cover"
     },
     {
       "type": "checkbox",
-      "id": "extend_media",
-      "label": "t:settings.extend_media_to_screen_edge",
-      "default": true,
-      "visible_if": "{{ section.settings.content_width == 'content-center-aligned' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "zoom",
-      "label": "t:settings.enable_zoom",
+      "id": "show_mobile_pagination",
+      "label": "Mobile pagination",
       "default": true
     },
     {
       "type": "checkbox",
-      "id": "video_loop",
-      "label": "t:settings.enable_video_looping",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "hide_variants",
-      "default": false,
-      "label": "t:settings.hide_unselected_variant_media"
-    },
-    {
-      "type": "header",
-      "content": "t:content.padding"
+      "id": "show_mobile_thumbnails",
+      "label": "Mobile thumbnails",
+      "default": true
     },
     {
       "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
+      "id": "thumbnail_size",
+      "label": "Thumbnail size",
+      "min": 48,
+      "max": 96,
+      "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 64
     },
     {
       "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
+      "id": "thumbnail_gap",
+      "label": "Thumbnail gap",
+      "min": 4,
+      "max": 16,
+      "step": 2,
       "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "t:settings.left",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "t:settings.right",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:names.product_media"
+      "default": 8
     }
   ]
 }

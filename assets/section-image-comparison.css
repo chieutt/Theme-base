@@ -1,0 +1,104 @@
+.image-comparison {
+  background: var(--gradient-background, var(--color-background));
+  color: var(--color-text);
+}
+
+.image-comparison__inner {
+  display: grid;
+  width: var(--content-width);
+  max-width: var(--page-width);
+  margin-inline: auto;
+  gap: var(--image-comparison-layout-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.image-comparison__slider {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: var(--image-comparison-ratio);
+  background: var(--color-variant-component-background);
+  cursor: col-resize;
+  isolation: isolate;
+}
+
+.image-comparison__slider > .shopify-block {
+  position: absolute;
+  inset: 0;
+}
+.image-comparison__slider--vertical { cursor: row-resize; }
+.image-comparison__slider--incomplete { min-height: 280px; }
+.image-comparison__media { position: absolute; inset: 0; transform: translateZ(0); }
+.image-comparison__media--after { z-index: 0; }
+.image-comparison__media--before { z-index: 1; clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0); -webkit-clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0); will-change: clip-path; }
+.image-comparison__slider--vertical .image-comparison__media--before { clip-path: inset(0 0 calc(100% - var(--comparison-position)) 0); -webkit-clip-path: inset(0 0 calc(100% - var(--comparison-position)) 0); }
+.image-comparison__image, .image-comparison__placeholder, .image-comparison__media picture { display: block; width: 100%; height: 100%; }
+.image-comparison__image, .image-comparison__placeholder { object-fit: cover; }
+.image-comparison__placeholder { color: color-mix(in srgb, var(--color-heading) 18%, transparent); }
+
+.image-comparison__overlay { position: absolute; z-index: 2; width: min(46%, 420px); color: var(--image-comparison-overlay-color); pointer-events: none; }
+
+/* Horizontal comparison: each image keeps its side; Start/Center/End move vertically. */
+.image-comparison__slider--horizontal .image-comparison__overlay--before { left: 22px; text-align: left; }
+.image-comparison__slider--horizontal .image-comparison__overlay--after { right: 22px; text-align: right; }
+.image-comparison__slider--horizontal .image-comparison__overlay--start { top: 22px; bottom: auto; transform: none; }
+.image-comparison__slider--horizontal .image-comparison__overlay--center { top: 50%; bottom: auto; transform: translateY(-50%); }
+.image-comparison__slider--horizontal .image-comparison__overlay--end { top: auto; bottom: 22px; transform: none; }
+.image-comparison__overlay-label { display: inline-flex; margin-bottom: 8px; font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.image-comparison__overlay-subheading { font-size: var(--subheading-size); letter-spacing: var(--subheading-letter-spacing); line-height: var(--subheading-line-height); text-transform: var(--subheading-text-transform); }
+.image-comparison__overlay-heading { margin-top: 6px; font-family: var(--heading-font-family); font-size: clamp(24px, 2vw, 34px); font-style: var(--heading-font-style); font-weight: var(--heading-font-weight); line-height: 1.12; }
+.image-comparison__overlay-button { display: inline-flex; width: fit-content; margin-top: 12px; padding-bottom: 4px; border-bottom: 1px solid currentColor; color: inherit; font-size: 13px; letter-spacing: .04em; line-height: 1.2; text-decoration: none; text-transform: uppercase; transition: opacity 180ms ease; pointer-events: auto; }
+.image-comparison__overlay-button:hover { opacity: .68; }
+.image-comparison__overlay-button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+/* Vertical comparison: each image keeps its row; Start/Center/End move horizontally. */
+.image-comparison__slider--vertical .image-comparison__overlay--before { top: 28px; bottom: auto; }
+.image-comparison__slider--vertical .image-comparison__overlay--after { top: auto; bottom: 28px; }
+.image-comparison__slider--vertical .image-comparison__overlay--start { right: auto; left: 32px; transform: none; text-align: left; }
+.image-comparison__slider--vertical .image-comparison__overlay--center { right: auto; left: 50%; transform: translateX(-50%); text-align: center; }
+.image-comparison__slider--vertical .image-comparison__overlay--end { right: 32px; left: auto; transform: none; text-align: right; }
+
+.image-comparison__handle { position: absolute; z-index: 3; top: 50%; left: var(--comparison-position); display: grid; width: 48px; height: 48px; padding: 0; border: 1px solid rgb(0 0 0 / .08); border-radius: 50%; place-items: center; background: #fff; box-shadow: 0 2px 12px rgb(0 0 0 / .18); color: #171717; transform: translate(-50%, -50%); cursor: inherit; touch-action: none; }
+.image-comparison__slider--vertical .image-comparison__handle { top: var(--comparison-position); left: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+.image-comparison__handle::before, .image-comparison__handle::after { position: absolute; left: 50%; width: 1px; height: 100vmax; background: rgb(255 255 255 / .8); content: ''; pointer-events: none; }
+.image-comparison__handle::before { bottom: 100%; }
+.image-comparison__handle::after { top: 100%; }
+.image-comparison__handle svg { width: 24px; height: 24px; }
+.image-comparison__handle:focus-visible { outline: 3px solid var(--color-heading); outline-offset: 4px; }
+
+.image-comparison__slider.is-reveal-ready .image-comparison__media--before, .image-comparison__slider.is-reveal-ready .image-comparison__handle { transition: clip-path 1600ms cubic-bezier(.16, 1, .3, 1), -webkit-clip-path 1600ms cubic-bezier(.16, 1, .3, 1), left 1600ms cubic-bezier(.16, 1, .3, 1), top 1600ms cubic-bezier(.16, 1, .3, 1); }
+.image-comparison__slider.is-dragging .image-comparison__media--before, .image-comparison__slider.is-dragging .image-comparison__handle { transition: none; }
+.no-js .image-comparison__slider { display: grid; aspect-ratio: auto; min-height: 0; cursor: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.no-js .image-comparison__slider > .shopify-block { position: relative; inset: auto; min-width: 0; }
+.no-js .image-comparison__media { position: relative; min-height: 260px; }
+.no-js .image-comparison__media--before { clip-path: none; -webkit-clip-path: none; }
+.no-js .image-comparison__handle { display: none; }
+
+@media screen and (min-width: 768px) {
+  .image-comparison__slider--desktop-height-adapt { height: auto; aspect-ratio: var(--image-comparison-ratio); }
+  .image-comparison__slider--desktop-height-small { height: 480px; aspect-ratio: auto; }
+  .image-comparison__slider--desktop-height-medium { height: 620px; aspect-ratio: auto; }
+  .image-comparison__slider--desktop-height-large { height: 760px; aspect-ratio: auto; }
+}
+
+@media screen and (max-width: 767.98px) {
+  .image-comparison__slider--mobile-height-adapt { height: auto; aspect-ratio: var(--image-comparison-ratio); }
+  .image-comparison__slider--mobile-height-small { height: 360px; aspect-ratio: auto; }
+  .image-comparison__slider--mobile-height-medium { height: 480px; aspect-ratio: auto; }
+  .image-comparison__slider--mobile-height-large { height: 620px; aspect-ratio: auto; }
+  .image-comparison__overlay { width: min(64%, 300px); }
+  .image-comparison__slider--horizontal .image-comparison__overlay--before { left: 16px; }
+  .image-comparison__slider--horizontal .image-comparison__overlay--after { right: 16px; }
+  .image-comparison__slider--horizontal .image-comparison__overlay--start { top: 16px; }
+  .image-comparison__slider--horizontal .image-comparison__overlay--end { bottom: 16px; }
+  .image-comparison__slider--vertical .image-comparison__overlay--before { top: 18px; }
+  .image-comparison__slider--vertical .image-comparison__overlay--after { bottom: 18px; }
+  .image-comparison__slider--vertical .image-comparison__overlay--start { left: 18px; }
+  .image-comparison__slider--vertical .image-comparison__overlay--end { right: 18px; }
+  .image-comparison__handle { width: 42px; height: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-comparison__slider.is-reveal-ready .image-comparison__media--before, .image-comparison__slider.is-reveal-ready .image-comparison__handle { transition: none; }
+}

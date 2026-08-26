@@ -1,0 +1,55 @@
+{% doc %}
+  Renders a sticky product action bar that mirrors the primary product buy button.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+{% assign variant = product.selected_or_first_available_variant %}
+{% assign sticky_allocation = variant.selected_selling_plan_allocation %}
+{% if sticky_allocation == blank and variant.requires_selling_plan %}{% assign sticky_allocation = variant.selling_plan_allocations | first %}{% endif %}
+{% assign sticky_price = variant.price %}
+{% assign sticky_compare_at_price = variant.compare_at_price %}
+{% if sticky_allocation != blank %}
+  {% assign sticky_price = sticky_allocation.price %}
+  {% assign sticky_compare_at_price = sticky_allocation.compare_at_price %}
+{% endif %}
+{% assign sticky_purchase_available = variant.available %}
+{% if variant.requires_selling_plan and sticky_allocation == blank %}{% assign sticky_purchase_available = false %}{% endif %}
+{% assign sticky_image = variant.featured_image | default: product.featured_image %}
+{% assign sticky_fallback_image = product.featured_image | default: sticky_image %}
+{% assign sticky_on_sale = false %}
+{% if sticky_compare_at_price > sticky_price %}{% assign sticky_on_sale = true %}{% endif %}
+<div class="product-sticky-add-to-cart" data-sticky-cart aria-hidden="true" {{ block.shopify_attributes }}>
+  {% if sticky_image != blank %}
+    <div class="product-sticky-add-to-cart__media">
+      <img
+        src="{{ sticky_image | image_url: width: 160 }}"
+        alt="{{ sticky_image.alt | default: product.title | escape }}"
+        width="80"
+        height="80"
+        loading="lazy"
+        data-sticky-cart-image
+        data-fallback-src="{{ sticky_fallback_image | image_url: width: 160 }}"
+      >
+    </div>
+  {% endif %}
+  <div class="product-sticky-add-to-cart__info">
+    <span class="product-sticky-add-to-cart__title product-title-text">{{ product.title | escape }}</span>
+    <span class="product-sticky-add-to-cart__variant" data-sticky-cart-variant{% if product.has_only_default_variant %} hidden{% endif %}>{{ variant.title | escape }}</span>
+    <span class="product-sticky-add-to-cart__prices{% if sticky_on_sale %} is-sale{% endif %}" data-sticky-cart-prices>
+      <span class="product-sticky-add-to-cart__price" data-sticky-cart-price>{% render 'money', amount: sticky_price %}</span>
+      <s class="product-sticky-add-to-cart__compare-price" data-sticky-cart-compare-price{% unless sticky_on_sale %} hidden{% endunless %}>{% render 'money', amount: sticky_compare_at_price %}</s>
+    </span>
+  </div>
+  <button class="product-sticky-add-to-cart__button" type="button" data-sticky-cart-add{% unless sticky_purchase_available %} disabled{% endunless %}>
+    <span class="product-sticky-add-to-cart__button-label" data-sticky-cart-label>{% if sticky_purchase_available %}{{ 'product.add_to_cart' | t }}{% elsif variant.available %}{{ 'product.unavailable' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</span>
+    <svg class="product-sticky-add-to-cart__button-icon" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none">
+      <path d="M3 4h2l1.8 10.1a2 2 0 0 0 2 1.7h7.9a2 2 0 0 0 1.9-1.5L20 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="9" cy="20" r="1" fill="currentColor"/><circle cx="17" cy="20" r="1" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+{% schema %}
+{
+  "name": "Sticky add to cart",
+  "settings": []
+}
+{% endschema %}

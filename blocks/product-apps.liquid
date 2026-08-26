@@ -1,0 +1,15 @@
+{% doc %}
+  Provides a placement for product app content.
+{% enddoc %}
+<div class="product-apps" {{ block.shopify_attributes }}>{% content_for 'blocks' %}</div>
+{% schema %}
+{
+  "name": "Product apps",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": []
+}
+{% endschema %}

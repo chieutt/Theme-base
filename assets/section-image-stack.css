@@ -1,0 +1,359 @@
+.image-stack { --image-stack-horizontal-shift: 8vw; --image-stack-panel-padding: var(--section-padding-top); --sticky-scroll-active-height: 100svh; position: relative; isolation: isolate; padding-block: 0; }
+.image-stack__section-placeholder { position: absolute; z-index: 0; inset: 0; display: grid; overflow: hidden; place-items: center; background: var(--color-variant-component-background); color: color-mix(in srgb, var(--color-heading) 18%, transparent); }
+.image-stack__section-placeholder-svg { width: min(30vw, 320px); height: auto; }
+.image-stack .sticky-scroll__stage { z-index: 1; }
+.image-stack.sticky-scroll.is-enhanced { min-height: var(--sticky-scroll-scroll-height); }
+.image-stack__scene-background, .image-stack__overlay { position: absolute; inset: 0; }
+.image-stack__scene-background { z-index: -2; }
+.image-stack__background-image, .image-stack__background-placeholder, .image-stack__media-image, .image-stack__media-placeholder { display: block; width: 100%; height: 100%; object-fit: cover; }
+.image-stack__background-image, .image-stack__media-image { object-position: var(--sticky-scroll-image-position, center center); }
+.image-stack__background-placeholder, .image-stack__media-placeholder { background: var(--color-variant-component-background); color: color-mix(in srgb, var(--color-heading) 20%, transparent); }
+.image-stack__overlay { z-index: -1; background: linear-gradient(0deg, color-mix(in srgb, var(--color-background) 80%, transparent) 0%, color-mix(in srgb, var(--color-background) 30%, transparent) 48%, transparent 78%), linear-gradient(90deg, color-mix(in srgb, var(--color-background) 46%, transparent) 0%, color-mix(in srgb, var(--color-background) 16%, transparent) 55%, transparent 80%); pointer-events: none; }
+.image-stack__scene-layout { display: grid; width: 100%; min-height: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 0; padding: 0; }
+.image-stack__content-positioner { display: flex; min-width: 0; min-height: 100%; padding: var(--image-stack-panel-padding); }
+.image-stack__content { color: var(--color-text); --content-block-color: var(--color-text); }
+.image-stack__content :is(.content-block, .content-button, .btn-tertiary), .image-stack__content .content-block--label, .image-stack__content .content-block--text { color: inherit; }
+.image-stack__content .content-block--heading, .image-stack__content .content-block--heading :is(h1, h2, h3, h4, h5, h6) { color: var(--color-heading); }
+.image-stack__media { width: min(90%, 550px, calc(100% - (var(--image-stack-panel-padding) * 2))); max-width: 100%; aspect-ratio: var(--image-stack-card-ratio); align-self: center; justify-self: center; overflow: hidden; border-radius: var(--style-border-radius, 0); box-shadow: 0 24px 72px rgb(0 0 0 / 24%); }
+.image-stack__scene--top-left .image-stack__content-positioner { align-items: flex-start; justify-content: flex-start; }.image-stack__scene--top-center .image-stack__content-positioner { align-items: flex-start; justify-content: center; }.image-stack__scene--top-right .image-stack__content-positioner { align-items: flex-start; justify-content: flex-end; }.image-stack__scene--middle-left .image-stack__content-positioner { align-items: center; justify-content: flex-start; }.image-stack__scene--middle-center .image-stack__content-positioner { align-items: center; justify-content: center; }.image-stack__scene--middle-right .image-stack__content-positioner { align-items: center; justify-content: flex-end; }.image-stack__scene--bottom-left .image-stack__content-positioner { align-items: flex-end; justify-content: flex-start; }.image-stack__scene--bottom-center .image-stack__content-positioner { align-items: flex-end; justify-content: center; }.image-stack__scene--bottom-right .image-stack__content-positioner { align-items: flex-end; justify-content: flex-end; }
+.image-stack__scene--alignment-center .image-stack__content { align-items: center; text-align: center; }.image-stack__scene--alignment-right .image-stack__content { align-items: flex-end; text-align: right; }
+
+@media screen and (min-width: 768px) {
+  /* The Scene background belongs to the full panel. Page width only constrains
+     the foreground composition, so image and content retain a shared grid. */
+  .image-stack.sticky-scroll--width-page .image-stack__scene-layout {
+    width: min(var(--page-width), calc(100% - (var(--page-margin) * 2)));
+    margin-inline: auto;
+  }
+
+  .image-stack--content-right .image-stack__content-positioner {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .image-stack--content-right .image-stack__media {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1149.98px) {
+  .image-stack { --image-stack-panel-padding: calc(var(--section-padding-top) * .75); }
+}
+
+.image-stack .sticky-scroll__steps {
+  right: clamp(8px, 1vw, 16px);
+}
+
+.image-stack.sticky-scroll.is-enhanced .image-stack__section-placeholder {
+  position: sticky;
+  inset: auto;
+  inset-inline: 0;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  margin-bottom: -100svh;
+  z-index: 0;
+}
+
+.image-stack.sticky-scroll.is-enhanced .sticky-scroll__stage {
+  top: 0;
+  height: 100svh;
+}
+.image-stack--effect-horizontal.is-enhanced .sticky-scroll__panel {
+  z-index: var(--image-stack-scene-z-index, 1);
+  opacity: 1;
+  visibility: visible;
+  /* Reveal the incoming scene from right to left. */
+  clip-path: inset(0 0 0 calc(100% - var(--image-stack-scene-reveal, 0%)));
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+  /* Keep moving briefly after the wheel/touch input stops so the reveal feels
+     like a continuous layer, not a direct one-to-one scroll transform. */
+  transition: clip-path var(--image-stack-scroll-animation-duration, 750ms) cubic-bezier(.22, 1, .36, 1);
+  will-change: clip-path;
+}
+
+.image-stack--effect-horizontal.is-enhanced .sticky-scroll__panel:first-child {
+  --image-stack-scene-reveal: 100%;
+}
+
+.image-stack--effect-horizontal.is-enhanced .sticky-scroll__panel:is(.is-before, .is-after, .is-active) {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Horizontal panels use clip-path as their visibility lifecycle, so neither
+   the overlay nor the content participates in the generic sticky fade. */
+.image-stack--effect-horizontal.is-enhanced .image-stack__overlay {
+  opacity: 1;
+}
+
+.image-stack--effect-horizontal.is-enhanced .sticky-scroll__panel.is-active .image-stack__overlay {
+  opacity: 1;
+}
+
+.image-stack--effect-horizontal.is-enhanced .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+  opacity: 1;
+}
+
+/* Scene keeps every media element in its original panel/grid. Panels share the
+   sticky canvas but don't establish stacking contexts, so the incoming media
+   can clip over its sibling without a cloned, fixed-width media stack. */
+.image-stack--effect-scene.is-enhanced .sticky-scroll__panel,
+.image-stack--effect-scene.is-enhanced .sticky-scroll__panel:is(.is-before, .is-after, .is-active) {
+  opacity: 1;
+  visibility: visible;
+  isolation: auto;
+  transform: none;
+  transition: none;
+  pointer-events: none;
+}
+
+.image-stack--effect-scene.is-enhanced .sticky-scroll__panel.is-active {
+  pointer-events: auto;
+}
+
+.image-stack--effect-scene.is-enhanced .sticky-scroll__ghost-number {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease, visibility 0s linear 220ms;
+}
+
+.image-stack--effect-scene.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__ghost-number {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__scene-background {
+  z-index: 0;
+  /* Scene panels share the same canvas. A panel background is only a source
+     surface for non-enhanced layouts; showing it here lets the final mounted
+     panel cover all earlier content before its media is revealed. */
+  opacity: 0;
+  transition: none;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__overlay {
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+
+.image-stack--effect-scene.is-enhanced .sticky-scroll__panel.is-active .image-stack__overlay {
+  opacity: 1;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__content-positioner {
+  position: relative;
+  z-index: 20;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__media {
+  position: relative;
+  z-index: 10;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--image-stack-scroll-animation-duration, 750ms) cubic-bezier(.22, 1, .36, 1);
+  will-change: clip-path;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__media:is(.is-active, .is-before) {
+  clip-path: inset(0 0 0 0);
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-after,
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-entering {
+  clip-path: inset(100% 0 0 0);
+  transition: none;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-reverse-entering {
+  z-index: 12;
+  clip-path: inset(0 0 0 0);
+  transition: none;
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-reverse-exiting {
+  z-index: 12;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--image-stack-scroll-animation-duration, 750ms) cubic-bezier(.22, 1, .36, 1);
+}
+
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-active { z-index: 11; }
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-before { z-index: 10; }
+.image-stack--effect-scene.is-enhanced .image-stack__media.is-after { z-index: 12; }
+
+.image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced {
+  min-height: auto;
+  overflow: visible;
+}
+
+.image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced .sticky-scroll__stage {
+  position: relative;
+  top: auto;
+  height: auto;
+  overflow: visible;
+  contain: none;
+}
+
+.image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced .sticky-scroll__panel,
+.image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced .sticky-scroll__panel:is(.is-before, .is-after, .is-active) {
+  position: sticky;
+  inset: auto;
+  top: 0;
+  display: grid !important;
+  height: 100svh;
+  min-height: 100svh;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none;
+  pointer-events: auto;
+  transition: none;
+  z-index: 1;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.image-stack--effect-vertical .image-stack__scene-layout {
+  height: 100%;
+  min-height: 0;
+}
+
+.image-stack--effect-vertical .image-stack__content-positioner,
+.image-stack--effect-vertical .sticky-scroll__content {
+  position: relative;
+  z-index: 2;
+}
+
+.image-stack--effect-vertical .sticky-scroll__content > * {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(2) { z-index: 2; }
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(3) { z-index: 3; }
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(4) { z-index: 4; }
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(5) { z-index: 5; }
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(6) { z-index: 6; }
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(7) { z-index: 7; }
+.image-stack--effect-vertical .sticky-scroll__panel:nth-child(8) { z-index: 8; }
+
+.image-stack--effect-vertical .sticky-scroll__steps { display: none; }
+.image-stack--effect-vertical .sticky-scroll__ghost-number { display: none; }
+
+@media screen and (max-width: 767.98px) {
+  /* Every Image stack effect keeps its interactive lifecycle on mobile. Each
+     panel uses a stable 50/50 composition: centred media above, content below. */
+  .image-stack {
+    --image-stack-mobile-panel-height: max(100svh, 550px);
+    --sticky-scroll-active-height: var(--image-stack-mobile-panel-height);
+    --image-stack-panel-padding: calc(var(--section-padding-top) * .5);
+    padding-inline: 0;
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky.is-enhanced {
+    min-height: var(--sticky-scroll-scroll-height);
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky.is-enhanced .sticky-scroll__stage {
+    top: 0;
+    height: var(--image-stack-mobile-panel-height);
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky.is-enhanced .image-stack__section-placeholder {
+    height: var(--image-stack-mobile-panel-height);
+    margin-bottom: calc(-1 * var(--image-stack-mobile-panel-height));
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky .sticky-scroll__panel,
+  .image-stack.sticky-scroll--mobile-sticky.is-enhanced .sticky-scroll__panel {
+    min-height: var(--image-stack-mobile-panel-height);
+  }
+
+  /* Scene panels must enter from a hidden state on mobile too. Keep this
+     explicit because scene layers remain mounted while they crossfade. */
+  .image-stack--effect-scene.sticky-scroll.is-enhanced .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+    opacity: 0;
+  }
+
+  .image-stack--effect-scene.sticky-scroll.is-enhanced .sticky-scroll__panel.is-active .sticky-scroll__content > :is(.shopify-block, .content-block, .content-button) {
+    opacity: 1;
+  }
+
+  /* responsive-media emits a picture only when a Mobile image is selected.
+     Make that wrapper fill the scene canvas so its inner image can use the
+     existing 100% cover contract instead of shrinking to intrinsic height. */
+  .image-stack__scene-background picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky .image-stack__scene-layout {
+    display: grid;
+    width: 100%;
+    min-height: var(--image-stack-mobile-panel-height);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0;
+    padding: 0 var(--page-margin);
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky .image-stack__content-positioner {
+    grid-row: 2;
+    min-height: 0;
+    height: 100%;
+    padding: 28px 0 36px;
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky .image-stack__media {
+    position: relative;
+    grid-row: 1;
+    width: min(50%, 260px);
+    max-width: 50%;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .image-stack.image-stack--mobile-image-left .image-stack__media {
+    justify-self: start;
+  }
+
+  .image-stack.image-stack--mobile-image-right .image-stack__media {
+    justify-self: end;
+  }
+
+  .image-stack.sticky-scroll--mobile-sticky .sticky-scroll__steps {
+    right: 12px;
+  }
+
+  .image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced {
+    min-height: auto;
+  }
+
+  .image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced .sticky-scroll__stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  .image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced .sticky-scroll__panel,
+  .image-stack.image-stack--effect-vertical.sticky-scroll.is-enhanced .sticky-scroll__panel:is(.is-before, .is-after, .is-active) {
+    position: sticky;
+    inset: auto;
+    top: 0;
+    display: grid;
+    height: var(--image-stack-mobile-panel-height);
+    min-height: var(--image-stack-mobile-panel-height);
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+  }
+}

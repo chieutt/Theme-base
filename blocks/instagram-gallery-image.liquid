@@ -1,0 +1,45 @@
+{% doc %}
+  Renders one linked Instagram image inside the editorial gallery.
+{% enddoc %}
+
+{% liquid
+  assign gallery_image = block.settings.image
+  assign gallery_alt = block.settings.alt | default: gallery_image.alt
+%}
+
+<article class="gallery__item" data-reveal-item {{ block.shopify_attributes }}>
+  {% if block.settings.link != blank %}
+    <a class="gallery__item-link" href="{{ block.settings.link | escape }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} aria-label="{{ block.settings.accessibility_label | default: 'View on Instagram' | escape }}">
+  {% endif %}
+      <div class="gallery__media">
+        {% render 'responsive-media',
+          image: gallery_image,
+          max_width: 1000,
+          widths: '240, 360, 480, 600, 750, 1000',
+          sizes: '(min-width: 1150px) calc((100vw - (var(--page-margin) * 2) - 96px) / 5), (min-width: 768px) calc((100vw - (var(--page-margin) * 2) - 48px) / 3), calc((100vw - (var(--page-margin) * 2) - 24px) / 2)',
+          class: 'gallery__image',
+          loading: 'lazy',
+          alt: gallery_alt,
+          placeholder_asset: 'image',
+          placeholder_class: 'gallery__placeholder'
+        %}
+        <span class="gallery__item-overlay" aria-hidden="true">
+          <span class="gallery__instagram-icon">{% render 'social-icon', name: 'instagram' %}</span>
+          <span class="gallery__instagram-label">View on Instagram ↗</span>
+        </span>
+      </div>
+  {% if block.settings.link != blank %}</a>{% endif %}
+</article>
+
+{% schema %}
+{
+  "name": "Instagram image",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "alt", "label": "Alt text" },
+    { "type": "url", "id": "link", "label": "Instagram link" },
+    { "type": "checkbox", "id": "open_in_new_tab", "label": "Open link in new tab", "default": true },
+    { "type": "text", "id": "accessibility_label", "label": "Accessibility label", "default": "View on Instagram" }
+  ]
+}
+{% endschema %}

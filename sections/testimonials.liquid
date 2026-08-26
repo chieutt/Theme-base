@@ -1,0 +1,272 @@
+{% render 'section-stylesheet', asset: 'section-testimonials.css', defer_on_home: true %}
+
+{% liquid
+  assign testimonials_background = section.settings.background_color
+  if testimonials_background == blank
+    assign testimonials_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+
+  assign testimonial_count = 0
+  for section_block in section.blocks
+    if section_block.type == 'testimonial'
+      assign testimonial_count = testimonial_count | plus: 1
+    endif
+  endfor
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ testimonials_background }};
+  }
+
+  #shopify-section-{{ section.id }} .testimonials {
+    background: transparent;
+  }
+{% endstyle %}
+
+{% if section.blocks.size > 0 %}
+  <testimonials-slider
+    data-deferred-module="{{ 'testimonials.js' | asset_url }}"
+    class="testimonials testimonials--editorial testimonials--label-align-{{ section.settings.label_alignment }} testimonials--item-align-{{ section.settings.item_alignment }} color-scheme color-{{ section.settings.color_scheme.id }} full-width{% if section.settings.section_width == 'full' %} testimonials--content-full{% endif %}"
+    data-section-id="{{ section.id }}"
+    style="--testimonials-content-width: {% case section.settings.content_width %}{% when 'small' %}560px{% when 'large' %}960px{% when 'custom' %}{{ section.settings.content_width_custom }}px{% else %}760px{% endcase %}; --testimonials-item-gap: {{ section.settings.item_gap }}px; --testimonials-heading-size: {{ section.settings.heading_size }}px; --testimonials-content-padding: {{ section.settings.content_padding }}px; --testimonial-author-size: {{ section.settings.author_size }}px; --testimonial-location-size: {{ section.settings.location_size }}px; --testimonial-button-size: {{ section.settings.button_size }}px; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+  >
+    {% if section.settings.background_image != blank %}
+      <div class="testimonials__background" aria-hidden="true">
+        {% render 'responsive-image',
+          image: section.settings.background_image,
+          max_width: 2400,
+          widths: '480, 750, 1100, 1500, 1920, 2400',
+          sizes: '100vw',
+          class: 'testimonials__background-image',
+          loading: 'lazy',
+          decorative: true
+        %}
+      </div>
+    {% endif %}
+    <div class="testimonials__inner section-spacing">
+      <header class="testimonials__header">
+        {% content_for 'block', type: 'label', id: 'label' %}
+      </header>
+      <div class="testimonials__carousel">
+        <div class="testimonials__slider swiper" data-testimonials-slider>
+          <div class="testimonials__items swiper-wrapper" role="list">
+            {% content_for 'blocks' %}
+          </div>
+        </div>
+
+      </div>
+
+      {% assign testimonial_total = testimonial_count | prepend: '0' | slice: -2, 2 %}
+      <div class="testimonials__editorial-footer" data-testimonials-controls{% if testimonial_count <= 1 %} hidden{% endif %} role="group" aria-label="Testimonial controls">
+        <div class="testimonials__editorial-controls">
+          <button class="testimonials__editorial-button" type="button" aria-label="{{ 'testimonials.previous' | t | escape }}" data-testimonials-previous>
+            {% render 'icon', name: 'chevron-left' %}
+          </button>
+          <p class="testimonials__counter" aria-live="polite">
+            <span data-testimonials-current>01</span>
+            <span aria-hidden="true">/</span>
+            <span data-testimonials-total>{{ testimonial_total }}</span>
+          </p>
+          <button class="testimonials__editorial-button" type="button" aria-label="{{ 'testimonials.next' | t | escape }}" data-testimonials-next>
+            {% render 'icon', name: 'chevron-right' %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </testimonials-slider>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section-testimonials",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {"value": "page", "label": "Page width"},
+        {"value": "full", "label": "Full width"}
+      ],
+      "default": "page"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        {"value": "small", "label": "Small"},
+        {"value": "medium", "label": "Medium"},
+        {"value": "large", "label": "Large"},
+        {"value": "custom", "label": "Custom"}
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "text_alignment",
+      "id": "label_alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "content_width_custom",
+      "min": 320,
+      "max": 1280,
+      "step": 20,
+      "unit": "px",
+      "label": "Content width",
+      "default": 760,
+      "visible_if": "{{ section.settings.content_width == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "Item"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Item gap",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 24,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Content padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "author_size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Author size",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "location_size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Location size",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button size",
+      "default": 10
+    },
+    {
+      "type": "text_alignment",
+      "id": "item_alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    { "type": "testimonial" }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Brand trust",
+      "blocks": [
+        {
+          "type": "label",
+          "id": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>CUSTOMER STORIES / PRIVATE NOTES</p>",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          }
+        },
+        {"type": "testimonial"},
+        {"type": "testimonial"},
+        {"type": "testimonial"}
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,468 @@
+{% liquid
+  assign search_drawer_scheme = section.settings.color_scheme.id | default: 'scheme-1'
+  assign has_popular_categories = false
+  assign search_drawer_preview = false
+  assign search_drawer_category_image_ratio = 'auto'
+
+  case section.settings.category_image_ratio
+    when 'square'
+      assign search_drawer_category_image_ratio = '1 / 1'
+    when 'portrait'
+      assign search_drawer_category_image_ratio = '4 / 5'
+    when '2-3'
+      assign search_drawer_category_image_ratio = '2 / 3'
+    when 'tall'
+      assign search_drawer_category_image_ratio = '3 / 4'
+    when '3-4'
+      assign search_drawer_category_image_ratio = '3 / 4'
+    when '4-5'
+      assign search_drawer_category_image_ratio = '4 / 5'
+    when '6-7'
+      assign search_drawer_category_image_ratio = '6 / 7'
+    when 'classic'
+      assign search_drawer_category_image_ratio = '4 / 3'
+    when '4-3'
+      assign search_drawer_category_image_ratio = '4 / 3'
+    when 'landscape'
+      assign search_drawer_category_image_ratio = '3 / 2'
+    when '3-2'
+      assign search_drawer_category_image_ratio = '3 / 2'
+    when 'wide'
+      assign search_drawer_category_image_ratio = '16 / 9'
+    when '16-9'
+      assign search_drawer_category_image_ratio = '16 / 9'
+  endcase
+
+  if request.design_mode or request.visual_preview_mode
+    assign search_drawer_preview = true
+  endif
+
+  if section.settings.popular_categories != blank
+    assign has_popular_categories = true
+  endif
+%}
+
+{{ 'search-drawer.css' | asset_url | stylesheet_tag }}
+{% if has_popular_categories or search_drawer_preview %}
+  {% render 'swiper-stylesheet' %}
+{% endif %}
+
+<style>
+  #SearchDrawer .search-drawer__title.heading-custom,
+  #SearchDrawer .search-drawer__section-title.heading-custom {
+    font-size: var(--search-drawer-custom-font-size);
+  }
+
+  @media screen and (max-width: 767.98px) {
+    #SearchDrawer .search-drawer__title.heading-custom,
+    #SearchDrawer .search-drawer__section-title.heading-custom {
+      font-size: var(--search-drawer-custom-font-size-mobile);
+    }
+  }
+</style>
+
+<search-drawer
+  id="SearchDrawer"
+  class="search-drawer color-scheme color-{{ search_drawer_scheme }}{% if section.settings.indent_desktop %} search-drawer--indented{% endif %}{% if section.settings.blur_backdrop %} search-drawer--blurred{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-motion-enabled="{{ settings.enable_motion }}"
+  data-design-mode="{{ request.design_mode }}"
+  data-visual-preview-mode="{{ request.visual_preview_mode }}"
+  data-search-suggestions-enabled="{{ section.settings.enable_search_suggestions }}"
+  data-predictive-search-url="{{ routes.predictive_search_url | append: '.json' | escape }}"
+  data-placeholder-terms="{{ section.settings.animated_placeholder_terms | escape }}"
+  data-category-slides-per-view="{{ section.settings.category_slides_per_view }}"
+  data-category-slides-per-view-mobile="{{ section.settings.category_slides_per_view_mobile }}"
+  data-recently-viewed-enabled="{{ section.settings.show_recently_viewed }}"
+  data-recently-viewed-limit="{{ section.settings.recently_viewed_limit }}"
+  data-show-quick-add="{{ section.settings.show_quick_add }}"
+  data-currency-code="{{ localization.country.currency.iso_code | default: shop.currency | escape }}"
+  data-show-currency-code="{{ settings.show_currency_code }}"
+  data-no-products-text="{{ 'search.no_products' | t | escape }}"
+  data-no-results-text="{{ 'search.no_results' | t: term: '__term__' | escape }}"
+  data-results-found-text="{{ 'search.results_found' | t: count: '__count__' | escape }}"
+  data-searching-text="{{ 'search.searching' | t | escape }}"
+  data-search-error-text="{{ 'search.error' | t | escape }}"
+  data-product-count-one="{{ 'search.product_count.one' | t: count: '__count__' | escape }}"
+  data-product-count-other="{{ 'search.product_count.other' | t: count: '__count__' | escape }}"
+  data-quick-add-label="{{ 'product_card.quick_add' | t | escape }}"
+  data-choose-options-label="{{ 'product_card.choose_options' | t | escape }}"
+  data-adding-label="{{ 'product.adding_to_cart' | t | escape }}"
+  data-added-label="{{ 'product.added' | t | escape }}"
+  data-add-error-label="{{ 'product.add_to_cart_error' | t | escape }}"
+  data-search-drawer-dialog
+  data-scroll-lock-owner="search"
+  scroll-lock
+  hidden
+  style="--search-drawer-width: {{ section.settings.desktop_width }}px; --search-drawer-category-image-ratio: {{ search_drawer_category_image_ratio }};"
+  {{ section.shopify_attributes }}
+>
+  <span class="search-drawer__overlay" data-search-drawer-overlay aria-hidden="true"></span>
+  <span class="search-drawer__backdrop-pointer modal-backdrop-pointer modal-close-button close-icon" aria-hidden="true"></span>
+
+  <div
+    class="search-drawer__panel"
+    role="dialog"
+    {% if section.settings.heading != blank %}aria-labelledby="SearchDrawerTitle-{{ section.id }}"{% else %}aria-label="{{ 'search.title' | t | escape }}"{% endif %}
+    aria-modal="true"
+    tabindex="-1"
+    data-search-drawer-panel
+  >
+    <header class="search-drawer__header">
+      {% if section.settings.heading != blank %}
+        <h2
+          id="SearchDrawerTitle-{{ section.id }}"
+          class="search-drawer__title {% render 'typography-class', preset: section.settings.heading_size, fallback: 'h3' %}"
+          {% if section.settings.heading_size == 'custom' %}style="--search-drawer-custom-font-size: {{ section.settings.heading_font_size }}px; --search-drawer-custom-font-size-mobile: {{ section.settings.heading_font_size_mobile }}px;"{% endif %}
+        >{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      <button
+        class="search-drawer__close modal-close-button close-icon"
+        type="button"
+        aria-label="{{ 'header.close_search' | t | escape }}"
+        data-search-drawer-close
+      ></button>
+    </header>
+
+    <div class="search-drawer__body theme-scrollbar">
+        <form class="search-drawer__form" action="{{ routes.search_url | escape }}" method="get" role="search" data-search-drawer-form>
+          <label class="visually-hidden" for="SearchDrawerInput-{{ section.id }}">{{ 'search.label' | t }}</label>
+          <input
+            id="SearchDrawerInput-{{ section.id }}"
+            class="search-drawer__input"
+            type="search"
+            name="q"
+            placeholder="{{ section.settings.placeholder | escape }}"
+            autocomplete="off"
+            enterkeyhint="search"
+            autofocus
+            data-search-drawer-input
+          >
+          <span class="search-drawer__animated-placeholder" aria-hidden="true" data-search-drawer-animated-placeholder></span>
+          <button
+            class="search-drawer__clear close-icon"
+            type="button"
+            aria-label="{{ 'search.clear_search' | t | escape }}"
+            data-search-drawer-clear
+            hidden
+          ></button>
+          <button class="search-drawer__submit" type="submit" aria-label="{{ 'search.submit' | t | escape }}">
+            {% render 'icon', name: 'search' %}
+          </button>
+        </form>
+
+        <div class="search-drawer__predictive" data-search-drawer-predictive aria-busy="false" hidden>
+          <p class="search-drawer__status" data-search-drawer-status role="status" aria-live="polite" aria-atomic="true" hidden></p>
+          <div class="search-drawer__tabs" role="tablist" aria-label="{{ 'search.result_tabs' | t | escape }}" data-search-drawer-tabs>
+            <button
+              id="SearchDrawerTab-{{ section.id }}-products"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="SearchDrawerPanel-{{ section.id }}-products"
+              tabindex="0"
+              data-search-drawer-tab="products"
+            >{{ 'search.products' | t }}</button>
+            <button
+              id="SearchDrawerTab-{{ section.id }}-collections"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="SearchDrawerPanel-{{ section.id }}-collections"
+              tabindex="-1"
+              data-search-drawer-tab="collections"
+            >{{ 'search.collections' | t }}</button>
+          </div>
+          <div class="search-drawer__panels">
+            <div
+              id="SearchDrawerPanel-{{ section.id }}-products"
+              role="tabpanel"
+              aria-labelledby="SearchDrawerTab-{{ section.id }}-products"
+              data-search-drawer-panel-name="products"
+            ></div>
+            <div
+              id="SearchDrawerPanel-{{ section.id }}-collections"
+              role="tabpanel"
+              aria-labelledby="SearchDrawerTab-{{ section.id }}-collections"
+              data-search-drawer-panel-name="collections"
+              hidden
+            ></div>
+            <p class="search-drawer__empty" data-search-drawer-empty hidden></p>
+          </div>
+          <a class="button button--primary search-drawer__view-all" href="{{ routes.search_url | escape }}" data-search-drawer-view-all hidden>{{ 'search.view_all_results' | t }}</a>
+        </div>
+
+        <div class="search-drawer__navigation" data-search-drawer-navigation>
+          {% if has_popular_categories or search_drawer_preview %}
+            <div class="search-drawer__popular"{% if section.settings.popular_categories_heading != blank %} role="region" aria-labelledby="SearchDrawerPopularCategoriesTitle-{{ section.id }}"{% endif %}>
+              {% if section.settings.popular_categories_heading != blank %}
+                <h3
+                  id="SearchDrawerPopularCategoriesTitle-{{ section.id }}"
+                  class="search-drawer__section-title {% render 'typography-class', preset: section.settings.popular_categories_heading_size, fallback: 'h3' %}"
+                  {% if section.settings.popular_categories_heading_size == 'custom' %}style="--search-drawer-custom-font-size: {{ section.settings.popular_categories_heading_font_size }}px; --search-drawer-custom-font-size-mobile: {{ section.settings.popular_categories_heading_font_size_mobile }}px;"{% endif %}
+                >{{ section.settings.popular_categories_heading | escape }}</h3>
+              {% endif %}
+              <div class="search-drawer__category-carousel swiper" data-search-drawer-categories>
+                <ul class="search-drawer__chips swiper-wrapper" role="list">
+                  {% if has_popular_categories %}
+                    {% for collection in section.settings.popular_categories %}
+                      {% liquid
+                        assign search_drawer_collection_image = collection.image
+                        if search_drawer_collection_image == blank
+                          assign search_drawer_collection_image = collection.products.first.featured_image
+                        endif
+                        assign search_drawer_collection_alt = search_drawer_collection_image.alt | default: collection.title
+                      %}
+                      <li class="search-drawer__chip-item swiper-slide">
+                        <a class="search-drawer__chip" href="{{ collection.url | escape }}">
+                          <span class="search-drawer__category-media">
+                            {% if search_drawer_collection_image != blank %}
+                              {{ search_drawer_collection_image | image_url: width: 600 | image_tag: widths: '160, 240, 360, 480, 600', sizes: '(max-width: 749px) 80vw, 200px', loading: 'lazy', alt: search_drawer_collection_alt }}
+                            {% else %}
+                              <span class="search-drawer__category-placeholder" aria-hidden="true"></span>
+                            {% endif %}
+                          </span>
+                          <span class="search-drawer__category-title">{{ collection.title | escape }}</span>
+                        </a>
+                      </li>
+                    {% endfor %}
+                  {% elsif search_drawer_preview %}
+                    <li class="search-drawer__chip-item swiper-slide">
+                      <span class="search-drawer__chip">
+                        <span class="search-drawer__category-media" aria-hidden="true">
+                          {{ 'collection-1' | placeholder_svg_tag: 'search-drawer__category-placeholder-svg' }}
+                        </span>
+                        <span class="search-drawer__category-title">{{ 'collection_list.collection' | t }}</span>
+                      </span>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if section.settings.show_recently_viewed %}
+            <div class="search-drawer__recently-viewed{% if has_popular_categories %} search-drawer__recently-viewed--divided{% endif %}"{% if section.settings.recently_viewed_heading != blank %} role="region" aria-labelledby="SearchDrawerRecentTitle-{{ section.id }}"{% endif %} data-search-drawer-recently-viewed{% unless search_drawer_preview %} hidden{% endunless %}>
+              {% if section.settings.recently_viewed_heading != blank %}
+                <h3
+                  id="SearchDrawerRecentTitle-{{ section.id }}"
+                  class="search-drawer__section-title {% render 'typography-class', preset: section.settings.recently_viewed_heading_size, fallback: 'h3' %}"
+                  {% if section.settings.recently_viewed_heading_size == 'custom' %}style="--search-drawer-custom-font-size: {{ section.settings.recently_viewed_heading_font_size }}px; --search-drawer-custom-font-size-mobile: {{ section.settings.recently_viewed_heading_font_size_mobile }}px;"{% endif %}
+                >{{ section.settings.recently_viewed_heading | escape }}</h3>
+              {% endif %}
+              <div class="search-drawer__recent-list" data-search-drawer-recent-list>
+                {% if search_drawer_preview %}
+                  {% for placeholder_index in (1..section.settings.recently_viewed_limit) %}
+                    <article class="search-drawer__recent-product" data-search-drawer-design-placeholder>
+                      <span class="search-drawer__recent-media" aria-hidden="true">
+                        {% assign product_placeholder_index = placeholder_index | modulo: 6 %}
+                        {% if product_placeholder_index == 0 %}{% assign product_placeholder_index = 6 %}{% endif %}
+                        {{ 'product-' | append: product_placeholder_index | placeholder_svg_tag: 'search-drawer__recent-placeholder-svg' }}
+                      </span>
+                      <div class="search-drawer__recent-details">
+                        <h4 class="search-drawer__recent-title product-title-text heading-h4 heading-text">{{ 'onboarding.product_title' | t }}</h4>
+                        <p class="search-drawer__recent-price">{% render 'money', amount: 1999 %}</p>
+                      </div>
+                      {% if section.settings.show_quick_add %}
+                        <button class="quick-add-button search-drawer__quick-add" type="button" aria-label="{{ 'product_card.quick_add' | t | escape }}" disabled>
+                          {% render 'icon', name: 'bag-simple' %}
+                        </button>
+                      {% endif %}
+                    </article>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-search-drawer-announcer></p>
+    </div>
+
+    {% if section.settings.show_quick_add %}
+      <template data-search-drawer-bag-icon>{% render 'icon', name: 'bag-simple' %}</template>
+    {% endif %}
+  </div>
+</search-drawer>
+
+<script
+  src="{{ 'search-drawer-loader.js' | asset_url }}"
+  data-search-drawer-module="{{ 'search-drawer.js' | asset_url }}"
+  data-search-drawer-eager="{{ search_drawer_preview }}"
+  defer
+></script>
+
+{% schema %}
+{
+  "name": "Search drawer",
+  "limit": 1,
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Search" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:typography_blocks.heading_size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h3"
+    },
+    { "type": "range", "id": "heading_font_size", "label": "t:typography_blocks.size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 50, "visible_if": "{{ section.settings.heading_size == 'custom' }}" },
+    { "type": "range", "id": "heading_font_size_mobile", "label": "t:typography_blocks.mobile_size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 30, "visible_if": "{{ section.settings.heading_size == 'custom' }}" },
+    { "type": "text", "id": "placeholder", "label": "Search placeholder", "default": "Search" },
+    { "type": "textarea", "id": "animated_placeholder_terms", "label": "Animated search text", "info": "Separate phrases with commas or new lines. Leave blank to disable." },
+    { "type": "checkbox", "id": "enable_search_suggestions", "label": "Show search suggestions", "default": true },
+    { "type": "header", "content": "Collections", "info": "Displayed when no keyword is entered or when no results match your search." },
+    { "type": "text", "id": "popular_categories_heading", "label": "Heading", "default": "Popular categories" },
+    {
+      "type": "select",
+      "id": "popular_categories_heading_size",
+      "label": "t:typography_blocks.heading_size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h3"
+    },
+    { "type": "range", "id": "popular_categories_heading_font_size", "label": "t:typography_blocks.size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 50, "visible_if": "{{ section.settings.popular_categories_heading_size == 'custom' }}" },
+    { "type": "range", "id": "popular_categories_heading_font_size_mobile", "label": "t:typography_blocks.mobile_size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 30, "visible_if": "{{ section.settings.popular_categories_heading_size == 'custom' }}" },
+    { "type": "collection_list", "id": "popular_categories", "label": "Collections", "limit": 8 },
+    { "type": "select", "id": "category_image_ratio", "label": "Image ratio", "options": [{ "value": "adapt", "label": "Natural" }, { "value": "square", "label": "Square (1:1)" }, { "value": "4-3", "label": "Landscape (4:3)" }, { "value": "2-3", "label": "Portrait (2:3)" }, { "value": "16-9", "label": "Wide (16:9)" }, { "value": "3-4", "label": "Standard (3:4)" }, { "value": "4-5", "label": "Portrait (4:5)" }, { "value": "6-7", "label": "Classic (6:7)" }, { "value": "3-2", "label": "Landscape (3:2)" }], "default": "square" },
+    { "type": "range", "id": "category_slides_per_view", "label": "Cards per view", "info": "3.5 is compact and balanced. Increase this value to make cards smaller.", "min": 2, "max": 5, "step": 0.5, "default": 3.5 },
+    { "type": "range", "id": "category_slides_per_view_mobile", "label": "Mobile cards per view", "info": "Use a lower value than desktop to keep collection names readable.", "min": 1.5, "max": 4, "step": 0.5, "default": 3 },
+    { "type": "header", "content": "Recently viewed" },
+    { "type": "checkbox", "id": "show_recently_viewed", "label": "Show recently viewed products", "default": true },
+    { "type": "text", "id": "recently_viewed_heading", "label": "Heading", "default": "Recently viewed", "visible_if": "{{ section.settings.show_recently_viewed }}" },
+    {
+      "type": "select",
+      "id": "recently_viewed_heading_size",
+      "label": "t:typography_blocks.heading_size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h3",
+      "visible_if": "{{ section.settings.show_recently_viewed }}"
+    },
+    { "type": "range", "id": "recently_viewed_heading_font_size", "label": "t:typography_blocks.size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 50, "visible_if": "{{ section.settings.show_recently_viewed and section.settings.recently_viewed_heading_size == 'custom' }}" },
+    { "type": "range", "id": "recently_viewed_heading_font_size_mobile", "label": "t:typography_blocks.mobile_size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 30, "visible_if": "{{ section.settings.show_recently_viewed and section.settings.recently_viewed_heading_size == 'custom' }}" },
+    { "type": "range", "id": "recently_viewed_limit", "label": "Product limit", "min": 1, "max": 6, "step": 1, "default": 6, "visible_if": "{{ section.settings.show_recently_viewed }}" },
+    { "type": "checkbox", "id": "show_quick_add", "label": "Show quick-add icon", "default": true, "visible_if": "{{ section.settings.show_recently_viewed }}" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "desktop_width", "label": "Desktop drawer width", "min": 360, "max": 600, "step": 10, "unit": "px", "default": 550 },
+    { "type": "checkbox", "id": "indent_desktop", "label": "Indent on desktop", "default": false },
+    { "type": "checkbox", "id": "blur_backdrop", "label": "Blur backdrop", "default": false }
+  ],
+  "presets": [
+    {
+      "name": "Search drawer"
+    }
+  ],
+  "enabled_on": { "groups": ["custom.overlay"] }
+}
+{% endschema %}

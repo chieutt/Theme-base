@@ -1,0 +1,116 @@
+<div class="product-usp-list__item" {{ block.shopify_attributes }}>
+  {% if block.settings.icon != 'none' %}
+    {% assign benefit_icon_asset = blank %}
+    {% case block.settings.icon %}
+      {% when 'truck' %}{% assign benefit_icon_asset = 'product-benefit-shipped.png' %}
+      {% when 'return' %}{% assign benefit_icon_asset = 'product-benefit-return.png' %}
+      {% when 'shield' %}{% assign benefit_icon_asset = 'product-benefit-guarantee.png' %}
+      {% when 'sparkles' %}{% assign benefit_icon_asset = 'product-benefit-clean.png' %}
+    {% endcase %}
+    <span class="product-usp-list__icon">
+      {% if benefit_icon_asset != blank %}<img src="{{ benefit_icon_asset | asset_url }}" alt="" width="48" height="48" loading="lazy">{% else %}{% render 'icon', name: block.settings.icon %}{% endif %}
+    </span>
+  {% else %}
+    <div class="product-usp-list__image" aria-hidden="true">
+      {% render 'media-placeholder', class_name: 'product-usp-list__image-placeholder', asset_name: 'placeholder-image-default-5.svg' %}
+    </div>
+  {% endif %}
+
+  {% if block.settings.text != blank %}
+    <div class="product-usp-list__item-copy rte">{{ block.settings.text }}</div>
+  {% endif %}
+
+  {% if block.settings.page != blank %}
+    {% if block.settings.show_page_popup %}
+      {% assign page_popup_label = block.settings.page_popup_label | default: block.settings.page.title %}
+      {% assign benefit_dialog_id = 'ProductBenefitPage-' | append: block.id %}
+      {% assign benefit_title_id = 'ProductBenefitPageTitle-' | append: block.id %}
+      <button class="product-usp-list__page-trigger" type="button" data-product-panel-open aria-controls="{{ benefit_dialog_id }}">{{ page_popup_label | escape }}</button>
+      {% render 'product-panel-dialog',
+        dialog_id: benefit_dialog_id,
+        title_id: benefit_title_id,
+        title: block.settings.page.title,
+        dialog_content: block.settings.page.content,
+        dialog_class: 'product-benefit-page-modal'
+      %}
+    {% else %}
+      <a class="product-usp-list__page-link" href="{{ block.settings.page.url | escape }}">{{ block.settings.page.title | escape }}</a>
+    {% endif %}
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Benefit item",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Benefit item"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "truck",
+          "label": "Shipping"
+        },
+        {
+          "value": "return",
+          "label": "Returns"
+        },
+        {
+          "value": "heart",
+          "label": "Care"
+        },
+        {
+          "value": "box",
+          "label": "Packaging"
+        },
+        {
+          "value": "shield",
+          "label": "Warranty"
+        },
+        {
+          "value": "sparkles",
+          "label": "Sustainability"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Complimentary shipping<br>On every order</p>"
+    },
+    {
+      "type": "page",
+      "id": "page",
+      "label": "Page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_popup",
+      "label": "Show page content in pop-up",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "page_popup_label",
+      "label": "Pop-up link label",
+      "info": "Shown when page content opens in a pop-up. Leave blank to use the page title."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefit item"
+    }
+  ]
+}
+{% endschema %}

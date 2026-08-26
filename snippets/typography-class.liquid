@@ -1,0 +1,35 @@
+{% doc %}
+  Resolves typography preset values to shared role and scale classes.
+
+  @param {string} preset - Typography preset value.
+  @param {string} [fallback] - Value used when preset is blank.
+{% enddoc %}
+
+{%- liquid
+  assign resolved_preset = preset | default: fallback | default: 'h2'
+  assign typography_class = ''
+
+  case resolved_preset
+    when 'h0', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'
+      assign typography_class = 'heading-' | append: resolved_preset | append: ' heading-text'
+    when 'custom'
+      assign typography_class = 'heading-custom heading-text'
+    when 'paragraph', 'body', 'p'
+      assign typography_class = 'body-p1 body-text'
+    when 'lg'
+      assign typography_class = 'body-p0 body-text'
+    when 'md'
+      assign typography_class = 'body-p1 body-text'
+    when 'sm'
+      assign typography_class = 'body-p2 body-text'
+    when 'xs'
+      assign typography_class = 'body-p3 body-text'
+    when 'p0', 'p1', 'p2', 'p3'
+      assign typography_class = 'body-' | append: resolved_preset | append: ' body-text'
+    when 'label'
+      assign typography_class = 'label-text'
+    when 'subheading', 'sub'
+      assign typography_class = 'subheading-text'
+  endcase
+-%}
+{{- typography_class -}}

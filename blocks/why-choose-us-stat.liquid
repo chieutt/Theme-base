@@ -1,0 +1,24 @@
+{% doc %}
+  Renders one fixed editorial statistic for the Why choose us section.
+{% enddoc %}
+
+<div
+  class="why-choose-us__stat"
+  role="listitem"
+  data-reveal-item
+  {{ block.shopify_attributes }}
+>
+  <p class="why-choose-us__stat-value heading-text">{{ block.settings.value | escape }}</p>
+  <div class="why-choose-us__stat-description body-text rte">{{ block.settings.description }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Why choose us statistic",
+  "tag": null,
+  "settings": [
+    { "type": "text", "id": "value", "label": "Heading", "default": "8 MM" },
+    { "type": "richtext", "id": "description", "label": "Text", "default": "<p>NATURAL, UNTREATED<br>MOGOK, BURMA</p>" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,171 @@
+/*
+ * Collection-page structural CSS.
+ *
+ * This deliberately contains only geometry required for the first paint. The
+ * full collection stylesheet remains with the section for its controls and
+ * interaction states. Keeping this small, static layer in the document head
+ * prevents the product grid from first rendering as an unstyled list.
+ */
+
+.main-collection {
+  display: block;
+  background: var(--gradient-background, var(--color-background));
+  color: var(--color-text);
+}
+
+.main-collection__header {
+  display: grid;
+  min-height: 192px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 56px;
+  padding: var(--main-collection-header-padding-top) var(--page-margin) var(--main-collection-header-padding-bottom);
+}
+
+.main-collection__title {
+  margin: 0;
+  font-size: var(--h2-size-display-md);
+  line-height: var(--heading-line-height);
+}
+
+.main-collection__description-wrap {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+html:not(.no-js) .main-collection__description--collapsed {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.main-collection__facets {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.main-collection__toolbar {
+  display: flex;
+  min-height: 48px;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-inline: var(--page-margin);
+}
+
+.main-collection__toolbar-start,
+.main-collection__toolbar-end,
+.main-collection__sort-form,
+.main-collection__sort-select-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.main-collection__toolbar-end {
+  gap: 18px;
+}
+
+.main-collection__sort-form {
+  gap: 8px;
+}
+
+.main-collection__products {
+  padding-inline: var(--page-margin);
+}
+
+.main-collection__grid {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  column-gap: var(--main-collection-column-gap);
+  row-gap: var(--main-collection-row-gap);
+  grid-template-columns: repeat(var(--main-collection-columns-desktop), minmax(0, 1fr));
+  list-style: none;
+}
+
+.main-collection__product,
+.main-collection__promotion {
+  min-width: 0;
+}
+
+.main-collection__pagination {
+  display: flex;
+  min-height: 88px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1149.98px) {
+  .main-collection__header {
+    min-height: 238px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 24px;
+    padding-inline: var(--page-margin);
+    text-align: center;
+  }
+
+  .main-collection__description-wrap {
+    max-width: 708px;
+    justify-items: center;
+  }
+
+  .main-collection__grid {
+    grid-template-columns: repeat(var(--main-collection-columns-tablet), minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 767.98px) {
+  html:not(.no-js) .main-collection__description--collapsed {
+    -webkit-line-clamp: 6;
+  }
+
+  .main-collection__header {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 24px;
+    padding: 36px var(--page-margin);
+    text-align: center;
+  }
+
+  .main-collection__title {
+    font-size: var(--h2-size-display-md);
+    line-height: 1.02;
+  }
+
+  .main-collection__description-wrap {
+    justify-items: center;
+    gap: 16px;
+  }
+
+  .main-collection__facets {
+    gap: 28px;
+  }
+
+  .main-collection__toolbar {
+    padding-inline: var(--page-margin);
+  }
+
+  .main-collection__toolbar-end {
+    margin-left: auto;
+  }
+
+  .main-collection__sort-form--mobile-hidden {
+    display: none;
+  }
+
+  .main-collection__grid {
+    grid-template-columns: repeat(var(--main-collection-columns-mobile), minmax(0, 1fr));
+    column-gap: var(--main-collection-mobile-column-gap);
+    row-gap: var(--main-collection-mobile-row-gap);
+  }
+
+  .main-collection__pagination {
+    min-height: 72px;
+  }
+}

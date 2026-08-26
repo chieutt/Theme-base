@@ -1,0 +1,573 @@
+{% render 'section-stylesheet', asset: 'section-icon-with-text.css', defer_on_home: true %}
+
+{% liquid
+  assign item_count = section.blocks | where: 'type', 'item' | size
+  assign header_count = section.blocks | where: 'type', 'header' | size
+  assign section_background = section.settings.background_color
+  if section_background == blank
+    assign section_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+
+  assign item_alignment = section.settings.content_alignment | default: 'center'
+  assign item_flex_alignment = 'center'
+  if item_alignment == 'left'
+    assign item_flex_alignment = 'flex-start'
+  elsif item_alignment == 'right'
+    assign item_flex_alignment = 'flex-end'
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ section_background }};
+  }
+{% endstyle %}
+
+{% if item_count > 0 or header_count > 0 %}
+  <div
+    class="icon-with-text icon-with-text--icon-{{ section.settings.icon_size | default: 'small' }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+    style="--section-padding-top: {{ section.settings.padding_top | default: 10 }}px; --section-padding-bottom: {{ section.settings.padding_bottom | default: 64 }}px; --icon-with-text-column-gap: {{ section.settings.column_gap | default: 20 }}px; --icon-with-text-mobile-column-gap: {{ section.settings.mobile_column_gap | default: 12 }}px; --icon-with-text-row-gap: {{ section.settings.row_gap | default: 40 }}px; --icon-with-text-content-gap: {{ section.settings.content_gap | default: 24 }}px; --icon-with-text-item-alignment: {{ item_flex_alignment }}; --icon-with-text-item-text-alignment: {{ item_alignment }}; --icon-with-text-columns-desktop: {{ section.settings.columns_desktop | default: 1 }}; --icon-with-text-columns-tablet: {{ section.settings.columns_desktop | default: 1 }}; --icon-with-text-columns-mobile: {{ section.settings.columns_mobile | default: 1 }};"
+  >
+    <div class="icon-with-text__inner section-spacing">
+      {% if header_count > 0 %}
+        <header class="icon-with-text__header">
+          {% for block in section.blocks %}
+            {% if block.type == 'header' %}
+              {% assign icon_with_text_header_text_class = 'icon-with-text__intro content-text content-text--' | append: block.settings.text_size %}
+              {% capture header_attributes %}{{ block.shopify_attributes }}{% endcapture %}
+              {% render 'section-header',
+                heading: block.settings.heading,
+                heading_tag: block.settings.heading_tag,
+                heading_size: block.settings.heading_size,
+                heading_class: 'icon-with-text__heading',
+                text: block.settings.text,
+                text_class: icon_with_text_header_text_class,
+                alignment: 'center',
+                class: 'icon-with-text__header-content',
+                tag: 'div',
+                attributes: header_attributes
+              %}
+            {% endif %}
+          {% endfor %}
+        </header>
+      {% endif %}
+
+      {% if item_count > 0 %}
+        <div class="icon-with-text__list" role="list" data-reveal-group>
+            {% assign icon_with_text_reveal_index = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'item' %}
+                {% assign item_heading = block.settings.title | default: block.settings.heading %}
+                {% assign item_anchor = block.settings.anchor_id | handleize %}
+                {% if item_anchor != blank %}
+                  <a class="icon-with-text__item-link" href="#{{ item_anchor }}">
+                {% endif %}
+                <div class="icon-with-text__item icon-with-text__item--{{ section.settings.item_style | default: 'default' }}" role="listitem" data-reveal-item style="--reveal-order: {{ icon_with_text_reveal_index }};" {{ block.shopify_attributes }}>
+                  <div class="icon-with-text__icon" aria-hidden="true">
+                    {% if block.settings.icon != blank %}
+                      {% render 'responsive-image',
+                        image: block.settings.icon,
+                        max_width: 96,
+                        widths: '32, 48, 64, 96',
+                        sizes: '32px',
+                        class: 'icon-with-text__icon-image',
+                        loading: 'lazy',
+                        decorative: true
+                      %}
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'icon-with-text__icon-placeholder' }}
+                    {% endif %}
+                  </div>
+
+                  <div class="icon-with-text__content">
+                    {% if item_heading != blank %}
+                      <{{ section.settings.heading_tag }} class="icon-with-text__heading {% render 'typography-class', preset: section.settings.heading_size, fallback: 'h4' %}">
+                        {{ item_heading | escape }}
+                      </{{ section.settings.heading_tag }}>
+                    {% endif %}
+
+                    {% if block.settings.text != blank %}
+                      <div class="icon-with-text__text content-text spinel-text--{{ section.settings.text_size }} content-text--{{ section.settings.text_size }} rte">
+                        {{ block.settings.text }}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% if item_anchor != blank %}
+                  </a>
+                {% endif %}
+                {% assign icon_with_text_reveal_index = icon_with_text_reveal_index | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+
+
+{% schema %}
+{
+  "name": "Icon with text",
+  "tag": "section",
+  "class": "section-icon-with-text",
+  "enabled_on": { "groups": ["footer"] },
+  "max_blocks": 7,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page width"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop column gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile column gap",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Row gap",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Item"
+    },
+    {
+      "type": "select",
+      "id": "item_style",
+      "label": "Item style",
+      "options": [
+        {
+          "value": "with-border",
+          "label": "With border"
+        },
+        {
+          "value": "with-background",
+          "label": "With background"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "Icon size",
+      "default": "small",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Icon to text gap",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h5"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "HTML Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "x-large",
+          "label": "X-large"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "x-small",
+          "label": "X-small"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Why Choose Us"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "options": [
+            {
+              "value": "h0",
+              "label": "t:typography_options.display_extra_large"
+            },
+            {
+              "value": "h1",
+              "label": "t:typography_options.display_large"
+            },
+            {
+              "value": "h2",
+              "label": "t:typography_options.display_medium"
+            },
+            {
+              "value": "h3",
+              "label": "t:typography_options.heading_extra_large"
+            },
+            {
+              "value": "h4",
+              "label": "t:typography_options.heading_large"
+            },
+            {
+              "value": "h5",
+              "label": "t:typography_options.heading_medium"
+            },
+            {
+              "value": "h6",
+              "label": "t:typography_options.heading_small"
+            },
+            {
+              "value": "h7",
+              "label": "t:typography_options.heading_extra_small"
+            },
+            {
+              "value": "custom",
+              "label": "t:typography_options.custom"
+            }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "HTML Tag",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "h6", "label": "H6" }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Thoughtfully made pieces, designed to be treasured every day.</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "Text size",
+          "options": [
+            { "value": "x-large", "label": "X-large" },
+            { "value": "large", "label": "Large" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "small", "label": "Small" },
+            { "value": "x-small", "label": "X-small" }
+          ],
+          "default": "medium"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Item",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Item"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quality That Lasts"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Overrides the heading when set."
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "FAQ anchor ID",
+          "info": "Links this item to a matching FAQ group anchor."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>For extra peace of mind, every piece is covered by our two-year warranty.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon with text",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Quality That Lasts",
+            "text": "<p>For extra peace of mind, every piece is covered by our two-year warranty.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Sustainably Made",
+            "text": "<p>Handcrafted from responsibly sourced materials, with 100% certified recycled gold.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Premium Service",
+            "text": "<p>Shipping options and pricing are calculated at checkout, with returns subject to eligibility.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Gift Wrapping",
+            "text": "<p>A good gift is a gift well wrapped. Complimentary gift wrap is available online.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

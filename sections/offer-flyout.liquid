@@ -1,0 +1,352 @@
+{% liquid
+  assign render_flyout = false
+  assign preference_blocks = section.blocks | where: 'type', 'preference'
+  assign preference_legend = section.settings.preference_heading
+
+  if preference_legend == blank
+    assign preference_legend = 'offer_flyout.preference_legend' | t
+  endif
+
+  if request.page_type == 'index'
+    assign render_flyout = true
+  endif
+
+  if section.settings.hide_for_customers and customer
+    assign render_flyout = false
+  endif
+%}
+
+{% if render_flyout %}
+  {% style %}
+    .offer-flyout__tab {
+      display: none;
+    }
+  {% endstyle %}
+  {% render 'section-stylesheet', asset: 'section-offer-flyout.css', defer_on_home: true %}
+  <offer-flyout
+    class="offer-flyout"
+    data-section-id="{{ section.id }}"
+    data-show-delay="{{ section.settings.show_delay | times: 1000 }}"
+    data-frequency="{{ section.settings.frequency }}"
+    data-deferred-module="{{ 'section-offer-flyout.js' | asset_url }}"
+    data-deferred-module-after-load
+  >
+    <div
+      class="offer-flyout__tab offer-flyout__tab--left-center{% if section.settings.invert_tab_colors %} offer-flyout__tab--inverted{% endif %} color-scheme color-{{ section.settings.color_scheme.id }}"
+      aria-hidden="true"
+    >
+        <button
+          class="offer-flyout__tab-open"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="OfferFlyoutDialog-{{ section.id }}"
+          data-offer-flyout-open
+        >
+          <span class="offer-flyout__tab-label">{{ section.settings.tab_label | escape }}</span>
+        </button>
+        <button
+          class="offer-flyout__tab-dismiss close-icon"
+          type="button"
+          aria-label="{{ 'offer_flyout.close' | t | escape }}"
+          data-offer-flyout-dismiss
+        ></button>
+    </div>
+
+    <dialog
+      class="quick-view-modal modal-drag-target offer-flyout__dialog offer-flyout__dialog--with-media{% if section.settings.image != blank and section.settings.show_image_mobile %} offer-flyout__dialog--mobile-with-media{% endif %}"
+      scroll-lock
+      id="OfferFlyoutDialog-{{ section.id }}"
+      aria-label="{{ 'offer_flyout.dialog' | t | escape }}"
+      data-offer-flyout-dialog
+    >
+      <span class="quick-view-modal__backdrop-pointer modal-close-button close-icon" aria-hidden="true"></span>
+      <div
+        class="quick-view__handle offer-flyout__handle color-scheme color-{{ section.settings.color_scheme.id }}"
+        data-offer-flyout-handle
+        aria-hidden="true"
+      ></div>
+      <div class="offer-flyout__panel offer-flyout__panel--with-media theme-scrollbar color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.center_text %} offer-flyout__panel--center{% endif %}">
+        <button
+          class="offer-flyout__close modal-close-button close-icon"
+          type="button"
+          aria-label="{{ 'offer_flyout.close' | t | escape }}"
+          data-offer-flyout-close
+        ></button>
+
+        <div class="offer-flyout__media offer-flyout__media--{{ section.settings.image_ratio }}{% if section.settings.image != blank %}{% unless section.settings.show_image_mobile %} offer-flyout__media--desktop-only{% endunless %}{% endif %}">
+          {% if section.settings.image != blank %}
+            {% if section.settings.image_link != blank %}
+              <a href="{{ section.settings.image_link | escape }}"{% if section.settings.image_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+            {% endif %}
+            {% render 'responsive-image', image: section.settings.image, max_width: 1400, widths: '480, 640, 750, 960, 1200, 1400', sizes: '(min-width: 768px) 42vw, 100vw', class: 'offer-flyout__image', loading: 'lazy' %}
+            {% if section.settings.image_link != blank %}</a>{% endif %}
+          {% else %}
+            {% render 'media-placeholder', class_name: 'offer-flyout__placeholder', asset_name: 'placeholder-image-default-1.svg' %}
+          {% endif %}
+        </div>
+
+        <div class="offer-flyout__content">
+          {% if section.settings.badge != blank %}
+            <span class="offer-flyout__badge color-scheme color-scheme-3">{{ section.settings.badge | escape }}</span>
+          {% endif %}
+
+          {% if section.settings.heading != blank %}
+            <h2
+              class="offer-flyout__heading heading {% render 'typography-class', preset: section.settings.heading_size, fallback: 'h2' %}"
+              id="OfferFlyoutTitle-{{ section.id }}"
+            >
+              {{ section.settings.heading | escape }}
+            </h2>
+          {% endif %}
+
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'newsletter' %}
+                {% liquid
+                  assign form_id = 'OfferFlyoutNewsletter-' | append: section.id | append: '-' | append: block.id
+                  assign email_label = block.settings.email_label
+                  if email_label == blank
+                    assign email_label = 'footer.email' | t
+                  endif
+                %}
+                <div class="offer-flyout__newsletter" {{ block.shopify_attributes }}>
+                  {% form 'customer', id: form_id, class: 'offer-flyout__form' %}
+                    {% if form.posted_successfully? %}
+                      <p
+                        class="offer-flyout__form-message"
+                        role="status"
+                        tabindex="-1"
+                        data-offer-flyout-form-success
+                      >
+                        {{ 'offer_flyout.newsletter_success' | t }}
+                      </p>
+                    {% else %}
+                      <input type="hidden" name="contact[tags]" value="newsletter" data-offer-flyout-tags>
+                      {% if preference_blocks.size > 0 %}
+                        <fieldset class="offer-flyout__preferences">
+                          <legend class="offer-flyout__preferences-heading">{{ preference_legend | escape }}</legend>
+                          <div class="offer-flyout__preference-options">
+                            {% for preference_block in preference_blocks %}
+                              {% liquid
+                                assign preference_id = form_id | append: '-preference-' | append: preference_block.id
+                                assign preference_tag = preference_block.settings.customer_tag
+                                if preference_tag == blank
+                                  assign preference_tag = preference_block.settings.label
+                                endif
+                              %}
+                              {% if preference_block.settings.label != blank %}
+                                <label
+                                  class="offer-flyout__preference"
+                                  for="{{ preference_id }}"
+                                  {{ preference_block.shopify_attributes }}
+                                >
+                                  <input
+                                    class="offer-flyout__preference-input"
+                                    id="{{ preference_id }}"
+                                    type="checkbox"
+                                    value="{{ preference_tag | escape }}"
+                                    data-offer-flyout-preference
+                                  >
+                                  <span>{{ preference_block.settings.label | escape }}</span>
+                                </label>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </fieldset>
+                      {% endif %}
+                      <label class="visually-hidden" for="{{ form_id }}-email">{{ email_label | escape }}</label>
+                      <input
+                        id="{{ form_id }}-email"
+                        type="email"
+                        name="contact[email]"
+                        value="{{ form.email | escape }}"
+                        autocomplete="email"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        placeholder="{{ block.settings.email_placeholder | escape }}"
+                        required
+                      >
+                      <button class="btn-primary" type="submit">{{ block.settings.button_label | escape }}</button>
+                      {% if form.errors %}
+                        <div class="offer-flyout__form-message offer-flyout__form-message--error" role="alert">{{ form.errors | default_errors }}</div>
+                      {% endif %}
+                    {% endif %}
+                  {% endform %}
+                </div>
+            {% endcase %}
+          {% endfor %}
+
+          {% if section.settings.description != blank %}
+            <div class="offer-flyout__text text-block text-block--{{ section.settings.description_size }} content-text--{{ section.settings.description_size }} rte">
+              {{ section.settings.description }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </dialog>
+  </offer-flyout>
+{% endif %}
+
+
+
+
+{% schema %}
+{
+  "name": "Newsletter popup",
+  "tag": "section",
+  "class": "section-offer-flyout",
+  "max_blocks": 7,
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    { "type": "header", "content": "Audience" },
+    { "type": "checkbox", "id": "hide_for_customers", "label": "Disable for registered customers", "default": true },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Newsletter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the Spinel newsletter" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h3"
+    },
+    { "type": "text", "id": "preference_heading", "label": "Preference heading", "default": "What styles are you looking for?" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Subscribe for updates and exclusive offers. Unsubscribe anytime.</p>" },
+    {
+      "type": "select",
+      "id": "description_size",
+      "label": "Description size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "base", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "small"
+    },
+    { "type": "checkbox", "id": "center_text", "label": "Center text", "default": true },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "show_image_mobile", "label": "Show image on mobile", "default": false, "visible_if": "{{ section.settings.image != blank }}" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [{ "value": "adapt", "label": "Natural" }, { "value": "square", "label": "Square (1:1)" }, { "value": "4-3", "label": "Landscape (4:3)" }, { "value": "2-3", "label": "Portrait (2:3)" }, { "value": "16-9", "label": "Wide (16:9)" }, { "value": "3-4", "label": "Standard (3:4)" }, { "value": "4-5", "label": "Portrait (4:5)" }, { "value": "6-7", "label": "Classic (6:7)" }, { "value": "3-2", "label": "Landscape (3:2)" }], "default": "adapt", "visible_if": "{{ section.settings.image != blank }}" },
+    { "type": "url", "id": "image_link", "label": "Image link", "visible_if": "{{ section.settings.image != blank }}" },
+    { "type": "checkbox", "id": "image_new_tab", "label": "Open image link in a new tab", "default": false, "visible_if": "{{ section.settings.image_link != blank }}" },
+    { "type": "header", "content": "Reopen tab" },
+    { "type": "paragraph", "content": "This tab appears after the customer closes the popup." },
+    { "type": "text", "id": "tab_label", "label": "Label", "default": "Newsletter" },
+    { "type": "checkbox", "id": "invert_tab_colors", "label": "Invert tab colors", "default": true },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" },
+    { "type": "header", "content": "Behavior" },
+    {
+      "type": "range",
+      "id": "show_delay",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "label": "Popup display delay",
+      "info": "Time a visitor spends on the home page before the popup opens automatically.",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "frequency",
+      "label": "Frequency",
+      "info": "Controls when the popup can open automatically again after a customer closes it.",
+      "options": [
+        { "value": "once", "label": "Once" },
+        { "value": "6_hours", "label": "Every 6 hours" },
+        { "value": "1_day", "label": "Every day" },
+        { "value": "3_days", "label": "Every 3 days" },
+        { "value": "1_week", "label": "Every week" },
+        { "value": "always", "label": "No limit" }
+      ],
+      "default": "1_day"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "preference",
+      "name": "Style preference",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Style preference"
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "Rings" },
+        { "type": "text", "id": "customer_tag", "label": "Customer tag", "info": "Added to the customer profile when this option is selected.", "default": "Preference: Rings" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Newsletter"
+        },
+        { "type": "text", "id": "email_label", "label": "Email label", "default": "Email address" },
+        { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "Email address" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter popup",
+      "category": "Marketing",
+      "blocks": [
+        { "type": "preference", "settings": { "label": "Rings", "customer_tag": "Preference: Rings" } },
+        { "type": "preference", "settings": { "label": "Earrings", "customer_tag": "Preference: Earrings" } },
+        { "type": "preference", "settings": { "label": "Necklaces", "customer_tag": "Preference: Necklaces" } },
+        { "type": "preference", "settings": { "label": "Bracelets", "customer_tag": "Preference: Bracelets" } },
+        { "type": "newsletter" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,258 @@
+
+<div class="faq color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}" style="--faq-padding-top: {{ section.settings.padding_top }}px; --faq-padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="faq__inner">
+    {% if section.settings.heading != blank %}
+      <{{ section.settings.heading_tag | default: 'h2' }} class="faq__title {% render 'typography-class', preset: section.settings.heading_size, fallback: 'h2' %}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag | default: 'h2' }}>
+    {% endif %}
+    {% if section.settings.text != blank %}
+      <div class="faq__intro content-text spinel-text--{{ section.settings.text_size | default: 'medium' }} content-text--{{ section.settings.text_size | default: 'medium' }} rte">{{ section.settings.text }}</div>
+    {% endif %}
+
+    <div class="faq__content" data-reveal-group>
+      {% assign has_questions = false %}
+      {% assign faq_reveal_index = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'group_heading' %}
+          {% assign faq_anchor = block.settings.anchor_id | handleize %}
+          {% if faq_anchor == blank %}
+            {% assign faq_anchor_id = 'faq-group-' | append: section.id | append: '-' | append: block.id | handleize %}
+          {% else %}
+            {% assign faq_anchor_id = faq_anchor %}
+            {% assign faq_anchor_occurrence = 1 %}
+            {% for previous_block in section.blocks %}
+              {% if previous_block.id == block.id %}
+                {% break %}
+              {% endif %}
+              {% if previous_block.type == 'group_heading' %}
+                {% assign previous_anchor = previous_block.settings.anchor_id | handleize %}
+                {% if previous_anchor == faq_anchor %}
+                  {% assign faq_anchor_occurrence = faq_anchor_occurrence | plus: 1 %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            {% if faq_anchor_occurrence > 1 %}
+              {% assign faq_anchor_id = faq_anchor | append: '-' | append: faq_anchor_occurrence %}
+            {% endif %}
+          {% endif %}
+          <div class="faq__group" id="{{ faq_anchor_id | escape }}" data-reveal-item style="--reveal-order: {{ faq_reveal_index }};" {{ block.shopify_attributes }}>
+            {% if block.settings.heading != blank %}
+              <{{ block.settings.heading_tag | default: 'h3' }} class="faq__group-title {% render 'typography-class', preset: block.settings.heading_size, fallback: 'h3' %}">{{ block.settings.heading | escape }}</{{ block.settings.heading_tag | default: 'h3' }}>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <div class="faq__group-text content-text spinel-text--{{ block.settings.text_size | default: 'medium' }} content-text--{{ block.settings.text_size | default: 'medium' }} rte">{{ block.settings.text }}</div>
+            {% endif %}
+          </div>
+          {% assign faq_reveal_index = faq_reveal_index | plus: 1 %}
+        {% elsif block.type == 'question' %}
+          {% assign has_questions = true %}
+          <details class="faq__item" data-reveal-item style="--reveal-order: {{ faq_reveal_index }};"{% if block.settings.default_open %} open{% endif %} {{ block.shopify_attributes }}>
+            <summary class="faq__summary">
+              <span class="faq__question">{{ block.settings.question | escape }}</span>
+              <span class="faq__chevron" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
+            </summary>
+            {% if block.settings.answer != blank %}
+              <div class="faq__answer content-text spinel-text--{{ block.settings.text_size | default: 'medium' }} content-text--{{ block.settings.text_size | default: 'medium' }} rte">{{ block.settings.answer }}</div>
+            {% endif %}
+          </details>
+          {% assign faq_reveal_index = faq_reveal_index | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {% unless has_questions %}
+        <p class="faq__empty">{{ section.settings.empty_message | escape }}</p>
+      {% endunless %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq { background: var(--gradient-background, var(--color-background)); }
+  .faq__inner { width: min(100%, var(--page-width)); margin-inline: auto; padding: var(--faq-padding-top) var(--page-margin) var(--faq-padding-bottom); }
+  .faq__title { margin: 0; text-align: center; }
+  .faq__intro { max-width: 56ch; margin: 16px auto 44px; color: var(--color-text); text-align: center; }
+  .faq__title + .faq__content { margin-top: 44px; }
+  .faq__content { width: min(100%, 760px); margin-inline: auto; }
+  .faq__group { scroll-margin-top: 24px; margin: 56px 0 10px; }
+  .faq__group:first-child { margin-top: 0; }
+  .faq__group-title { margin: 0 0 28px; }
+  .faq__group-text { margin: -14px 0 28px; color: var(--color-text); }
+  .faq__item { border-bottom: 1px solid var(--color-variant-border); }
+  .faq__item:first-of-type { border-top: 1px solid var(--color-variant-border); }
+  .faq__summary { display: flex; min-height: 68px; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 0; color: var(--color-heading); cursor: pointer; font-family: var(--heading-font-family); font-size: 16px; line-height: 1.4; list-style: none; }
+  .faq__summary::-webkit-details-marker { display: none; }
+  .faq__summary:focus-visible { outline: 2px solid currentcolor; outline-offset: 4px; }
+  .faq__question { flex: 1 1 auto; }
+  .faq__chevron { flex: 0 0 auto; transition: transform .2s ease; }
+  .faq__chevron svg { width: 16px; height: 16px; }
+  .faq__item[open] .faq__chevron { transform: rotate(180deg); }
+  .faq__answer { padding: 0 44px 22px 0; color: var(--color-text); line-height: 1.6; }
+  .faq__empty { color: var(--color-text); text-align: center; }
+  @media screen and (max-width: 767.98px) {
+    .faq__inner { padding-top: calc(var(--faq-padding-top) * .5); padding-bottom: calc(var(--faq-padding-bottom) * .5); }
+    .faq__title { margin-bottom: 36px; }
+    .faq__summary { min-height: 60px; font-size: 15px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section-faq",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page", "label": "Page width" }, { "value": "full", "label": "Full width" }], "default": "full" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Order and Shipping" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h2"
+    },
+    { "type": "select", "id": "heading_tag", "label": "HTML Tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }, { "value": "h5", "label": "H5" }, { "value": "h6", "label": "H6" }], "default": "h2" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "select", "id": "text_size", "label": "Text size", "options": [{ "value": "x-large", "label": "X-large" }, { "value": "large", "label": "Large" }, { "value": "medium", "label": "Medium" }, { "value": "small", "label": "Small" }, { "value": "x-small", "label": "X-small" }], "default": "medium" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "text", "id": "empty_message", "label": "Empty state message", "default": "Add FAQ questions from the Theme Editor." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "blocks": [
+    {
+      "type": "group_heading",
+      "name": "FAQ group heading",
+      "settings": [
+        {
+          "type": "header",
+          "content": "FAQ group heading"
+        },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Orders" },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "options": [
+            {
+              "value": "h0",
+              "label": "t:typography_options.display_extra_large"
+            },
+            {
+              "value": "h1",
+              "label": "t:typography_options.display_large"
+            },
+            {
+              "value": "h2",
+              "label": "t:typography_options.display_medium"
+            },
+            {
+              "value": "h3",
+              "label": "t:typography_options.heading_extra_large"
+            },
+            {
+              "value": "h4",
+              "label": "t:typography_options.heading_large"
+            },
+            {
+              "value": "h5",
+              "label": "t:typography_options.heading_medium"
+            },
+            {
+              "value": "h6",
+              "label": "t:typography_options.heading_small"
+            },
+            {
+              "value": "h7",
+              "label": "t:typography_options.heading_extra_small"
+            },
+            {
+              "value": "custom",
+              "label": "t:typography_options.custom"
+            }
+          ],
+          "default": "h3"
+        },
+        { "type": "select", "id": "heading_tag", "label": "HTML Tag", "options": [{ "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" }, { "value": "h5", "label": "H5" }, { "value": "h6", "label": "H6" }], "default": "h3" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "select", "id": "text_size", "label": "Text size", "options": [{ "value": "x-large", "label": "X-large" }, { "value": "large", "label": "Large" }, { "value": "medium", "label": "Medium" }, { "value": "small", "label": "Small" }, { "value": "x-small", "label": "X-small" }], "default": "medium" },
+        { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "orders" }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "FAQ question",
+      "settings": [
+        {
+          "type": "header",
+          "content": "FAQ question"
+        },
+        { "type": "text", "id": "question", "label": "Question", "default": "How can I track the status of my order?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Once your order ships, you will receive a confirmation email with a tracking link.</p>" },
+        { "type": "select", "id": "text_size", "label": "Text size", "options": [{ "value": "x-large", "label": "X-large" }, { "value": "large", "label": "Large" }, { "value": "medium", "label": "Medium" }, { "value": "small", "label": "Small" }, { "value": "x-small", "label": "X-small" }], "default": "medium" },
+        { "type": "checkbox", "id": "default_open", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Brand trust",
+      "settings": { "heading": "Order and Shipping" },
+      "blocks": [
+        { "type": "group_heading", "settings": { "heading": "Orders", "anchor_id": "orders" } },
+        { "type": "question", "settings": { "question": "How Can I Track The Status Of My Order?", "default_open": true } },
+        { "type": "question", "settings": { "question": "How Do I Place An Order On Your Website?" } },
+        { "type": "question", "settings": { "question": "Can I Change Or Cancel My Order After It’s Been Placed?" } },
+        { "type": "question", "settings": { "question": "Do You Offer International Shipping For Orders Outside My Country?" } },
+        { "type": "group_heading", "settings": { "heading": "Shipping", "anchor_id": "shipping" } },
+        { "type": "question", "settings": { "question": "What Shipping Options Do You Offer?" } },
+        { "type": "question", "settings": { "question": "How Can I Track My Shipment?" } },
+        { "type": "question", "settings": { "question": "Do Gift Cards Expire?" } },
+        { "type": "question", "settings": { "question": "Do You Offer Free Shipping?" } },
+        { "type": "question", "settings": { "question": "What Should I Do If My Package Is Delayed Or Lost?" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,76 @@
+{% doc %}
+  Renders a reusable testimonial slide for the Testimonials section.
+
+  The owning section provides the Swiper wrapper and navigation lifecycle.
+{% enddoc %}
+
+{% liquid
+  assign testimonial_button_url = block.settings.product.url | default: block.settings.button_link
+%}
+
+{% if block.settings.quote != blank or block.settings.author != blank or block.settings.role != blank %}
+  <figure
+    class="testimonials__item swiper-slide"
+    role="listitem"
+    data-block-id="{{ block.id }}"
+    {{ block.shopify_attributes }}
+  >
+    {% if block.settings.quote != blank %}
+      <blockquote class="testimonials__quote" data-testimonials-reveal>
+        <p>{{ block.settings.quote | escape }}</p>
+      </blockquote>
+    {% endif %}
+
+    {% if block.settings.author != blank or block.settings.role != blank %}
+      <figcaption class="testimonials__attribution" data-testimonials-reveal>
+        {% if block.settings.author != blank %}<span class="testimonials__author">{{ block.settings.author | escape }}</span>{% endif %}
+        {% if block.settings.role != blank %}<span>{{ block.settings.role | escape }}</span>{% endif %}
+      </figcaption>
+    {% endif %}
+
+    {% if block.settings.location != blank or block.settings.piece != blank %}
+      <p class="testimonials__details" data-testimonials-reveal>
+        {% if block.settings.location != blank %}<span>{{ block.settings.location | escape }}</span>{% endif %}
+        {% if block.settings.location != blank and block.settings.piece != blank %}<span aria-hidden="true"> · </span>{% endif %}
+        {% if block.settings.piece != blank %}<span>{{ block.settings.piece | escape }}</span>{% endif %}
+      </p>
+    {% endif %}
+
+    <div class="testimonials__piece-link-wrap" data-testimonials-reveal>
+      {% render 'cta',
+        label: block.settings.button_label,
+        url: testimonial_button_url,
+        style: 'tertiary',
+        icon: 'arrow-right',
+        class: 'testimonials__piece-link'
+      %}
+    </div>
+  </figure>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Testimonial",
+  "tag": null,
+  "settings": [
+    { "type": "header", "content": "Item" },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking"
+    },
+    { "type": "text", "id": "author", "label": "Author", "default": "Clara" },
+    { "type": "text", "id": "role", "label": "Role", "default": "Founder of MALANDRA" },
+    { "type": "header", "content": "Additional details" },
+    { "type": "text", "id": "location", "label": "Location" },
+    { "type": "text", "id": "piece", "label": "Piece" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "View the piece" },
+    { "type": "url", "id": "button_link", "label": "Button link", "visible_if": "{{ false }}" }
+  ],
+  "presets": [
+    { "name": "Testimonial", "category": "Brand trust" }
+  ]
+}
+{% endschema %}

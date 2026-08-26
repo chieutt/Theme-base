@@ -1,0 +1,53 @@
+{% doc %}
+  Renders purchase options for products with subscription selling plans.
+
+  @param {product} product
+{% enddoc %}
+{% if product.selling_plan_groups.size > 0 %}
+  {% liquid
+    assign selected_variant = product.selected_or_first_available_variant
+    assign selected_allocation = selected_variant.selected_selling_plan_allocation
+    if selected_allocation == blank and selected_variant.requires_selling_plan
+      assign selected_allocation = selected_variant.selling_plan_allocations | first
+    endif
+    assign selected_selling_plan_id = selected_allocation.selling_plan.id
+  %}
+  <fieldset class="selling-plan-picker" data-selling-plan-picker>
+    <legend>{{ 'selling_plans.purchase_options' | t }}</legend>
+    <label class="selling-plan-picker__option" data-selling-plan-option-row{% if selected_variant.requires_selling_plan %} hidden{% endif %}>
+      <input
+        type="radio"
+        name="selling_plan"
+        value=""
+        data-selling-plan-option
+        data-selling-plan-one-time
+        {% if selected_variant.requires_selling_plan %}disabled{% elsif selected_selling_plan_id == blank %}checked{% endif %}
+      >
+      <span>{{ 'selling_plans.one_time_purchase' | t }}</span>
+    </label>
+    {% for group in product.selling_plan_groups %}
+      {% for selling_plan in group.selling_plans %}
+        {% liquid
+          assign plan_available = false
+          for allocation in selected_variant.selling_plan_allocations
+            if allocation.selling_plan.id == selling_plan.id
+              assign plan_available = true
+              break
+            endif
+          endfor
+        %}
+        <label class="selling-plan-picker__option" data-selling-plan-option-row{% unless plan_available %} hidden{% endunless %}>
+          <input
+            type="radio"
+            name="selling_plan"
+            value="{{ selling_plan.id }}"
+            data-selling-plan-option
+            {% unless plan_available %}disabled{% endunless %}
+            {% if selected_selling_plan_id == selling_plan.id %}checked{% endif %}
+          >
+          <span>{{ selling_plan.name | escape }}</span>
+        </label>
+      {% endfor %}
+    {% endfor %}
+  </fieldset>
+{% endif %}

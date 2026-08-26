@@ -1,0 +1,361 @@
+{% render 'section-stylesheet', asset: 'section-featured-collection-critical.css', inline_on_home: true, inline_on_design_mode: true %}
+{% render 'section-stylesheet', asset: 'section-editorial-featured-collection.css', inline_on_home: true, inline_on_design_mode: true %}
+{% render 'section-stylesheet', asset: 'component-carousel-navigator.css', inline_on_home: true, inline_on_design_mode: true %}
+{% render 'swiper-stylesheet', defer_on_home: true %}
+
+{% liquid
+  assign editorial_collection_background = section.settings.background_color
+  if editorial_collection_background == blank
+    assign editorial_collection_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ editorial_collection_background }};
+  }
+
+  #shopify-section-{{ section.id }} .editorial-featured-collection {
+    background: transparent;
+  }
+{% endstyle %}
+
+{% liquid
+  assign featured_collection = section.settings.collection
+  assign products_to_show = section.settings.products_to_show
+  assign product_count = featured_collection.products_count | default: 0
+  assign visible_product_count = product_count
+  if visible_product_count > products_to_show
+    assign visible_product_count = products_to_show
+  endif
+
+  assign desktop_columns = section.settings.columns_desktop | plus: 0
+  assign tablet_columns = desktop_columns
+  if tablet_columns > 2
+    assign tablet_columns = 2
+  endif
+  assign mobile_columns = section.settings.columns_mobile | plus: 0
+  assign mobile_slides_per_view = mobile_columns | plus: 0.2
+  assign collection_label = section.settings.collection_label | default: featured_collection.title | default: 'Collection'
+  assign view_all_label = section.settings.view_all_label | default: 'View all objects'
+  assign skeleton_product_count = products_to_show
+  assign rendered_product_count = visible_product_count
+  if featured_collection == blank or product_count == 0
+    assign rendered_product_count = skeleton_product_count
+  endif
+
+  assign initial_showing_count = desktop_columns
+  if initial_showing_count > rendered_product_count
+    assign initial_showing_count = rendered_product_count
+  endif
+%}
+
+<featured-collection
+  class="editorial-featured-collection featured-collection color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+  data-deferred-module="{{ 'featured-collection.js' | asset_url }}"
+  data-desktop-columns="{{ desktop_columns }}"
+  data-mobile-columns="{{ mobile_slides_per_view }}"
+  data-products-to-show="{{ products_to_show }}"
+  data-exact-slides="true"
+  data-design-mode="{{ request.design_mode }}"
+  aria-label="{{ featured_collection.title | default: 'Featured collection' | escape }}"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --featured-collection-column-gap: {{ section.settings.column_gap }}px; --featured-collection-mobile-column-gap: {{ section.settings.mobile_column_gap }}px; --featured-collection-columns: {{ desktop_columns }}; --featured-collection-slide-width-mobile: calc((100% - {{ section.settings.mobile_column_gap }}px * ({{ mobile_slides_per_view }} - 1)) / {{ mobile_slides_per_view }}); --featured-collection-slide-width-tablet: calc((100% - {{ section.settings.column_gap }}px * ({{ tablet_columns }} - 1)) / {{ tablet_columns }}); --featured-collection-slide-width-desktop: calc((100% - {{ section.settings.column_gap }}px * ({{ desktop_columns }} - 1)) / {{ desktop_columns }});"
+>
+  <div class="editorial-featured-collection__inner section-spacing{% if section.settings.section_width == 'page' %} page-width{% endif %}">
+    <header class="editorial-featured-collection__header">
+      <div class="editorial-featured-collection__title-group">
+        {% content_for 'block', type: 'label', id: 'label' %}
+        {% content_for 'block', type: 'heading', id: 'heading' %}
+      </div>
+      <div class="editorial-featured-collection__description">
+        {% content_for 'block', type: 'text', id: 'description' %}
+      </div>
+    </header>
+
+    <div class="editorial-featured-collection__panel featured-collection__panel" data-featured-collection-panel>
+      <div class="editorial-featured-collection__carousel featured-collection__carousel swiper" data-featured-collection-carousel>
+        <ul class="editorial-featured-collection__products featured-collection__products swiper-wrapper" role="list" data-featured-collection-scroller data-reveal-group>
+          {% if featured_collection != blank and product_count > 0 %}
+            {% for product in featured_collection.products limit: products_to_show %}
+              {% liquid
+                assign card_loading = 'lazy'
+                assign card_fetchpriority = 'auto'
+                assign card_preload = false
+                if section.index <= 2 and forloop.first
+                  assign card_loading = 'eager'
+                  assign card_fetchpriority = 'high'
+                  assign card_preload = true
+                endif
+              %}
+              <li class="editorial-featured-collection__product featured-collection__product swiper-slide">
+                <div class="editorial-featured-collection__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+                  {% render 'product-card',
+                  product: product,
+                  media_ratio: 'global',
+                  show_badges: true,
+                  show_variant_dots: false,
+                  show_media_actions: false,
+                  show_quick_add: true,
+                  enable_quick_view: true,
+                  loading: card_loading,
+                  fetchpriority: card_fetchpriority,
+                  preload: card_preload,
+                  sizes: '(min-width: 1150px) 25vw, (min-width: 768px) 50vw, 84vw'
+                  %}
+                </div>
+              </li>
+            {% endfor %}
+          {% else %}
+            {% for placeholder_index in (1..skeleton_product_count) %}
+              <li class="editorial-featured-collection__product featured-collection__product swiper-slide">
+                <div class="editorial-featured-collection__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
+                  {% render 'product-card',
+                  media_ratio: 'global',
+                  show_badges: true,
+                  show_variant_dots: false,
+                  show_media_actions: false,
+                  show_quick_add: false,
+                  enable_quick_view: false,
+                  placeholder_index: placeholder_index
+                  %}
+                </div>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+
+      <button
+        class="editorial-featured-collection__arrow editorial-featured-collection__arrow--previous featured-collection__carousel-button featured-collection__carousel-button--previous carousel-navigator__arrow carousel-navigator__arrow--previous"
+        type="button"
+        aria-label="{{ 'featured_collection.previous_products' | t | escape }}"
+        data-featured-collection-previous
+      >
+        {% render 'icon', name: 'chevron-left' %}
+      </button>
+      <button
+        class="editorial-featured-collection__arrow editorial-featured-collection__arrow--next featured-collection__carousel-button featured-collection__carousel-button--next carousel-navigator__arrow carousel-navigator__arrow--next"
+        type="button"
+        aria-label="{{ 'featured_collection.next_products' | t | escape }}"
+        data-featured-collection-next
+      >
+        {% render 'icon', name: 'chevron-right' %}
+      </button>
+
+      <footer class="editorial-featured-collection__footer" data-reveal>
+        <span
+          class="editorial-featured-collection__count"
+          data-featured-collection-showing
+          data-showing-prefix="Showing"
+          data-showing-separator="of"
+          data-total="{{ rendered_product_count }}"
+        >
+          Showing {{ initial_showing_count }} of {{ rendered_product_count }}
+        </span>
+        <div class="editorial-featured-collection__progress featured-collection__progress" aria-hidden="true">
+          <span data-featured-collection-progress></span>
+        </div>
+        {% if featured_collection != blank %}
+          <a class="editorial-featured-collection__collection-link" href="{{ featured_collection.url | escape }}">{{ collection_label | escape }}</a>
+          <a class="btn-tertiary editorial-featured-collection__view-all" href="{{ featured_collection.url | escape }}">
+            <span>{{ view_all_label | escape }}</span>
+            <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+          </a>
+        {% else %}
+          <span class="editorial-featured-collection__collection-link">{{ collection_label | escape }}</span>
+          <span class="btn-tertiary editorial-featured-collection__view-all">
+            <span>{{ view_all_label | escape }}</span>
+            <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+          </span>
+        {% endif %}
+      </footer>
+    </div>
+  </div>
+</featured-collection>
+
+{% schema %}
+{
+  "name": "Editorial collection",
+  "tag": "section",
+  "class": "section-editorial-featured-collection",
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "collection_label",
+      "label": "Collection label",
+      "info": "Leave blank to use the collection title."
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all objects"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "Product count",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop column gap",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "info": "Shows an additional 0.2 card as a swipe preview.",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile column gap",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial collection",
+      "category": "Products",
+      "settings": {
+        "section_width": "full",
+        "products_to_show": 6,
+        "columns_desktop": 4,
+        "column_gap": 20,
+        "columns_mobile": "1",
+        "mobile_column_gap": 12,
+        "color_scheme": "scheme-2"
+      },
+      "blocks": [
+        {
+          "type": "label",
+          "id": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>03 / FEATURED COLLECTION</p>",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          }
+        },
+        {
+          "type": "heading",
+          "id": "heading",
+          "static": true,
+          "settings": {
+            "heading": "<h2>The Nocturne<br>Collection</h2>",
+            "type_preset": "h2",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 150
+          }
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "static": true,
+          "settings": {
+            "text": "<p>The ruby collar from the opening chapter, joined by three forms shaped after dark.</p>",
+            "type_preset": "sm",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 300
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

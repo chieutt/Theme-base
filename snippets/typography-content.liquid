@@ -1,0 +1,31 @@
+{% doc %}
+  Adds the shared heading classes to heading tags inside rendered HTML content.
+
+  @param {string} content - HTML content to render.
+  @param {string} [heading_class] - Optional typography class applied to every heading in the content.
+{% enddoc %}
+
+{%- liquid
+  assign rendered_content = content
+  assign h1_class = heading_class | default: 'heading-h1 heading-text'
+  assign h2_class = heading_class | default: 'heading-h2 heading-text'
+  assign h3_class = heading_class | default: 'heading-h3 heading-text'
+  assign h4_class = heading_class | default: 'heading-h4 heading-text'
+  assign h5_class = heading_class | default: 'heading-h5 heading-text'
+  assign h6_class = heading_class | default: 'heading-h6 heading-text'
+
+  assign h1_open = '<h1 class="' | append: h1_class | append: '">'
+  assign h2_open = '<h2 class="' | append: h2_class | append: '">'
+  assign h3_open = '<h3 class="' | append: h3_class | append: '">'
+  assign h4_open = '<h4 class="' | append: h4_class | append: '">'
+  assign h5_open = '<h5 class="' | append: h5_class | append: '">'
+  assign h6_open = '<h6 class="' | append: h6_class | append: '">'
+
+  assign rendered_content = rendered_content | replace: '<h1>', h1_open
+  assign rendered_content = rendered_content | replace: '<h2>', h2_open
+  assign rendered_content = rendered_content | replace: '<h3>', h3_open
+  assign rendered_content = rendered_content | replace: '<h4>', h4_open
+  assign rendered_content = rendered_content | replace: '<h5>', h5_open
+  assign rendered_content = rendered_content | replace: '<h6>', h6_open
+-%}
+{{- rendered_content -}}

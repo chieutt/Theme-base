@@ -1,0 +1,175 @@
+{% doc %}
+  Renders one independently configurable marquee row containing nested theme blocks.
+
+  @example
+  {% content_for 'block', type: 'marquee', id: 'marquee' %}
+{% enddoc %}
+
+<theme-marquee
+  class="marquee marquee--direction-{{ block.settings.direction }}{% unless block.settings.enable_scrolling %} marquee--static{% endunless %}{% if block.settings.pause_on_hover %} marquee--pause-on-hover{% endif %} color-scheme color-{{ block.settings.color_scheme.id }}"
+  style="--marquee-duration: {{ block.settings.speed }}s; --marquee-item-gap: {{ block.settings.item_gap }}px; --marquee-min-height: {{ block.settings.height_desktop }}px; --marquee-min-height-mobile: {{ block.settings.height_mobile }}px; --marquee-item-alignment: {{ block.settings.item_alignment }};"
+  {{ block.shopify_attributes }}
+>
+  <div class="marquee__viewport">
+    <div class="marquee__track">
+      <div class="marquee__group">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</theme-marquee>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "blocks": [
+    {
+      "type": "marquee-media"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scrolling",
+      "label": "Enable scrolling",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ block.settings.enable_scrolling }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover or focus",
+      "default": true,
+      "visible_if": "{{ block.settings.enable_scrolling }}"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "label": "Scrolling duration",
+      "default": 35,
+      "visible_if": "{{ block.settings.enable_scrolling }}"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 4,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Item gap",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "item_alignment",
+      "label": "Vertical alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "min": 40,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop height",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 36,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile height",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Comfort Products</p>",
+            "type_preset": "md"
+          }
+        },
+        {
+          "type": "marquee-media"
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>PEBBLE</p>",
+            "type_preset": "md"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

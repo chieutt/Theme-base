@@ -10,406 +10,556 @@
 {
   "sections": {
     "main": {
-      "type": "product-information",
+      "type": "product-main",
       "blocks": {
-        "media-gallery": {
+        "breadcrumbs": {
+          "type": "product-breadcrumbs",
+          "settings": {},
+          "blocks": {}
+        },
+        "gallery": {
           "type": "_product-media-gallery",
-          "static": true,
           "settings": {
-            "media_presentation": "grid",
-            "media_columns": "two",
-            "image_gap": 4,
-            "large_first_image": false,
-            "icons_style": "arrow",
-            "slideshow_controls_style": "counter",
-            "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "right",
-            "thumbnail_width": 44,
-            "aspect_ratio": "adapt",
-            "constrain_to_viewport": true,
-            "media_fit": "contain",
-            "media_radius": 0,
-            "extend_media": false,
-            "zoom": true,
-            "video_loop": false,
-            "hide_variants": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "desktop_layout": "grid",
+            "image_zoom": "open_lightbox",
+            "grid_columns": "2",
+            "grid_layout": "uniform",
+            "carousel_thumbnails": "left",
+            "gap": 12,
+            "media_ratio": "4-5",
+            "mobile_media_ratio": "4-5",
+            "media_fit": "cover",
+            "show_mobile_pagination": true,
+            "show_mobile_thumbnails": true,
+            "thumbnail_size": 64,
+            "thumbnail_gap": 8
           },
           "blocks": {}
         },
-        "product-details": {
+        "details": {
           "type": "_product-details",
-          "static": true,
           "settings": {
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "details_position": "flex-start",
-            "gap": 28,
-            "sticky_details_desktop": true,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 24,
-            "padding-block-end": 24,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "enable_sticky": true,
+            "desktop_top_offset": 24
           },
           "blocks": {
-            "group_icgrde": {
-              "type": "group",
-              "name": "t:names.header",
+            "title": {
+              "type": "product-title",
               "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "heading_size": "h2",
+                "html_tag": "h1"
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "product-price",
+              "settings": {
+                "price_size": "medium",
+                "show_discount_percentage": false
+              },
+              "blocks": {}
+            },
+            "rating": {
+              "type": "product-rating",
+              "settings": {
+                "show_when_empty": false,
+                "empty_label": "No reviews yet"
+              },
+              "blocks": {}
+            },
+            "description": {
+              "type": "product-metafield",
+              "settings": {
+                "namespace": "custom",
+                "key": "summary",
+                "style": "full"
+              },
+              "blocks": {}
+            },
+            "options": {
+              "type": "product-option-picker",
+              "settings": {
+                "show_variant_labels": true,
+                "picker_type": "button",
+                "enable_color_swatches": true,
+                "swatch_type": "color",
+                "swatch_corner_radius": "pill",
+                "enable_size_chart": true,
+                "size_guide": "Size guide",
+                "size_chart": "Size chart",
+                "size_chart_page": "size-chart"
+              },
+              "blocks": {}
+            },
+            "inventory": {
+              "type": "product-inventory",
+              "settings": {},
+              "blocks": {}
+            },
+            "buttons": {
+              "type": "product-buy-buttons",
+              "settings": {
+                "button_layout": "inline",
+                "show_quantity": true,
+                "show_dynamic_checkout": true
+              },
+              "blocks": {}
+            },
+            "benefits": {
+              "type": "product-usp-list",
+              "settings": {
+                "columns_desktop": "4",
+                "columns_mobile": "2",
+                "text_size": "small",
+                "icon_size": "small"
               },
               "blocks": {
-                "text_xpVMaM": {
-                  "type": "text",
-                  "name": "t:names.title",
+                "benefit_1": {
+                  "type": "product-benefit-item",
                   "settings": {
-                    "text": "<h1>{{ closest.product.title }}</h1>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "icon": "truck",
+                    "text": "<p>Shipping options and pricing are calculated at checkout.</p>",
+                    "page": "",
+                    "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "price_tVjtKg": {
-                  "type": "price",
+                "benefit_2": {
+                  "type": "product-benefit-item",
                   "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": true,
-                    "show_tax_info": true,
-                    "type_preset": "paragraph",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "padding-block-start": 4,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "icon": "return",
+                    "text": "<p>See our returns policy for eligibility and details.</p>",
+                    "page": "",
+                    "show_page_popup": false
+                  },
+                  "blocks": {}
+                },
+                "benefit_3": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "shield",
+                    "text": "<p>Lifetime Warranty</p>",
+                    "page": "",
+                    "show_page_popup": false
+                  },
+                  "blocks": {}
+                },
+                "benefit_4": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "sparkles",
+                    "text": "<p>Sustainably Made</p>",
+                    "page": "",
+                    "show_page_popup": false
                   },
                   "blocks": {}
                 }
               },
               "block_order": [
-                "text_xpVMaM",
-                "price_tVjtKg"
+                "benefit_1",
+                "benefit_2",
+                "benefit_3",
+                "benefit_4"
               ]
             },
-            "divider_VJhene": {
-              "type": "_divider",
-              "name": "t:names.divider",
+            "accordion_group": {
+              "type": "product-accordion-group",
               "settings": {
-                "thickness": 1,
-                "corner_radius": "square",
-                "divider_color": "{{ settings.color_palette.surface_light }}",
-                "width_percent": 100,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
-            "variant_picker_R3rGDr": {
-              "type": "variant-picker",
-              "settings": {
-                "variant_style": "buttons",
-                "show_swatches": false,
-                "alignment": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "buy_buttons_eYQEYi": {
-              "type": "buy-buttons",
-              "settings": {
-                "stacking": true,
-                "show_pickup_availability": false,
-                "gift_card_form": true,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "icon": "plus"
               },
               "blocks": {
-                "quantity": {
-                  "type": "quantity",
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                },
-                "add-to-cart": {
-                  "type": "add-to-cart",
-                  "static": true,
+                "description_accordion": {
+                  "type": "product-accordion",
                   "settings": {
-                    "style_class": "button"
+                    "heading": "Description",
+                    "heading_size": "h5",
+                    "html_tag": "h2",
+                    "content_source": "description",
+                    "metafield_namespace": "custom",
+                    "metafield_key": "summary",
+                    "content": "",
+                    "show_divider": true,
+                    "open_by_default": false,
+                    "show_view_more": true,
+                    "content_max_height": 240
                   },
                   "blocks": {}
                 },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "static": true,
-                  "settings": {},
+                "care_accordion": {
+                  "type": "product-accordion",
+                  "settings": {
+                    "heading": "Care guide",
+                    "heading_size": "h5",
+                    "html_tag": "h2",
+                    "content_source": "manual",
+                    "metafield_namespace": "custom",
+                    "metafield_key": "summary",
+                    "content": "<p>To keep your jewellery looking its best:</p><ul><li>Store each piece separately in a soft pouch or lined jewellery box.</li><li>Avoid contact with water, perfume, lotions and household chemicals.</li><li>Remove before showering, swimming, exercising or sleeping.</li><li>After wear, gently wipe with a clean, soft, dry cloth.</li></ul>",
+                    "show_divider": true,
+                    "open_by_default": false,
+                    "show_view_more": true,
+                    "content_max_height": 240
+                  },
+                  "blocks": {}
+                },
+                "shipping_accordion": {
+                  "type": "product-accordion",
+                  "settings": {
+                    "heading": "Shipping and returns",
+                    "heading_size": "h5",
+                    "html_tag": "h2",
+                    "content_source": "manual",
+                    "metafield_namespace": "custom",
+                    "metafield_key": "summary",
+                    "content": "<p>Shipping options and pricing are calculated at checkout.</p><p>See our returns policy for eligibility and details.</p>",
+                    "show_divider": true,
+                    "open_by_default": false,
+                    "show_view_more": true,
+                    "content_max_height": 240
+                  },
                   "blocks": {}
                 }
               },
-              "block_order": []
+              "block_order": [
+                "description_accordion",
+                "care_accordion",
+                "shipping_accordion"
+              ]
             },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "t:names.product_description",
+            "recommendations": {
+              "type": "product-recommendations",
               "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "heading": "Complete the set",
+                "heading_size": "h5",
+                "html_tag": "h2",
+                "source": "complementary",
+                "limit": 4
+              },
+              "blocks": {}
+            },
+            "pickup": {
+              "type": "product-pickup-availability",
+              "settings": {},
+              "blocks": {}
+            },
+            "payment": {
+              "type": "product-payment",
+              "settings": {
+                "heading": "Pay With",
+                "heading_size": "h5",
+                "html_tag": "h2",
+                "text_size": "small",
+                "note": "Your transaction is protected with advanced security measures to keep your information confidential."
+              },
+              "blocks": {}
+            },
+            "share": {
+              "type": "product-share",
+              "settings": {
+                "label": "Share"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "group_icgrde",
-            "divider_VJhene",
-            "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "title",
+            "price",
+            "rating",
+            "description",
+            "options",
+            "inventory",
+            "buttons",
+            "benefits",
+            "accordion_group",
+            "recommendations",
+            "pickup",
+            "payment",
+            "share"
           ]
         },
-        "disclosures": {
-          "type": "disclosures",
-          "settings": {
-            "padding-block-start": 0,
-            "padding-block-end": 0
-          },
+        "sticky_cart": {
+          "type": "product-sticky-add-to-cart",
+          "settings": {},
           "blocks": {}
         }
       },
       "block_order": [
-        "disclosures"
+        "breadcrumbs",
+        "gallery",
+        "details",
+        "sticky_cart"
       ],
       "settings": {
-        "content_width": "content-center-aligned",
-        "desktop_media_position": "left",
-        "equal_columns": false,
-        "limit_details_width": false,
-        "gap": 48,
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "desktop_gap": 64,
+        "media_width": 58,
+        "mobile_gap": 16,
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 48
       }
     },
-    "product_recommendations_qggXJq": {
-      "type": "product-recommendations",
+    "image-with-text-01": {
+      "type": "image-with-text",
       "blocks": {
-        "text_cbcgyb": {
-          "type": "text",
-          "name": "t:names.header",
+        "media": {
+          "type": "media",
           "settings": {
-            "text": "<h2>You may also like </h2>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h4",
-            "font": "var(--font-body--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/image-with-text-ring-hands.jpg",
+            "alt": "",
+            "focal_point": "center center"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "subheading": {
+          "type": "heading",
           "settings": {
-            "product_card_gap": 8,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_DNizbJ": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_M7MJkb": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_gLWgA6": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_DNizbJ",
-            "product_title_M7MJkb",
-            "price_gLWgA6"
-          ]
+            "heading": "<p>INVEST NOW, WEAR FOREVER</p>",
+            "type_preset": "h7"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>9K Gold For Lasting Elegance</h2>"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Crafted with precision and timeless beauty, each piece shines with exceptional detail and enduring quality. Crafted in premium 9K gold with timeless shine.</p><p>Whether you're reimagining a treasured piece or creating something entirely new, our bespoke service brings your story to every detail — shaped by your vision and guided by our expertise, from gemstone selection to design refinement.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Discover more",
+            "link": "/collections/all",
+            "style": "tertiary"
+          }
         }
       },
       "block_order": [
-        "text_cbcgyb"
+        "media",
+        "subheading",
+        "heading",
+        "text",
+        "button"
       ],
-      "name": "t:names.product_recommendations",
       "settings": {
-        "product": "{{ closest.product }}",
-        "recommendation_type": "related",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
-        "mobile_columns": "2",
-        "columns_gap": 12,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "media_position": "right",
+        "content_alignment": "left",
+        "section_width": "page",
+        "column_gap": 40,
+        "color_scheme": "scheme-1",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "featured-collection-14": {
+      "type": "product-featured-collection",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>You May Also Like</h2>"
+          }
+        },
+        "collection": {
+          "type": "collection",
+          "settings": {
+            "source": "complementary",
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "collection"
+      ],
+      "settings": {
+        "header_alignment": "center",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "section_width": "full",
+        "product_gap": 20,
+        "mobile_column_gap": 12,
+        "products_to_show": 6,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "color_scheme": ""
+      }
+    },
+    "collapsible-content": {
+      "type": "collapsible-content",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>Frequently Asked Questions</h2>"
+          }
+        },
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "heading": "Can I Wear Your Jewelry Daily?",
+            "heading_size": "h4",
+            "heading_tag": "h3",
+            "content": "<p>Absolutely. Our jewelry is crafted for durability and comfort, allowing you to enjoy your favorite pieces from day to night.</p>",
+            "text_size": "medium",
+            "open_by_default": true
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "heading": "Do You Offer Warranty Or Repairs?",
+            "heading_size": "h4",
+            "heading_tag": "h3",
+            "content": "<p>Yes. Every piece is supported by our care and repair service. Contact us if you need help with your jewelry.</p>",
+            "text_size": "medium",
+            "open_by_default": false
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "heading": "Is Your Jewelry Hypoallergenic And Safe For Sensitive Skin?",
+            "heading_size": "h4",
+            "heading_tag": "h3",
+            "content": "<p>Our materials are selected with comfort in mind. Please review each product’s material details if you have sensitivities.</p>",
+            "text_size": "medium",
+            "open_by_default": false
+          }
+        },
+        "item-4": {
+          "type": "item",
+          "settings": {
+            "heading": "How Do I Care For My Jewelry To Keep It Shining?",
+            "heading_size": "h4",
+            "heading_tag": "h3",
+            "content": "<p>Remove jewelry before showering, swimming or exercising. Keep each piece away from perfume and household chemicals, then gently wipe it with a soft, dry cloth after wear.</p>",
+            "text_size": "medium",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "item-1",
+        "item-2",
+        "item-3",
+        "item-4"
+      ],
+      "settings": {
+        "section_width": "page",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "button_label": "View all FAQs",
+        "button_link": "/pages/faq",
+        "color_scheme": ""
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>Explore our collections</h2>"
+          }
+        },
+        "collection-3": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "earrings",
+            "title": "Earrings",
+            "show_product_count": true,
+            "subheading": "",
+            "button_label": "",
+            "content_position": "bottom",
+            "focal_point": "center center",
+            "color_scheme": "scheme-3",
+            "overlay_opacity": 30
+          }
+        },
+        "collection-4": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "bracelets",
+            "title": "Bracelets",
+            "show_product_count": true,
+            "subheading": "",
+            "button_label": "",
+            "content_position": "bottom",
+            "focal_point": "center center",
+            "color_scheme": "scheme-3",
+            "overlay_opacity": 30
+          }
+        },
+        "collection-1": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "necklaces",
+            "title": "Necklaces",
+            "show_product_count": true,
+            "subheading": "",
+            "button_label": "",
+            "content_position": "bottom",
+            "focal_point": "center center",
+            "color_scheme": "scheme-3",
+            "overlay_opacity": 30
+          }
+        },
+        "collection-2": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "rings",
+            "title": "Rings",
+            "show_product_count": true,
+            "subheading": "",
+            "button_label": "",
+            "content_position": "bottom",
+            "focal_point": "center center",
+            "color_scheme": "scheme-3",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "collection-3",
+        "collection-4",
+        "collection-1",
+        "collection-2"
+      ],
+      "settings": {
+        "layout": "grid",
+        "section_width": "full",
+        "column_gap": 20,
+        "mobile_column_gap": 12,
+        "header_gap": 48,
+        "layout_desktop": "slider",
+        "layout_mobile": "slider",
+        "show_pagination": true,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "image_ratio": "portrait",
+        "card_alignment": "center",
+        "card_gap": 20,
+        "card_heading_size": "h4",
+        "card_heading_tag": "h3",
+        "height_desktop": "medium",
+        "height_mobile": "medium",
+        "color_scheme": "",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     }
   },
   "order": [
     "main",
-    "product_recommendations_qggXJq"
+    "image-with-text-01",
+    "featured-collection-14",
+    "collapsible-content",
+    "collection-list"
   ]
 }

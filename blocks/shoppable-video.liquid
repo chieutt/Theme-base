@@ -1,0 +1,314 @@
+{% doc %}
+  Renders one shoppable video card and its product-list dialog.
+
+  @example
+  {% content_for 'blocks' %}
+{% enddoc %}
+
+{% liquid
+  assign video = block.settings.video
+  assign poster = block.settings.poster | default: video.preview_image
+  assign products = block.settings.products
+  assign featured_product = products | first
+  assign product_count = products.count | default: 0
+  assign has_media = false
+  assign has_product = false
+  if video != blank or poster != blank
+    assign has_media = true
+  endif
+  if featured_product != blank
+    assign has_product = true
+  endif
+  assign product_placeholder_index = 1
+  for sibling_block in section.blocks
+    if sibling_block.id == block.id
+      assign product_placeholder_index = forloop.index | minus: 1 | modulo: 3 | plus: 1
+      break
+    endif
+  endfor
+  assign modal_image = block.settings.look_image | default: poster | default: featured_product.featured_image
+  assign video_alt = block.settings.video_alt | default: poster.alt
+  assign poster_url = blank
+  if poster != blank
+    assign poster_url = poster | image_url: width: 1200
+  endif
+  if video_alt == blank
+    assign video_alt = 'Shoppable video'
+  endif
+%}
+
+<article
+  class="shoppable-video-card swiper-slide{% unless has_media or has_product %} shoppable-video-card--placeholder{% endunless %}"
+  role="listitem"
+  data-shoppable-video-slide
+  data-block-id="{{ block.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="shoppable-video-card__reveal" data-reveal-item>
+  <div class="shoppable-video-card__media" role="group" aria-label="{{ video_alt | escape }}">
+    {% if video != blank %}
+      {{
+        video
+        | video_tag:
+          class: 'shoppable-video-card__video',
+          image_size: '1200x',
+          autoplay: false,
+          loop: true,
+          muted: true,
+          controls: false,
+          playsinline: true,
+          preload: 'metadata',
+          poster: poster_url
+      }}
+    {% elsif poster != blank %}
+      {% render 'responsive-image',
+        image: poster,
+        max_width: 1200,
+        widths: '360, 480, 640, 750, 960, 1200',
+        sizes: '(min-width: 990px) 31vw, (min-width: 768px) 46vw, 86vw',
+        class: 'shoppable-video-card__poster',
+        loading: 'lazy',
+        alt: video_alt
+      %}
+    {% else %}
+      {% render 'media-placeholder', class_name: 'shoppable-video-card__placeholder', placeholder_name: 'image' %}
+    {% endif %}
+
+    {% if video != blank %}
+      <button
+        class="shoppable-video-card__play"
+        type="button"
+        aria-label="{{ block.settings.play_label | default: 'Play video' | escape }}"
+        data-shoppable-video-play
+        data-play-label="{{ block.settings.play_label | default: 'Play video' | escape }}"
+        data-pause-label="{{ block.settings.pause_label | default: 'Pause video' | escape }}"
+      >
+        <span class="shoppable-video-card__play-icon shoppable-video-card__play-icon--play" aria-hidden="true">{% render 'icon', name: 'play' %}</span>
+        <span class="shoppable-video-card__play-icon shoppable-video-card__play-icon--pause" aria-hidden="true">{% render 'icon', name: 'pause' %}</span>
+      </button>
+    {% endif %}
+  </div>
+
+  <div class="shoppable-video-card__product-strip">
+    <div class="shoppable-video-card__product-media">
+      {% if featured_product.featured_image != blank %}
+        {% render 'responsive-image',
+          image: featured_product.featured_image,
+          max_width: 180,
+          widths: '90, 120, 180',
+          sizes: '64px',
+          class: 'shoppable-video-card__product-image',
+          loading: 'lazy',
+          alt: featured_product.featured_image.alt
+        %}
+      {% else %}
+        {% assign product_placeholder_asset = 'placeholder-image-product-' | append: product_placeholder_index | append: '.svg' %}
+        {% render 'media-placeholder', class_name: 'shoppable-video-card__product-placeholder', asset_name: product_placeholder_asset %}
+      {% endif %}
+    </div>
+
+    <div class="shoppable-video-card__product-copy">
+      {% if has_product %}
+        <h3 class="shoppable-video-card__product-title heading-text product-title-text">{{ featured_product.title | escape }}</h3>
+      {% else %}
+        <h3 class="shoppable-video-card__product-title heading-text product-title-text">{{ 'onboarding.product_title' | t }}</h3>
+      {% endif %}
+      {% if has_product and block.settings.product_detail != blank %}
+        <p class="shoppable-video-card__product-detail">{{ block.settings.product_detail | escape }}</p>
+      {% endif %}
+    </div>
+
+    <div class="shoppable-video-card__product-action{% unless has_product %} shoppable-video-card__product-action--placeholder{% endunless %}">
+      {% if has_product %}
+        <span class="shoppable-video-card__price">
+          {% if featured_product.price_varies %}From {% endif %}{% render 'money', amount: featured_product.price %}
+        </span>
+        <button
+          class="btn-tertiary shoppable-video-card__shop"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="ShoppableVideoDialog-{{ section.id }}-{{ block.id }}"
+          data-shoppable-video-open
+        >
+          <span>{{ block.settings.button_label | default: 'Shop the look' | escape }}</span>
+          <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+        </button>
+      {% else %}
+        <span class="shoppable-video-card__price">{% render 'money', amount: 1999 %}</span>
+      {% endif %}
+    </div>
+  </div>
+  </div>
+
+  {% if has_product %}
+  <dialog
+    class="quick-view-modal modal-drag-target shoppable-video-dialog color-scheme color-{{ section.settings.modal_color_scheme.id }}"
+    id="ShoppableVideoDialog-{{ section.id }}-{{ block.id }}"
+    aria-labelledby="ShoppableVideoDialogTitle-{{ section.id }}-{{ block.id }}"
+    tabindex="-1"
+    scroll-lock
+    data-shoppable-video-dialog
+  >
+    <span class="quick-view-modal__backdrop-pointer modal-close-button close-icon" aria-hidden="true"></span>
+    <div class="quick-view__handle shoppable-video-dialog__handle" data-shoppable-video-handle aria-hidden="true"></div>
+    <div class="shoppable-video-dialog__panel">
+      <button
+        class="shoppable-video-dialog__close modal-close-button close-icon"
+        type="button"
+        aria-label="Close"
+        data-shoppable-video-close
+      ></button>
+
+      <div class="shoppable-video-dialog__look">
+        {% if modal_image != blank %}
+          {% render 'responsive-image',
+            image: modal_image,
+            max_width: 1600,
+            widths: '480, 750, 960, 1200, 1600',
+            sizes: '(min-width: 768px) 50vw, 100vw',
+            class: 'shoppable-video-dialog__look-image',
+            loading: 'lazy',
+            alt: modal_image.alt
+          %}
+        {% else %}
+          {% render 'media-placeholder', class_name: 'shoppable-video-dialog__look-placeholder', placeholder_name: 'image' %}
+        {% endif %}
+      </div>
+
+      <div class="shoppable-video-dialog__content theme-scrollbar">
+        <header class="shoppable-video-dialog__header">
+          <span class="shoppable-video-dialog__eyebrow">{{ block.settings.modal_label | default: 'Shop the film' | escape }}</span>
+          <h2 class="shoppable-video-dialog__title heading-h3 heading-text" id="ShoppableVideoDialogTitle-{{ section.id }}-{{ block.id }}">
+            {{ block.settings.modal_heading | default: 'Objects in this look' | escape }}
+          </h2>
+          <p class="shoppable-video-dialog__count">{{ product_count }} {% if product_count == 1 %}object{% else %}objects{% endif %}</p>
+        </header>
+
+        <div class="shoppable-video-dialog__products" role="list">
+          {% if product_count > 0 %}
+            {% for product in products %}
+              <div class="shoppable-video-dialog__product" role="listitem">
+                {% render 'product-card',
+                  product: product,
+                  media_ratio: 'square',
+                  show_badges: false,
+                  show_variant_dots: false,
+                  show_media_actions: false,
+                  show_quick_add: true,
+                  enable_quick_view: true,
+                  quick_add_style: 'icon',
+                  sizes: '80px'
+                %}
+              </div>
+            {% endfor %}
+          {% else %}
+            {% for placeholder_index in (1..2) %}
+              <div class="shoppable-video-dialog__product" role="listitem">
+                {% render 'product-card',
+                  media_ratio: 'square',
+                  show_badges: false,
+                  show_variant_dots: false,
+                  show_media_actions: false,
+                  show_quick_add: false,
+                  enable_quick_view: false,
+                  placeholder_index: placeholder_index
+                %}
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </dialog>
+  {% endif %}
+</article>
+
+{% schema %}
+{
+  "name": "Shoppable video",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster image",
+      "info": "Used before playback and as a fallback when no video is selected."
+    },
+    {
+      "type": "text",
+      "id": "video_alt",
+      "label": "Video description"
+    },
+    {
+      "type": "text",
+      "id": "play_label",
+      "label": "Play label",
+      "default": "Play video"
+    },
+    {
+      "type": "text",
+      "id": "pause_label",
+      "label": "Pause label",
+      "default": "Pause video"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 6
+    },
+    {
+      "type": "text",
+      "id": "product_detail",
+      "label": "Product detail",
+      "default": "18K GOLD / ONE OF ONE"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the look"
+    },
+    {
+      "type": "header",
+      "content": "Product modal"
+    },
+    {
+      "type": "image_picker",
+      "id": "look_image",
+      "label": "Look image",
+      "info": "Defaults to the poster or first selected product image."
+    },
+    {
+      "type": "text",
+      "id": "modal_label",
+      "label": "Modal label",
+      "default": "Shop the film"
+    },
+    {
+      "type": "text",
+      "id": "modal_heading",
+      "label": "Modal heading",
+      "default": "Objects in this look"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shoppable video"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,13 @@
+{% if variant.store_availabilities.size > 0 %}
+  <section class="product-pickup-availability__content" aria-label="{{ 'product_pickup.availability' | t | escape }}">
+    <h3 class="product-pickup-availability__heading heading-h3 heading-text">{{ 'product_pickup.heading' | t }}</h3>
+    <ul role="list">
+      {% for availability in variant.store_availabilities %}
+        <li>
+          <strong>{{ availability.location.name | escape }}</strong>
+          <span>{% if availability.available %}{{ 'product_pickup.ready' | t }}{% else %}{{ 'product_pickup.unavailable' | t }}{% endif %}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}

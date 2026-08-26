@@ -1,0 +1,315 @@
+{% doc %}
+  Renders a Figma-oriented editorial slideshow slide with the same media,
+  content, and nested block options as the standard slide block.
+
+  @example
+  {% content_for 'block', type: 'editorial-slide', id: 'slide' %}
+{% enddoc %}
+
+{% liquid
+  assign slide_image = block.settings.image | default: block.settings.mobile_image
+  assign slide_mobile_image = block.settings.mobile_image
+  assign slide_image_alt = block.settings.image_alt | default: slide_image.alt
+  assign slide_desktop_ratio = block.settings.image.aspect_ratio | default: block.settings.mobile_image.aspect_ratio | default: 1.7778
+  assign slide_mobile_ratio = block.settings.mobile_image.aspect_ratio | default: block.settings.image.aspect_ratio | default: 0.75
+  if slide_image_alt == blank
+    assign slide_image_alt = block.settings.nav_label
+  endif
+  if slide_image_alt == blank
+    assign slide_image_alt = 'accessibility.image' | t
+  endif
+
+  assign image_loading = 'lazy'
+  assign image_priority = 'auto'
+  assign first_slide = section.blocks | first
+  if first_slide.id == block.id
+    if request.page_type != 'index' or section.index == 1
+      assign image_loading = 'eager'
+      assign image_priority = 'high'
+    endif
+  endif
+
+%}
+
+{% unless request.visual_preview_mode and block.settings.render_visual_preview != true %}
+<article
+  class="editorial-slideshow__slide swiper-slide color-scheme color-{{ block.settings.color_scheme.id }} editorial-slideshow__slide--desktop-{{ block.settings.content_position | default: 'top-left' }} editorial-slideshow__slide--mobile-{{ block.settings.content_position_mobile | default: 'top-left' }} editorial-slideshow__slide--align-{{ block.settings.content_alignment | default: 'left' }}"
+  style="
+    --editorial-slideshow-overlay-color: {{ block.settings.overlay_color | default: '#000000' }};
+    --editorial-slideshow-overlay-opacity: {{ block.settings.overlay_opacity | default: 30 | divided_by: 100.0 }};
+    --editorial-slideshow-content-width: {{ block.settings.content_width | default: 520 }}px;
+    --editorial-slideshow-image-position: {{ block.settings.image_position | default: 'center center' }};
+  "
+  data-block-id="{{ block.id }}"
+  data-editorial-nav-label="{{ block.settings.nav_label | escape }}"
+  data-editorial-nav-detail="{{ block.settings.nav_detail | escape }}"
+  data-editorial-desktop-ratio="{{ slide_desktop_ratio }}"
+  data-editorial-mobile-ratio="{{ slide_mobile_ratio }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="editorial-slideshow__media">
+    {% if slide_image != blank %}
+      {% render 'responsive-media',
+        image: slide_image,
+        mobile_image: slide_mobile_image,
+        mobile_breakpoint: 767,
+        max_width: 2400,
+        mobile_max_width: 1280,
+        widths: '750, 960, 1200, 1600, 1920, 2400',
+        mobile_widths: '375, 550, 750, 960, 1280',
+        sizes: '100vw',
+        class: 'editorial-slideshow__image',
+        loading: image_loading,
+        fetchpriority: image_priority,
+        alt: slide_image_alt
+      %}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'editorial-slideshow__placeholder' }}
+    {% endif %}
+  </div>
+
+  <div class="editorial-slideshow__overlay" aria-hidden="true"></div>
+
+  <div
+    class="editorial-slideshow__content-positioner"
+  >
+    <div class="editorial-slideshow__content">
+      <div class="editorial-slideshow__content-main">
+        <div
+          class="editorial-slideshow__content-blocks gap-style"
+          style="{% render 'gap-style', value: block.settings.gap %}"
+        >
+          {% content_for 'blocks' %}
+        </div>
+      </div>
+
+      {% content_for "block", type: "editorial-product-card", id: "product_card" %}
+    </div>
+  </div>
+</article>
+{% endunless %}
+
+{% schema %}
+{
+  "name": "Editorial slide",
+  "tag": null,
+  "blocks": [
+    { "type": "heading" },
+    { "type": "label" },
+    { "type": "text" },
+    { "type": "spacer" },
+    { "type": "button-group" }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "1920 x 1080px recommended for desktop."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Image (mobile)",
+      "info": "1280 x 1780px recommended for mobile."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt text",
+      "info": "Leave blank to use the image alt text."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Content layout"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 280,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "label": "Content width",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Gap",
+      "default": 12
+    },
+    {
+      "type": "text_alignment",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "top-left"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "Content position mobile",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "top-left"
+    },
+    {
+      "type": "text",
+      "id": "nav_label",
+      "label": "Navigator label",
+      "default": "Nocturne"
+    },
+    {
+      "type": "text",
+      "id": "nav_detail",
+      "label": "Navigator detail",
+      "default": "HOUSE SIGNATURE"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "render_visual_preview",
+      "label": "Render visual preview",
+      "default": false,
+      "visible_if": "{{ false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial slide",
+      "category": "Banners",
+      "settings": {
+        "content_width": 520,
+        "gap": 24,
+        "content_alignment": "left",
+        "content_position": "top-left",
+        "content_position_mobile": "top-left",
+        "color_scheme": "scheme-4"
+      },
+      "blocks": [
+        {
+          "type": "label",
+          "settings": {
+            "text": "<p>OBJECT 01 / THE HOUSE SIGNATURE</p>",
+            "alignment": "left"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "<h1>The Nocturne<br>Collar.</h1>",
+            "type_preset": "h1",
+            "alignment": "left"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>A singular cushion-cut spinel held at the throat by sculptural gold—one unmistakable object, made to order.</p>",
+            "type_preset": "md",
+            "alignment": "left"
+          }
+        },
+        {
+          "type": "button-group",
+          "settings": {
+            "layout_direction": "horizontal",
+            "alignment": "left",
+            "gap": 0
+          },
+          "blocks": [
+            {
+              "type": "button",
+              "settings": {
+                "label": "DISCOVER THE COLLAR",
+                "link": "/collections/all",
+                "style": "primary",
+                "icon": "arrow-right"
+              }
+            }
+          ]
+        },
+        {
+          "type": "label",
+          "settings": {
+            "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · ONE OF ONE</p>",
+            "alignment": "left"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

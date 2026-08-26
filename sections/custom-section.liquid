@@ -1,0 +1,160 @@
+<div
+  class="custom-section color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="custom-section__background">
+    {% render 'responsive-media',
+      image: section.settings.background_image,
+      max_width: 2400,
+      widths: '480, 750, 1100, 1500, 1920, 2400',
+      sizes: '100vw',
+      class: 'custom-section__background-image',
+      decorative: true,
+      loading: 'lazy',
+      placeholder_asset: 'placeholder-image-default-5.svg',
+      placeholder_class: 'custom-section__background-image'
+    %}
+  </div>
+
+  <div class="custom-section__inner section-spacing{% if section.settings.section_width == 'page' %} custom-section__inner--page{% endif %}">
+    <div class="custom-section__content">
+      {% if section.settings.custom_liquid != blank %}
+        <div class="custom-section__liquid">
+          {{ section.settings.custom_liquid }}
+        </div>
+      {% endif %}
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .custom-section {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background: var(--gradient-background, var(--color-background));
+    color: var(--color-text);
+    isolation: isolate;
+  }
+
+  .custom-section__background {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .custom-section__background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .custom-section__inner {
+    width: 100%;
+    padding-inline: var(--page-margin);
+  }
+
+  .custom-section__inner--page {
+    max-width: var(--page-width);
+    margin-inline: auto;
+  }
+
+  .custom-section__content {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 24px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page width"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background"
+    },
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Liquid",
+      "category": "Advanced"
+    }
+  ]
+}
+{% endschema %}

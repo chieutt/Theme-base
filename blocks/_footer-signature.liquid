@@ -1,0 +1,83 @@
+{% doc %}
+  Renders the grouped house signature content for the footer.
+
+  @example
+  {% content_for 'block', type: '_footer-signature', id: 'signature' %}
+{% enddoc %}
+
+{% liquid
+  assign mark_image_url = blank
+  if block.settings.mark_image != blank
+    assign mark_image_url = block.settings.mark_image | image_url: width: 1200
+  endif
+%}
+
+<section
+  class="footer__signature{% if mark_image_url == blank %} footer__signature--placeholder-mark{% endif %}{% unless block.settings.show_image_mobile %} footer__signature--hide-image-mobile{% endunless %}"
+  data-reveal
+  style="{% if mark_image_url != blank %}--footer-house-mark-image: url('{{ mark_image_url }}');{% endif %} --footer-house-mark-opacity: {{ block.settings.image_opacity | divided_by: 100.0 }};"
+  {{ block.shopify_attributes }}
+>
+  {% if mark_image_url == blank %}
+    <div class="footer__signature-mark" aria-hidden="true">
+      {{ 'image' | placeholder_svg_tag: 'footer__signature-placeholder' }}
+    </div>
+  {% endif %}
+
+  <div class="footer__eyebrow footer__signature-eyebrow">
+    {% content_for 'block', type: 'label', id: 'signature_eyebrow' %}
+  </div>
+
+  <div class="footer__signature-main">
+    <footer-wordmark class="footer__wordmark" data-footer-wordmark>
+      {% content_for 'block', type: 'heading', id: 'signature_wordmark' %}
+    </footer-wordmark>
+
+    <div class="footer__principles">
+      {% content_for 'block', type: 'label', id: 'signature_principles' %}
+    </div>
+  </div>
+
+  <div class="footer__signature-tagline">
+    {% content_for 'block', type: 'label', id: 'signature_tagline' %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "House signature",
+  "tag": null,
+  "blocks": [
+    { "type": "heading" },
+    { "type": "label" }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "mark_image",
+      "label": "Image",
+      "info": "Leave blank to show an outline placeholder."
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_mobile",
+      "label": "Show image on mobile",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

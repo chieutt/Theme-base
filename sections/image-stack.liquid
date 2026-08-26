@@ -1,0 +1,168 @@
+{% render 'section-stylesheet', asset: 'section-sticky-scroll.css' %}
+{% render 'section-stylesheet', asset: 'section-image-stack.css' %}
+
+{% liquid
+  assign section_background = section.settings.background_color
+  assign section_background_image = ''
+  assign section_mobile_background_image = ''
+  if section.settings.use_custom_background_image
+    assign section_background_image = section.settings.background_image
+    assign section_mobile_background_image = section.settings.mobile_background_image
+  endif
+  assign section_description = section.settings.accessibility_label | default: 'Image stack'
+  assign mobile_image_position = section.settings.mobile_image_position | default: 'center'
+%}
+
+{% if section_background != blank or section_background_image != blank or section_mobile_background_image != blank %}
+  <style>
+    #shopify-section-{{ section.id }},
+    #shopify-section-{{ section.id }} .image-stack {
+      {% if section_background != blank %}background-color: {{ section_background }};{% endif %}
+      {% if section_background_image != blank %}
+        --image-stack-section-background-image: url('{{ section_background_image | image_url: width: 2400 }}');
+        background-image: url('{{ section_background_image | image_url: width: 2400 }}');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      {% endif %}
+    }
+    {% if section_mobile_background_image != blank %}
+      @media screen and (max-width: 767.98px) {
+        #shopify-section-{{ section.id }},
+        #shopify-section-{{ section.id }} .image-stack {
+          --image-stack-section-background-image: url('{{ section_mobile_background_image | image_url: width: 1280 }}');
+          background-image: url('{{ section_mobile_background_image | image_url: width: 1280 }}');
+        }
+
+        #shopify-section-{{ section.id }} .image-stack__section-placeholder {
+          display: none;
+        }
+      }
+    {% endif %}
+  </style>
+{% endif %}
+
+<sticky-scroll
+  class="sticky-scroll image-stack image-stack--effect-{{ section.settings.scroll_effect_style }} image-stack--scroll-speed-{{ section.settings.scroll_animation_speed }} image-stack--content-{{ section.settings.content_side }} image-stack--mobile-image-{{ mobile_image_position }} sticky-scroll--width-page sticky-scroll--mobile-sticky color-scheme color-{{ section.settings.color_scheme.id }} full-width"
+  role="region"
+  aria-label="{{ section_description | escape }}"
+  data-section-id="{{ section.id }}"
+  data-design-mode="{{ request.design_mode }}"
+  data-mobile-layout="sticky"
+  data-sticky-scroll-ignore-header-offset="true"
+  data-scroll-effect-style="{{ section.settings.scroll_effect_style }}"
+  data-scroll-animation-speed="{{ section.settings.scroll_animation_speed }}"
+  style="--sticky-scroll-panel-count: {{ section.blocks.size }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  {% if section.settings.use_custom_background_image and section_background_image == blank %}
+    <div class="image-stack__section-placeholder" aria-hidden="true">
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'image-stack__section-placeholder-svg' }}
+    </div>
+  {% endif %}
+
+  <div class="sticky-scroll__stage" data-sticky-scroll-stage>
+    {% content_for 'blocks' %}
+
+    {% if section.blocks.size > 1 %}
+      <nav class="sticky-scroll__steps" aria-label="Image stack steps" data-sticky-scroll-steps></nav>
+    {% endif %}
+  </div>
+</sticky-scroll>
+
+<script type="module" src="{{ 'sticky-scroll.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Image stack",
+  "tag": "section",
+  "class": "section-image-stack",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "scroll_effect_style",
+      "label": "Scroll effect style",
+      "options": [
+        { "value": "horizontal", "label": "Horizontal" },
+        { "value": "vertical", "label": "Vertical" },
+        { "value": "scene", "label": "Scene" }
+      ],
+      "default": "scene"
+    },
+    {
+      "type": "select",
+      "id": "content_side",
+      "label": "Content side",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text_alignment",
+      "id": "mobile_image_position",
+      "label": "Mobile image position",
+      "default": "center"
+    },
+    { "type": "header", "content": "Motion" },
+    {
+      "type": "select",
+      "id": "scroll_animation_speed",
+      "label": "Scroll animation speed",
+      "options": [
+        { "value": "slow", "label": "Slow" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "fast", "label": "Fast" }
+      ],
+      "default": "medium"
+    },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-4" },
+    { "type": "color", "id": "background_color", "label": "Background color" },
+    { "type": "checkbox", "id": "use_custom_background_image", "label": "Use custom background image", "default": false },
+    { "type": "image_picker", "id": "background_image", "label": "Background image", "visible_if": "{{ section.settings.use_custom_background_image }}" },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile background image", "visible_if": "{{ section.settings.use_custom_background_image }}" },
+    { "type": "header", "content": "Accessibility" },
+    { "type": "text", "id": "accessibility_label", "label": "Accessibility label", "info": "Describes this section for screen reader users.", "default": "Image stack" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    { "type": "image-stack-scene" }
+  ],
+  "presets": [
+    {
+      "name": "Image stack",
+      "category": "Editorial content",
+      "settings": { "scroll_effect_style": "scene", "content_side": "right", "mobile_image_position": "center", "padding_top": 80, "padding_bottom": 80 },
+      "blocks": [
+        {
+          "type": "image-stack-scene",
+          "settings": { "content_position": "middle-left", "content_alignment": "left", "content_width": 520, "content_gap": 20 },
+          "blocks": [
+            { "type": "label", "settings": { "text": "<p>THE COLLECTION</p>", "reveal_type": "fade-up", "reveal_delay": 0 } },
+            { "type": "heading", "settings": { "heading": "<h2>Beauty in every detail.</h2>", "type_preset": "h2", "reveal_type": "fade-up", "reveal_delay": 150 } },
+            { "type": "text", "settings": { "text": "<p>Each piece is shaped through a quiet study of material, proportion and light.</p>", "type_preset": "sm", "reveal_type": "fade-up", "reveal_delay": 300 } },
+            { "type": "button", "settings": { "label": "Shop the collection", "style": "tertiary", "icon": "arrow-right", "reveal_type": "fade-up", "reveal_delay": 450 } }
+          ]
+        },
+        {
+          "type": "image-stack-scene",
+          "settings": { "content_position": "middle-left", "content_alignment": "left", "content_width": 520, "content_gap": 20 },
+          "blocks": [
+            { "type": "label", "settings": { "text": "<p>THE CRAFT</p>", "reveal_type": "fade-up", "reveal_delay": 0 } },
+            { "type": "heading", "settings": { "heading": "<h2>Made to be remembered.</h2>", "type_preset": "h2", "reveal_type": "fade-up", "reveal_delay": 150 } },
+            { "type": "text", "settings": { "text": "<p>Designed with an attention to the detail that gives every object its character.</p>", "type_preset": "sm", "reveal_type": "fade-up", "reveal_delay": 300 } },
+            { "type": "button", "settings": { "label": "Discover the craft", "style": "tertiary", "icon": "arrow-right", "reveal_type": "fade-up", "reveal_delay": 450 } }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

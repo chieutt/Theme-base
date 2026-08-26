@@ -1,0 +1,17 @@
+{% doc %}
+  Renders global opt-in scroll-reveal attributes for a Theme Block.
+
+  @param {object} settings - Block settings containing reveal_type, reveal_duration and reveal_delay.
+{% enddoc %}
+
+{% liquid
+  assign reveal_type = settings.reveal_type | default: 'none'
+  assign reveal_duration = settings.reveal_duration | default: 650
+  assign reveal_delay = settings.reveal_delay | default: 0
+%}
+
+{% if reveal_type != 'none' %}
+  data-reveal="{{ reveal_type | escape }}"
+  data-reveal-duration="{{ reveal_duration }}"
+  data-reveal-delay="{{ reveal_delay }}"
+{% endif %}

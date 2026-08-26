@@ -1,0 +1,45 @@
+{% assign product = closest.product | default: product %}
+{% if product != blank %}
+  {% render 'product-price', variant: product.selected_or_first_available_variant, block: block %}
+{% else %}
+  <div class="product-price product-price--{{ block.settings.price_size | default: 'medium' }}" {{ block.shopify_attributes }}>
+    <span class="product-price__current">{% render 'money', amount: 1999 %}</span>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Product price",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product price"
+    },
+    {
+      "type": "select",
+      "id": "price_size",
+      "label": "Price size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_percentage",
+      "label": "Discount percentage",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

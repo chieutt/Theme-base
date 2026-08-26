@@ -1,0 +1,46 @@
+{% doc %}
+  Loads a section stylesheet synchronously by default and without blocking the
+  initial homepage render when the section is below the first viewport.
+
+  @param {string} asset - The section stylesheet asset name.
+  @param {boolean} [defer_on_home] - Defer the stylesheet on the storefront homepage.
+  @param {boolean} [inline_on_home] - Inline the stylesheet on the storefront homepage.
+  @param {boolean} [inline_on_design_mode] - Inline the stylesheet while the Theme Editor is rendering the section.
+  @param {boolean} [loaded_in_home_head] - Omit the section tag when the stylesheet is already loaded in the homepage head.
+  @param {string} [shared_key] - Mark a shared stylesheet so duplicate tags can be removed after render.
+{% enddoc %}
+
+{% liquid
+  assign should_defer = false
+  assign should_inline = false
+  assign is_loaded_in_home_head = false
+  if defer_on_home and request.page_type == 'index' and request.design_mode == false
+    assign should_defer = true
+  endif
+  if inline_on_home and request.page_type == 'index' and request.design_mode == false
+    assign should_inline = true
+  endif
+  if inline_on_design_mode and request.design_mode
+    assign should_inline = true
+  endif
+  if loaded_in_home_head and request.page_type == 'index' and request.design_mode == false
+    assign is_loaded_in_home_head = true
+  endif
+%}
+
+{% if is_loaded_in_home_head %}
+  {% comment %}Loaded once from layout/theme.liquid so it can download in parallel with the document.{% endcomment %}
+{% elsif should_inline %}
+  <style>{{ asset | inline_asset_content }}</style>
+{% elsif should_defer %}
+  <link
+    data-deferred-section-stylesheet
+    {% if shared_key != blank %}data-spinel-shared-stylesheet="{{ shared_key | escape }}"{% endif %}
+    data-href="{{ asset | asset_url | escape }}"
+  >
+  <noscript>{{ asset | asset_url | stylesheet_tag }}</noscript>
+{% elsif shared_key != blank %}
+  <link rel="stylesheet" href="{{ asset | asset_url | escape }}" data-spinel-shared-stylesheet="{{ shared_key | escape }}">
+{% else %}
+  {{ asset | asset_url | stylesheet_tag }}
+{% endif %}

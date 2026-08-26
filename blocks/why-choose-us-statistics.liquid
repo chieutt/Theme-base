@@ -1,0 +1,45 @@
+{% doc %}
+  Owns the repeatable statistic-item stream for Why choose us. The parent is a
+  fixed editorial region; its child items remain merchant-addable and editable.
+{% enddoc %}
+
+<div
+  class="why-choose-us__stats why-choose-us__stats--heading-{{ block.settings.heading_size }} why-choose-us__stats--text-{{ block.settings.text_size }}"
+  role="list"
+  aria-label="{{ block.settings.accessibility_label | escape }}"
+  data-reveal-group
+  style="--why-choose-us-stat-columns-desktop: {{ block.settings.columns_desktop }}; --why-choose-us-stat-columns-mobile: {{ block.settings.columns_mobile }}; --why-choose-us-stat-gap: {{ block.settings.item_gap }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Why choose us statistics",
+  "tag": null,
+  "blocks": [
+    { "type": "why-choose-us-stat" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "columns_desktop", "label": "Desktop columns", "options": [{ "value": "1", "label": "1 column" }, { "value": "2", "label": "2 columns" }, { "value": "3", "label": "3 columns" }, { "value": "4", "label": "4 columns" }], "default": "3" },
+    { "type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{ "value": "1", "label": "1 column" }, { "value": "2", "label": "2 columns" }], "default": "1" },
+    { "type": "range", "id": "item_gap", "label": "Item gap", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Item" },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "options": [{ "value": "h0", "label": "t:typography_options.display_extra_large" }, { "value": "h1", "label": "t:typography_options.display_large" }, { "value": "h2", "label": "t:typography_options.display_medium" }, { "value": "h3", "label": "t:typography_options.heading_extra_large" }, { "value": "h4", "label": "t:typography_options.heading_large" }, { "value": "h5", "label": "t:typography_options.heading_medium" }, { "value": "h6", "label": "t:typography_options.heading_small" }, { "value": "h7", "label": "t:typography_options.heading_extra_small" }], "default": "h2" },
+    { "type": "select", "id": "text_size", "label": "Text size", "options": [{ "value": "lg", "label": "t:typography_options.body_large" }, { "value": "md", "label": "t:typography_options.body_medium" }, { "value": "sm", "label": "t:typography_options.body_small" }, { "value": "xs", "label": "t:typography_options.body_extra_small" }], "default": "xs" },
+    { "type": "text", "id": "accessibility_label", "label": "Accessibility label", "default": "Why choose Spinel statistics" }
+  ],
+  "presets": [
+    {
+      "name": "Why choose us statistics",
+      "blocks": [
+        { "type": "why-choose-us-stat", "settings": { "value": "8 MM", "description": "<p>NATURAL, UNTREATED<br>MOGOK, BURMA</p>" } },
+        { "type": "why-choose-us-stat", "settings": { "value": "42 HOURS", "description": "<p>SETTING AND HAND-FINISHING<br>18K HALLMARKED</p>" } },
+        { "type": "why-choose-us-stat", "settings": { "value": "600 YEARS", "description": "<p>CATALOGUED AS RUBY UNTIL GEMOLOGY SETTLED IT —<br>THE NAME NEVER CAUGHT UP</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

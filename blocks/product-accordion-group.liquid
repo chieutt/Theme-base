@@ -1,0 +1,30 @@
+<div class="product-accordion-group product-accordion-group--{{ block.settings.icon | default: 'plus' }}" {{ block.shopify_attributes }}>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Accordion group",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Accordion group"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Expand icon",
+      "options": [
+        { "value": "plus", "label": "Plus" },
+        { "value": "caret", "label": "Caret" }
+      ],
+      "default": "plus"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product-accordion"
+    }
+  ]
+}
+{% endschema %}

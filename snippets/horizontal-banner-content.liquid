@@ -1,0 +1,85 @@
+{% doc %}
+  Renders the editorial content shared by horizontal Text and Media with text blocks.
+
+  @param {block} block - Horizontal banner content block.
+
+  @example
+  {% render 'horizontal-banner-content', block: block %}
+{% enddoc %}
+
+{% liquid
+  assign heading_tag = block.settings.heading_tag | default: 'h2'
+  assign subheading_tag = block.settings.subheading_tag | default: 'p'
+  assign open_in_new_tab = block.settings.open_in_new_tab
+  assign block_link_label = block.settings.heading | default: block.settings.subheading
+  if block_link_label == blank
+    assign block_link_label = 'accessibility.view_story' | t
+  endif
+%}
+
+{% if block.settings.block_link != blank %}
+  <a
+    class="horizontal-banners__block-link"
+    href="{{ block.settings.block_link | escape }}"
+    aria-label="{{ block_link_label | escape }}"
+    {% if open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+  ></a>
+{% endif %}
+
+<div
+  class="horizontal-banners__content horizontal-banners__content--v-{{ block.settings.vertical_position }} horizontal-banners__content--h-{{ block.settings.horizontal_position }}{% if block.settings.center_text %} horizontal-banners__content--center-text{% endif %}{% if block.settings.narrow_content_width %} horizontal-banners__content--narrow{% endif %}"
+>
+  <div class="horizontal-banners__content-inner">
+    {% if block.settings.context_image != blank %}
+      <div
+        class="horizontal-banners__context horizontal-banners__context--{{ block.settings.context_image_ratio }} horizontal-banners__context--radius-{{ block.settings.context_corner_radius }}"
+        style="--horizontal-banners-context-width: {{ block.settings.context_image_width }}px;"
+      >
+        {% render 'responsive-image',
+          image: block.settings.context_image,
+          max_width: 600,
+          widths: '80, 120, 160, 240, 320, 480, 600',
+          sizes: '(min-width: 1150px) 240px, 160px',
+          class: 'horizontal-banners__context-image',
+          loading: 'lazy'
+        %}
+      </div>
+    {% endif %}
+
+    {% if block.settings.number != blank %}
+      <p class="horizontal-banners__number horizontal-banners__type--{{ block.settings.number_size }}">
+        {{ block.settings.number | escape }}
+      </p>
+    {% endif %}
+
+    {% if block.settings.subheading != blank %}
+      <{{ subheading_tag }} class="horizontal-banners__subheading subheading-text horizontal-banners__type--{{ block.settings.subheading_size }}">
+        {{ block.settings.subheading | escape }}
+      </{{ subheading_tag }}>
+    {% endif %}
+
+    {% if block.settings.heading != blank %}
+      <{{ heading_tag }}
+        class="horizontal-banners__heading {% render 'typography-class', preset: block.settings.heading_size, fallback: 'h3' %} horizontal-banners__type--{{ block.settings.heading_size }} horizontal-banners__heading--{{ block.settings.heading_color_style }}"
+      >
+        {{ block.settings.heading | escape }}
+      </{{ heading_tag }}>
+    {% endif %}
+
+    {% if block.settings.text != blank %}
+      <div class="horizontal-banners__text text-block text-block--{{ block.settings.text_size | default: 'medium' }} spinel-text--{{ block.settings.text_size | default: 'medium' }}{% if block.settings.dim_text %} horizontal-banners__text--dim{% endif %} rte">
+        {{ block.settings.text }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+      {% render 'cta',
+        label: block.settings.button_label,
+        url: block.settings.button_link,
+        style: block.settings.button_style,
+        class: 'horizontal-banners__button',
+        open_in_new_tab: block.settings.button_open_in_new_tab
+      %}
+    {% endif %}
+  </div>
+</div>

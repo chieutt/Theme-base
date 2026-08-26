@@ -1,0 +1,149 @@
+<details class="collapsible-content-block__item" data-animated-details {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+  <summary><{{ block.settings.heading_tag }} class="collapsible-content-block__item-heading {% render 'typography-class', preset: block.settings.heading_size, fallback: 'h4' %}">{{ block.settings.heading | escape }}</{{ block.settings.heading_tag }}><span class="collapsible-content-block__icon" aria-hidden="true">+</span></summary>
+  <div class="collapsible-content-block__body content-text spinel-text--{{ block.settings.text_size }} content-text--{{ block.settings.text_size }} rte" data-accordion-content>{{ block.settings.content }}</div>
+</details>
+
+{% stylesheet %}
+  .collapsible-content-block__item { border-block-end: 1px solid var(--color-variant-border); }
+  .collapsible-content-block__item summary { display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; }
+  .collapsible-content-block__item summary::-webkit-details-marker { display: none; }
+  .collapsible-content-block__item-heading { margin: 0; font-weight: 400; }
+  .collapsible-content-block__icon { transition: transform .25s ease; }
+  .collapsible-content-block__item[open] .collapsible-content-block__icon { transform: rotate(45deg); }
+  .collapsible-content-block__item.is-closing .collapsible-content-block__icon { transform: rotate(0deg); }
+  .collapsible-content-block__body { padding: 0 32px 20px 0; color: var(--color-text); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collapsible item",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collapsible item"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently asked question"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "HTML Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Add helpful information for customers.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "x-large",
+          "label": "X-large"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "x-small",
+          "label": "X-small"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_by_default",
+      "label": "Open by default",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

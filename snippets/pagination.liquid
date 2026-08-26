@@ -1,0 +1,38 @@
+{% doc %}
+  Renders numbered pagination with optional previous and next links.
+
+  @param {paginate} paginate - Shopify paginate object.
+  @param {string} base_class - Classes for the navigation element.
+  @param {string} aria_label - Accessible label for the navigation.
+  @param {string} previous_label - Accessible label for the previous link.
+  @param {string} next_label - Accessible label for the next link.
+  @param {string} [arrow_class] - Classes for previous and next links.
+{% enddoc %}
+
+{% if paginate != blank and paginate.pages > 1 %}
+  {% liquid
+    assign pagination_base_class = base_class | default: 'pagination'
+    assign pagination_arrow_class = arrow_class | default: pagination_base_class | append: '-arrow'
+  %}
+  <nav class="{{ pagination_base_class }}" aria-label="{{ aria_label | escape }}">
+    {% if paginate.previous %}
+      <a class="{{ pagination_arrow_class }}" href="{{ paginate.previous.url | escape }}" aria-label="{{ previous_label | escape }}">
+        {% render 'icon', name: 'chevron-left' %}
+      </a>
+    {% endif %}
+
+    {% for part in paginate.parts %}
+      {% if part.is_link %}
+        <a href="{{ part.url | escape }}">{{ part.title }}</a>
+      {% else %}
+        <span{% if part.title == paginate.current_page %} class="is-current" aria-current="page"{% endif %}>{{ part.title }}</span>
+      {% endif %}
+    {% endfor %}
+
+    {% if paginate.next %}
+      <a class="{{ pagination_arrow_class }}" href="{{ paginate.next.url | escape }}" aria-label="{{ next_label | escape }}">
+        {% render 'icon', name: 'chevron-right' %}
+      </a>
+    {% endif %}
+  </nav>
+{% endif %}

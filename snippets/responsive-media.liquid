@@ -1,0 +1,82 @@
+{% doc %}
+  Renders a responsive image or picture with a theme placeholder fallback.
+
+  @param {image} [image] - Desktop or fallback image.
+  @param {image} [mobile_image] - Optional mobile-specific image.
+  @param {number} [max_width] - Largest desktop generated image width.
+  @param {number} [mobile_max_width] - Largest mobile generated image width.
+  @param {number} [mobile_breakpoint] - Largest viewport width that uses the mobile source.
+  @param {string} [widths] - Desktop responsive source widths.
+  @param {string} [mobile_widths] - Mobile responsive source widths.
+  @param {string} [sizes] - Image sizes attribute.
+  @param {string} [class] - Image class names.
+  @param {string} [alt] - Alternative text override.
+  @param {boolean} [decorative] - Whether the image is decorative.
+  @param {string} [loading] - Browser loading behavior.
+  @param {string} [fetchpriority] - Browser fetch priority.
+  @param {boolean} [preload] - Whether Shopify should emit an early preload hint.
+  @param {string} [decoding] - Native image decoding behavior.
+  @param {string} [style] - Inline style declarations for the image.
+  @param {string} [placeholder_asset] - Legacy placeholder asset filename, mapped to a Shopify placeholder SVG.
+  @param {string} [placeholder_class] - CSS class names for the fallback artwork.
+
+  @example
+  {% render 'responsive-media',
+    image: product.featured_image,
+    max_width: 1200,
+    widths: '320, 480, 750, 960, 1200',
+    sizes: '(min-width: 768px) 50vw, 100vw',
+    class: 'media-cover',
+    placeholder_asset: 'placeholder-image-product-1.svg',
+    placeholder_class: 'media-cover'
+  %}
+{% enddoc %}
+
+{% liquid
+  assign responsive_media_image = image | default: mobile_image
+  assign responsive_media_placeholder_asset = placeholder_asset | default: 'placeholder-image-default-1.svg'
+  assign responsive_media_placeholder_class = placeholder_class | default: class
+%}
+
+{% if responsive_media_image != blank %}
+  {% if mobile_image != blank %}
+    {% render 'responsive-picture',
+      image: responsive_media_image,
+      mobile_image: mobile_image,
+      max_width: max_width,
+      mobile_max_width: mobile_max_width,
+      mobile_breakpoint: mobile_breakpoint,
+      widths: widths,
+      mobile_widths: mobile_widths,
+      sizes: sizes,
+      class: class,
+      alt: alt,
+      decorative: decorative,
+      loading: loading,
+      fetchpriority: fetchpriority,
+      preload: preload,
+      decoding: decoding,
+      style: style
+    %}
+  {% else %}
+    {% render 'responsive-image',
+      image: responsive_media_image,
+      max_width: max_width,
+      widths: widths,
+      sizes: sizes,
+      class: class,
+      alt: alt,
+      decorative: decorative,
+      loading: loading,
+      fetchpriority: fetchpriority,
+      preload: preload,
+      decoding: decoding,
+      style: style
+    %}
+  {% endif %}
+{% else %}
+  {% render 'media-placeholder',
+    class_name: responsive_media_placeholder_class,
+    asset_name: responsive_media_placeholder_asset
+  %}
+{% endif %}

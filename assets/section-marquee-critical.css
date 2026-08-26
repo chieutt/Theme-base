@@ -1,0 +1,98 @@
+.marquee-section {
+  width: 100%;
+  overflow: hidden;
+  background: var(--gradient-background, var(--color-background));
+  color: var(--color-text);
+}
+
+.marquee-section__inner {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--marquee-section-gap);
+  padding-block: var(--marquee-section-padding-top) var(--marquee-section-padding-bottom);
+}
+
+.marquee-section__inner--page {
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+.marquee {
+  display: block;
+  min-height: var(--marquee-min-height-mobile);
+  overflow: hidden;
+  background: var(--gradient-background, var(--color-background));
+  color: var(--color-text);
+}
+
+.marquee__viewport {
+  width: 100%;
+  min-height: inherit;
+  overflow: hidden;
+}
+
+.marquee__track,
+.marquee__group {
+  display: flex;
+  width: max-content;
+  min-height: inherit;
+  align-items: var(--marquee-item-alignment);
+}
+
+.marquee__track {
+  gap: var(--marquee-item-gap);
+  animation: marquee-scroll var(--marquee-duration) linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.marquee__group {
+  flex-shrink: 0;
+  gap: var(--marquee-item-gap);
+}
+
+.marquee__group > * {
+  flex-shrink: 0;
+}
+
+.marquee.is-active:not(.marquee--static) .marquee__track {
+  animation-play-state: running;
+}
+
+.marquee--direction-right .marquee__track {
+  animation-direction: reverse;
+}
+
+.marquee--static .marquee__track {
+  animation: none;
+}
+
+.marquee--pause-on-hover:hover .marquee__track,
+.marquee--pause-on-hover:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee .content-button {
+  width: max-content;
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(calc(-50% - var(--marquee-item-gap) / 2));
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .marquee {
+    min-height: var(--marquee-min-height);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee .marquee__track,
+  .marquee.is-active .marquee__track {
+    animation-play-state: paused;
+  }
+}

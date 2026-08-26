@@ -1,0 +1,10 @@
+{% doc %}
+  Loads the shared Swiper styles only for a section that uses a Swiper instance.
+
+  @param {boolean} [defer_on_home] - Defer the styles on the storefront homepage.
+{% enddoc %}
+
+{% render 'section-stylesheet', asset: 'swiper-12.2.0.min.css', defer_on_home: defer_on_home, shared_key: 'swiper' %}
+{% render 'section-stylesheet', asset: 'swiper-12.2.0-navigation.min.css', defer_on_home: defer_on_home, shared_key: 'swiper' %}
+{% render 'section-stylesheet', asset: 'swiper-12.2.0-pagination.min.css', defer_on_home: defer_on_home, shared_key: 'swiper' %}
+{% render 'section-stylesheet', asset: 'swiper-12.2.0-a11y.min.css', defer_on_home: defer_on_home, shared_key: 'swiper' %}

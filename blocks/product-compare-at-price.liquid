@@ -1,0 +1,17 @@
+{% doc %}
+  Renders the selected variant's compare-at price and discount.
+{% enddoc %}
+{% assign product = closest.product | default: product %}
+{% assign variant = product.selected_or_first_available_variant %}
+{% if variant.compare_at_price > variant.price %}
+  <div class="product-compare-at-price" {{ block.shopify_attributes }}>
+    <s>{% render 'money', amount: variant.compare_at_price %}</s>
+    <span>{% assign discount = variant.compare_at_price | minus: variant.price %}{% render 'money', amount: discount %} off</span>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Compare-at price",
+  "settings": []
+}
+{% endschema %}

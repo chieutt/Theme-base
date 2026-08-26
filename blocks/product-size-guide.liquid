@@ -1,0 +1,28 @@
+{% doc %}
+  Renders a link to a merchant-selected size guide page.
+{% enddoc %}
+{% if block.settings.page != blank %}
+  <a class="product-size-guide" href="{{ block.settings.page.url | escape }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>
+{% endif %}
+{% schema %}
+{
+  "name": "Size guide",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Size guide"
+    },
+    {
+      "type": "page",
+      "id": "page",
+      "label": "Size guide page"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Size guide"
+    }
+  ]
+}
+{% endschema %}

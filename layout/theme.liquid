@@ -1,195 +1,298 @@
 <!doctype html>
-<html
-  {% if request.design_mode %}
-    class="shopify-design-mode"
+{% assign is_quick_view_template = false %}
+{% if request.page_type == 'product' and template.suffix == 'quick-view' %}
+  {% assign is_quick_view_template = true %}
+{% endif %}
+{% assign page_transition_enabled = false %}
+{% unless is_quick_view_template or request.design_mode %}
+  {% if settings.enable_page_transitions %}
+    {% assign page_transition_enabled = true %}
   {% endif %}
+{% endunless %}
+<html
+  class="no-js"
   lang="{{ request.locale.iso_code }}"
+  data-desktop-smooth-scroll="all"
+  data-desktop-smooth-scroll-speed="0.9"
+  data-desktop-smooth-scroll-lerp="0.08"
 >
   <head>
-    {%- if settings.favicon != blank -%}
-      <link
-        rel="icon"
-        type="image/png"
-        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
-      >
-    {%- endif -%}
+    <script>
+      document.documentElement.classList.remove('no-js');
+      {% if request.page_type == 'index' and request.design_mode == false %}
+        const scrollRestorationKey = `spinel-homepage-scroll:${window.location.pathname}${window.location.search}`;
+        let savedScrollPosition;
 
-    {% comment %}
-      Opt into cross-document (MPA) view transitions and hold first paint until #MainContent
-      parses, so the transition runs consistently.
-      Both are gated on the same settings as the view-transitions.js opt-out switch (see snippets/scripts.liquid).
-    {% endcomment %}
-    {% if settings.transition_to_main_product or settings.page_transition_enabled %}
-      {% style %}
-        @media (prefers-reduced-motion: no-preference) {
-          @view-transition {
-            navigation: auto;
-          }
+        try {
+          savedScrollPosition = JSON.parse(window.sessionStorage.getItem(scrollRestorationKey) || 'null');
+        } catch (error) {
+          savedScrollPosition = null;
         }
-      {% endstyle %}
-      <link
-        rel="expect"
-        href="#MainContent"
-        blocking="render"
-        id="view-transition-render-blocker"
-      >
+
+        const navigationEntry = window.performance.getEntriesByType?.('navigation')[0];
+        const shouldRestoreHomepageScroll =
+          ['reload', 'back_forward'].includes(navigationEntry?.type)
+          && Number.isFinite(savedScrollPosition?.top)
+          && Number.isFinite(savedScrollPosition?.left);
+
+        window.SpinelScrollRestoration = {
+          position: savedScrollPosition,
+          shouldRestore: shouldRestoreHomepageScroll
+        };
+
+        if (shouldRestoreHomepageScroll && 'scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
+
+        window.addEventListener('pagehide', () => {
+          try {
+            window.sessionStorage.setItem(
+              scrollRestorationKey,
+              JSON.stringify({ left: window.scrollX, top: window.scrollY })
+            );
+          } catch (error) {
+          }
+        });
+      {% endif %}
+      {% if page_transition_enabled %}
+        let pageTransitionDomReady = false;
+        let pageTransitionScrollRestored = !window.SpinelScrollRestoration?.shouldRestore;
+        let pageTransitionRevealed = false;
+
+        const revealPageTransition = () => {
+          if (!pageTransitionDomReady || !pageTransitionScrollRestored || pageTransitionRevealed) return;
+          pageTransitionRevealed = true;
+          document.documentElement.classList.add('page-transition-dom-ready');
+          window.dispatchEvent(new Event('spinel:page-transition-reveal'));
+        };
+
+        const forcePageTransitionReveal = () => {
+          pageTransitionScrollRestored = true;
+          revealPageTransition();
+        };
+
+        document.documentElement.classList.add('page-transitions-enabled');
+        document.addEventListener('DOMContentLoaded', () => {
+          pageTransitionDomReady = true;
+          revealPageTransition();
+        }, { once: true });
+        window.addEventListener('spinel:scroll-restored', () => {
+          pageTransitionScrollRestored = true;
+          revealPageTransition();
+        }, { once: true });
+        window.addEventListener('load', () => {
+          window.setTimeout(forcePageTransitionReveal, 4000);
+        }, { once: true });
+      {% endif %}
+    </script>
+
+    {% if settings.heading_font.system? == false and settings.heading_font != settings.body_font %}
+      {{ settings.heading_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
     {% endif %}
 
-    {%- render 'meta-tags' -%}
-    {%- render 'stylesheets' -%}
-    {%- render 'card-hover-effect-styles' -%}
-    {%- render 'fonts' -%}
-    {%- render 'scripts' -%}
-    {%- render 'theme-styles-variables' -%}
-    {%- render 'color-palette' -%}
+    {% unless settings.body_font.system? %}
+      {{ settings.body_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {% endunless %}
 
-    {% if request.design_mode %}
-      {%- render 'theme-editor' -%}
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+
+    {% if page_transition_enabled %}
+      <style>
+        .page-transitions-enabled .page-transition {
+          position: fixed;
+          z-index: 2147483000;
+          inset: 0;
+          display: block;
+          margin: 0;
+          background: {{ settings.page_transition_color | default: '#000000' }};
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+          transition: opacity {{ settings.page_transition_duration | default: 1000 }}ms ease;
+        }
+
+        .page-transitions-enabled.page-transition-dom-ready .page-transition {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .page-transitions-enabled .page-transition.is-hidden {
+          display: none;
+        }
+
+        /*
+         * Keep the mobile first paint visible. The overlay is out of flow, so
+         * hiding it here cannot create layout shift, while the LCP candidate
+         * remains available to paint as soon as it is ready.
+         */
+        @media screen and (max-width: 767.98px) {
+          .page-transitions-enabled .page-transition {
+            opacity: 0;
+            pointer-events: none;
+            transition-duration: 0ms;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .page-transitions-enabled .page-transition {
+            transition-duration: 0ms;
+          }
+        }
+      </style>
+    {% endif %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'animation.css' | asset_url | stylesheet_tag }}
+    {{ 'details-accordion.css' | asset_url | stylesheet_tag }}
+    {{ 'modal.css' | asset_url | stylesheet_tag }}
+    {{ 'quick-view.css' | asset_url | stylesheet_tag }}
+    {% # Header is rendered on every storefront page. Keep its critical styles in the document head so a Theme Editor section re-render cannot remove the active stylesheet before the replacement is ready. %}
+    {{ 'section-header-critical-1.css' | asset_url | stylesheet_tag }}
+    <style>
+      @media (min-width: 1024px) {
+        .header__menu-disclosure,
+        .header__mobile-drawer,
+        .header__navigation--mobile,
+        .header__menu-overlay--mobile,
+        .header__mobile-drawer-header,
+        .header__mobile-menu-direct-link,
+        .header__mobile-submenu-back,
+        .header__mobile-submenu-back-item,
+        .header__mobile-login,
+        .header__mobile-account,
+        .header__mobile-language {
+          display: none;
+        }
+
+        .header__navigation--desktop {
+          display: flex;
+        }
+
+        .header__navigation--desktop .header__navigation-content {
+          display: contents;
+        }
+      }
+
+      {{ 'section-header-critical-3.css' | inline_asset_content }}
+
+      @media (min-width: 1024px) and (max-width: 1279px) {
+        .header__navigation--desktop .header__menu {
+          column-gap: clamp(28px, 3vw, 40px);
+        }
+
+        .header__navigation--desktop .header__menu-link {
+          gap: 3px;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="{{ 'section-header-mobile.css' | asset_url | escape }}" media="(max-width: 1023.98px)">
+    {% if settings.cart_action == 'drawer' %}
+      {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {% if request.page_type == 'collection' and request.design_mode == false %}
+      <style>{{ 'section-collection-critical.css' | inline_asset_content }}</style>
+    {% endif %}
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+
+    {% if settings.favicon != blank %}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 | escape }}">
+    {% else %}
+      <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url | escape }}">
     {% endif %}
 
     {{ content_for_header }}
+    <script>
+      window.theme = window.theme || {};
+      window.theme.strings = {
+        ...(window.theme.strings || {}),
+        addToCartError: {{ 'product.add_to_cart_error' | t | json }},
+        quickViewError: {{ 'product_card.quick_view_error' | t | json }},
+        quickViewRetry: {{ 'product_card.quick_view_retry' | t | json }}
+      };
+      window.theme.moneyFormat = {{ shop.money_format | json }};
+      window.theme.currency = {{ cart.currency.iso_code | default: shop.currency | json }};
+      window.theme.showCurrencyCode = {{ settings.show_currency_code | json }};
+    </script>
+    <script src="{{ 'money.js' | asset_url }}" defer></script>
+    <script src="{{ 'details-accordion.js' | asset_url }}" defer></script>
+    <script
+      src="{{ 'theme-animations.js' | asset_url }}"
+      data-motion-enabled="{{ settings.enable_motion }}"
+      defer
+    ></script>
+    <script src="{{ 'section-color-scheme.js' | asset_url }}" defer></script>
+    <script src="{{ 'scroll-lock.js' | asset_url }}" defer></script>
+    <script type="module" src="{{ 'smooth-scroll.js' | asset_url }}"></script>
+    {% if page_transition_enabled %}
+      <script src="{{ 'page-transition.js' | asset_url }}" defer></script>
+    {% endif %}
+    <script src="{{ 'modal-backdrop.js' | asset_url }}" defer></script>
+    <script src="{{ 'deferred-module-loader.js' | asset_url }}" defer></script>
+    <script src="{{ 'shared-stylesheet-loader.js' | asset_url }}" defer></script>
+    {% if request.page_type == 'index' %}
+      <script src="{{ 'section-stylesheet-loader.js' | asset_url }}" defer></script>
+    {% endif %}
+    <script
+      src="{{ 'product-card-loader.js' | asset_url }}"
+      data-product-card-module="{{ 'product-card.js' | asset_url }}"
+      data-cart-feedback-module="{{ 'cart-feedback.js' | asset_url }}"
+      defer
+    ></script>
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
-    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+  <body class="template-{{ request.page_type | handle }}{% if is_quick_view_template %} template-quick-view{% endif %}{% if request.design_mode %} shopify-design-mode{% endif %}">
+    {% if page_transition_enabled %}
+      {% render 'page-transition' %}
+    {% endif %}
 
-    {% render 'chat-drawer' %}
+    {% unless is_quick_view_template %}
+      <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+      {% sections 'header-group' %}
+    {% endunless %}
 
-    <div class="page-wrapper">
-      <div id="header-group">
-        {% sections 'header-group' %}
-      </div>
-
-      <script>
-        /**
-         * Sets `--header-height` and `--header-group-height` to measured values before first paint.
-         *
-         * A few CSS rules position content relative to the header at first paint — a hero sized to
-         * the remaining viewport, a transparent header's negative margin. Without a measured value
-         * those rules use the `60px` fallback from `sections/header.liquid`, and the content visibly
-         * jumps once `header.js` corrects the values after load.
-         *
-         * Measuring forces layout mid-parse, so it only runs where a consuming rule exists.
-         * Callers opt in: the transparent-header branch below, or `snippets/measure-header-heights.liquid`,
-         * which any new first-paint consumer must render too.
-         *
-         * Measures once per page; after load, header.js's ResizeObservers keep the values fresh.
-         * The group-height walk mimics calculateHeaderGroupHeight() in utilities.js — keep them
-         * in sync.
-         */
-        window.measureHeaderHeights = (function () {
-          let measured = false;
-
-          return function measureHeaderHeights() {
-            if (measured) return;
-
-            const header = document.querySelector('#header-component');
-            const headerGroup = document.querySelector('#header-group');
-
-            if (!header || !headerGroup) return;
-            measured = true;
-
-            const headerHeight = header.offsetHeight;
-
-            let headerGroupHeight = 0;
-            for (const element of headerGroup.children) {
-              if (element instanceof HTMLElement) headerGroupHeight += element.offsetHeight;
-            }
-
-            /**
-             * A transparent header is absolutely positioned, so the loop above counts its section
-             * wrapper as 0px. When a section follows it in the group, header.liquid pushes that
-             * section down by the header's height using a margin, which offsetHeight also
-             * excludes — so the header's height has to be added back manually.
-             */
-            if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
-              headerGroupHeight += headerHeight;
-            }
-
-            document.body.style.setProperty('--header-height', `${headerHeight}px`);
-            document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
-          };
-        })();
-
-        /**
-         * Transparent-header rules consume the measured heights at first paint on every
-         * template, so the transparent case opts in globally here instead of per-section.
-         */
-        if (document.querySelector('#header-component')?.hasAttribute('transparent')) {
-          measureHeaderHeights();
-        }
-
-        /**
-         * Sets `--top-row-height`, consumed by the header underlays and submenus. Deferred to a
-         * rAF so the `offsetHeight` read doesn't force layout mid-parse, and scoped to the
-         * header, where all consumers live, so the write only invalidates the header subtree.
-         * Mimics the `--top-row-height` write in updateHeaderHeights() in utilities.js
-         */
-        (function setTopRowHeight() {
-          const header = document.querySelector('#header-component');
-          const headerTopRow = header?.querySelector('.header__row--top');
-          if (!headerTopRow) return;
-
-          window.requestAnimationFrame(function () {
-            header.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
-          });
-        })();
-
-        /**
-         * Sets `--transparent-header-offset-boolean` when the first section must offset itself
-         * under a transparent header. The non-offset case relies on the `0` default declared in
-         * sections/header.liquid — unlike updateTransparentHeaderOffset() in utilities.js, which
-         * re-runs on editor changes and must write '0' to reset a previously written '1'.
-         */
-        (function updateTransparentHeaderOffset() {
-          const header = document.querySelector('#header-component');
-          const headerSection = document.querySelector('#header-group .header-section');
-          if (!headerSection || !header?.hasAttribute('transparent')) return;
-
-          const hasImmediateSection = headerSection.nextElementSibling?.classList.contains('shopify-section');
-          if (!hasImmediateSection) {
-            document.body.style.setProperty('--transparent-header-offset-boolean', '1');
-          }
-        })();
-
-        /**
-         * Sets the initial menu style (inline menu vs. drawer) on the header component.
-         * Mimics setHeaderMenuStyle() in utilities.js
-         */
-        (function setHeaderMenuStyle() {
-          const headerComponent = document.querySelector('#header-component');
-          if (headerComponent) {
-            const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
-            const overflowList = headerComponent.querySelector('overflow-list');
-            const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
-            headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
-          }
-        })();
-      </script>
-
-      <main
-        id="MainContent"
-        class="content-for-layout"
-        role="main"
-        data-page-transition-enabled="{{ settings.page_transition_enabled }}"
-        data-product-transition="{{ settings.transition_to_main_product }}"
-        data-template="{{ template }}"
-      >
+    {% if is_quick_view_template %}
+      {{ content_for_layout }}
+    {% else %}
+      <main id="MainContent" role="main" tabindex="-1">
         {{ content_for_layout }}
       </main>
-
-      <footer>
-        {% sections 'footer-group' %}
-      </footer>
-    </div>
-
-    {% render 'cart-drawer', render_wrapper: true %}
-    {% render 'theme-drawer' %}
-
-    {% render 'search-modal' %}
-
-    {% if settings.quick_add or settings.mobile_quick_add %}
-      {% render 'quick-add-modal' %}
     {% endif %}
+
+    {% unless is_quick_view_template %}
+      <dialog
+        class="quick-view-modal modal-drag-target"
+        scroll-lock
+        data-scroll-lock-owner="modal"
+        data-quick-view-modal
+        data-product-page-module="{{ 'product-page.js' | asset_url }}"
+        aria-label="{{ 'product_card.quick_view' | t | escape }}"
+      >
+        <span class="quick-view-modal__backdrop-pointer modal-close-button close-icon" aria-hidden="true"></span>
+        <div data-quick-view-modal-content></div>
+      </dialog>
+
+      {% sections 'footer-group' %}
+      {% sections 'overlay-group' %}
+
+      <button
+        class="back-to-top"
+        type="button"
+        data-back-to-top
+        aria-label="{{ 'back_to_top.label' | t | escape }}"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <svg class="back-to-top__progress" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <circle class="back-to-top__progress-track" cx="24" cy="24" r="21" pathLength="100"></circle>
+          <circle class="back-to-top__progress-value" cx="24" cy="24" r="21" pathLength="100"></circle>
+        </svg>
+        <svg class="back-to-top__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="m6 14 6-6 6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+        </svg>
+      </button>
+      <script src="{{ 'back-to-top.js' | asset_url }}" defer></script>
+    {% endunless %}
   </body>
 </html>

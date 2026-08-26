@@ -1,0 +1,46 @@
+{% assign product = closest.product | default: product %}
+{% assign share_url = shop.url | append: product.url %}
+{% assign share_title = product.title | strip_html %}
+{% assign encoded_share_url = share_url | url_encode %}
+{% assign encoded_share_title = share_title | url_encode %}
+{% assign share_label = block.settings.label %}
+{% if share_label == blank %}
+  {% assign share_label = 'product_share.share' | t %}
+{% endif %}
+<section class="product-share" {{ block.shopify_attributes }}>
+  <p class="product-share__label">{{ share_label | escape }}</p>
+  <ul class="product-share__icons" role="list" aria-label="{{ 'product_share.label' | t | escape }}">
+    {% assign share_networks = 'facebook,pinterest' | split: ',' %}
+    {% for network in share_networks %}
+      {% case network %}
+        {% when 'facebook' %}
+          {% assign share_link = 'https://www.facebook.com/sharer/sharer.php?u=' | append: encoded_share_url %}
+        {% when 'pinterest' %}
+          {% assign share_link = 'https://pinterest.com/pin/create/button/?url=' | append: encoded_share_url | append: '&description=' | append: encoded_share_title %}
+      {% endcase %}
+      {% assign network_label = network | capitalize %}
+      <li>
+        <a class="product-share__icon" href="{{ share_link | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'product_share.network' | t: network: network_label | escape }}">
+          <img src="{{ 'social-' | append: network | append: '.png' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% schema %}
+{
+  "name": "Product share",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product share"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Share"
+    }
+  ]
+}
+{% endschema %}

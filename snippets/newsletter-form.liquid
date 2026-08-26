@@ -1,0 +1,71 @@
+{% doc %}
+  Renders the shared customer newsletter form.
+
+  @param {object} settings - Newsletter form settings.
+  @param {string} form_id - Unique form ID.
+  @param {string} [class] - Optional context class.
+  @param {string} [attributes] - Optional Theme Editor attributes.
+{% enddoc %}
+
+{% liquid
+  assign email_label = settings.email_label
+  if email_label == blank
+    assign email_label = 'footer.email' | t
+  endif
+  assign button_label = settings.button_label | default: 'Subscribe'
+  assign message_id = form_id | append: '-message'
+%}
+
+<div class="newsletter-form-block{% if class != blank %} {{ class }}{% endif %}"{% if attributes != blank %} {{ attributes }}{% endif %}>
+  {% form 'customer', id: form_id, class: 'newsletter-form' %}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+
+    <div class="newsletter-form__fields newsletter-form__fields--{{ settings.form_layout }}">
+      <div class="newsletter-form__field form-field">
+        <label
+          class="newsletter-form__label form-label{% if settings.hide_label %} visually-hidden{% endif %}"
+          for="{{ form_id }}-email"
+        >
+          {{ email_label | escape }}{% if settings.show_required_marker %}<span aria-hidden="true">*</span>{% endif %}
+        </label>
+        <input
+          class="form-control form-input"
+          id="{{ form_id }}-email"
+          type="email"
+          name="contact[email]"
+          value="{{ form.email | escape }}"
+          autocomplete="email"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="{{ settings.email_placeholder | escape }}"
+          aria-required="true"
+          {% if form.errors %}aria-invalid="true" aria-describedby="{{ message_id }}"{% endif %}
+          required
+        >
+      </div>
+
+      <button
+        class="btn-{{ settings.button_style }} newsletter-form__submit{% if settings.icon != 'none' %} newsletter-form__submit--with-icon{% endif %}"
+        type="submit"
+      >
+        <span>{{ button_label | escape }}</span>
+        {% if settings.icon != 'none' %}
+          <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
+        {% endif %}
+      </button>
+    </div>
+
+    {% if form.posted_successfully? %}
+      <p id="{{ message_id }}" class="newsletter-form__message form-message" role="status" tabindex="-1">
+        {{ settings.success_message | escape }}
+      </p>
+    {% endif %}
+
+    {% if form.errors %}
+      <div id="{{ message_id }}" class="newsletter-form__message newsletter-form__message--error form-message form-message--error" role="alert">
+        {{ form.errors | default_errors }}
+      </div>
+    {% endif %}
+  {% endform %}
+</div>

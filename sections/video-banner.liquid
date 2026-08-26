@@ -1,0 +1,328 @@
+{% render 'section-stylesheet', asset: 'section-video-banner.css', inline_on_home: true, inline_on_design_mode: true %}
+
+{% liquid
+  assign video_banner_background = section.settings.background_color
+  if video_banner_background == blank
+    assign video_banner_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+
+  assign desktop_video = section.settings.desktop_video
+  assign desktop_video_url = section.settings.desktop_video_url
+  assign mobile_video = section.settings.mobile_video
+  assign mobile_video_url = section.settings.mobile_video_url
+  assign desktop_thumbnail = section.settings.desktop_thumbnail | default: desktop_video.preview_image
+  assign mobile_thumbnail = section.settings.mobile_thumbnail | default: mobile_video.preview_image | default: desktop_thumbnail
+  assign desktop_thumbnail_alt = desktop_thumbnail.alt | default: section.settings.accessibility_label
+  assign mobile_thumbnail_alt = mobile_thumbnail.alt | default: section.settings.accessibility_label
+  assign has_mobile_source = false
+  if section.settings.mobile_video != blank or section.settings.mobile_video_url != blank
+    assign has_mobile_source = true
+  endif
+
+  assign poster_loading = 'lazy'
+  assign poster_fetchpriority = 'auto'
+  if section.index <= 2
+    assign poster_loading = 'eager'
+    assign poster_fetchpriority = 'high'
+  endif
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ video_banner_background }};
+  }
+{% endstyle %}
+
+<video-banner
+  class="video-banner color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %} video-banner--desktop-{{ section.settings.desktop_content_position }} video-banner--desktop-align-{{ section.settings.desktop_alignment }} video-banner--mobile-{{ section.settings.mobile_content_position }} video-banner--mobile-align-{{ section.settings.mobile_alignment }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-loop="{{ section.settings.loop }}"
+  data-deferred-module="{{ 'section-video-banner.js' | asset_url }}"
+  role="region"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+  style="
+    --video-banner-width-desktop: {{ section.settings.desktop_video_width }}%;
+    --video-banner-height-desktop: {{ section.settings.desktop_video_height }}px;
+    --video-banner-width-mobile: {{ section.settings.mobile_video_width }}%;
+    --video-banner-height-mobile: {{ section.settings.mobile_video_height }}px;
+    --video-banner-content-width: {{ section.settings.content_width }}px;
+    --video-banner-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="video-banner__frame{% if section.settings.section_width == 'page' %} page-width{% endif %}">
+    <div class="video-banner__inner">
+      <div class="video-banner__media" aria-hidden="true">
+        <div class="video-banner__source video-banner__source--desktop{% unless has_mobile_source %} video-banner__source--shared{% endunless %}" data-video-banner-source>
+          {% if desktop_video != blank %}
+            {{
+              desktop_video
+              | video_tag:
+                class: 'video-banner__video media-cover',
+                image_size: '2400x',
+                autoplay: false,
+                loop: section.settings.loop,
+                muted: true,
+                controls: false,
+                playsinline: true,
+                preload: 'metadata'
+            }}
+          {% elsif desktop_video_url != blank %}
+            {{
+              desktop_video_url
+              | external_video_tag:
+                class: 'video-banner__video video-banner__external-video media-cover',
+                autoplay: false,
+                loop: section.settings.loop,
+                muted: true,
+                controls: section.settings.show_sound_control
+            }}
+          {% endif %}
+
+          {% if desktop_thumbnail != blank %}
+            {% render 'responsive-media',
+              image: desktop_thumbnail,
+              max_width: 2400,
+              widths: '480, 750, 1100, 1500, 1920, 2400',
+              sizes: '100vw',
+              class: 'video-banner__poster video-banner__thumbnail media-cover',
+              loading: poster_loading,
+              fetchpriority: poster_fetchpriority,
+              alt: desktop_thumbnail_alt,
+              placeholder_asset: 'placeholder-image-video.svg'
+            %}
+          {% elsif desktop_video == blank and desktop_video_url == blank %}
+            {% render 'responsive-media',
+              image: blank,
+              max_width: 2400,
+              widths: '480, 750, 1100, 1500, 1920, 2400',
+              sizes: '100vw',
+              class: 'video-banner__poster video-banner__thumbnail media-cover',
+              loading: poster_loading,
+              fetchpriority: poster_fetchpriority,
+              alt: section.settings.accessibility_label,
+              placeholder_asset: 'placeholder-image-video.svg',
+              placeholder_class: 'video-banner__placeholder media-cover'
+            %}
+          {% endif %}
+        </div>
+
+        {% if has_mobile_source %}
+          <div class="video-banner__source video-banner__source--mobile" data-video-banner-source>
+            {% if mobile_video != blank %}
+              {{
+                mobile_video
+                | video_tag:
+                  class: 'video-banner__video media-cover',
+                  image_size: '1600x',
+                  autoplay: false,
+                  loop: section.settings.loop,
+                  muted: true,
+                  controls: false,
+                  playsinline: true,
+                  preload: 'metadata'
+              }}
+            {% elsif mobile_video_url != blank %}
+              {{
+                mobile_video_url
+                | external_video_tag:
+                  class: 'video-banner__video video-banner__external-video media-cover',
+                  autoplay: false,
+                  loop: section.settings.loop,
+                  muted: true,
+                  controls: section.settings.show_sound_control
+              }}
+            {% endif %}
+
+            {% if mobile_thumbnail != blank %}
+              {% render 'responsive-media',
+                image: mobile_thumbnail,
+                max_width: 1600,
+                widths: '360, 480, 750, 1100, 1400, 1600',
+                sizes: '100vw',
+                class: 'video-banner__poster video-banner__thumbnail media-cover',
+                loading: poster_loading,
+                fetchpriority: poster_fetchpriority,
+                alt: mobile_thumbnail_alt,
+                placeholder_asset: 'placeholder-image-video.svg'
+              %}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <span class="video-banner__overlay" aria-hidden="true"></span>
+
+      <div class="video-banner__foreground">
+        <div class="video-banner__content">
+          <div class="video-banner__content-blocks">
+            {% content_for 'blocks' %}
+          </div>
+        </div>
+
+        {% if desktop_video != blank or desktop_video_url != blank or mobile_video != blank or mobile_video_url != blank %}
+          <button
+            class="video-banner__play"
+            type="button"
+            aria-label="{{ section.settings.play_label | escape }}"
+            aria-pressed="false"
+            data-video-banner-play
+          >
+            <span class="video-banner__play-icon" aria-hidden="true">
+              {% render 'icon', name: 'play', class: 'video-banner__play-icon--play' %}
+              {% render 'icon', name: 'pause', class: 'video-banner__play-icon--pause' %}
+            </span>
+            <span class="video-banner__play-label">{{ section.settings.play_label | escape }}</span>
+          </button>
+        {% endif %}
+      </div>
+
+      {% if desktop_video != blank or desktop_video_url != blank or mobile_video != blank or mobile_video_url != blank %}
+        <button
+          class="video-banner__close modal-close-button close-icon"
+          type="button"
+          aria-label="{{ section.settings.close_label | escape }}"
+          data-video-banner-close
+        ></button>
+
+        {% if section.settings.show_sound_control and desktop_video != blank or section.settings.show_sound_control and section.settings.mobile_video != blank %}
+          <button
+            class="video-banner__sound"
+            type="button"
+            aria-label="{{ section.settings.unmute_label | escape }}"
+            aria-pressed="false"
+            data-video-banner-sound
+            data-label-muted="{{ section.settings.unmute_label | escape }}"
+            data-label-unmuted="{{ section.settings.mute_label | escape }}"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10h3l4-4v12l-4-4H5z"/><path class="video-banner__sound-wave" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/><path class="video-banner__sound-muted" d="m16 10 5 5M21 10l-5 5"/></svg>
+          </button>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</video-banner>
+
+{% schema %}
+{
+  "name": "Video banner",
+  "tag": "section",
+  "class": "section-video-banner",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 4,
+  "blocks": [
+    { "type": "label" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "button" },
+    { "type": "spacer" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Desktop video" },
+    { "type": "video", "id": "desktop_video", "label": "Video" },
+    { "type": "image_picker", "id": "desktop_thumbnail", "label": "Thumbnail", "info": "Overrides the video's preview image before playback." },
+    { "type": "checkbox", "id": "show_sound_control", "label": "Show sound control", "default": true },
+    {
+      "type": "video_url",
+      "id": "desktop_video_url",
+      "label": "URL",
+      "accept": ["youtube", "vimeo"],
+      "info": "Used when no Shopify-hosted video is selected."
+    },
+    { "type": "header", "content": "Mobile video" },
+    { "type": "video", "id": "mobile_video", "label": "Mobile video" },
+    { "type": "image_picker", "id": "mobile_thumbnail", "label": "Mobile thumbnail", "info": "Leave blank to use the desktop thumbnail." },
+    {
+      "type": "video_url",
+      "id": "mobile_video_url",
+      "label": "Mobile video URL",
+      "accept": ["youtube", "vimeo"],
+      "info": "Leave blank to use the desktop video."
+    },
+    { "type": "header", "content": "Video behavior" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false },
+    { "type": "checkbox", "id": "loop", "label": "Loop video", "default": true },
+    { "type": "text", "id": "play_label", "label": "Play label", "default": "Play film" },
+    { "type": "text", "id": "close_label", "label": "Close video label", "default": "Close video" },
+    { "type": "text", "id": "unmute_label", "label": "Unmute label", "default": "Turn sound on", "visible_if": "{{ section.settings.show_sound_control }}" },
+    { "type": "text", "id": "mute_label", "label": "Mute label", "default": "Turn sound off", "visible_if": "{{ section.settings.show_sound_control }}" },
+    { "type": "text", "id": "accessibility_label", "label": "Section label", "default": "Campaign video" },
+    { "type": "header", "content": "Desktop layout" },
+    { "type": "range", "id": "desktop_video_width", "min": 50, "max": 100, "step": 5, "unit": "%", "label": "Video width", "default": 100 },
+    { "type": "range", "id": "desktop_video_height", "min": 450, "max": 1000, "step": 10, "unit": "px", "label": "Video height", "default": 760 },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "middle-left"
+    },
+    { "type": "text_alignment", "id": "desktop_alignment", "label": "Alignment", "default": "left" },
+    { "type": "header", "content": "Mobile layout" },
+    { "type": "range", "id": "mobile_video_width", "min": 50, "max": 100, "step": 5, "unit": "%", "label": "Video width", "default": 100 },
+    { "type": "range", "id": "mobile_video_height", "min": 360, "max": 800, "step": 10, "unit": "px", "label": "Video height", "default": 620 },
+    {
+      "type": "select",
+      "id": "mobile_content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "middle-left"
+    },
+    { "type": "text_alignment", "id": "mobile_alignment", "label": "Alignment", "default": "left" },
+    { "type": "range", "id": "content_width", "min": 280, "max": 800, "step": 20, "unit": "px", "label": "Content width", "default": 560 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page", "label": "Page width" }, { "value": "full", "label": "Full width" }], "default": "full" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "color", "id": "background_color", "label": "Background color", "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme." },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "label": "Overlay opacity", "default": 20 },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "Video banner",
+      "category": "Media",
+      "settings": {
+        "desktop_content_position": "middle-left",
+        "mobile_content_position": "middle-left",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "desktop_video_width": 100,
+        "desktop_video_height": 760,
+        "mobile_video_width": 100,
+        "mobile_video_height": 620,
+        "overlay_opacity": 20,
+        "color_scheme": "scheme-3"
+      },
+      "blocks": [
+        { "type": "label", "settings": { "text": "<p>05 / THE HOUSE FILM</p>" } },
+        { "type": "heading", "settings": { "heading": "<h2>Light remembers<br>what it touches.</h2>", "type_preset": "h2" } },
+        { "type": "text", "settings": { "text": "<p>A study in skin, stone and shadow.</p>", "type_preset": "sm" } },
+        { "type": "button", "settings": { "label": "Discover the house", "style": "tertiary", "icon": "arrow-right" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

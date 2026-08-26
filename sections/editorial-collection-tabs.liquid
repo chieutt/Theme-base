@@ -1,0 +1,236 @@
+{% render 'section-stylesheet', asset: 'section-editorial-collection-tabs.css', defer_on_home: true %}
+{% render 'section-stylesheet', asset: 'component-carousel-navigator.css', defer_on_home: true %}
+{% render 'swiper-stylesheet', defer_on_home: true %}
+
+{% liquid
+  assign section_background = section.settings.background_color
+  if section_background == blank
+    assign section_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+
+  assign desktop_columns = section.settings.columns_desktop | plus: 0
+  assign tablet_columns = desktop_columns
+  if tablet_columns > 2
+    assign tablet_columns = 2
+  endif
+  assign mobile_columns = section.settings.columns_mobile | plus: 0
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: {{ section_background }};
+  }
+
+  #shopify-section-{{ section.id }} .editorial-collection-tabs {
+    background: transparent;
+  }
+{% endstyle %}
+
+<editorial-collection-tabs
+  class="editorial-collection-tabs color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+  data-deferred-module="{{ 'editorial-collection-tabs.js' | asset_url }}"
+  data-desktop-columns="{{ desktop_columns }}"
+  data-mobile-columns="{{ mobile_columns }}"
+  style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --editorial-tabs-gap: {{ section.settings.column_gap }}px; --editorial-tabs-mobile-gap: {{ section.settings.mobile_column_gap }}px;"
+>
+  <div class="editorial-collection-tabs__inner section-spacing{% if section.settings.section_width == 'page' %} page-width{% endif %}">
+    <header class="editorial-collection-tabs__header">
+      <div class="editorial-collection-tabs__title-group">
+        {% content_for 'block', type: 'label', id: 'label' %}
+        {% content_for 'block', type: 'heading', id: 'heading' %}
+      </div>
+      <div class="editorial-collection-tabs__description">
+        {% content_for 'block', type: 'text', id: 'description' %}
+      </div>
+    </header>
+
+    <div class="editorial-collection-tabs__tabs" role="tablist" aria-label="Collections" data-editorial-collection-tablist></div>
+    <div class="editorial-collection-tabs__panels" data-editorial-collection-panels></div>
+    <div class="editorial-collection-tabs__source" data-editorial-collection-source>
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</editorial-collection-tabs>
+
+{% schema %}
+{
+  "name": "Editorial collection tabs",
+  "tag": "section",
+  "class": "section-editorial-collection-tabs",
+  "enabled_on": { "templates": ["index"] },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Default view all label",
+      "default": "View all collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "Products per tab",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "info": "Shows an additional 0.2 card as a swipe preview.",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop column gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile column gap",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Optional. Overrides the color scheme background. Clear it to use the color scheme."
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    { "type": "editorial-collection-tab" }
+  ],
+  "presets": [
+    {
+      "name": "Editorial collection tabs",
+      "category": "Products",
+      "settings": {
+        "section_width": "full",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "color_scheme": "scheme-2"
+      },
+      "blocks": [
+        {
+          "type": "label",
+          "id": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>SHOP / THE HOUSE EDIT</p>",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          }
+        },
+        {
+          "type": "heading",
+          "id": "heading",
+          "static": true,
+          "settings": {
+            "heading": "<h2>Shop the<br>current edit.</h2>",
+            "type_preset": "h2",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 150
+          }
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "static": true,
+          "settings": {
+            "text": "<p>Warm-gold forms,<br>chosen for now.</p>",
+            "type_preset": "sm",
+            "reveal_type": "fade-up",
+            "reveal_duration": 650,
+            "reveal_delay": 300
+          }
+        },
+        { "type": "editorial-collection-tab", "settings": { "label": "New arrivals" } },
+        { "type": "editorial-collection-tab", "settings": { "label": "Best sellers" } },
+        { "type": "editorial-collection-tab", "settings": { "label": "Rings" } },
+        { "type": "editorial-collection-tab", "settings": { "label": "Necklaces" } },
+        { "type": "editorial-collection-tab", "settings": { "label": "Gifts" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

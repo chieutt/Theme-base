@@ -1,0 +1,52 @@
+{% assign product = closest.product | default: product %}
+{% assign metafield_namespace = block.settings.namespace | strip | default: 'custom' %}
+{% assign metafield_key = block.settings.key | strip | default: 'summary' %}
+{% assign product_metafield = product.metafields[metafield_namespace][metafield_key] %}
+{% if product == blank %}
+  <div class="product-description rte product-description--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+    <p>Product description</p>
+  </div>
+{% elsif product_metafield != blank %}
+  <div class="product-description rte product-description--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+    {{ product_metafield.value }}
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Product metafield",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product metafield"
+    },
+    {
+      "type": "text",
+      "id": "namespace",
+      "label": "Metafield namespace",
+      "default": "custom"
+    },
+    {
+      "type": "text",
+      "id": "key",
+      "label": "Metafield key",
+      "default": "summary"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Text style",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full"
+        },
+        {
+          "value": "compact",
+          "label": "Compact"
+        }
+      ],
+      "default": "full"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "size-chart",
+      "settings": {
+        "subheading": "Jewellery sizing",
+        "heading": "Size guide",
+        "intro": "Use the measurements below to find the right fit. Product pages show the sizes available for each individual piece."
+      }
+    }
+  },
+  "order": ["main"]
+}

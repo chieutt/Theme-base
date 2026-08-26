@@ -1,0 +1,140 @@
+{% doc %}
+  Renders a product-specific frequently asked question.
+{% enddoc %}
+{% if block.settings.answer != blank %}
+  {% render 'product-disclosure',
+    details_class: 'product-faq',
+    heading: block.settings.question,
+    heading_tag: block.settings.heading_tag,
+    heading_size: block.settings.heading_size,
+    content: block.settings.answer,
+    text_size: block.settings.text_size,
+    attributes: block.shopify_attributes
+  %}
+{% endif %}
+{% schema %}
+{
+  "name": "Product FAQ",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product FAQ"
+    },
+    {
+      "type": "text",
+      "id": "question",
+      "label": "Question",
+      "default": "Question"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "t:typography_options.display_extra_large"
+        },
+        {
+          "value": "h1",
+          "label": "t:typography_options.display_large"
+        },
+        {
+          "value": "h2",
+          "label": "t:typography_options.display_medium"
+        },
+        {
+          "value": "h3",
+          "label": "t:typography_options.heading_extra_large"
+        },
+        {
+          "value": "h4",
+          "label": "t:typography_options.heading_large"
+        },
+        {
+          "value": "h5",
+          "label": "t:typography_options.heading_medium"
+        },
+        {
+          "value": "h6",
+          "label": "t:typography_options.heading_small"
+        },
+        {
+          "value": "h7",
+          "label": "t:typography_options.heading_extra_small"
+        },
+        {
+          "value": "custom",
+          "label": "t:typography_options.custom"
+        }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "HTML Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "x-large",
+          "label": "X-large"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "x-small",
+          "label": "X-small"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "richtext",
+      "id": "answer",
+      "label": "Answer"
+    }
+  ]
+}
+{% endschema %}
