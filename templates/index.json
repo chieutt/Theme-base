@@ -1350,7 +1350,7 @@
             "item_alignment": "center",
             "height_desktop": 54,
             "height_mobile": 46,
-            "color_scheme": "scheme-4"
+            "color_scheme": "scheme-3"
           },
           "blocks": {
             "primary_permanence": {
@@ -1503,7 +1503,7 @@
             "item_alignment": "center",
             "height_desktop": 54,
             "height_mobile": 46,
-            "color_scheme": "scheme-4"
+            "color_scheme": "scheme-3"
           },
           "blocks": {
             "secondary_sourced": {
@@ -1657,7 +1657,7 @@
         "enable_parallax": true,
         "parallax_strength": 180,
         "parallax_strength_mobile": 72,
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-3",
         "padding_top": 12,
         "padding_bottom": 12
       }
