@@ -2678,13 +2678,25 @@
               "type": "product-usp-list",
               "name": "Product benefits",
               "settings": {
-                "columns_desktop": "3",
+                "columns_desktop": "4",
                 "columns_mobile": "2",
                 "content_alignment": "left",
                 "text_size": "small",
                 "icon_size": "small"
               },
               "blocks": {
+                "product_benefit_item_FkrgfQ": {
+                  "type": "product-benefit-item",
+                  "name": "Benefit item",
+                  "settings": {
+                    "icon": "truck",
+                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                    "page": "",
+                    "show_page_popup": false,
+                    "page_popup_label": ""
+                  },
+                  "blocks": {}
+                },
                 "product_benefit_item_6PeqhH": {
                   "type": "product-benefit-item",
                   "settings": {
@@ -2720,6 +2732,7 @@
                 }
               },
               "block_order": [
+                "product_benefit_item_FkrgfQ",
                 "product_benefit_item_6PeqhH",
                 "product_benefit_item_WTPAaj",
                 "product_benefit_item_BmCt3q"
