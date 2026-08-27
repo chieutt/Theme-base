@@ -57,7 +57,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/faq-icon1.png",
-            "heading": "Ordering &amp; delivery",
+            "heading": "Ordering & delivery",
             "title": "Before your piece arrives",
             "anchor_id": "orders",
             "text": "<p>What happens once your order is placed.</p>"
@@ -67,7 +67,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/faq-icon2.png",
-            "heading": "Returns &amp; exchanges",
+            "heading": "Returns & exchanges",
             "title": "A considered next step",
             "anchor_id": "",
             "text": "<p>Clear guidance when a piece is not quite right.</p>"
@@ -77,7 +77,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/faq-icon3.png",
-            "heading": "Care &amp; materials",
+            "heading": "Care & materials",
             "title": "For the years ahead",
             "anchor_id": "",
             "text": "<p>How to keep your piece close and looking its best.</p>"
@@ -87,7 +87,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/faq-icon4.png",
-            "heading": "Gifting &amp; service",
+            "heading": "Gifting & service",
             "title": "A more personal gesture",
             "anchor_id": "",
             "text": "<p>Help with gifting, care and client services.</p>"
@@ -125,7 +125,7 @@
         "group_orders": {
           "type": "group_heading",
           "settings": {
-            "heading": "Ordering &amp; delivery",
+            "heading": "Ordering & delivery",
             "heading_size": "h2",
             "heading_tag": "h2",
             "text": "<p>What to expect once you have chosen your piece.</p>",
@@ -163,7 +163,7 @@
         "group_shipping": {
           "type": "group_heading",
           "settings": {
-            "heading": "Returns &amp; exchanges",
+            "heading": "Returns & exchanges",
             "heading_size": "h2",
             "heading_tag": "h2",
             "text": "<p>Clear guidance when your order needs a second look.</p>",
