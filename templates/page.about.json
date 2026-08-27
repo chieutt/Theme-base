@@ -12,35 +12,39 @@
     "about_intro": {
       "type": "image-with-text",
       "blocks": {
-        "media": {
+        "hero_image": {
           "type": "media",
+          "static": true,
           "settings": {
             "image": "shopify://shop_images/about1.jpg",
             "alt": "Jewellery collection",
             "focal_point": "center"
           }
         },
-        "subheading": {
-          "type": "heading",
+        "eyebrow": {
+          "type": "label",
+          "static": true,
           "settings": {
-            "heading": "<p>THE HOUSE OF ORLUNE</p>",
-            "type_preset": "h7"
+            "text": "<p>THE HOUSE OF ORLUNE</p>"
           }
         },
         "heading": {
           "type": "heading",
+          "static": true,
           "settings": {
             "heading": "<h1>Jewelry, made personal.</h1>"
           }
         },
         "text": {
           "type": "text",
+          "static": true,
           "settings": {
             "text": "<p>Orlune creates jewelry with presence: sculptural forms, luminous stones and details that become more personal with wear.</p><p>Every piece begins with a quiet study of proportion, material and light—then is finished for the life it will live with you.</p>"
           }
         },
         "button": {
           "type": "button",
+          "static": true,
           "settings": {
             "label": "Explore the collection",
             "link": "/collections/all",
@@ -48,13 +52,6 @@
           }
         }
       },
-      "block_order": [
-        "media",
-        "subheading",
-        "heading",
-        "text",
-        "button"
-      ],
       "settings": {
         "media_position": "left",
         "content_alignment": "left",
@@ -141,40 +138,37 @@
     "founder_story": {
       "type": "image-with-text",
       "blocks": {
-        "media": {
+        "hero_image": {
           "type": "media",
+          "static": true,
           "settings": {
             "image": "shopify://shop_images/about3.jpg",
             "alt": "Founder portrait",
             "focal_point": "center"
           }
         },
-        "subheading": {
-          "type": "heading",
+        "eyebrow": {
+          "type": "label",
+          "static": true,
           "settings": {
-            "heading": "<p>OUR POINT OF VIEW</p>",
-            "type_preset": "h7"
+            "text": "<p>OUR POINT OF VIEW</p>"
           }
         },
         "heading": {
           "type": "heading",
+          "static": true,
           "settings": {
             "heading": "<h2>Form follows feeling.</h2>"
           }
         },
         "text": {
           "type": "text",
+          "static": true,
           "settings": {
             "text": "<p>We begin with the way a piece should feel: the weight against the skin, the turn of a setting, the flash of a stone in motion.</p><p><strong>ORLUNE / CREATIVE DIRECTION</strong></p>"
           }
         }
       },
-      "block_order": [
-        "media",
-        "subheading",
-        "heading",
-        "text"
-      ],
       "settings": {
         "media_position": "right",
         "content_alignment": "left",
@@ -188,35 +182,39 @@
     "design_vision": {
       "type": "image-with-text",
       "blocks": {
-        "media": {
+        "hero_image": {
           "type": "media",
+          "static": true,
           "settings": {
             "image": "shopify://shop_images/about4.jpg",
             "alt": "Jewellery craft detail",
             "focal_point": "center"
           }
         },
-        "subheading": {
-          "type": "heading",
+        "eyebrow": {
+          "type": "label",
+          "static": true,
           "settings": {
-            "heading": "<p>THE PROCESS</p>",
-            "type_preset": "h7"
+            "text": "<p>THE PROCESS</p>"
           }
         },
         "heading": {
           "type": "heading",
+          "static": true,
           "settings": {
             "heading": "<h2>Character, held in form.</h2>"
           }
         },
         "text": {
           "type": "text",
+          "static": true,
           "settings": {
             "text": "<p>From the first line to the final polish, we refine every element until the piece feels inevitable: expressive, enduring and unmistakably yours.</p>"
           }
         },
         "button": {
           "type": "button",
+          "static": true,
           "settings": {
             "label": "Discover the house",
             "link": "/collections/all",
@@ -224,13 +222,6 @@
           }
         }
       },
-      "block_order": [
-        "media",
-        "subheading",
-        "heading",
-        "text",
-        "button"
-      ],
       "settings": {
         "media_position": "left",
         "content_alignment": "left",

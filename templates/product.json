@@ -301,35 +301,39 @@
     "image-with-text-01": {
       "type": "image-with-text",
       "blocks": {
-        "media": {
+        "hero_image": {
           "type": "media",
+          "static": true,
           "settings": {
             "image": "shopify://shop_images/image-with-text-ring-hands.jpg",
             "alt": "",
             "focal_point": "center center"
           }
         },
-        "subheading": {
-          "type": "heading",
+        "eyebrow": {
+          "type": "label",
+          "static": true,
           "settings": {
-            "heading": "<p>INVEST NOW, WEAR FOREVER</p>",
-            "type_preset": "h7"
+            "text": "<p>THE ORLUNE ATELIER</p>"
           }
         },
         "heading": {
           "type": "heading",
+          "static": true,
           "settings": {
             "heading": "<h2>Made for the years ahead.</h2>"
           }
         },
         "text": {
           "type": "text",
+          "static": true,
           "settings": {
             "text": "<p>Each Orlune object begins with proportion, light and a material chosen to deepen with wear.</p><p>For a personal commission, our atelier works closely with you from stone selection to the final finish.</p>"
           }
         },
         "button": {
           "type": "button",
+          "static": true,
           "settings": {
             "label": "Discover the house",
             "link": "/collections/all",
@@ -337,13 +341,6 @@
           }
         }
       },
-      "block_order": [
-        "media",
-        "subheading",
-        "heading",
-        "text",
-        "button"
-      ],
       "settings": {
         "media_position": "right",
         "content_alignment": "left",
