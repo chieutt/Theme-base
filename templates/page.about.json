@@ -23,27 +23,27 @@
         "subheading": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Our story</p>",
+            "heading": "<p>THE HOUSE OF ORLUNE</p>",
             "type_preset": "h7"
           }
         },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h1>About Us</h1>"
+            "heading": "<h1>Jewelry, made personal.</h1>"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>We are endlessly inspired and moved by the earth and all of her magic. Our fascination with the natural world informs jewellery that will be a reminder of her beauty to others who wear them.</p><p>In 2022, we chose to extend our narrative, which began in Toronto, to Bangkok, a city where rich culture intertwines with historical expertise of jewellery artisans.</p>"
+            "text": "<p>Orlune creates jewelry with presence: sculptural forms, luminous stones and details that become more personal with wear.</p><p>Every piece begins with a quiet study of proportion, material and light—then is finished for the life it will live with you.</p>"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "label": "Discover more",
-            "link": "",
+            "label": "Explore the collection",
+            "link": "/collections/all",
             "style": "tertiary"
           }
         }
@@ -71,9 +71,9 @@
         "quote": {
           "type": "testimonial",
           "settings": {
-            "quote": "When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking.",
-            "author": "Clem",
-            "role": "Founder of Orlune"
+            "quote": "We believe the pieces you keep closest should ask to be noticed slowly—and reward a lifetime of looking.",
+            "author": "Orlune",
+            "role": "Creative direction"
           }
         }
       },
@@ -93,20 +93,20 @@
         "subheading": {
           "type": "label",
           "settings": {
-            "text": "<p>Introducing</p>"
+            "text": "<p>MATERIAL, CONSIDERED</p>"
           }
         },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Sustainability and Ethics</h2>"
+            "heading": "<h2>Made with intention.</h2>"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "label": "Our sustainability",
-            "link": "",
+            "label": "Explore the collection",
+            "link": "/collections/all",
             "style": "secondary"
           }
         }
@@ -152,20 +152,20 @@
         "subheading": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Invest now, wear forever</p>",
+            "heading": "<p>OUR POINT OF VIEW</p>",
             "type_preset": "h7"
           }
         },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>An Interview With Our Founder</h2>"
+            "heading": "<h2>Form follows feeling.</h2>"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Our founder's vision is to create thoughtfully designed jewellery that becomes part of your everyday story.</p><p><strong>ORLUNE FOUNDER AND CREATIVE DIRECTOR</strong></p>"
+            "text": "<p>We begin with the way a piece should feel: the weight against the skin, the turn of a setting, the flash of a stone in motion.</p><p><strong>ORLUNE / CREATIVE DIRECTION</strong></p>"
           }
         }
       },
@@ -199,27 +199,27 @@
         "subheading": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Our vision</p>",
+            "heading": "<p>THE PROCESS</p>",
             "type_preset": "h7"
           }
         },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Our Design and Vision</h2>"
+            "heading": "<h2>Character, held in form.</h2>"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>We pair enduring craftsmanship with a modern point of view, creating expressive pieces designed to be worn, treasured and passed on.</p>"
+            "text": "<p>From the first line to the final polish, we refine every element until the piece feels inevitable: expressive, enduring and unmistakably yours.</p>"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "label": "Discover more",
-            "link": "",
+            "label": "Discover the house",
+            "link": "/collections/all",
             "style": "tertiary"
           }
         }
@@ -248,40 +248,40 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/about-icon2.png",
-            "heading": "Quality That Lasts",
+            "heading": "Made to keep",
             "title": "",
             "anchor_id": "",
-            "text": "<p>Every piece is covered by our two-year warranty.</p>"
+            "text": "<p>Objects designed to become part of your story.</p>"
           }
         },
         "sustainable": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/about-icon3.png",
-            "heading": "Sustainably Made",
+            "heading": "Material first",
             "title": "",
             "anchor_id": "",
-            "text": "<p>Handcrafted from responsibly sourced materials.</p>"
+            "text": "<p>Stone, metal and finish chosen with intention.</p>"
           }
         },
         "service": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/about-icon4.png",
-            "heading": "Premium Service",
+            "heading": "Here to help",
             "title": "",
             "anchor_id": "",
-            "text": "<p>Thoughtful service from discovery to delivery.</p>"
+            "text": "<p>Considered guidance from first question to final delivery.</p>"
           }
         },
         "gift": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/about-icon5.png",
-            "heading": "Gift Wrapping",
+            "heading": "For giving",
             "title": "",
             "anchor_id": "",
-            "text": "<p>Complimentary gift wrap for every special moment.</p>"
+            "text": "<p>Pieces chosen for the moments that stay with us.</p>"
           }
         }
       },
@@ -301,7 +301,7 @@
         "item_style": "default",
         "icon_size": "small",
         "content_gap": 12,
-        "heading_size": "h4",
+        "heading_size": "h6",
         "heading_tag": "h3",
         "text_size": "small",
         "color_scheme": "scheme-1",
@@ -316,26 +316,26 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Join Our Community</h2>"
+            "heading": "<h2>Private notes, from the house.</h2>"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Sign up for our newsletter to receive stories, new collections and private offers.</p>"
+            "text": "<p>New collections, atelier stories and occasional invitations—delivered with restraint.</p>"
           }
         },
         "form": {
           "type": "newsletter_form",
           "settings": {
             "email_label": "Email address",
-            "email_placeholder": "Enter your email",
+            "email_placeholder": "YOUR EMAIL ADDRESS",
             "hide_label": true,
             "show_required_marker": false,
-            "button_label": "Subscribe",
+            "button_label": "JOIN THE LIST",
             "button_style": "primary",
             "form_layout": "inline",
-            "success_message": "Thank you for subscribing."
+            "success_message": "Thank you. You are now on the list."
           }
         }
       },
