@@ -172,7 +172,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Description",
-                    "heading_size": "h6",
+                    "heading_size": "h7",
                     "html_tag": "h2",
                     "content_source": "description",
                     "metafield_namespace": "custom",
@@ -189,7 +189,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Care guide",
-                    "heading_size": "h6",
+                    "heading_size": "h7",
                     "html_tag": "h2",
                     "content_source": "manual",
                     "metafield_namespace": "custom",
@@ -206,7 +206,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Shipping and returns",
-                    "heading_size": "h6",
+                    "heading_size": "h7",
                     "html_tag": "h2",
                     "content_source": "manual",
                     "metafield_namespace": "custom",
@@ -246,7 +246,7 @@
               "type": "product-payment",
               "settings": {
                 "heading": "Pay With",
-                "heading_size": "h6",
+                "heading_size": "h7",
                 "html_tag": "h2",
                 "text_size": "small",
                 "note": "Your transaction is protected with advanced security measures to keep your information confidential."
