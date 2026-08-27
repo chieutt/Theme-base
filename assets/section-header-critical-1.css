@@ -1054,8 +1054,8 @@ html[scroll-lock] .header__menu-overlay {
     content: '';
     transition: width 400ms ease;
   }
-.header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):hover::after,
-  .header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):focus-visible::after {
+.header__mega-link--nested:not(.button):hover::after,
+  .header__mega-link--nested:not(.button):focus-visible::after {
     width: 100%;
   }
 .header--underline-active a.header__mega-link--active:not(.button) {
