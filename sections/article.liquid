@@ -84,11 +84,13 @@
                         <div class="article__comment" data-reveal-item style="--reveal-order: {{ forloop.index0 }};"><p>{{ comment.content }}</p><p class="article__meta">{{ comment.author | escape }} · {{ comment.created_at | time_tag: format: 'date' }}</p></div>
                       {% endfor %}
                     </div>
-                    {% if paginate.pages > 1 %}
-                      <nav class="article__comment-pagination" aria-label="{{ 'article.comment_pagination' | t | escape }}">
-                        {{ paginate | default_pagination }}
-                      </nav>
-                    {% endif %}
+                    {% render 'pagination',
+                      paginate: paginate,
+                      base_class: 'article__comment-pagination',
+                      aria_label: 'article.comment_pagination' | t,
+                      previous_label: 'article.previous_page' | t,
+                      next_label: 'article.next_page' | t
+                    %}
                   {% endif %}
                 {% endpaginate %}
                 {% if block.settings.show_form %}
@@ -146,8 +148,7 @@
   .article__comment { padding: 20px; border: 1px solid var(--color-variant-border); }
   .article__comment p:first-child { line-height: 1.55; }
   .article__comment .article__meta { margin-top: 12px; }
-  .article__comment-pagination { margin: 24px auto 0; text-align: center; }
-  .article__comment-pagination .page, .article__comment-pagination .next, .article__comment-pagination .prev { display: inline-block; margin-inline: 6px; }
+  .article__comment-pagination { display: flex; justify-content: center; padding-top: 24px; }
   .article__comment-form { display: grid; gap: 20px; max-width: 700px; margin: 36px auto 0; }
   .article__comment-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .article__comment-fields label { align-self: end; font-size: var(--label-size); }

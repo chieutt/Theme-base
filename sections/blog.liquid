@@ -67,7 +67,15 @@
                 {% endif %}
               {% endfor %}
             </div>
-            {% if block.settings.show_pagination and paginate.pages > 1 %}<nav class="blog-index__pagination" aria-label="{{ 'blog.pagination' | t | escape }}">{{ paginate | default_pagination }}</nav>{% endif %}
+            {% if block.settings.show_pagination %}
+              {% render 'pagination',
+                paginate: paginate,
+                base_class: 'blog-index__pagination',
+                aria_label: 'blog.pagination' | t,
+                previous_label: 'blog.previous_page' | t,
+                next_label: 'blog.next_page' | t
+              %}
+            {% endif %}
           {% endpaginate %}
       {% endcase %}
     {% endfor %}
@@ -91,7 +99,7 @@
   .blog-index__featured-title { margin: 12px 0 0; color: inherit; font-size: clamp(32px, 4vw, 58px); line-height: 1.05; }
   .blog-index__featured-title a, .blog-index__card-title a { color: inherit; text-decoration: none; }
   .blog-index__metadata { margin-top: 12px; font-size: var(--label-size); }
-  .blog-index__featured-button { margin-top: 26px; border-color: #fff; background: #fff; color: #222; }
+  .blog-index__featured-button { margin-top: 26px; }
   .blog-index__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--blog-index-card-gap); padding-top: 46px; }
   .blog-index__card { min-width: 0; }
   .blog-index__card-media { display: block; aspect-ratio: 1.25; overflow: hidden; background: var(--color-variant-component-background); }
