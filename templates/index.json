@@ -3016,7 +3016,7 @@
                   "name": "Benefit item",
                   "settings": {
                 "icon": "truck",
-                "text": "<p>Shipping options and pricing are calculated at checkout.</p>",
+                "text": "<p>Shipping at checkout</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3027,7 +3027,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                 "icon": "return",
-                "text": "<p>See our returns policy for eligibility and details.</p>",
+                "text": "<p>Easy returns</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3038,7 +3038,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                 "icon": "shield",
-                "text": "<p>Lifetime Warranty</p>",
+                "text": "<p>Lifetime warranty</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3049,7 +3049,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                 "icon": "sparkles",
-                "text": "<p>Sustainably Made</p>",
+                "text": "<p>Responsibly made</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
