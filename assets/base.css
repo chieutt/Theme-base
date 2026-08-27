@@ -867,7 +867,7 @@ body {
 .hover-underline::after {
   position: absolute;
   right: 0;
-  bottom: -3px;
+  bottom: var(--hover-underline-offset, -3px);
   left: 0;
   height: 1px;
   background: currentcolor;

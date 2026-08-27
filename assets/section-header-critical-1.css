@@ -423,6 +423,7 @@ html[scroll-lock] .header__menu-overlay {
     }
     .header__navigation--desktop > .header__navigation-content > .header__menu > .header__menu-item > .header__menu-link > :is(.header__menu-link-title, .header__navigation-label),
     .header__navigation--desktop > .header__navigation-content > .header__menu > .header__menu-item > details > .header__menu-link > :is(.header__menu-link-title, .header__navigation-label) {
+      --hover-underline-offset: 0px;
       display: block;
       max-width: clamp(84px, 11vw, 150px);
       overflow: hidden;
