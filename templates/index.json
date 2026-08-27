@@ -2920,7 +2920,7 @@
               "type": "text",
               "name": "t:typography_blocks.text",
               "settings": {
-                "text": "<p>Use this text to share information about your brand with your customers.</p>",
+                "text": "<p>A study in proportion, light and the details that make a piece entirely your own.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
