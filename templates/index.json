@@ -17,13 +17,13 @@
           "settings": {
             "image_alt": "",
             "image_position": "right center",
-            "content_width": 520,
+            "content_width": 440,
             "gap": 24,
             "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
-            "nav_label": "Nocturne",
-            "nav_detail": "HOUSE SIGNATURE",
+            "nav_label": "The House",
+            "nav_detail": "SIGNATURE PIECES",
             "color_scheme": "scheme-4",
             "overlay_color": "#000000",
             "overlay_opacity": 30,
@@ -33,7 +33,7 @@
             "editorial_nocturne_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>OBJECT 01 / THE HOUSE SIGNATURE</p>",
+                "text": "<p>THE HOUSE OF SPINEL</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -55,7 +55,7 @@
             "editorial_nocturne_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>The Nocturne<br/>Collar.</h1>",
+                "heading": "<h1>Jewelry,<br/>held close.</h1>",
                 "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -80,7 +80,7 @@
             "editorial_nocturne_text": {
               "type": "text",
               "settings": {
-                "text": "<p>A singular cushion-cut spinel held at the throat by sculptural gold—one unmistakable object, made to order.</p>",
+                "text": "<p>Natural spinel and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -113,7 +113,7 @@
                 "editorial_nocturne_button": {
                   "type": "button",
                   "settings": {
-                    "label": "DISCOVER THE COLLAR",
+                    "label": "EXPLORE SIGNATURE PIECES",
                     "link": "/collections/all",
                     "style": "primary",
                     "open_in_new_tab": false,
@@ -132,7 +132,7 @@
             "editorial_nocturne_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · ONE OF ONE</p>",
+                "text": "<p>NATURAL SPINEL · 18K GOLD · MADE TO ORDER</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -179,13 +179,13 @@
           "settings": {
             "image_alt": "",
             "image_position": "center center",
-            "content_width": 520,
+            "content_width": 440,
             "gap": 24,
             "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
-            "nav_label": "Equinox",
-            "nav_detail": "SCULPTURAL LIGHT",
+            "nav_label": "The Edit",
+            "nav_detail": "QUIET RADIANCE",
             "color_scheme": "scheme-4",
             "overlay_color": "#000000",
             "overlay_opacity": 25,
@@ -195,7 +195,7 @@
             "editorial_equinox_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>OBJECT 02 / THE LIGHT STUDY</p>",
+                "text": "<p>THE NEW EDIT</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -217,7 +217,7 @@
             "editorial_equinox_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>Light, held<br/>in balance.</h1>",
+                "heading": "<h1>Light in its<br/>rarest form.</h1>",
                 "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -242,7 +242,7 @@
             "editorial_equinox_text": {
               "type": "text",
               "settings": {
-                "text": "<p>A luminous line of gold shaped around a stone with a quieter kind of fire</p>",
+                "text": "<p>Sculptural gold meets luminous spinel in pieces chosen for clarity, character, and enduring presence.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -275,7 +275,7 @@
                 "editorial_equinox_button": {
                   "type": "button",
                   "settings": {
-                    "label": "DISCOVER THE EQUINOX",
+                    "label": "SHOP THE NEW EDIT",
                     "link": "/collections/all",
                     "style": "primary",
                     "open_in_new_tab": false,
@@ -294,7 +294,7 @@
             "editorial_equinox_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>SCULPTURAL GOLD · NATURAL SPINEL · ONE OF ONE</p>",
+                "text": "<p>NATURAL SPINEL · SCULPTURAL GOLD · LIMITED RELEASE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -341,13 +341,13 @@
           "settings": {
             "image_alt": "",
             "image_position": "center center",
-            "content_width": 520,
+            "content_width": 420,
             "gap": 24,
             "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
-            "nav_label": "Vesper",
-            "nav_detail": "WRIST STUDY",
+            "nav_label": "Occasion",
+            "nav_detail": "EVENING OBJECTS",
             "color_scheme": "scheme-4",
             "overlay_color": "#000000",
             "overlay_opacity": 20,
@@ -357,7 +357,7 @@
             "editorial_vesper_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>OBJECT 03 / THE WRIST STUDY</p>",
+                "text": "<p>AFTER DARK</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -379,7 +379,7 @@
             "editorial_vesper_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>The Vesper<br/>after dark.</h1>",
+                "heading": "<h1>For evenings worth<br/>remembering.</h1>",
                 "type_preset": "h1",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -404,7 +404,7 @@
             "editorial_vesper_text": {
               "type": "text",
               "settings": {
-                "text": "<p>A considered curve for evenings that ask for one precise point of colour.</p>",
+                "text": "<p>Refined silhouettes and vivid stones for the moments that call for something unforgettable.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -437,7 +437,7 @@
                 "editorial_vesper_button": {
                   "type": "button",
                   "settings": {
-                    "label": "DISCOVER THE VESPER",
+                    "label": "DISCOVER EVENING PIECES",
                     "link": "/collections/all",
                     "style": "primary",
                     "open_in_new_tab": false,
@@ -456,7 +456,7 @@
             "editorial_vesper_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · MADE TO LAST</p>",
+                "text": "<p>NATURAL GEMSTONES · 18K GOLD · MADE TO LAST</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
