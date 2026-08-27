@@ -115,7 +115,7 @@
                   "settings": {
                     "label": "EXPLORE SIGNATURE PIECES",
                     "link": "/collections/all",
-                    "style": "primary",
+                    "style": "secondary",
                     "open_in_new_tab": false,
                     "icon": "arrow-right",
                     "reveal_type": "none",
@@ -277,7 +277,7 @@
                   "settings": {
                     "label": "SHOP THE NEW EDIT",
                     "link": "/collections/all",
-                    "style": "primary",
+                    "style": "secondary",
                     "open_in_new_tab": false,
                     "icon": "arrow-right",
                     "reveal_type": "none",
@@ -379,7 +379,7 @@
             "editorial_vesper_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>For evenings worth<br/>remembering.</h1>",
+                "heading": "<h1>An evening,<br/>remembered.</h1>",
                 "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -439,7 +439,7 @@
                   "settings": {
                     "label": "DISCOVER EVENING PIECES",
                     "link": "/collections/all",
-                    "style": "primary",
+                    "style": "secondary",
                     "open_in_new_tab": false,
                     "icon": "arrow-right",
                     "reveal_type": "none",
