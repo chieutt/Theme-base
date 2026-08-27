@@ -526,6 +526,18 @@ html:has(.product-size-chart.is-open) { overflow: hidden; }
 .product-lightbox-open {
   overflow: hidden;
 }
+
+/* The lightbox is rendered inside the product section, which can sit below the
+   sticky header's stacking context. Hide the header only while the modal is
+   active so the close control is never obscured. */
+html.product-lightbox-open .shopify-section:has(> .header) {
+  z-index: 0;
+}
+
+html.product-lightbox-open .header {
+  visibility: hidden;
+  pointer-events: none;
+}
 @media (max-width: 1149.98px) {
   .product-lightbox__counter {
     top: 12px;
