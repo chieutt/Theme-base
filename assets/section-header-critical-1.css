@@ -333,31 +333,10 @@ html[scroll-lock] .header__menu-overlay {
     height: 12px;
     color: color-mix(in srgb, var(--color-heading) 70%, transparent);
   }
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-    .header__menu-link > :is(.header__menu-link-title, .header__navigation-label) {
-      position: relative;
-      display: inline-block;
-      text-decoration: none;
-    }
-    .header__menu-link > :is(.header__menu-link-title, .header__navigation-label)::after {
-      position: absolute;
-      right: 0;
-      /* Desktop labels use overflow:hidden for ellipsis, so keep the underline inside their paint box. */
-      bottom: 0;
-      left: 0;
-      height: 1px;
-      background: currentColor;
-      content: '';
-      transform: scaleX(0);
-      transform-origin: left center;
-      transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
-    }
-    .header--underline-active .header__menu-link:hover > :is(.header__menu-link-title, .header__navigation-label)::after,
-    .header--underline-active .header__menu-link:focus-visible > :is(.header__menu-link-title, .header__navigation-label)::after,
-    .header--underline-active .header__menu-link--active > :is(.header__menu-link-title, .header__navigation-label)::after,
-    .header--underline-active .header__submenu-disclosure[open]:not([data-closing='true']) > .header__menu-link > :is(.header__menu-link-title, .header__navigation-label)::after {
-      transform: scaleX(1);
-    }
+.header--underline-active .header__menu-link--active > .hover-underline::after,
+  .header--underline-active .header__submenu-disclosure[open]:not([data-closing='true']) > .header__menu-link > .hover-underline::after {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 .header__submenu-disclosure[open] > .header__menu-link .header__dropdown-icon--chevron {
     transform: rotate(180deg);
@@ -431,11 +410,6 @@ html[scroll-lock] .header__menu-overlay {
 .header--underline-active .header__submenu-link--active {
     color: var(--color-heading);
   }
-.header--underline-active .header__submenu-link--active .header__submenu-link-text {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-  }
 .header__submenu-nested {
     margin: 8px 0 0;
     padding-left: 16px;
@@ -449,6 +423,7 @@ html[scroll-lock] .header__menu-overlay {
     }
     .header__navigation--desktop > .header__navigation-content > .header__menu > .header__menu-item > .header__menu-link > :is(.header__menu-link-title, .header__navigation-label),
     .header__navigation--desktop > .header__navigation-content > .header__menu > .header__menu-item > details > .header__menu-link > :is(.header__menu-link-title, .header__navigation-label) {
+      --hover-underline-offset: 0px;
       display: block;
       max-width: clamp(84px, 11vw, 150px);
       overflow: hidden;
@@ -583,13 +558,57 @@ html[scroll-lock] .header__menu-overlay {
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) > .header__submenu > .header__submenu-item--has-children:is(:hover, :focus-within) {
       background: color-mix(in srgb, var(--color-heading) 6%, transparent);
     }
-    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li:is(:hover, :focus-within) {
-      background: color-mix(in srgb, var(--color-heading) 6%, transparent);
-    }
   }
 .header__menu-item--mega {
     position: static;
   }
+.header__menu-item--more {
+    position: relative;
+  }
+@media (min-width: 1024px) {
+  .header__overflow-submenu {
+    width: min(320px, calc(100vw - (var(--page-margin) * 2)));
+    min-width: 240px;
+    max-height: min(70vh, 560px);
+    overflow-y: auto;
+  }
+  .header__overflow-submenu .header__mega-surface {
+    padding: 18px;
+    border-top: 0;
+    background: var(--gradient-background, var(--color-background));
+  }
+  .header__overflow-submenu .header__mega-inner,
+  .header__overflow-submenu .header__overflow-group,
+  .header__overflow-submenu .header__mega-navigation,
+  .header__overflow-submenu .header__mega-list,
+  .header__overflow-submenu .header__mega-lists {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    min-width: 0;
+  }
+  .header__overflow-submenu .header__overflow-group + .header__overflow-group {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-variant-border);
+  }
+  .header__overflow-submenu .header__mega-lists {
+    grid-template-columns: 1fr !important;
+  }
+  .header__overflow-submenu .header__mega-list ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .header__overflow-submenu .header__mega-nested {
+    padding-inline-start: 14px;
+  }
+  .header__overflow-submenu .header__mega-promotions {
+    display: none;
+  }
+}
 .header__mega-panel {
     --header-mega-text-size: var(--p1-size-md);
     --header-mega-nested-text-size: calc(var(--p1-size-md) - 2px);
@@ -963,7 +982,6 @@ html[scroll-lock] .header__menu-overlay {
     line-height: 1.5;
   }
 .header a.header__mega-link--nested:not(.button) {
-    position: relative;
     color: var(--color-text);
     font-family: var(--body-font-family);
     font-style: var(--body-font-style);
@@ -992,23 +1010,9 @@ html[scroll-lock] .header__menu-overlay {
   .header a.header__mega-link--active:not(.button) {
     color: var(--color-heading);
   }
-.header a.header__mega-link--nested:not(.button)::after {
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    height: 1px;
-    width: 0;
-    background: currentColor;
-    content: '';
-    transition: width 400ms ease;
-  }
-.header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):hover::after,
-  .header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):focus-visible::after {
-    width: 100%;
-  }
-.header--underline-active a.header__mega-link--active:not(.button) {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+.header--underline-active a.header__mega-link--active:not(.button) .hover-underline::after {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 .header__mega-promotions {
     display: grid;

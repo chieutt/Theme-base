@@ -17,13 +17,13 @@
           "settings": {
             "image_alt": "",
             "image_position": "right center",
-            "content_width": 520,
+            "content_width": 440,
             "gap": 24,
             "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
-            "nav_label": "Nocturne",
-            "nav_detail": "HOUSE SIGNATURE",
+            "nav_label": "The House",
+            "nav_detail": "SIGNATURE PIECES",
             "color_scheme": "scheme-4",
             "overlay_color": "#000000",
             "overlay_opacity": 30,
@@ -33,7 +33,7 @@
             "editorial_nocturne_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>OBJECT 01 / THE HOUSE SIGNATURE</p>",
+                "text": "<p>THE HOUSE OF ORLUNE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -55,7 +55,7 @@
             "editorial_nocturne_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>The Nocturne<br/>Collar.</h1>",
+                "heading": "<h1>Jewelry,<br/>held close.</h1>",
                 "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -80,7 +80,7 @@
             "editorial_nocturne_text": {
               "type": "text",
               "settings": {
-                "text": "<p>A singular cushion-cut spinel held at the throat by sculptural gold—one unmistakable object, made to order.</p>",
+                "text": "<p>Natural gemstones and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -113,9 +113,9 @@
                 "editorial_nocturne_button": {
                   "type": "button",
                   "settings": {
-                    "label": "DISCOVER THE COLLAR",
+                    "label": "EXPLORE SIGNATURE PIECES",
                     "link": "/collections/all",
-                    "style": "primary",
+                    "style": "secondary",
                     "open_in_new_tab": false,
                     "icon": "arrow-right",
                     "reveal_type": "none",
@@ -132,7 +132,7 @@
             "editorial_nocturne_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · ONE OF ONE</p>",
+                "text": "<p>NATURAL GEMSTONES · 18K GOLD · MADE TO ORDER</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -179,13 +179,13 @@
           "settings": {
             "image_alt": "",
             "image_position": "center center",
-            "content_width": 520,
+            "content_width": 440,
             "gap": 24,
             "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
-            "nav_label": "Equinox",
-            "nav_detail": "SCULPTURAL LIGHT",
+            "nav_label": "The Edit",
+            "nav_detail": "QUIET RADIANCE",
             "color_scheme": "scheme-4",
             "overlay_color": "#000000",
             "overlay_opacity": 25,
@@ -195,7 +195,7 @@
             "editorial_equinox_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>OBJECT 02 / THE LIGHT STUDY</p>",
+                "text": "<p>THE NEW EDIT</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -217,7 +217,7 @@
             "editorial_equinox_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>Light, held<br/>in balance.</h1>",
+                "heading": "<h1>Light in its<br/>rarest form.</h1>",
                 "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -242,7 +242,7 @@
             "editorial_equinox_text": {
               "type": "text",
               "settings": {
-                "text": "<p>A luminous line of gold shaped around a stone with a quieter kind of fire</p>",
+                "text": "<p>Sculptural gold meets luminous gemstones in pieces chosen for clarity, character, and enduring presence.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -275,9 +275,9 @@
                 "editorial_equinox_button": {
                   "type": "button",
                   "settings": {
-                    "label": "DISCOVER THE EQUINOX",
+                    "label": "SHOP THE NEW EDIT",
                     "link": "/collections/all",
-                    "style": "primary",
+                    "style": "secondary",
                     "open_in_new_tab": false,
                     "icon": "arrow-right",
                     "reveal_type": "none",
@@ -294,7 +294,7 @@
             "editorial_equinox_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>SCULPTURAL GOLD · NATURAL SPINEL · ONE OF ONE</p>",
+                "text": "<p>NATURAL GEMSTONES · SCULPTURAL GOLD · LIMITED RELEASE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -341,13 +341,13 @@
           "settings": {
             "image_alt": "",
             "image_position": "center center",
-            "content_width": 520,
+            "content_width": 420,
             "gap": 24,
             "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
-            "nav_label": "Vesper",
-            "nav_detail": "WRIST STUDY",
+            "nav_label": "Occasion",
+            "nav_detail": "EVENING OBJECTS",
             "color_scheme": "scheme-4",
             "overlay_color": "#000000",
             "overlay_opacity": 20,
@@ -357,7 +357,7 @@
             "editorial_vesper_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>OBJECT 03 / THE WRIST STUDY</p>",
+                "text": "<p>AFTER DARK</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -379,8 +379,8 @@
             "editorial_vesper_heading": {
               "type": "heading",
               "settings": {
-                "heading": "<h1>The Vesper<br/>after dark.</h1>",
-                "type_preset": "h1",
+                "heading": "<h1>An evening,<br/>remembered.</h1>",
+                "type_preset": "h2",
                 "font_size": 50,
                 "font_size_mobile": 30,
                 "text_color": "",
@@ -404,7 +404,7 @@
             "editorial_vesper_text": {
               "type": "text",
               "settings": {
-                "text": "<p>A considered curve for evenings that ask for one precise point of colour.</p>",
+                "text": "<p>Refined silhouettes and vivid stones for the moments that call for something unforgettable.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -437,9 +437,9 @@
                 "editorial_vesper_button": {
                   "type": "button",
                   "settings": {
-                    "label": "DISCOVER THE VESPER",
+                    "label": "DISCOVER EVENING PIECES",
                     "link": "/collections/all",
-                    "style": "primary",
+                    "style": "secondary",
                     "open_in_new_tab": false,
                     "icon": "arrow-right",
                     "reveal_type": "none",
@@ -456,7 +456,7 @@
             "editorial_vesper_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>NATURAL SPINEL · 18K YELLOW GOLD · MADE TO LAST</p>",
+                "text": "<p>NATURAL GEMSTONES · 18K GOLD · MADE TO LAST</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -593,7 +593,7 @@
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>03 / WHY SPINEL</p>",
+            "text": "<p>03 / WHY ORLUNE</p>",
             "text_color": "",
             "color": "text",
             "disable_line_break_mobile": false,
@@ -647,7 +647,7 @@
             "item_gap": 40,
             "heading_size": "h2",
             "text_size": "xs",
-            "accessibility_label": "Why choose Spinel statistics"
+            "accessibility_label": "Why choose Orlune statistics"
           },
           "blocks": {
             "stat_1": {
@@ -1370,7 +1370,7 @@
             "primary_spinel": {
               "type": "label",
               "settings": {
-                "text": "<p>SPINEL</p>",
+                "text": "<p>ORLUNE</p>",
                 "text_color": "",
                 "width": "fit-content",
                 "width_mobile": "fit-content",
@@ -2606,7 +2606,7 @@
         "gift_path_4aq8Mp",
         "gift_path_hyjaFt"
       ],
-      "name": "Gift Spinel",
+      "name": "Orlune gift finder",
       "settings": {
         "section_width": "full",
         "layout_ratio": "balanced",
@@ -2805,7 +2805,7 @@
         "heading_UqUYVP": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Explore Spinel</h2>",
+            "heading": "<h2>Explore Orlune</h2>",
             "type_preset": "h2",
             "font_size": 50,
             "font_size_mobile": 30,
@@ -2920,7 +2920,7 @@
               "type": "text",
               "name": "t:typography_blocks.text",
               "settings": {
-                "text": "<p>Use this text to share information about your brand with your customers.</p>",
+                "text": "<p>A study in proportion, light and the details that make a piece entirely your own.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -3006,7 +3006,7 @@
               "settings": {
                 "columns_desktop": "4",
                 "columns_mobile": "2",
-                "content_alignment": "left",
+                "content_alignment": "center",
                 "text_size": "small",
                 "icon_size": "small"
               },
@@ -3015,8 +3015,8 @@
                   "type": "product-benefit-item",
                   "name": "Benefit item",
                   "settings": {
-                    "icon": "truck",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "truck",
+                "text": "<p>Shipping at checkout</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3026,8 +3026,8 @@
                 "product_benefit_item_6PeqhH": {
                   "type": "product-benefit-item",
                   "settings": {
-                    "icon": "truck",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "return",
+                "text": "<p>Easy returns</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3037,8 +3037,8 @@
                 "product_benefit_item_WTPAaj": {
                   "type": "product-benefit-item",
                   "settings": {
-                    "icon": "return",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "shield",
+                "text": "<p>Lifetime warranty</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3048,8 +3048,8 @@
                 "product_benefit_item_BmCt3q": {
                   "type": "product-benefit-item",
                   "settings": {
-                    "icon": "shield",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "sparkles",
+                "text": "<p>Responsibly made</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3535,7 +3535,7 @@
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>COMMUNITY&nbsp;&nbsp;/&nbsp;&nbsp;CURATED BY SPINEL</p>",
+            "text": "<p>COMMUNITY&nbsp;&nbsp;/&nbsp;&nbsp;CURATED BY ORLUNE</p>",
             "text_color": "",
             "color": "text",
             "disable_line_break_mobile": false,
@@ -3558,7 +3558,7 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>From @spinel,<br>worn by you.</h2>",
+            "heading": "<h2>From @orlune,<br>worn by you.</h2>",
             "type_preset": "h2",
             "font_size": 50,
             "font_size_mobile": 30,
@@ -3610,7 +3610,7 @@
           "type": "button",
           "static": true,
           "settings": {
-            "label": "Visit @spinel",
+            "label": "Visit @orlune",
             "link": "",
             "style": "tertiary",
             "open_in_new_tab": true,
@@ -3635,7 +3635,7 @@
             "circle_label": {
               "type": "label",
               "settings": {
-                "text": "<p>THE SPINEL CIRCLE</p>",
+                "text": "<p>THE ORLUNE CIRCLE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -3707,7 +3707,7 @@
             "circle_button": {
               "type": "button",
               "settings": {
-                "label": "Follow @spinel",
+                "label": "Follow @orlune",
                 "link": "",
                 "style": "tertiary",
                 "open_in_new_tab": true,

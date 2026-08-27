@@ -92,7 +92,7 @@
             {% endif %}
             <details class="header__submenu-disclosure{% unless link_has_destination %} header__submenu-disclosure--no-direct-link{% endunless %}{% if mega_menu_block != nil %} header__submenu-disclosure--mega{% endif %}{% if section.settings.dropdown_trigger == 'hover' %} header__submenu-disclosure--hover{% endif %}{% if section.settings.underline_active_link %} header__submenu-disclosure--underline-active{% endif %}">
               <summary class="header__menu-link{% if link.current or link.child_active %} header__menu-link--active{% endif %}" data-open-label="{{ 'header.open_submenu' | t: item: link.title | escape }}" data-close-label="{{ 'header.close_submenu' | t: item: link.title | escape }}" aria-controls="{{ submenu_id }}">
-                <span class="header__menu-link-title" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
+                <span class="header__menu-link-title hover-underline" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
                 <span class="header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
               </summary>
               {% if mega_menu_block != nil %}
@@ -182,7 +182,7 @@
                                           {% endif %}
                                               <ul class="header__mega-nested" role="list">
                                             {% for grandchild_link in child_link.links %}
-                                              <li>{% if grandchild_link.url != blank and grandchild_link.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if grandchild_link.current %} header__mega-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="{{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></a>{% else %}<span class="header__mega-link header__mega-link--nested"><span class="{{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></span>{% endif %}</li>
+                                              <li>{% if grandchild_link.url != blank and grandchild_link.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if grandchild_link.current %} header__mega-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="header__mega-link-text hover-underline {{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></a>{% else %}<span class="header__mega-link header__mega-link--nested"><span class="header__mega-link-text hover-underline {{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></span>{% endif %}</li>
                                             {% endfor %}
                                           </ul>
                                         {% else %}
@@ -211,7 +211,7 @@
                               <div class="header__mega-promo-content">
                                 {% if mega_menu_block.settings.promotion_1_heading != blank %}<{{ promotion_1_heading_tag }} class="header__mega-promo-title {% render 'typography-class', preset: mega_menu_block.settings.promotion_1_heading_size, fallback: 'h4' %}">{{ mega_menu_block.settings.promotion_1_heading | escape }}</{{ promotion_1_heading_tag }}>{% endif %}
                                 {% if mega_menu_block.settings.promotion_1_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ mega_menu_block.settings.promotion_1_text_size | default: 'medium' }} content-text content-text--{{ mega_menu_block.settings.promotion_1_text_alignment | default: 'left' }}">{{ mega_menu_block.settings.promotion_1_text }}</div>{% endif %}
-                                {% if mega_menu_block.settings.promotion_1_link_label != blank and mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_1_link | escape }}">{{ mega_menu_block.settings.promotion_1_link_label | escape }}</a>{% endif %}
+                                {% if mega_menu_block.settings.promotion_1_link_label != blank and mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_1_link | escape }}"><span>{{ mega_menu_block.settings.promotion_1_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
@@ -226,7 +226,7 @@
                               <div class="header__mega-promo-content">
                                 {% if mega_menu_block.settings.promotion_2_heading != blank %}<{{ promotion_2_heading_tag }} class="header__mega-promo-title {% render 'typography-class', preset: mega_menu_block.settings.promotion_2_heading_size, fallback: 'h4' %}">{{ mega_menu_block.settings.promotion_2_heading | escape }}</{{ promotion_2_heading_tag }}>{% endif %}
                                 {% if mega_menu_block.settings.promotion_2_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ mega_menu_block.settings.promotion_2_text_size | default: 'medium' }} content-text content-text--{{ mega_menu_block.settings.promotion_2_text_alignment | default: 'left' }}">{{ mega_menu_block.settings.promotion_2_text }}</div>{% endif %}
-                                {% if mega_menu_block.settings.promotion_2_link_label != blank and mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_2_link | escape }}">{{ mega_menu_block.settings.promotion_2_link_label | escape }}</a>{% endif %}
+                                {% if mega_menu_block.settings.promotion_2_link_label != blank and mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_2_link | escape }}"><span>{{ mega_menu_block.settings.promotion_2_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
@@ -254,7 +254,7 @@
                         {% endif %}
                         <details class="header__submenu-nested-disclosure">
                           <summary class="header__submenu-link header__mega-category-title{% if child_link.current or child_link.child_active %} header__submenu-link--active{% endif %}" aria-controls="{{ nested_submenu_id }}">
-                            <span class="header__submenu-link-text">{{ child_link.title | escape }}</span>
+                            <span class="header__submenu-link-text hover-underline">{{ child_link.title | escape }}</span>
                             <span class="header__submenu-caret header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'caret-right' %}</span>
                           </summary>
                           <ul id="{{ nested_submenu_id }}" class="header__submenu-nested" role="list">
@@ -266,11 +266,11 @@
                                 </button>
                               </li>
                             {% endif %}
-                            {% for grandchild_link in child_link.links %}<li>{% if grandchild_link.url != blank and grandchild_link.url != '#' %}<a class="header__submenu-link{% if grandchild_link.current %} header__submenu-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text">{{ grandchild_link.title | escape }}</span></a>{% else %}<span class="header__submenu-link"><span class="header__submenu-link-text">{{ grandchild_link.title | escape }}</span></span>{% endif %}</li>{% endfor %}
+                            {% for grandchild_link in child_link.links %}<li>{% if grandchild_link.url != blank and grandchild_link.url != '#' %}<a class="header__submenu-link{% if grandchild_link.current %} header__submenu-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text hover-underline">{{ grandchild_link.title | escape }}</span></a>{% else %}<span class="header__submenu-link"><span class="header__submenu-link-text hover-underline">{{ grandchild_link.title | escape }}</span></span>{% endif %}</li>{% endfor %}
                           </ul>
                         </details>
                       {% else %}
-                        {% if child_link.url != blank and child_link.url != '#' %}<a class="header__submenu-link{% if child_link.current %} header__submenu-link--active{% endif %}" href="{{ child_link.url | escape }}"{% if child_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text">{{ child_link.title | escape }}</span></a>{% else %}<span class="header__submenu-link"><span class="header__submenu-link-text">{{ child_link.title | escape }}</span></span>{% endif %}
+                        {% if child_link.url != blank and child_link.url != '#' %}<a class="header__submenu-link{% if child_link.current %} header__submenu-link--active{% endif %}" href="{{ child_link.url | escape }}"{% if child_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text hover-underline">{{ child_link.title | escape }}</span></a>{% else %}<span class="header__submenu-link"><span class="header__submenu-link-text hover-underline">{{ child_link.title | escape }}</span></span>{% endif %}
                       {% endif %}
                     </li>
                   {% endfor %}
@@ -284,11 +284,11 @@
                 href="{{ link.url | escape }}"
                 {% if link.current %}aria-current="page"{% endif %}
               >
-                <span class="{{ navigation_label_class }}" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
+                <span class="{{ navigation_label_class }} hover-underline" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
               </a>
             {% else %}
               <span class="header__menu-link header__menu-link--disabled" aria-disabled="true">
-                <span class="{{ navigation_label_class }}" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
+                <span class="{{ navigation_label_class }} hover-underline" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
               </span>
             {% endif %}
           {% endif %}
@@ -297,13 +297,13 @@
       {% endfor %}
       {% if use_desktop_more_menu %}
         {% assign more_submenu_id = 'HeaderSubmenu-' | append: section.id | append: '-more-desktop' %}
-        <li class="header__menu-item header__menu-item--has-children header__menu-item--mega header__menu-item--more">
-          <details class="header__submenu-disclosure header__submenu-disclosure--mega{% if section.settings.dropdown_trigger == 'hover' %} header__submenu-disclosure--hover{% endif %}{% if section.settings.underline_active_link %} header__submenu-disclosure--underline-active{% endif %}">
+        <li class="header__menu-item header__menu-item--has-children header__menu-item--more">
+          <details class="header__submenu-disclosure{% if section.settings.dropdown_trigger == 'hover' %} header__submenu-disclosure--hover{% endif %}{% if section.settings.underline_active_link %} header__submenu-disclosure--underline-active{% endif %}">
             <summary class="header__menu-link{% if desktop_more_menu_active %} header__menu-link--active{% endif %}" data-open-label="{{ 'header.open_more' | t | escape }}" data-close-label="{{ 'header.close_more' | t | escape }}" aria-controls="{{ more_submenu_id }}">
-              <span class="header__menu-link-title">{{ 'header.more' | t }}</span>
+              <span class="header__menu-link-title hover-underline">{{ 'header.more' | t | upcase }}</span>
               <span class="header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
             </summary>
-            <div id="{{ more_submenu_id }}" class="header__mega-panel header__overflow-mega-panel">
+            <div id="{{ more_submenu_id }}" class="header__submenu header__overflow-submenu">
               <div class="header__mega-surface">
                 <div class="header__mega-inner header__mega-inner--links-only header__overflow-mega-inner theme-scrollbar">
                   {% for overflow_link in menu_links offset: desktop_visible_items %}
@@ -382,7 +382,7 @@
                                           {% if overflow_child.links != blank %}
                                             <ul class="header__mega-nested" role="list">
                                               {% for overflow_grandchild in overflow_child.links %}
-                                                <li>{% if overflow_grandchild.url != blank and overflow_grandchild.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if overflow_grandchild.current %} header__mega-link--active{% endif %}" href="{{ overflow_grandchild.url | escape }}"{% if overflow_grandchild.current %} aria-current="page"{% endif %}>{{ overflow_grandchild.title | escape }}</a>{% else %}<span class="header__mega-link header__mega-link--nested">{{ overflow_grandchild.title | escape }}</span>{% endif %}</li>
+                                                <li>{% if overflow_grandchild.url != blank and overflow_grandchild.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if overflow_grandchild.current %} header__mega-link--active{% endif %}" href="{{ overflow_grandchild.url | escape }}"{% if overflow_grandchild.current %} aria-current="page"{% endif %}><span class="header__mega-link-text hover-underline">{{ overflow_grandchild.title | escape }}</span></a>{% else %}<span class="header__mega-link header__mega-link--nested"><span class="header__mega-link-text hover-underline">{{ overflow_grandchild.title | escape }}</span></span>{% endif %}</li>
                                               {% endfor %}
                                             </ul>
                                           {% endif %}
@@ -409,7 +409,7 @@
                               <div class="header__mega-promo-content">
                                 {% if overflow_mega_menu_block.settings.promotion_1_heading != blank %}<{{ overflow_promotion_1_tag }} class="header__mega-promo-title {% render 'typography-class', preset: overflow_mega_menu_block.settings.promotion_1_heading_size, fallback: 'h4' %}">{{ overflow_mega_menu_block.settings.promotion_1_heading | escape }}</{{ overflow_promotion_1_tag }}>{% endif %}
                                 {% if overflow_mega_menu_block.settings.promotion_1_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ overflow_mega_menu_block.settings.promotion_1_text_size | default: 'medium' }} content-text content-text--{{ overflow_mega_menu_block.settings.promotion_1_text_alignment | default: 'left' }}">{{ overflow_mega_menu_block.settings.promotion_1_text }}</div>{% endif %}
-                                {% if overflow_mega_menu_block.settings.promotion_1_link_label != blank and overflow_mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_1_link | escape }}">{{ overflow_mega_menu_block.settings.promotion_1_link_label | escape }}</a>{% endif %}
+                                {% if overflow_mega_menu_block.settings.promotion_1_link_label != blank and overflow_mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_1_link | escape }}"><span>{{ overflow_mega_menu_block.settings.promotion_1_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
@@ -424,7 +424,7 @@
                               <div class="header__mega-promo-content">
                                 {% if overflow_mega_menu_block.settings.promotion_2_heading != blank %}<{{ overflow_promotion_2_tag }} class="header__mega-promo-title {% render 'typography-class', preset: overflow_mega_menu_block.settings.promotion_2_heading_size, fallback: 'h4' %}">{{ overflow_mega_menu_block.settings.promotion_2_heading | escape }}</{{ overflow_promotion_2_tag }}>{% endif %}
                                 {% if overflow_mega_menu_block.settings.promotion_2_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ overflow_mega_menu_block.settings.promotion_2_text_size | default: 'medium' }} content-text content-text--{{ overflow_mega_menu_block.settings.promotion_2_text_alignment | default: 'left' }}">{{ overflow_mega_menu_block.settings.promotion_2_text }}</div>{% endif %}
-                                {% if overflow_mega_menu_block.settings.promotion_2_link_label != blank and overflow_mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_2_link | escape }}">{{ overflow_mega_menu_block.settings.promotion_2_link_label | escape }}</a>{% endif %}
+                                {% if overflow_mega_menu_block.settings.promotion_2_link_label != blank and overflow_mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_2_link | escape }}"><span>{{ overflow_mega_menu_block.settings.promotion_2_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}

@@ -11,7 +11,9 @@
       <span data-lightbox-current>1</span> / <span data-lightbox-total>{{ product.media.size }}</span>
     </div>
     <button class="product-lightbox__close modal-close-button close-icon" type="button" data-lightbox-close aria-label="{{ 'product_lightbox.close' | t | escape }}"></button>
-    <button class="product-lightbox__previous" type="button" data-lightbox-previous aria-label="{{ 'product_lightbox.previous' | t | escape }}">&#8249;</button>
+    <button class="product-lightbox__previous" type="button" data-lightbox-previous aria-label="{{ 'product_lightbox.previous' | t | escape }}">
+      {% render 'icon', name: 'chevron-left' %}
+    </button>
     <div class="swiper product-lightbox__viewport" data-lightbox-swiper>
       <div class="swiper-wrapper">
         {% assign lightbox_started = false %}
@@ -31,6 +33,8 @@
         {% endfor %}
       </div>
     </div>
-    <button class="product-lightbox__next" type="button" data-lightbox-next aria-label="{{ 'product_lightbox.next' | t | escape }}">&#8250;</button>
+    <button class="product-lightbox__next" type="button" data-lightbox-next aria-label="{{ 'product_lightbox.next' | t | escape }}">
+      {% render 'icon', name: 'chevron-right' %}
+    </button>
   </div>
 </div>

@@ -159,6 +159,15 @@
   pointer-events: auto;
 }
 
+/* Create a clearer CTA pause while keeping the material specification visually attached to it. */
+.editorial-slideshow__content-blocks > .content-block--text {
+  margin-block-end: 8px;
+}
+
+.editorial-slideshow__content-blocks > .slideshow__button-group + .content-block--label {
+  margin-block-start: -8px;
+}
+
 .editorial-slideshow__content-blocks > :not(.spacer):not(:has(.spacer)):nth-child(1 of :not(.spacer):not(:has(.spacer))) { --editorial-animation-delay: 125ms; }
 .editorial-slideshow__content-blocks > :not(.spacer):not(:has(.spacer)):nth-child(2 of :not(.spacer):not(:has(.spacer))) { --editorial-animation-delay: 250ms; }
 .editorial-slideshow__content-blocks > :not(.spacer):not(:has(.spacer)):nth-child(3 of :not(.spacer):not(:has(.spacer))) { --editorial-animation-delay: 375ms; }

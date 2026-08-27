@@ -329,7 +329,7 @@
               "type": "heading",
               "static": true,
               "settings": {
-                "heading": "<h2>Discover Spinel,<br>one stone at a time.</h2>",
+                "heading": "<h2>Discover Orlune,<br>one piece at a time.</h2>",
                 "type_preset": "xl",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -407,7 +407,7 @@
               "type": "label",
               "static": true,
               "settings": {
-                "text": "<p>THE HOUSE OF SPINEL / NEW YORK</p>",
+                "text": "<p>THE HOUSE OF ORLUNE / NEW YORK</p>",
                 "text_color": "#b96578",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -430,7 +430,7 @@
               "type": "heading",
               "static": true,
               "settings": {
-                "heading": "<p>SPINEL</p>",
+                "heading": "<p>ORLUNE</p>",
                 "type_preset": "h1",
                 "font_size": 50,
                 "font_size_mobile": 30,
@@ -516,7 +516,7 @@
         "background_color": "",
         "show_country_selector": true,
         "show_language_selector": false,
-        "copyright_name": "SPINEL",
+        "copyright_name": "ORLUNE",
         "legal_menu": "",
         "show_payment_icons": false,
         "show_follow_on_shop": false,
@@ -575,7 +575,7 @@
       "settings": {
         "hide_for_customers": true,
         "badge": "Newsletter",
-        "heading": "Join the Spinel newsletter",
+        "heading": "Join the Orlune newsletter",
         "heading_size": "h3",
         "preference_heading": "Which pieces are you drawn to?",
         "description": "<p>Subscribe for updates and exclusive offers. Unsubscribe anytime.</p>",
