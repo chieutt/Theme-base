@@ -230,7 +230,7 @@
               "type": "product-recommendations",
               "settings": {
                 "heading": "Complete the set",
-                "heading_size": "h6",
+                "heading_size": "h5",
                 "html_tag": "h2",
                 "source": "complementary",
                 "limit": 4
@@ -246,7 +246,7 @@
               "type": "product-payment",
               "settings": {
                 "heading": "Pay With",
-                "heading_size": "h5",
+                "heading_size": "h6",
                 "html_tag": "h2",
                 "text_size": "small",
                 "note": "Your transaction is protected with advanced security measures to keep your information confidential."

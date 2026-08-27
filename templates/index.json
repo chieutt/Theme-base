@@ -19,7 +19,7 @@
             "image_position": "right center",
             "content_width": 440,
             "gap": 24,
-            "content_alignment": "center",
+            "content_alignment": "left",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
             "nav_label": "The House",
@@ -3006,7 +3006,7 @@
               "settings": {
                 "columns_desktop": "4",
                 "columns_mobile": "2",
-                "content_alignment": "left",
+                "content_alignment": "center",
                 "text_size": "small",
                 "icon_size": "small"
               },
