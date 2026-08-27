@@ -1028,6 +1028,7 @@ html[scroll-lock] .header__menu-overlay {
   }
 .header a.header__mega-link--nested:not(.button) {
     position: relative;
+    display: inline-block;
     color: var(--color-text);
     font-family: var(--body-font-family);
     font-style: var(--body-font-style);
@@ -1058,17 +1059,20 @@ html[scroll-lock] .header__menu-overlay {
   }
 .header a.header__mega-link--nested:not(.button)::after {
     position: absolute;
+    right: 0;
     bottom: -3px;
     left: 0;
     height: 1px;
-    width: 0;
     background: currentColor;
     content: '';
-    transition: width 400ms ease;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 400ms ease;
   }
-.header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):hover::after,
-  .header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):focus-visible::after {
-    width: 100%;
+.header__mega-link--nested:not(.button):hover::after,
+  .header__mega-link--nested:not(.button):focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 .header--underline-active a.header__mega-link--active:not(.button) {
     text-decoration: underline;
