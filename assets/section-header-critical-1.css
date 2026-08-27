@@ -583,13 +583,25 @@ html[scroll-lock] .header__menu-overlay {
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) > .header__submenu > .header__submenu-item--has-children:is(:hover, :focus-within) {
       background: color-mix(in srgb, var(--color-heading) 6%, transparent);
     }
-    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li:is(:hover, :focus-within) {
-      background: transparent;
+    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested a.header__submenu-link {
+      position: relative;
+      text-decoration: none;
     }
-    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li:is(:hover, :focus-within) .header__submenu-link {
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
+    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested a.header__submenu-link::after {
+      position: absolute;
+      right: 0;
+      bottom: -4px;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+      content: '';
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 180ms ease;
+    }
+    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested a.header__submenu-link:is(:hover, :focus-visible)::after {
+      transform: scaleX(1);
+      transform-origin: left center;
     }
   }
 .header__menu-item--mega {
@@ -1054,8 +1066,8 @@ html[scroll-lock] .header__menu-overlay {
     content: '';
     transition: width 400ms ease;
   }
-.header__mega-link--nested:not(.button):hover::after,
-  .header__mega-link--nested:not(.button):focus-visible::after {
+.header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):hover::after,
+  .header__submenu-disclosure--mega.header__submenu-disclosure--underline-active .header__mega-link--nested:not(.button):focus-visible::after {
     width: 100%;
   }
 .header--underline-active a.header__mega-link--active:not(.button) {
