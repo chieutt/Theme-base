@@ -297,13 +297,13 @@
       {% endfor %}
       {% if use_desktop_more_menu %}
         {% assign more_submenu_id = 'HeaderSubmenu-' | append: section.id | append: '-more-desktop' %}
-        <li class="header__menu-item header__menu-item--has-children header__menu-item--mega header__menu-item--more">
-          <details class="header__submenu-disclosure header__submenu-disclosure--mega{% if section.settings.dropdown_trigger == 'hover' %} header__submenu-disclosure--hover{% endif %}{% if section.settings.underline_active_link %} header__submenu-disclosure--underline-active{% endif %}">
+        <li class="header__menu-item header__menu-item--has-children header__menu-item--more">
+          <details class="header__submenu-disclosure{% if section.settings.dropdown_trigger == 'hover' %} header__submenu-disclosure--hover{% endif %}{% if section.settings.underline_active_link %} header__submenu-disclosure--underline-active{% endif %}">
             <summary class="header__menu-link{% if desktop_more_menu_active %} header__menu-link--active{% endif %}" data-open-label="{{ 'header.open_more' | t | escape }}" data-close-label="{{ 'header.close_more' | t | escape }}" aria-controls="{{ more_submenu_id }}">
-              <span class="header__menu-link-title">{{ 'header.more' | t }}</span>
+              <span class="header__menu-link-title">{{ 'header.more' | t | upcase }}</span>
               <span class="header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
             </summary>
-            <div id="{{ more_submenu_id }}" class="header__mega-panel header__overflow-mega-panel">
+            <div id="{{ more_submenu_id }}" class="header__submenu header__overflow-submenu">
               <div class="header__mega-surface">
                 <div class="header__mega-inner header__mega-inner--links-only header__overflow-mega-inner theme-scrollbar">
                   {% for overflow_link in menu_links offset: desktop_visible_items %}
