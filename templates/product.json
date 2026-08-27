@@ -319,19 +319,19 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>9K Gold For Lasting Elegance</h2>"
+            "heading": "<h2>Made for the years ahead.</h2>"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Crafted with precision and timeless beauty, each piece shines with exceptional detail and enduring quality. Crafted in premium 9K gold with timeless shine.</p><p>Whether you're reimagining a treasured piece or creating something entirely new, our bespoke service brings your story to every detail — shaped by your vision and guided by our expertise, from gemstone selection to design refinement.</p>"
+            "text": "<p>Each Orlune object begins with proportion, light and a material chosen to deepen with wear.</p><p>For a personal commission, our atelier works closely with you from stone selection to the final finish.</p>"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "label": "Discover more",
+            "label": "Discover the house",
             "link": "/collections/all",
             "style": "tertiary"
           }
@@ -360,7 +360,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>You May Also Like</h2>"
+            "heading": "<h2>Complete the composition</h2>"
           }
         },
         "collection": {
@@ -394,16 +394,16 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Frequently Asked Questions</h2>"
+            "heading": "<h2>Care &amp; assurances</h2>"
           }
         },
         "item-1": {
           "type": "item",
           "settings": {
-            "heading": "Can I Wear Your Jewelry Daily?",
-            "heading_size": "h4",
+            "heading": "Can I wear my piece every day?",
+            "heading_size": "h6",
             "heading_tag": "h3",
-            "content": "<p>Absolutely. Our jewelry is crafted for durability and comfort, allowing you to enjoy your favorite pieces from day to night.</p>",
+            "content": "<p>Yes. Each piece is designed for regular wear; we simply recommend removing it before swimming, exercising or sleeping.</p>",
             "text_size": "medium",
             "open_by_default": true
           }
@@ -411,10 +411,10 @@
         "item-2": {
           "type": "item",
           "settings": {
-            "heading": "Do You Offer Warranty Or Repairs?",
-            "heading_size": "h4",
+            "heading": "Do you offer care or repairs?",
+            "heading_size": "h6",
             "heading_tag": "h3",
-            "content": "<p>Yes. Every piece is supported by our care and repair service. Contact us if you need help with your jewelry.</p>",
+            "content": "<p>We are here to help with care advice and repair enquiries. Contact our client services team with a photograph and your order details.</p>",
             "text_size": "medium",
             "open_by_default": false
           }
@@ -422,10 +422,10 @@
         "item-3": {
           "type": "item",
           "settings": {
-            "heading": "Is Your Jewelry Hypoallergenic And Safe For Sensitive Skin?",
-            "heading_size": "h4",
+            "heading": "Is Orlune suitable for sensitive skin?",
+            "heading_size": "h6",
             "heading_tag": "h3",
-            "content": "<p>Our materials are selected with comfort in mind. Please review each product’s material details if you have sensitivities.</p>",
+            "content": "<p>Material details are listed on every product page. If you have sensitivities, please review them before ordering or contact us for guidance.</p>",
             "text_size": "medium",
             "open_by_default": false
           }
@@ -433,10 +433,10 @@
         "item-4": {
           "type": "item",
           "settings": {
-            "heading": "How Do I Care For My Jewelry To Keep It Shining?",
-            "heading_size": "h4",
+            "heading": "How should I care for my piece?",
+            "heading_size": "h6",
             "heading_tag": "h3",
-            "content": "<p>Remove jewelry before showering, swimming or exercising. Keep each piece away from perfume and household chemicals, then gently wipe it with a soft, dry cloth after wear.</p>",
+            "content": "<p>Store each piece separately, avoid water and fragrance, and wipe it gently with a soft, dry cloth after wear.</p>",
             "text_size": "medium",
             "open_by_default": false
           }
@@ -453,7 +453,7 @@
         "section_width": "page",
         "padding_top": 48,
         "padding_bottom": 48,
-        "button_label": "View all FAQs",
+        "button_label": "Explore all FAQs",
         "button_link": "/pages/faq",
         "color_scheme": ""
       }
