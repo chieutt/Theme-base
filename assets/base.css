@@ -891,7 +891,7 @@ body {
   pointer-events: none;
   transform: scaleX(0);
   transform-origin: right center;
-  transition: transform 280ms cubic-bezier(.22, 1, .36, 1);
+  transition: transform 400ms ease;
 }
 
 :is(.btn-tertiary, .button--tertiary) .button__icon,
