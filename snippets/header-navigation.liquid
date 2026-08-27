@@ -182,7 +182,7 @@
                                           {% endif %}
                                               <ul class="header__mega-nested" role="list">
                                             {% for grandchild_link in child_link.links %}
-                                              <li>{% if grandchild_link.url != blank and grandchild_link.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if grandchild_link.current %} header__mega-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="{{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></a>{% else %}<span class="header__mega-link header__mega-link--nested"><span class="{{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></span>{% endif %}</li>
+                                              <li>{% if grandchild_link.url != blank and grandchild_link.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if grandchild_link.current %} header__mega-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="header__mega-link-text {{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></a>{% else %}<span class="header__mega-link header__mega-link--nested"><span class="header__mega-link-text {{ navigation_label_class }}">{{ grandchild_link.title | escape }}</span></span>{% endif %}</li>
                                             {% endfor %}
                                           </ul>
                                         {% else %}
@@ -211,7 +211,7 @@
                               <div class="header__mega-promo-content">
                                 {% if mega_menu_block.settings.promotion_1_heading != blank %}<{{ promotion_1_heading_tag }} class="header__mega-promo-title {% render 'typography-class', preset: mega_menu_block.settings.promotion_1_heading_size, fallback: 'h4' %}">{{ mega_menu_block.settings.promotion_1_heading | escape }}</{{ promotion_1_heading_tag }}>{% endif %}
                                 {% if mega_menu_block.settings.promotion_1_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ mega_menu_block.settings.promotion_1_text_size | default: 'medium' }} content-text content-text--{{ mega_menu_block.settings.promotion_1_text_alignment | default: 'left' }}">{{ mega_menu_block.settings.promotion_1_text }}</div>{% endif %}
-                                {% if mega_menu_block.settings.promotion_1_link_label != blank and mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_1_link | escape }}">{{ mega_menu_block.settings.promotion_1_link_label | escape }}</a>{% endif %}
+                                {% if mega_menu_block.settings.promotion_1_link_label != blank and mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_1_link | escape }}"><span>{{ mega_menu_block.settings.promotion_1_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
@@ -226,7 +226,7 @@
                               <div class="header__mega-promo-content">
                                 {% if mega_menu_block.settings.promotion_2_heading != blank %}<{{ promotion_2_heading_tag }} class="header__mega-promo-title {% render 'typography-class', preset: mega_menu_block.settings.promotion_2_heading_size, fallback: 'h4' %}">{{ mega_menu_block.settings.promotion_2_heading | escape }}</{{ promotion_2_heading_tag }}>{% endif %}
                                 {% if mega_menu_block.settings.promotion_2_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ mega_menu_block.settings.promotion_2_text_size | default: 'medium' }} content-text content-text--{{ mega_menu_block.settings.promotion_2_text_alignment | default: 'left' }}">{{ mega_menu_block.settings.promotion_2_text }}</div>{% endif %}
-                                {% if mega_menu_block.settings.promotion_2_link_label != blank and mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_2_link | escape }}">{{ mega_menu_block.settings.promotion_2_link_label | escape }}</a>{% endif %}
+                                {% if mega_menu_block.settings.promotion_2_link_label != blank and mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ mega_menu_block.settings.promotion_2_link | escape }}"><span>{{ mega_menu_block.settings.promotion_2_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
@@ -382,7 +382,7 @@
                                           {% if overflow_child.links != blank %}
                                             <ul class="header__mega-nested" role="list">
                                               {% for overflow_grandchild in overflow_child.links %}
-                                                <li>{% if overflow_grandchild.url != blank and overflow_grandchild.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if overflow_grandchild.current %} header__mega-link--active{% endif %}" href="{{ overflow_grandchild.url | escape }}"{% if overflow_grandchild.current %} aria-current="page"{% endif %}>{{ overflow_grandchild.title | escape }}</a>{% else %}<span class="header__mega-link header__mega-link--nested">{{ overflow_grandchild.title | escape }}</span>{% endif %}</li>
+                                                <li>{% if overflow_grandchild.url != blank and overflow_grandchild.url != '#' %}<a class="header__mega-link header__mega-link--nested{% if overflow_grandchild.current %} header__mega-link--active{% endif %}" href="{{ overflow_grandchild.url | escape }}"{% if overflow_grandchild.current %} aria-current="page"{% endif %}><span class="header__mega-link-text">{{ overflow_grandchild.title | escape }}</span></a>{% else %}<span class="header__mega-link header__mega-link--nested"><span class="header__mega-link-text">{{ overflow_grandchild.title | escape }}</span></span>{% endif %}</li>
                                               {% endfor %}
                                             </ul>
                                           {% endif %}
@@ -409,7 +409,7 @@
                               <div class="header__mega-promo-content">
                                 {% if overflow_mega_menu_block.settings.promotion_1_heading != blank %}<{{ overflow_promotion_1_tag }} class="header__mega-promo-title {% render 'typography-class', preset: overflow_mega_menu_block.settings.promotion_1_heading_size, fallback: 'h4' %}">{{ overflow_mega_menu_block.settings.promotion_1_heading | escape }}</{{ overflow_promotion_1_tag }}>{% endif %}
                                 {% if overflow_mega_menu_block.settings.promotion_1_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ overflow_mega_menu_block.settings.promotion_1_text_size | default: 'medium' }} content-text content-text--{{ overflow_mega_menu_block.settings.promotion_1_text_alignment | default: 'left' }}">{{ overflow_mega_menu_block.settings.promotion_1_text }}</div>{% endif %}
-                                {% if overflow_mega_menu_block.settings.promotion_1_link_label != blank and overflow_mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_1_link | escape }}">{{ overflow_mega_menu_block.settings.promotion_1_link_label | escape }}</a>{% endif %}
+                                {% if overflow_mega_menu_block.settings.promotion_1_link_label != blank and overflow_mega_menu_block.settings.promotion_1_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_1_link | escape }}"><span>{{ overflow_mega_menu_block.settings.promotion_1_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
@@ -424,7 +424,7 @@
                               <div class="header__mega-promo-content">
                                 {% if overflow_mega_menu_block.settings.promotion_2_heading != blank %}<{{ overflow_promotion_2_tag }} class="header__mega-promo-title {% render 'typography-class', preset: overflow_mega_menu_block.settings.promotion_2_heading_size, fallback: 'h4' %}">{{ overflow_mega_menu_block.settings.promotion_2_heading | escape }}</{{ overflow_promotion_2_tag }}>{% endif %}
                                 {% if overflow_mega_menu_block.settings.promotion_2_text != blank %}<div class="header__mega-promo-text rte spinel-text--{{ overflow_mega_menu_block.settings.promotion_2_text_size | default: 'medium' }} content-text content-text--{{ overflow_mega_menu_block.settings.promotion_2_text_alignment | default: 'left' }}">{{ overflow_mega_menu_block.settings.promotion_2_text }}</div>{% endif %}
-                                {% if overflow_mega_menu_block.settings.promotion_2_link_label != blank and overflow_mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_2_link | escape }}">{{ overflow_mega_menu_block.settings.promotion_2_link_label | escape }}</a>{% endif %}
+                                {% if overflow_mega_menu_block.settings.promotion_2_link_label != blank and overflow_mega_menu_block.settings.promotion_2_link != blank %}<a class="header__mega-promo-link btn-tertiary" href="{{ overflow_mega_menu_block.settings.promotion_2_link | escape }}"><span>{{ overflow_mega_menu_block.settings.promotion_2_link_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>{% endif %}
                               </div>
                             </article>
                           {% endif %}
