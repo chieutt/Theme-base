@@ -107,6 +107,10 @@
     color: var(--color-heading);
   }
 
+  .image-with-text__heading-block:has(.content-block--label) {
+    margin-bottom: 16px;
+  }
+
   .image-with-text__heading--h2,
   .image-with-text__heading--large {
     font-size: var(--h2-size-display-md);

@@ -239,7 +239,8 @@
           "settings": {
             "label": "Discover the house",
             "link": "/collections/all",
-            "style": "tertiary"
+            "style": "tertiary",
+            "icon": "arrow-right"
           }
         }
       },
