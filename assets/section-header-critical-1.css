@@ -584,7 +584,12 @@ html[scroll-lock] .header__menu-overlay {
       background: color-mix(in srgb, var(--color-heading) 6%, transparent);
     }
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li:is(:hover, :focus-within) {
-      background: color-mix(in srgb, var(--color-heading) 6%, transparent);
+      background: transparent;
+    }
+    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested > li:is(:hover, :focus-within) .header__submenu-link {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
     }
   }
 .header__menu-item--mega {
