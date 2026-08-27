@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% doc %}
   Renders the shared product media lightbox.
 
@@ -38,3 +39,45 @@
     </button>
   </div>
 </div>
+=======
+{% doc %}
+  Renders the shared product media lightbox.
+
+  @param {product} product - Product whose media should be displayed.
+{% enddoc %}
+
+<div class="product-lightbox" data-product-lightbox aria-hidden="true" inert>
+  <div class="product-lightbox__backdrop" data-lightbox-close></div>
+  <div class="product-lightbox__panel" role="dialog" aria-modal="true" aria-label="{{ 'product_lightbox.label' | t: product: product.title | escape }}">
+    <div class="product-lightbox__counter" aria-live="polite">
+      <span data-lightbox-current>1</span> / <span data-lightbox-total>{{ product.media.size }}</span>
+    </div>
+    <button class="product-lightbox__close modal-close-button close-icon" type="button" data-lightbox-close aria-label="{{ 'product_lightbox.close' | t | escape }}"></button>
+    <button class="product-lightbox__previous" type="button" data-lightbox-previous aria-label="{{ 'product_lightbox.previous' | t | escape }}">
+      {% render 'icon', name: 'chevron-left' %}
+    </button>
+    <div class="swiper product-lightbox__viewport" data-lightbox-swiper>
+      <div class="swiper-wrapper">
+        {% assign lightbox_started = false %}
+        {% assign lightbox_index = 0 %}
+        {% for media in product.media %}
+          {% if media.media_type == 'image' or media.preview_image != blank %}
+            {% assign media_alt = media.alt | default: product.title %}
+            <figure class="swiper-slide product-lightbox__slide{% unless lightbox_started %} is-active{% assign lightbox_started = true %}{% endunless %}" data-lightbox-slide data-lightbox-index="{{ lightbox_index }}" data-media-id="{{ media.id }}" tabindex="0" role="button" aria-label="{{ 'product_lightbox.zoom' | t | escape }}">
+              {% if media.media_type == 'image' %}
+                {{ media | image_url: width: 2400 | image_tag: widths: '800, 1200, 1600, 2000, 2400', sizes: '100vw', loading: 'lazy', alt: media_alt }}
+              {% else %}
+                {{ media.preview_image | image_url: width: 2400 | image_tag: widths: '800, 1200, 1600, 2000, 2400', sizes: '100vw', loading: 'lazy', alt: media_alt }}
+              {% endif %}
+            </figure>
+            {% assign lightbox_index = lightbox_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <button class="product-lightbox__next" type="button" data-lightbox-next aria-label="{{ 'product_lightbox.next' | t | escape }}">
+      {% render 'icon', name: 'chevron-right' %}
+    </button>
+  </div>
+</div>
+>>>>>>> origin/dev

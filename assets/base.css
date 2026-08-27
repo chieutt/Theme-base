@@ -859,6 +859,57 @@ body {
 
 /* Shared text-link underline motion. Apply to the text span when a parent control also includes an icon. */
 .hover-underline {
+<<<<<<< HEAD
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.hover-underline::after {
+  position: absolute;
+  right: 0;
+  bottom: var(--hover-underline-offset, -3px);
+  left: 0;
+  height: 1px;
+  background: currentcolor;
+  content: '';
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 400ms ease;
+}
+
+:is(a, button, summary):is(:hover, :focus-visible) .hover-underline::after,
+.hover-underline:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-underline::after {
+    transition: none;
+  }
+}
+
+:is(.btn-tertiary, .button--tertiary),
+:is(.btn-text, .button--text),
+:is(.btn-link, .button--link) {
+  min-height: auto;
+  padding: 0 0 3px;
+  border-bottom-color: transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-tertiary-button);
+  font-family: var(--button-tertiary-font-family);
+  font-style: var(--button-tertiary-font-style);
+  font-weight: var(--button-tertiary-font-weight);
+  line-height: 1.5;
+  text-transform: var(--button-tertiary-text-transform);
+  text-underline-offset: var(--button-tertiary-underline-offset);
+}
+
+:is(.btn-tertiary, .button--tertiary) {
+=======
+>>>>>>> origin/dev
   position: relative;
   display: inline-block;
   text-decoration: none;
