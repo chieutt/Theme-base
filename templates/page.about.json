@@ -35,6 +35,13 @@
             "heading": "<h1>Jewelry, made personal.</h1>"
           }
         },
+        "highlight_heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": ""
+          }
+        },
         "text": {
           "type": "text",
           "static": true,
@@ -161,6 +168,13 @@
             "heading": "<h2>Form follows feeling.</h2>"
           }
         },
+        "highlight_heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": ""
+          }
+        },
         "text": {
           "type": "text",
           "static": true,
@@ -203,6 +217,13 @@
           "static": true,
           "settings": {
             "heading": "<h2>Character, held in form.</h2>"
+          }
+        },
+        "highlight_heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": ""
           }
         },
         "text": {
