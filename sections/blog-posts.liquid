@@ -176,7 +176,7 @@
 
                     <div class="blog-posts__card-content">
                       {% if section.settings.show_tags_and_lines and article.tags.first != blank %}
-                        <p class="blog-posts__tag">{{ article.tags.first | escape }}</p>
+                        <p class="blog-posts__tag label-text">{{ article.tags.first | escape }}</p>
                       {% endif %}
                       <h3 class="blog-posts__card-title heading-h6 heading-text"><a href="{{ article.url | escape }}">{{ article.title | escape }}</a></h3>
 
@@ -243,7 +243,7 @@
                     </div>
                   {% endif %}
                   <div class="blog-posts__card-content" aria-hidden="true">
-                    <p class="blog-posts__placeholder-tag">Journal</p>
+                    <p class="blog-posts__placeholder-tag label-text">Journal</p>
                     <h3 class="blog-posts__card-title heading-h6 heading-text">Article title</h3>
                     <p class="blog-posts__metadata">Month 00, 2026</p>
                     <p class="blog-posts__placeholder-copy">A considered story from the house.</p>

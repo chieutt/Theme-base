@@ -38,7 +38,7 @@
               {% render 'responsive-media', image: featured_article.image, max_width: 1800, widths: '640, 960, 1200, 1600, 1800', sizes: '100vw', class: 'blog-index__featured-image media-cover', loading: 'eager', fetchpriority: 'high', alt: featured_article_image_alt, placeholder_asset: 'placeholder-image-default-2.svg', placeholder_class: 'blog-index__featured-image media-cover' %}
               <div class="blog-index__featured-overlay" aria-hidden="true"></div>
               <div class="blog-index__featured-copy">
-                {% if block.settings.show_tag and featured_article.tags.first != blank %}<p class="blog-index__tag">{{ featured_article.tags.first | escape }}</p>{% endif %}
+                {% if block.settings.show_tag and featured_article.tags.first != blank %}<p class="blog-index__tag label-text">{{ featured_article.tags.first | escape }}</p>{% endif %}
                 <h2 class="blog-index__featured-title heading-h2 heading-text"><a href="{{ featured_article.url | escape }}">{{ featured_article.title | escape }}</a></h2>
                 {% if block.settings.show_date %}<p class="blog-index__metadata">{{ featured_article.published_at | time_tag: format: 'date' }}</p>{% endif %}
                 {% if block.settings.show_button %}<a class="btn-secondary blog-index__featured-button" href="{{ featured_article.url | escape }}">{{ block.settings.button_label | escape }}</a>{% endif %}
@@ -57,11 +57,11 @@
                       {% render 'responsive-media', image: article.image, max_width: 900, widths: '360, 540, 720, 900', sizes: '(min-width: 1150px) 33vw, (min-width: 768px) 50vw, 100vw', class: 'blog-index__card-image media-cover', loading: 'lazy', alt: article_image_alt, placeholder_asset: 'placeholder-image-default-1.svg', placeholder_class: 'blog-index__card-image media-cover' %}
                     </a>
                     <div class="blog-index__card-copy">
-                      {% if block.settings.show_tags and article.tags.first != blank %}<p class="blog-index__tag">{{ article.tags.first | escape }}</p>{% endif %}
+                      {% if block.settings.show_tags and article.tags.first != blank %}<p class="blog-index__tag label-text">{{ article.tags.first | escape }}</p>{% endif %}
                       <h2 class="blog-index__card-title heading-h2 heading-text"><a href="{{ article.url | escape }}">{{ article.title | escape }}</a></h2>
                       {% if block.settings.show_date or block.settings.show_author %}<p class="blog-index__metadata">{% if block.settings.show_date %}{{ article.published_at | time_tag: format: 'date' }}{% endif %}{% if block.settings.show_date and block.settings.show_author %}<span aria-hidden="true"> · </span>{% endif %}{% if block.settings.show_author %}{{ article.author | escape }}{% endif %}</p>{% endif %}
                       {% if block.settings.show_excerpt and article.excerpt != blank %}<div class="blog-index__excerpt rte">{{ article.excerpt | strip_html | truncatewords: block.settings.excerpt_words }}</div>{% endif %}
-                      <a class="blog-index__read-more" href="{{ article.url | escape }}" aria-label="{{ block.settings.read_more_label | escape }}: {{ article.title | escape }}">{{ block.settings.read_more_label | escape }} <span aria-hidden="true">→</span></a>
+                      <a class="btn-tertiary blog-index__read-more" href="{{ article.url | escape }}" aria-label="{{ block.settings.read_more_label | escape }}: {{ article.title | escape }}"><span>{{ block.settings.read_more_label | escape }}</span><span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span></a>
                     </div>
                   </article>
                 {% endif %}
@@ -87,7 +87,7 @@
   .blog-index__inner { width: 100%; max-width: var(--page-width); margin-inline: auto; }
   .blog-index.full-width .blog-index__inner { max-width: none; padding-inline: var(--page-margin); }
   .blog-index__header { padding: 26px 0 42px; text-align: center; }
-  .blog-index__subheading, .blog-index__tag { color: var(--color-text); font-size: var(--label-size); letter-spacing: .1em; text-transform: uppercase; }
+  .blog-index__subheading, .blog-index__tag { color: var(--color-text); }
   .blog-index__title { margin: 6px 0 0; }
   .blog-index__intro { max-width: 560px; margin: 18px auto 0; line-height: 1.5; }
   .blog-index__featured { position: relative; min-height: var(--blog-index-hero-height); overflow: hidden; color: #fff; }
@@ -108,7 +108,7 @@
   .blog-index__card-copy { padding: 18px 4px 0; }
   .blog-index__card-title { margin-top: 9px; font-size: clamp(20px, 2vw, 26px); line-height: 1.12; }
   .blog-index__excerpt { margin-top: 10px; color: var(--color-text); line-height: 1.45; }
-  .blog-index__read-more { display: inline-flex; gap: 8px; margin-top: 18px; color: var(--color-heading); font-size: var(--label-size); letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+  .blog-index__read-more { margin-top: 18px; color: var(--color-heading); }
   .blog-index__pagination { display: flex; justify-content: center; padding-top: 48px; }
   .blog-index__pagination a, .blog-index__pagination span { padding: 8px 12px; color: inherit; text-decoration: none; }
   @media screen and (max-width: 1149.98px) { .blog-index__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
