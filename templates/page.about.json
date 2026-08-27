@@ -254,75 +254,6 @@
         "padding_bottom": 48
       }
     },
-    "benefits": {
-      "type": "icon-with-text",
-      "blocks": {
-        "quality": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/about-icon2.png",
-            "heading": "Made to keep",
-            "title": "",
-            "anchor_id": "",
-            "text": "<p>Objects designed to become part of your story.</p>"
-          }
-        },
-        "sustainable": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/about-icon3.png",
-            "heading": "Material first",
-            "title": "",
-            "anchor_id": "",
-            "text": "<p>Stone, metal and finish chosen with intention.</p>"
-          }
-        },
-        "service": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/about-icon4.png",
-            "heading": "Here to help",
-            "title": "",
-            "anchor_id": "",
-            "text": "<p>Considered guidance from first question to final delivery.</p>"
-          }
-        },
-        "gift": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/about-icon5.png",
-            "heading": "For giving",
-            "title": "",
-            "anchor_id": "",
-            "text": "<p>Pieces chosen for the moments that stay with us.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "quality",
-        "sustainable",
-        "service",
-        "gift"
-      ],
-      "settings": {
-        "columns_desktop": 4,
-        "columns_mobile": "2",
-        "section_width": "page",
-        "column_gap": 20,
-        "mobile_column_gap": 12,
-        "row_gap": 32,
-        "item_style": "default",
-        "icon_size": "small",
-        "content_gap": 12,
-        "heading_size": "h6",
-        "heading_tag": "h3",
-        "text_size": "small",
-        "color_scheme": "scheme-1",
-        "background_color": "",
-        "padding_top": 48,
-        "padding_bottom": 96
-      }
-    },
     "newsletter": {
       "type": "newsletter",
       "blocks": {
@@ -389,7 +320,6 @@
     "sustainability",
     "founder_story",
     "design_vision",
-    "benefits",
     "newsletter"
   ]
 }
