@@ -333,31 +333,10 @@ html[scroll-lock] .header__menu-overlay {
     height: 12px;
     color: color-mix(in srgb, var(--color-heading) 70%, transparent);
   }
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-    .header__menu-link > :is(.header__menu-link-title, .header__navigation-label) {
-      position: relative;
-      display: inline-block;
-      text-decoration: none;
-    }
-    .header__menu-link > :is(.header__menu-link-title, .header__navigation-label)::after {
-      position: absolute;
-      right: 0;
-      /* Desktop labels use overflow:hidden for ellipsis, so keep the underline inside their paint box. */
-      bottom: 0;
-      left: 0;
-      height: 1px;
-      background: currentColor;
-      content: '';
-      transform: scaleX(0);
-      transform-origin: left center;
-      transition: transform 220ms cubic-bezier(.22, 1, .36, 1);
-    }
-    .header--underline-active .header__menu-link:hover > :is(.header__menu-link-title, .header__navigation-label)::after,
-    .header--underline-active .header__menu-link:focus-visible > :is(.header__menu-link-title, .header__navigation-label)::after,
-    .header--underline-active .header__menu-link--active > :is(.header__menu-link-title, .header__navigation-label)::after,
-    .header--underline-active .header__submenu-disclosure[open]:not([data-closing='true']) > .header__menu-link > :is(.header__menu-link-title, .header__navigation-label)::after {
-      transform: scaleX(1);
-    }
+.header--underline-active .header__menu-link--active > .hover-underline::after,
+  .header--underline-active .header__submenu-disclosure[open]:not([data-closing='true']) > .header__menu-link > .hover-underline::after {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 .header__submenu-disclosure[open] > .header__menu-link .header__dropdown-icon--chevron {
     transform: rotate(180deg);
@@ -430,11 +409,6 @@ html[scroll-lock] .header__menu-overlay {
 .header__overflow-promotions .header__mega-promo-image { aspect-ratio: 4 / 3; }
 .header--underline-active .header__submenu-link--active {
     color: var(--color-heading);
-  }
-.header--underline-active .header__submenu-link--active .header__submenu-link-text {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
   }
 .header__submenu-nested {
     margin: 8px 0 0;
@@ -582,26 +556,6 @@ html[scroll-lock] .header__menu-overlay {
     }
     .header__submenu-disclosure:not(.header__submenu-disclosure--mega) > .header__submenu > .header__submenu-item--has-children:is(:hover, :focus-within) {
       background: color-mix(in srgb, var(--color-heading) 6%, transparent);
-    }
-    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested .header__submenu-link-text {
-      position: relative;
-      display: inline-block;
-    }
-    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested .header__submenu-link-text::after {
-      position: absolute;
-      right: 0;
-      bottom: -3px;
-      left: 0;
-      height: 1px;
-      background: currentColor;
-      content: '';
-      transform: scaleX(0);
-      transform-origin: right center;
-      transition: transform 400ms ease;
-    }
-    .header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested a.header__submenu-link:is(:hover, :focus-visible) .header__submenu-link-text::after {
-      transform: scaleX(1);
-      transform-origin: left center;
     }
   }
 .header__menu-item--mega {
@@ -1055,30 +1009,9 @@ html[scroll-lock] .header__menu-overlay {
   .header a.header__mega-link--active:not(.button) {
     color: var(--color-heading);
   }
-.header__mega-link--nested:not(.button) .header__mega-link-text {
-    position: relative;
-    display: inline-block;
-  }
-.header__mega-link--nested:not(.button) .header__mega-link-text::after {
-    position: absolute;
-    right: 0;
-    bottom: -3px;
-    left: 0;
-    height: 1px;
-    background: currentColor;
-    content: '';
-    transform: scaleX(0);
-    transform-origin: right center;
-    transition: transform 400ms ease;
-  }
-.header__mega-link--nested:not(.button):hover .header__mega-link-text::after,
-  .header__mega-link--nested:not(.button):focus-visible .header__mega-link-text::after {
+.header--underline-active a.header__mega-link--active:not(.button) .hover-underline::after {
     transform: scaleX(1);
     transform-origin: left center;
-  }
-.header--underline-active a.header__mega-link--active:not(.button) {
-    text-decoration: underline;
-    text-underline-offset: 3px;
   }
 .header__mega-promotions {
     display: grid;
