@@ -1,6 +1,9 @@
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/dev
 >>>>>>> origin/dev
 .shopify-section:has(> .header--sticky) {
     position: sticky;
@@ -1313,6 +1316,8 @@ shopify-account.header__action--account::part(signed-out-avatar) {
   }
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
 =======
 .shopify-section:has(> .header--sticky) {
     position: sticky;
@@ -2623,5 +2628,6 @@ shopify-account.header__action--account::part(signed-out-avatar) {
     transition-property: color, transform;
     transition-timing-function: ease;
   }
+>>>>>>> origin/dev
 >>>>>>> origin/dev
 >>>>>>> origin/dev
