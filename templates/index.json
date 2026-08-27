@@ -33,7 +33,7 @@
             "editorial_nocturne_eyebrow": {
               "type": "label",
               "settings": {
-                "text": "<p>THE HOUSE OF SPINEL</p>",
+                "text": "<p>THE HOUSE OF ORLUNE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -80,7 +80,7 @@
             "editorial_nocturne_text": {
               "type": "text",
               "settings": {
-                "text": "<p>Natural spinel and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
+                "text": "<p>Natural gemstones and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -132,7 +132,7 @@
             "editorial_nocturne_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>NATURAL SPINEL · 18K GOLD · MADE TO ORDER</p>",
+                "text": "<p>NATURAL GEMSTONES · 18K GOLD · MADE TO ORDER</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -242,7 +242,7 @@
             "editorial_equinox_text": {
               "type": "text",
               "settings": {
-                "text": "<p>Sculptural gold meets luminous spinel in pieces chosen for clarity, character, and enduring presence.</p>",
+                "text": "<p>Sculptural gold meets luminous gemstones in pieces chosen for clarity, character, and enduring presence.</p>",
                 "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
@@ -294,7 +294,7 @@
             "editorial_equinox_specification": {
               "type": "label",
               "settings": {
-                "text": "<p>NATURAL SPINEL · SCULPTURAL GOLD · LIMITED RELEASE</p>",
+                "text": "<p>NATURAL GEMSTONES · SCULPTURAL GOLD · LIMITED RELEASE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -593,7 +593,7 @@
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>03 / WHY SPINEL</p>",
+            "text": "<p>03 / WHY ORLUNE</p>",
             "text_color": "",
             "color": "text",
             "disable_line_break_mobile": false,
@@ -647,7 +647,7 @@
             "item_gap": 40,
             "heading_size": "h2",
             "text_size": "xs",
-            "accessibility_label": "Why choose Spinel statistics"
+            "accessibility_label": "Why choose Orlune statistics"
           },
           "blocks": {
             "stat_1": {
@@ -1370,7 +1370,7 @@
             "primary_spinel": {
               "type": "label",
               "settings": {
-                "text": "<p>SPINEL</p>",
+                "text": "<p>ORLUNE</p>",
                 "text_color": "",
                 "width": "fit-content",
                 "width_mobile": "fit-content",
@@ -2606,7 +2606,7 @@
         "gift_path_4aq8Mp",
         "gift_path_hyjaFt"
       ],
-      "name": "Gift Spinel",
+      "name": "Orlune gift finder",
       "settings": {
         "section_width": "full",
         "layout_ratio": "balanced",
@@ -2805,7 +2805,7 @@
         "heading_UqUYVP": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Explore Spinel</h2>",
+            "heading": "<h2>Explore Orlune</h2>",
             "type_preset": "h2",
             "font_size": 50,
             "font_size_mobile": 30,
@@ -3535,7 +3535,7 @@
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>COMMUNITY&nbsp;&nbsp;/&nbsp;&nbsp;CURATED BY SPINEL</p>",
+            "text": "<p>COMMUNITY&nbsp;&nbsp;/&nbsp;&nbsp;CURATED BY ORLUNE</p>",
             "text_color": "",
             "color": "text",
             "disable_line_break_mobile": false,
@@ -3558,7 +3558,7 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>From @spinel,<br>worn by you.</h2>",
+            "heading": "<h2>From @orlune,<br>worn by you.</h2>",
             "type_preset": "h2",
             "font_size": 50,
             "font_size_mobile": 30,
@@ -3610,7 +3610,7 @@
           "type": "button",
           "static": true,
           "settings": {
-            "label": "Visit @spinel",
+            "label": "Visit @orlune",
             "link": "",
             "style": "tertiary",
             "open_in_new_tab": true,
@@ -3635,7 +3635,7 @@
             "circle_label": {
               "type": "label",
               "settings": {
-                "text": "<p>THE SPINEL CIRCLE</p>",
+                "text": "<p>THE ORLUNE CIRCLE</p>",
                 "text_color": "",
                 "color": "text",
                 "disable_line_break_mobile": false,
@@ -3707,7 +3707,7 @@
             "circle_button": {
               "type": "button",
               "settings": {
-                "label": "Follow @spinel",
+                "label": "Follow @orlune",
                 "link": "",
                 "style": "tertiary",
                 "open_in_new_tab": true,
