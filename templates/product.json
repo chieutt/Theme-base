@@ -172,7 +172,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Description",
-                    "heading_size": "h5",
+                    "heading_size": "h6",
                     "html_tag": "h2",
                     "content_source": "description",
                     "metafield_namespace": "custom",
@@ -189,7 +189,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Care guide",
-                    "heading_size": "h5",
+                    "heading_size": "h6",
                     "html_tag": "h2",
                     "content_source": "manual",
                     "metafield_namespace": "custom",
@@ -206,7 +206,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Shipping and returns",
-                    "heading_size": "h5",
+                    "heading_size": "h6",
                     "html_tag": "h2",
                     "content_source": "manual",
                     "metafield_namespace": "custom",
@@ -230,7 +230,7 @@
               "type": "product-recommendations",
               "settings": {
                 "heading": "Complete the set",
-                "heading_size": "h5",
+                "heading_size": "h6",
                 "html_tag": "h2",
                 "source": "complementary",
                 "limit": 4
@@ -398,14 +398,18 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Care &amp; assurances</h2>"
+            "heading": "<h2>Care &amp; assurances</h2>",
+            "type_preset": "h4",
+            "width": "100%",
+            "width_mobile": "100%",
+            "alignment": "center"
           }
         },
         "item-1": {
           "type": "item",
           "settings": {
             "heading": "Can I wear my piece every day?",
-            "heading_size": "h6",
+            "heading_size": "h7",
             "heading_tag": "h3",
             "content": "<p>Yes. Each piece is designed for regular wear; we simply recommend removing it before swimming, exercising or sleeping.</p>",
             "text_size": "medium",
@@ -416,7 +420,7 @@
           "type": "item",
           "settings": {
             "heading": "Do you offer care or repairs?",
-            "heading_size": "h6",
+            "heading_size": "h7",
             "heading_tag": "h3",
             "content": "<p>We are here to help with care advice and repair enquiries. Contact our client services team with a photograph and your order details.</p>",
             "text_size": "medium",
@@ -427,7 +431,7 @@
           "type": "item",
           "settings": {
             "heading": "Is Orlune suitable for sensitive skin?",
-            "heading_size": "h6",
+            "heading_size": "h7",
             "heading_tag": "h3",
             "content": "<p>Material details are listed on every product page. If you have sensitivities, please review them before ordering or contact us for guidance.</p>",
             "text_size": "medium",
@@ -438,7 +442,7 @@
           "type": "item",
           "settings": {
             "heading": "How should I care for my piece?",
-            "heading_size": "h6",
+            "heading_size": "h7",
             "heading_tag": "h3",
             "content": "<p>Store each piece separately, avoid water and fragrance, and wipe it gently with a soft, dry cloth after wear.</p>",
             "text_size": "medium",
@@ -549,7 +553,7 @@
         "image_ratio": "portrait",
         "card_alignment": "center",
         "card_gap": 20,
-        "card_heading_size": "h4",
+        "card_heading_size": "h6",
         "card_heading_tag": "h3",
         "height_desktop": "medium",
         "height_mobile": "medium",

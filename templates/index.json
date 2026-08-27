@@ -19,7 +19,7 @@
             "image_position": "right center",
             "content_width": 440,
             "gap": 24,
-            "content_alignment": "left",
+            "content_alignment": "center",
             "content_position": "bottom-left",
             "content_position_mobile": "top-left",
             "nav_label": "The House",
@@ -3015,8 +3015,8 @@
                   "type": "product-benefit-item",
                   "name": "Benefit item",
                   "settings": {
-                    "icon": "truck",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "truck",
+                "text": "<p>Shipping options and pricing are calculated at checkout.</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3026,8 +3026,8 @@
                 "product_benefit_item_6PeqhH": {
                   "type": "product-benefit-item",
                   "settings": {
-                    "icon": "truck",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "return",
+                "text": "<p>See our returns policy for eligibility and details.</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3037,8 +3037,8 @@
                 "product_benefit_item_WTPAaj": {
                   "type": "product-benefit-item",
                   "settings": {
-                    "icon": "return",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "shield",
+                "text": "<p>Lifetime Warranty</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3048,8 +3048,8 @@
                 "product_benefit_item_BmCt3q": {
                   "type": "product-benefit-item",
                   "settings": {
-                    "icon": "shield",
-                    "text": "<p>Complimentary shipping<br/>On every order</p>",
+                "icon": "sparkles",
+                "text": "<p>Sustainably Made</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
