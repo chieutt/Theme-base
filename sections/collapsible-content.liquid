@@ -20,9 +20,10 @@
       {% endfor %}
     </div>
     {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-      <a class="collapsible-content__button" href="{{ section.settings.button_link | escape }}">
+      <a class="btn-tertiary collapsible-content__button" href="{{ section.settings.button_link | escape }}">
         {{ section.settings.button_label | escape }}
         <span aria-hidden="true">›</span>
+        <span class="button__icon" aria-hidden="true">{% render 'icon', name: 'button-arrow' %}</span>
       </a>
     {% endif %}
   </div>
@@ -41,8 +42,8 @@
   .collapsible-content__icon svg { display: block; width: 20px; height: 20px; }
   .collapsible-content__item[open] .collapsible-content__icon { transform: rotate(360deg); }
   .collapsible-content__item.is-closing .collapsible-content__icon { transform: rotate(180deg); }
-  .collapsible-content__button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; align-self: center; border-bottom: 1px solid currentColor; padding-bottom: 3px; color: var(--color-text); font-size: var(--label-size); letter-spacing: .04em; text-decoration: none; text-transform: uppercase; }
-  .collapsible-content__button span { font-size: 18px; line-height: .8; }
+  .collapsible-content__button { align-self: center; }
+  .collapsible-content__button > span:first-of-type { display: none; }
   .collapsible-content__body { padding: 0 32px 20px 0; color: var(--color-text, #686560); }
   @media (max-width: 1149.98px) { .collapsible-content { padding-inline: 16px; } .collapsible-content__inner { gap: 24px; } }
   @media (max-width: 767.98px) { .collapsible-content { padding-block: calc(var(--collapsible-padding-top) * 0.5) calc(var(--collapsible-padding-bottom) * 0.5); } }
