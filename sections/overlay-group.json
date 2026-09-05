@@ -1,1 +1,137 @@
-{"type":"custom.overlay","name":"Overlay group","sections":{"cart_drawer":{"type":"cart-drawer","blocks":{"cart_tools":{"type":"cart_tools","settings":{"show_note":true,"note_label":"Order note","note_placeholder":"Add a note to your order","note_save_label":"Save note","shipping_estimator_enable":true,"shipping_estimator_label":"Estimate shipping","shipping_estimator_country_label":"Country","shipping_estimator_province_label":"State \/ Province","shipping_estimator_postal_label":"Postal code","shipping_estimator_button_label":"Calculate","show_discount":true,"discount_button_label":"Apply"}}},"block_order":["cart_tools"],"settings":{"heading":"Cart","heading_size":"h7","heading_font_size":18,"heading_font_size_mobile":18,"auto_open":true,"promotion_enable":true,"promotion_message":"Use coupon code CODE10 for 10% off your first order.","promotion_speed":15,"promotion_direction":"left","promotion_pause_on_hover":true,"promotion_uppercase":false,"free_shipping_enable":true,"free_shipping_threshold":1000,"free_shipping_pending_message":"You are {amount} away from free shipping!","free_shipping_success_message":"Congratulations! You are eligible for free shipping!","complementary_products_enable":true,"complementary_products_heading":"You may also like","complementary_products_heading_size":"custom","complementary_products_heading_font_size":16,"complementary_products_heading_font_size_mobile":16,"complementary_products_source":"related","complementary_products":[],"complementary_products_limit":4,"complementary_products_auto_rotate":true,"complementary_products_interval":8,"complementary_products_pause_on_hover":true,"empty_heading":"Your cart is empty","empty_heading_size":"h7","empty_heading_font_size":14,"empty_heading_font_size_mobile":14,"empty_link":"shopify:\/\/collections\/all","empty_description":"Not sure where to start?\nTry these collections:","empty_collections":["a-birthstone","all-personalized","anniversary"],"total_label_size":"custom","total_label_font_size":18,"total_label_font_size_mobile":16,"total_price_size":"custom","total_price_font_size":18,"total_price_font_size_mobile":18,"checkout_label":"Checkout","checkout_icon":"none","show_view_cart":true,"view_cart_label":"View cart","show_accelerated_checkout":true,"color_scheme":"scheme-1","desktop_width":550,"indent_desktop":false,"blur_backdrop":false,"product_title_case":"none","image_radius":0}},"search_drawer":{"type":"search-drawer","settings":{"heading":"Search","heading_size":"h7","heading_font_size":50,"heading_font_size_mobile":30,"placeholder":"Search","animated_placeholder_terms":"Spinel rings\nBirthstone jewelry\nLab-grown sapphire","enable_search_suggestions":true,"popular_categories_heading":"Popular categories","popular_categories_heading_size":"h7","popular_categories_heading_font_size":50,"popular_categories_heading_font_size_mobile":30,"popular_categories":["a-birthstone","all-personalized","anniversary","before-we-melt","best-sellers"],"category_image_ratio":"square","category_slides_per_view":3.5,"category_slides_per_view_mobile":3,"show_recently_viewed":true,"recently_viewed_heading":"Recently viewed","recently_viewed_heading_size":"h7","recently_viewed_heading_font_size":50,"recently_viewed_heading_font_size_mobile":30,"recently_viewed_limit":4,"show_quick_add":true,"color_scheme":"scheme-1","desktop_width":550,"indent_desktop":false,"blur_backdrop":false}}},"order":["cart_drawer","search_drawer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.overlay",
+  "name": "Overlay group",
+  "sections": {
+    "cart_drawer": {
+      "type": "cart-drawer",
+      "blocks": {
+        "cart_tools": {
+          "type": "cart_tools",
+          "settings": {
+            "show_note": true,
+            "note_label": "Order note",
+            "note_placeholder": "Add a note to your order",
+            "note_save_label": "Save note",
+            "shipping_estimator_enable": true,
+            "shipping_estimator_label": "Estimate shipping",
+            "shipping_estimator_country_label": "Country",
+            "shipping_estimator_province_label": "State / Province",
+            "shipping_estimator_postal_label": "Postal code",
+            "shipping_estimator_button_label": "Calculate",
+            "show_discount": true,
+            "discount_button_label": "Apply"
+          }
+        }
+      },
+      "block_order": [
+        "cart_tools"
+      ],
+      "settings": {
+        "heading": "Cart",
+        "heading_size": "h7",
+        "heading_font_size": 18,
+        "heading_font_size_mobile": 18,
+        "auto_open": true,
+        "promotion_enable": true,
+        "promotion_message": "Use coupon code CODE10 for 10% off your first order.",
+        "promotion_speed": 15,
+        "promotion_direction": "left",
+        "promotion_pause_on_hover": true,
+        "promotion_uppercase": false,
+        "free_shipping_enable": true,
+        "free_shipping_threshold": 1000,
+        "free_shipping_pending_message": "You are {amount} away from free shipping!",
+        "free_shipping_success_message": "Congratulations! You are eligible for free shipping!",
+        "complementary_products_enable": true,
+        "complementary_products_heading": "You may also like",
+        "complementary_products_heading_size": "custom",
+        "complementary_products_heading_font_size": 16,
+        "complementary_products_heading_font_size_mobile": 16,
+        "complementary_products_source": "related",
+        "complementary_products": [],
+        "complementary_products_limit": 4,
+        "complementary_products_auto_rotate": true,
+        "complementary_products_interval": 8,
+        "complementary_products_pause_on_hover": true,
+        "empty_heading": "Your cart is empty",
+        "empty_heading_size": "h7",
+        "empty_heading_font_size": 14,
+        "empty_heading_font_size_mobile": 14,
+        "empty_link": "shopify://collections/all",
+        "empty_description": "Not sure where to start?\nTry these collections:",
+        "empty_collections": [
+          "a-birthstone",
+          "all-personalized",
+          "anniversary"
+        ],
+        "total_label_size": "custom",
+        "total_label_font_size": 18,
+        "total_label_font_size_mobile": 16,
+        "total_price_size": "custom",
+        "total_price_font_size": 18,
+        "total_price_font_size_mobile": 18,
+        "checkout_label": "Checkout",
+        "checkout_icon": "none",
+        "show_view_cart": true,
+        "view_cart_label": "View cart",
+        "show_accelerated_checkout": true,
+        "color_scheme": "scheme-1",
+        "desktop_width": 550,
+        "indent_desktop": false,
+        "blur_backdrop": false,
+        "product_title_case": "none",
+        "image_radius": 0
+      }
+    },
+    "search_drawer": {
+      "type": "search-drawer",
+      "settings": {
+        "heading": "Search",
+        "heading_size": "h7",
+        "heading_font_size": 50,
+        "heading_font_size_mobile": 30,
+        "placeholder": "Search",
+        "animated_placeholder_terms": "Orlune rings\nBirthstone jewelry\nLab-grown sapphire",
+        "enable_search_suggestions": true,
+        "popular_categories_heading": "Popular categories",
+        "popular_categories_heading_size": "h7",
+        "popular_categories_heading_font_size": 50,
+        "popular_categories_heading_font_size_mobile": 30,
+        "popular_categories": [
+          "a-birthstone",
+          "all-personalized",
+          "anniversary",
+          "before-we-melt",
+          "best-sellers"
+        ],
+        "category_image_ratio": "square",
+        "category_slides_per_view": 3.5,
+        "category_slides_per_view_mobile": 3,
+        "show_recently_viewed": true,
+        "recently_viewed_heading": "Recently viewed",
+        "recently_viewed_heading_size": "h7",
+        "recently_viewed_heading_font_size": 50,
+        "recently_viewed_heading_font_size_mobile": 30,
+        "recently_viewed_limit": 4,
+        "show_quick_add": true,
+        "color_scheme": "scheme-1",
+        "desktop_width": 550,
+        "indent_desktop": false,
+        "blur_backdrop": false
+      }
+    }
+  },
+  "order": [
+    "cart_drawer",
+    "search_drawer"
+  ]
+}

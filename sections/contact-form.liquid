@@ -39,7 +39,7 @@
               {% if studio_block.settings.hours != blank %}<p>{{ studio_block.settings.hours | escape }}</p>{% endif %}
             </div>
             {% if studio_block.settings.button_label != blank and studio_block.settings.button_link != blank %}
-              <a class="contact-form__studio-button" href="{{ studio_block.settings.button_link | escape }}">
+              <a class="contact-form__studio-button btn-secondary" href="{{ studio_block.settings.button_link | escape }}">
                 {{ studio_block.settings.button_label | escape }}
               </a>
             {% endif %}
@@ -60,7 +60,7 @@
               <{{ intro_block.settings.heading_tag | default: 'h2' }} class="contact-form__heading {% render 'typography-class', preset: intro_block.settings.heading_size, fallback: 'h2' %}">{{ intro_block.settings.heading | escape }}</{{ intro_block.settings.heading_tag | default: 'h2' }}>
             {% endif %}
             {% if intro_block.settings.text != blank %}
-              <div class="contact-form__description content-text jovie-text--{{ intro_block.settings.text_size | default: 'medium' }} content-text--{{ intro_block.settings.text_size | default: 'medium' }} rte">{{ intro_block.settings.text }}</div>
+              <div class="contact-form__description content-text spinel-text--{{ intro_block.settings.text_size | default: 'medium' }} content-text--{{ intro_block.settings.text_size | default: 'medium' }} rte">{{ intro_block.settings.text }}</div>
             {% endif %}
           </div>
         {% endif %}
@@ -181,7 +181,7 @@
     display: grid;
     gap: 2px;
     color: color-mix(in srgb, currentcolor 88%, transparent);
-    font-size: var(--label-size);
+    font-size: var(--p2-size-sm);
     line-height: 1.5;
   }
 
@@ -190,18 +190,7 @@
   }
 
   .contact-form__studio-button {
-    display: inline-flex;
-    min-height: 36px;
-    align-items: center;
-    justify-content: center;
     margin-top: 22px;
-    padding: 0 18px;
-    border: 1px solid currentcolor;
-    color: inherit;
-    font-size: 10px;
-    letter-spacing: .08em;
-    text-decoration: none;
-    text-transform: uppercase;
   }
 
   .contact-form__content {
@@ -525,7 +514,7 @@
           "type": "text",
           "id": "heading",
           "label": "Heading",
-          "default": "Spinel Atelier"
+          "default": "Orlune Atelier"
         },
         {
           "type": "select",

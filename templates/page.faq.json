@@ -1,1 +1,221 @@
-{"sections":{"hero":{"type":"hero-banner","blocks":{"media_hinwXk":{"type":"media","settings":{"image":"shopify:\/\/shop_images\/image_11zon_1.webp","alt_text":"","focal_point":"center center"}},"heading":{"type":"heading","settings":{"heading":"<h1>FAQs<\/h1>"}},"text":{"type":"text","settings":{"text":"<p>Find answers to our most common questions.<\/p>"}}},"block_order":["media_hinwXk","heading","text"],"settings":{"content_position":"center","content_width":680,"section_width":"full","height_desktop":480,"height_tablet":360,"height_mobile":320,"overlay_color":"#181818","overlay_opacity":0,"color_scheme":"scheme-3"}},"icon_with_text":{"type":"icon-with-text","blocks":{"category_orders":{"type":"item","settings":{"icon":"shopify:\/\/shop_images\/faq-icon1.png","heading":"Quality That Lasts","title":"Order and Shipping","anchor_id":"orders","text":"<p>For extra peace of mind, every piece is covered by our two-year warranty.<\/p>"}},"category_returns":{"type":"item","settings":{"icon":"shopify:\/\/shop_images\/faq-icon2.png","heading":"Quality That Lasts","title":"Account and Returns","anchor_id":"","text":"<p>For extra peace of mind, every piece is covered by our two-year warranty.<\/p>"}},"category_products":{"type":"item","settings":{"icon":"shopify:\/\/shop_images\/faq-icon3.png","heading":"Quality That Lasts","title":"Product Information","anchor_id":"","text":"<p>For extra peace of mind, every piece is covered by our two-year warranty.<\/p>"}},"category_gifts":{"type":"item","settings":{"icon":"shopify:\/\/shop_images\/faq-icon4.png","heading":"Quality That Lasts","title":"Gift Cards","anchor_id":"","text":"<p>For extra peace of mind, every piece is covered by our two-year warranty.<\/p>"}}},"block_order":["category_orders","category_returns","category_products","category_gifts"],"settings":{"columns_desktop":4,"columns_mobile":"1","section_width":"full","column_gap":20,"mobile_column_gap":12,"row_gap":40,"item_style":"default","icon_size":"small","content_gap":24,"heading_size":"h5","heading_tag":"h3","text_size":"medium","color_scheme":"scheme-1","background_color":"","padding_top":96,"padding_bottom":48}},"faq":{"type":"faq","blocks":{"group_orders":{"type":"group_heading","settings":{"heading":"Order and Shipping","heading_size":"h2","heading_tag":"h2","text":"<p>Everything you need to know about placing and receiving your order.<\/p>","text_size":"x-large","anchor_id":"orders"}},"question_track":{"type":"question","settings":{"question":"How can I track my order?","answer":"<p>Once your order ships, we will email you a tracking link.<\/p>","text_size":"medium","default_open":false}},"question_ship":{"type":"question","settings":{"question":"When will my order ship?","answer":"<p>Available delivery methods and estimated times are shown at checkout.<\/p>","text_size":"medium","default_open":false}},"question_international":{"type":"question","settings":{"question":"Where do you ship?","answer":"<p>Shipping availability is confirmed at checkout for the destination entered.<\/p>","text_size":"medium","default_open":false}},"group_shipping":{"type":"group_heading","settings":{"heading":"Shipping","heading_size":"h2","heading_tag":"h2","text":"<p>Shipping availability and delivery information for eligible destinations.<\/p>","text_size":"medium","anchor_id":"shipping"}},"question_cost":{"type":"question","settings":{"question":"How much does shipping cost?","answer":"<p>Shipping options and pricing are calculated at checkout.<\/p>","text_size":"medium","default_open":false}},"question_address":{"type":"question","settings":{"question":"Can I change my delivery address?","answer":"<p>Contact us as soon as possible and we will do our best to help before dispatch.<\/p>","text_size":"medium","default_open":false}}},"block_order":["group_orders","question_track","question_ship","question_international","group_shipping","question_cost","question_address"],"settings":{"section_width":"full","padding_top":48,"padding_bottom":96,"heading":"","heading_size":"h2","heading_tag":"h2","text":"","text_size":"medium","empty_message":"Add FAQ questions from the Theme Editor.","color_scheme":"scheme-1"}}},"order":["hero","icon_with_text","faq"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "blocks": {
+        "media_hinwXk": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/image_11zon_1.webp",
+            "alt_text": "",
+            "focal_point": "center center"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h1>Care, delivery &amp; the details.</h1>"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Everything you may want to know before choosing a piece or placing an order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "media_hinwXk",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "content_position": "center",
+        "content_width": 680,
+        "section_width": "full",
+        "height_desktop": 480,
+        "height_tablet": 360,
+        "height_mobile": 320,
+        "overlay_color": "#181818",
+        "overlay_opacity": 0,
+        "color_scheme": "scheme-3"
+      }
+    },
+    "icon_with_text": {
+      "type": "icon-with-text",
+      "blocks": {
+        "category_orders": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/faq-icon1.png",
+            "heading": "Ordering & delivery",
+            "title": "Before your piece arrives",
+            "anchor_id": "orders",
+            "text": "<p>What happens once your order is placed.</p>"
+          }
+        },
+        "category_returns": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/faq-icon2.png",
+            "heading": "Returns & exchanges",
+            "title": "A considered next step",
+            "anchor_id": "",
+            "text": "<p>Clear guidance when a piece is not quite right.</p>"
+          }
+        },
+        "category_products": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/faq-icon3.png",
+            "heading": "Care & materials",
+            "title": "For the years ahead",
+            "anchor_id": "",
+            "text": "<p>How to keep your piece close and looking its best.</p>"
+          }
+        },
+        "category_gifts": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/faq-icon4.png",
+            "heading": "Gifting & service",
+            "title": "A more personal gesture",
+            "anchor_id": "",
+            "text": "<p>Help with gifting, care and client services.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_orders",
+        "category_returns",
+        "category_products",
+        "category_gifts"
+      ],
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "section_width": "full",
+        "column_gap": 20,
+        "mobile_column_gap": 12,
+        "row_gap": 40,
+        "item_style": "default",
+        "icon_size": "small",
+        "content_gap": 24,
+        "heading_size": "h5",
+        "heading_tag": "h3",
+        "text_size": "medium",
+        "color_scheme": "scheme-1",
+        "background_color": "",
+        "padding_top": 96,
+        "padding_bottom": 48
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "group_orders": {
+          "type": "group_heading",
+          "settings": {
+            "heading": "Ordering & delivery",
+            "heading_size": "h2",
+            "heading_tag": "h2",
+            "text": "<p>What to expect once you have chosen your piece.</p>",
+            "text_size": "medium",
+            "anchor_id": "orders"
+          }
+        },
+        "question_track": {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order?",
+            "answer": "<p>Once your order has shipped, we will send the tracking details to the email address used at checkout.</p>",
+            "text_size": "medium",
+            "default_open": false
+          }
+        },
+        "question_ship": {
+          "type": "question",
+          "settings": {
+            "question": "When will my order ship?",
+            "answer": "<p>Available delivery methods and estimated timings are shown at checkout and confirmed in your order email.</p>",
+            "text_size": "medium",
+            "default_open": false
+          }
+        },
+        "question_international": {
+          "type": "question",
+          "settings": {
+            "question": "Where do you ship?",
+            "answer": "<p>Shipping availability is confirmed at checkout once you enter your delivery destination.</p>",
+            "text_size": "medium",
+            "default_open": false
+          }
+        },
+        "group_shipping": {
+          "type": "group_heading",
+          "settings": {
+            "heading": "Returns & exchanges",
+            "heading_size": "h2",
+            "heading_tag": "h2",
+            "text": "<p>Clear guidance when your order needs a second look.</p>",
+            "text_size": "medium",
+            "anchor_id": "returns"
+          }
+        },
+        "question_cost": {
+          "type": "question",
+          "settings": {
+            "question": "Can I request a return or exchange?",
+            "answer": "<p>Please review the return policy, then contact us with your order details so we can advise on eligibility and next steps.</p>",
+            "text_size": "medium",
+            "default_open": false
+          }
+        },
+        "question_address": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change my delivery address?",
+            "answer": "<p>Contact us as soon as possible. If your order has not been dispatched, we will do our best to help.</p>",
+            "text_size": "medium",
+            "default_open": false
+          }
+        }
+      },
+      "block_order": [
+        "group_orders",
+        "question_track",
+        "question_ship",
+        "question_international",
+        "group_shipping",
+        "question_cost",
+        "question_address"
+      ],
+      "settings": {
+        "section_width": "full",
+        "padding_top": 48,
+        "padding_bottom": 96,
+        "heading": "",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "text": "",
+        "text_size": "medium",
+        "empty_message": "Add FAQ questions from the Theme Editor.",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "icon_with_text",
+    "faq"
+  ]
+}

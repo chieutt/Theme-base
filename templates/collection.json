@@ -90,13 +90,13 @@
         "image_ratio": "4-5",
         "card_alignment": "center",
         "card_gap": 20,
-        "card_heading_size": "h4",
+        "card_heading_size": "h6",
         "card_heading_tag": "h3",
         "height_desktop": "medium",
         "height_mobile": "medium",
         "color_scheme": "",
         "padding_top": 12,
-        "padding_bottom": 12
+        "padding_bottom": 48
       }
     },
     "collection_breadcrumb": {
@@ -143,7 +143,7 @@
       ],
       "settings": {
         "custom_heading": "",
-        "fallback_description": "<p>Explore our complete collection of thoughtfully crafted jewelry, from timeless everyday essentials to statement pieces designed to celebrate life's most meaningful moments. Discover necklaces, rings, earrings, bracelets, and more in one place.</p>",
+        "fallback_description": "<p>A considered edit of sculptural gold and luminous stones, made for the pieces you wear every day and remember for years.</p>",
         "text_size": "medium",
         "show_read_more": true,
         "header_padding_top": 20,

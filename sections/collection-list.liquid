@@ -262,7 +262,7 @@
                 {% else %}
                   <span class="collection-list__overlay" aria-hidden="true"></span>
                   <span class="collection-list__content collection-list__content--{{ section.settings.card_alignment }} collection-list__content--position-bottom">
-                    <{{ section.settings.card_heading_tag | default: 'h3' }} class="collection-list__title collection-list__title--{{ section.settings.card_heading_size | default: 'h3' }} {% render 'typography-class', preset: section.settings.card_heading_size, fallback: 'h3' %}">
+                    <{{ section.settings.card_heading_tag | default: 'h3' }} class="collection-list__title collection-list__title--{{ section.settings.card_alignment | default: 'left' }} collection-list__title--{{ section.settings.card_heading_size | default: 'h3' }} {% render 'typography-class', preset: section.settings.card_heading_size, fallback: 'h3' %}">
                       {{ card_title | escape }}
                     </{{ section.settings.card_heading_tag | default: 'h3' }}>
                     {% if block.settings.show_product_count != false and card_collection != blank %}

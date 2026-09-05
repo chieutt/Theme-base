@@ -17,7 +17,9 @@
     "view_story": "View story"
   },
   "blog": {
-    "pagination": "Pagination"
+    "pagination": "Pagination",
+    "previous_page": "Previous page",
+    "next_page": "Next page"
   },
   "article": {
     "add_block": "Add an Article block to build this page.",
@@ -27,7 +29,9 @@
     "share_email": "Email",
     "share_facebook": "Facebook",
     "share_x": "X",
-    "comment_pagination": "Comment pagination"
+    "comment_pagination": "Comment pagination",
+    "previous_page": "Previous page",
+    "next_page": "Next page"
   },
   "errors": {
     "page_not_found": "Page not found",

@@ -152,6 +152,11 @@
     text-align: center;
   }
 
+  .newsletter-section--center-text :is(.newsletter-section__heading, .newsletter-section__text) .content-block {
+    width: 100%;
+    text-align: center;
+  }
+
   .newsletter-section__heading {
     margin: 0;
     color: var(--color-heading);
@@ -254,6 +259,7 @@
   .newsletter-section__form .newsletter-form__field input {
     width: 100%;
     min-width: 0;
+    height: var(--control-height);
     min-height: var(--control-height);
     padding-inline: 16px;
     border: 1px solid color-mix(in srgb, var(--color-heading) 72%, transparent);
@@ -265,6 +271,9 @@
 
   .newsletter-section__form .newsletter-form__field input::placeholder {
     color: color-mix(in srgb, var(--color-text) 65%, transparent);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-letter-spacing);
+    line-height: 1;
     opacity: 1;
   }
 
@@ -279,6 +288,8 @@
   }
 
   .newsletter-section__form .newsletter-form__fields--inline :is(.btn-primary, .btn-secondary, .btn-tertiary) {
+    height: var(--control-height);
+    min-height: var(--control-height);
     white-space: nowrap;
   }
 

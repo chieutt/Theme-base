@@ -118,7 +118,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                     "icon": "truck",
-                    "text": "<p>Shipping options and pricing are calculated at checkout.</p>",
+                    "text": "<p>Shipping at checkout</p>",
                     "page": "",
                     "show_page_popup": false
                   },
@@ -128,7 +128,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                     "icon": "return",
-                    "text": "<p>See our returns policy for eligibility and details.</p>",
+                    "text": "<p>Easy returns</p>",
                     "page": "",
                     "show_page_popup": false
                   },
@@ -138,7 +138,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                     "icon": "shield",
-                    "text": "<p>Lifetime Warranty</p>",
+                    "text": "<p>Lifetime warranty</p>",
                     "page": "",
                     "show_page_popup": false
                   },
@@ -148,7 +148,7 @@
                   "type": "product-benefit-item",
                   "settings": {
                     "icon": "sparkles",
-                    "text": "<p>Sustainably Made</p>",
+                    "text": "<p>Responsibly made</p>",
                     "page": "",
                     "show_page_popup": false
                   },
@@ -172,7 +172,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Description",
-                    "heading_size": "h5",
+                    "heading_size": "h7",
                     "html_tag": "h2",
                     "content_source": "description",
                     "metafield_namespace": "custom",
@@ -189,7 +189,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Care guide",
-                    "heading_size": "h5",
+                    "heading_size": "h7",
                     "html_tag": "h2",
                     "content_source": "manual",
                     "metafield_namespace": "custom",
@@ -206,7 +206,7 @@
                   "type": "product-accordion",
                   "settings": {
                     "heading": "Shipping and returns",
-                    "heading_size": "h5",
+                    "heading_size": "h7",
                     "html_tag": "h2",
                     "content_source": "manual",
                     "metafield_namespace": "custom",
@@ -246,7 +246,7 @@
               "type": "product-payment",
               "settings": {
                 "heading": "Pay With",
-                "heading_size": "h5",
+                "heading_size": "h7",
                 "html_tag": "h2",
                 "text_size": "small",
                 "note": "Your transaction is protected with advanced security measures to keep your information confidential."
@@ -301,49 +301,54 @@
     "image-with-text-01": {
       "type": "image-with-text",
       "blocks": {
-        "media": {
+        "hero_image": {
           "type": "media",
+          "static": true,
           "settings": {
             "image": "shopify://shop_images/image-with-text-ring-hands.jpg",
             "alt": "",
             "focal_point": "center center"
           }
         },
-        "subheading": {
-          "type": "heading",
+        "eyebrow": {
+          "type": "label",
+          "static": true,
           "settings": {
-            "heading": "<p>INVEST NOW, WEAR FOREVER</p>",
-            "type_preset": "h7"
+            "text": "<p>THE ORLUNE ATELIER</p>"
           }
         },
         "heading": {
           "type": "heading",
+          "static": true,
           "settings": {
-            "heading": "<h2>9K Gold For Lasting Elegance</h2>"
+            "heading": "<h2>Made for the years ahead.</h2>"
+          }
+        },
+        "highlight_heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "heading": ""
           }
         },
         "text": {
           "type": "text",
+          "static": true,
           "settings": {
-            "text": "<p>Crafted with precision and timeless beauty, each piece shines with exceptional detail and enduring quality. Crafted in premium 9K gold with timeless shine.</p><p>Whether you're reimagining a treasured piece or creating something entirely new, our bespoke service brings your story to every detail — shaped by your vision and guided by our expertise, from gemstone selection to design refinement.</p>"
+            "text": "<p>Each Orlune object begins with proportion, light and a material chosen to deepen with wear.</p><p>For a personal commission, our atelier works closely with you from stone selection to the final finish.</p>"
           }
         },
         "button": {
           "type": "button",
+          "static": true,
           "settings": {
-            "label": "Discover more",
+            "label": "Discover the house",
             "link": "/collections/all",
-            "style": "tertiary"
+            "style": "tertiary",
+            "icon": "arrow-right"
           }
         }
       },
-      "block_order": [
-        "media",
-        "subheading",
-        "heading",
-        "text",
-        "button"
-      ],
       "settings": {
         "media_position": "right",
         "content_alignment": "left",
@@ -360,7 +365,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>You May Also Like</h2>"
+            "heading": "<h2>Complete the composition</h2>"
           }
         },
         "collection": {
@@ -394,16 +399,20 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Frequently Asked Questions</h2>"
+            "heading": "<h2>Care &amp; assurances</h2>",
+            "type_preset": "h4",
+            "width": "100%",
+            "width_mobile": "100%",
+            "alignment": "center"
           }
         },
         "item-1": {
           "type": "item",
           "settings": {
-            "heading": "Can I Wear Your Jewelry Daily?",
-            "heading_size": "h4",
+            "heading": "Can I wear my piece every day?",
+            "heading_size": "h7",
             "heading_tag": "h3",
-            "content": "<p>Absolutely. Our jewelry is crafted for durability and comfort, allowing you to enjoy your favorite pieces from day to night.</p>",
+            "content": "<p>Yes. Each piece is designed for regular wear; we simply recommend removing it before swimming, exercising or sleeping.</p>",
             "text_size": "medium",
             "open_by_default": true
           }
@@ -411,10 +420,10 @@
         "item-2": {
           "type": "item",
           "settings": {
-            "heading": "Do You Offer Warranty Or Repairs?",
-            "heading_size": "h4",
+            "heading": "Do you offer care or repairs?",
+            "heading_size": "h7",
             "heading_tag": "h3",
-            "content": "<p>Yes. Every piece is supported by our care and repair service. Contact us if you need help with your jewelry.</p>",
+            "content": "<p>We are here to help with care advice and repair enquiries. Contact our client services team with a photograph and your order details.</p>",
             "text_size": "medium",
             "open_by_default": false
           }
@@ -422,10 +431,10 @@
         "item-3": {
           "type": "item",
           "settings": {
-            "heading": "Is Your Jewelry Hypoallergenic And Safe For Sensitive Skin?",
-            "heading_size": "h4",
+            "heading": "Is Orlune suitable for sensitive skin?",
+            "heading_size": "h7",
             "heading_tag": "h3",
-            "content": "<p>Our materials are selected with comfort in mind. Please review each product’s material details if you have sensitivities.</p>",
+            "content": "<p>Material details are listed on every product page. If you have sensitivities, please review them before ordering or contact us for guidance.</p>",
             "text_size": "medium",
             "open_by_default": false
           }
@@ -433,10 +442,10 @@
         "item-4": {
           "type": "item",
           "settings": {
-            "heading": "How Do I Care For My Jewelry To Keep It Shining?",
-            "heading_size": "h4",
+            "heading": "How should I care for my piece?",
+            "heading_size": "h7",
             "heading_tag": "h3",
-            "content": "<p>Remove jewelry before showering, swimming or exercising. Keep each piece away from perfume and household chemicals, then gently wipe it with a soft, dry cloth after wear.</p>",
+            "content": "<p>Store each piece separately, avoid water and fragrance, and wipe it gently with a soft, dry cloth after wear.</p>",
             "text_size": "medium",
             "open_by_default": false
           }
@@ -453,7 +462,7 @@
         "section_width": "page",
         "padding_top": 48,
         "padding_bottom": 48,
-        "button_label": "View all FAQs",
+        "button_label": "Explore all FAQs",
         "button_link": "/pages/faq",
         "color_scheme": ""
       }
@@ -545,7 +554,7 @@
         "image_ratio": "portrait",
         "card_alignment": "center",
         "card_gap": 20,
-        "card_heading_size": "h4",
+        "card_heading_size": "h6",
         "card_heading_tag": "h3",
         "height_desktop": "medium",
         "height_mobile": "medium",
