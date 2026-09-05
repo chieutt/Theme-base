@@ -2195,6 +2195,16 @@ if (!window.SpinelHeaderMenus) {
       closeOtherTopLevelHoverMenus(topLevelMenuItem);
     }
 
+    const moreDetails = event.target.closest?.('.header__submenu-disclosure--more');
+    if (moreDetails && !moreDetails.contains(event.relatedTarget)) {
+      clearMegaMenuHoverTimer(moreDetails);
+      closeOtherHeaderSubmenus(moreDetails, true);
+      positionHeaderSubmenu(moreDetails);
+      moreDetails.open = true;
+      syncHeaderDisclosureAria(moreDetails);
+      return;
+    }
+
     const nestedDetails = event.target.closest?.('.header__submenu-disclosure:not(.header__submenu-disclosure--mega) .header__submenu-nested-disclosure');
     if (nestedDetails && !nestedDetails.contains(event.relatedTarget)) {
       clearMegaMenuHoverTimer(nestedDetails);
@@ -2215,6 +2225,18 @@ if (!window.SpinelHeaderMenus) {
     if (localization) {
       if (localization.contains(event.relatedTarget)) return;
       scheduleHeaderLocalizationClose(localization);
+      return;
+    }
+
+    const moreDetails = event.target.closest?.('.header__submenu-disclosure--more');
+    if (moreDetails) {
+      if (moreDetails.contains(event.relatedTarget)) return;
+      clearMegaMenuHoverTimer(moreDetails);
+      megaMenuHoverTimers.set(moreDetails, window.setTimeout(() => {
+        if (moreDetails.matches(':hover')) return;
+        moreDetails.open = false;
+        syncHeaderDisclosureAria(moreDetails);
+      }, headerHoverCloseDelay));
       return;
     }
 
@@ -2369,6 +2391,7 @@ if (!window.SpinelHeaderMenus) {
 
     const summary = event.target.closest?.('summary');
     const submenu = summary?.parentElement;
+    if (submenu?.matches('.header__submenu-disclosure--more')) return;
     if (submenu?.matches('.header__localization-selector')) {
       event.preventDefault();
       if (isMobileHeaderViewport()) {

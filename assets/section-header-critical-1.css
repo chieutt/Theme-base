@@ -2631,3 +2631,24 @@ shopify-account.header__action--account::part(signed-out-avatar) {
 >>>>>>> origin/dev
 >>>>>>> origin/dev
 >>>>>>> origin/dev
+
+@media (min-width: 1024px) {
+  .header__submenu-disclosure--more > .header__submenu {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition: none;
+    visibility: visible;
+  }
+
+  .header__submenu-disclosure--more:not([open]) > .header__submenu {
+    display: none;
+  }
+
+  .header__submenu-disclosure--more > .header__submenu > li {
+    opacity: 1;
+    transform: none;
+  }
+}
