@@ -349,6 +349,7 @@
           }
         }
       },
+      "block_order": [],
       "settings": {
         "media_position": "right",
         "content_alignment": "left",
