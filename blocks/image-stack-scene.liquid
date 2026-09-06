@@ -64,9 +64,9 @@
   if request.page_type == 'index' and block.settings.image == blank and block.settings.mobile_image == blank
     case panel_index
       when 0
-        assign image_stack_asset = 'image-stack-light.jpg'
+        assign image_stack_asset = 'image-stack-light-lifestyle-v2.jpg'
         if panel_alt == blank
-          assign panel_alt = 'Pale-gold moonstone pendant suspended in morning light'
+          assign panel_alt = 'Model wearing a pale-gold moonstone pendant in soft morning light'
         endif
       when 1
         assign image_stack_asset = 'image-stack-nocturne.jpg'
@@ -74,9 +74,9 @@
           assign panel_alt = 'Garnet ring resting on dark stone in soft light'
         endif
       when 2
-        assign image_stack_asset = 'image-stack-atelier.jpg'
+        assign image_stack_asset = 'image-stack-atelier-hands-v2.jpg'
         if panel_alt == blank
-          assign panel_alt = 'Gold ring and jeweler tools on an atelier workbench'
+          assign panel_alt = 'Jeweler hands inspecting a gold ring in the atelier'
         endif
     endcase
   endif
