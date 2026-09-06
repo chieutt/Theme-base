@@ -3747,10 +3747,227 @@
         "padding_top": 80,
         "padding_bottom": 40
       }
+    },
+    "homepage_slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "homepage_slide_signature": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "mobile_image": "",
+            "image_alt": "Gold necklace resting on a collarbone",
+            "image_position": "center center",
+            "content_width": 520,
+            "content_alignment": "left",
+            "content_position": "middle-left",
+            "content_position_mobile": "bottom-left",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          },
+          "blocks": {
+            "homepage_signature_heading": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>Jewelry,<br/>held close.</h1>",
+                "type_preset": "h1",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "homepage_signature_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Natural gemstones and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "homepage_signature_buttons": {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 12
+              },
+              "blocks": {
+                "homepage_signature_button": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Explore signature pieces",
+                    "link": "/collections/all",
+                    "style": "secondary",
+                    "icon": "arrow-right"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "homepage_signature_button"
+              ]
+            }
+          },
+          "block_order": [
+            "homepage_signature_heading",
+            "homepage_signature_text",
+            "homepage_signature_buttons"
+          ]
+        },
+        "homepage_slide_radiance": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "mobile_image": "",
+            "image_alt": "Sculptural gold earring in warm light",
+            "image_position": "center center",
+            "content_width": 520,
+            "content_alignment": "left",
+            "content_position": "middle-left",
+            "content_position_mobile": "bottom-left",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 25
+          },
+          "blocks": {
+            "homepage_radiance_heading": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>Light in its<br/>rarest form.</h1>",
+                "type_preset": "h1",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "homepage_radiance_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Sculptural gold, luminous details, and a quiet radiance for every day.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "homepage_radiance_buttons": {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 12
+              },
+              "blocks": {
+                "homepage_radiance_button": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Discover the edit",
+                    "link": "/collections/all",
+                    "style": "secondary",
+                    "icon": "arrow-right"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "homepage_radiance_button"
+              ]
+            }
+          },
+          "block_order": [
+            "homepage_radiance_heading",
+            "homepage_radiance_text",
+            "homepage_radiance_buttons"
+          ]
+        },
+        "homepage_slide_evening": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "mobile_image": "",
+            "image_alt": "Gold ring on a hand against velvet",
+            "image_position": "center center",
+            "content_width": 520,
+            "content_alignment": "left",
+            "content_position": "middle-left",
+            "content_position_mobile": "bottom-left",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20
+          },
+          "blocks": {
+            "homepage_evening_heading": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>An evening<br/>remembered.</h1>",
+                "type_preset": "h1",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "homepage_evening_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Refined silhouettes for celebrations, candlelight, and everything after dark.</p>",
+                "type_preset": "md",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "homepage_evening_buttons": {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 12
+              },
+              "blocks": {
+                "homepage_evening_button": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Shop occasion",
+                    "link": "/collections/all",
+                    "style": "secondary",
+                    "icon": "arrow-right"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "homepage_evening_button"
+              ]
+            }
+          },
+          "block_order": [
+            "homepage_evening_heading",
+            "homepage_evening_text",
+            "homepage_evening_buttons"
+          ]
+        }
+      },
+      "block_order": [
+        "homepage_slide_signature",
+        "homepage_slide_radiance",
+        "homepage_slide_evening"
+      ],
+      "settings": {
+        "slideshow_style": "single",
+        "height_desktop": "full",
+        "height_mobile": "full",
+        "slide_gap": 0,
+        "autoplay": true,
+        "autoplay_delay": 6,
+        "enable_image_zoom": true,
+        "arrow_color": "#FFFFFF",
+        "arrow_background": "#000000",
+        "progress_color": "#FFFFFF",
+        "progress_track_color": "#FFFFFF",
+        "section_width": "full",
+        "color_scheme": "scheme-4"
+      }
     }
   },
   "order": [
-    "editorial_slideshow",
+    "homepage_slideshow",
     "highlight_text_with_image",
     "why_choose_us_spinel",
     "editorial_featured_collection",
