@@ -5,15 +5,19 @@
   assign section_background = section.settings.background_color
   assign section_background_image = ''
   assign section_mobile_background_image = ''
+  assign section_background_asset_url = ''
   if section.settings.use_custom_background_image
     assign section_background_image = section.settings.background_image
     assign section_mobile_background_image = section.settings.mobile_background_image
+    if request.page_type == 'index' and section_background_image == blank and section_mobile_background_image == blank
+      assign section_background_asset_url = 'image-stack-background-v2.jpg' | asset_url
+    endif
   endif
   assign section_description = section.settings.accessibility_label | default: 'Image stack'
   assign mobile_image_position = section.settings.mobile_image_position | default: 'center'
 %}
 
-{% if section_background != blank or section_background_image != blank or section_mobile_background_image != blank %}
+{% if section_background != blank or section_background_image != blank or section_mobile_background_image != blank or section_background_asset_url != blank %}
   <style>
     #shopify-section-{{ section.id }},
     #shopify-section-{{ section.id }} .image-stack {
@@ -21,6 +25,11 @@
       {% if section_background_image != blank %}
         --image-stack-section-background-image: url('{{ section_background_image | image_url: width: 2400 }}');
         background-image: url('{{ section_background_image | image_url: width: 2400 }}');
+      {% elsif section_background_asset_url != blank %}
+        --image-stack-section-background-image: url('{{ section_background_asset_url }}');
+        background-image: url('{{ section_background_asset_url }}');
+      {% endif %}
+      {% if section_background_image != blank or section_background_asset_url != blank %}
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -72,7 +81,7 @@
   data-scroll-animation-speed="{{ section.settings.scroll_animation_speed }}"
   style="--sticky-scroll-panel-count: {{ section.blocks.size }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --image-stack-final-hold: 100svh;"
 >
-  {% if section.settings.use_custom_background_image and section_background_image == blank %}
+  {% if section.settings.use_custom_background_image and section_background_image == blank and section_background_asset_url == blank %}
     <div class="image-stack__section-placeholder" aria-hidden="true">
       {{ 'lifestyle-1' | placeholder_svg_tag: 'image-stack__section-placeholder-svg' }}
     </div>
