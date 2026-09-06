@@ -59,6 +59,18 @@
               {% if block.type == 'item' %}
                 {% assign item_heading = block.settings.title | default: block.settings.heading %}
                 {% assign item_anchor = block.settings.anchor_id | handleize %}
+                {% assign trust_icon_asset = blank %}
+                {% if block.settings.icon == blank and section.id contains 'icon_with_text_trust' %}
+                  {% if item_heading contains 'Delivery' %}
+                    {% assign trust_icon_asset = 'trust-icon-delivery-v1.png' %}
+                  {% elsif item_heading contains 'Returns' %}
+                    {% assign trust_icon_asset = 'trust-icon-returns-v1.png' %}
+                  {% elsif item_heading contains 'Care' %}
+                    {% assign trust_icon_asset = 'trust-icon-care-v1.png' %}
+                  {% elsif item_heading contains 'Material' %}
+                    {% assign trust_icon_asset = 'trust-icon-material-v1.png' %}
+                  {% endif %}
+                {% endif %}
                 {% if item_anchor != blank %}
                   <a class="icon-with-text__item-link" href="#{{ item_anchor }}">
                 {% endif %}
@@ -74,6 +86,16 @@
                         loading: 'lazy',
                         decorative: true
                       %}
+                    {% elsif trust_icon_asset != blank %}
+                      <img
+                        class="icon-with-text__icon-image"
+                        src="{{ trust_icon_asset | asset_url }}"
+                        alt=""
+                        width="192"
+                        height="192"
+                        loading="lazy"
+                        decoding="async"
+                      >
                     {% else %}
                       {{ 'image' | placeholder_svg_tag: 'icon-with-text__icon-placeholder' }}
                     {% endif %}
