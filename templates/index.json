@@ -32,10 +32,10 @@
             "link": "",
             "link_label": "",
             "open_in_new_tab": false,
-            "image_ratio": "adapt",
+            "image_ratio": "16-9",
             "corner_style": "round",
-            "width": 56,
-            "width_mobile": 40
+            "width": 92,
+            "width_mobile": 68
           }
         },
         "highlight_inline_image_3": {
@@ -45,10 +45,10 @@
             "link": "",
             "link_label": "",
             "open_in_new_tab": false,
-            "image_ratio": "adapt",
+            "image_ratio": "16-9",
             "corner_style": "round",
-            "width": 56,
-            "width_mobile": 40
+            "width": 92,
+            "width_mobile": 68
           }
         }
       },
