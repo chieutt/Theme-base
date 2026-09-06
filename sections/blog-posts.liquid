@@ -131,7 +131,24 @@
                     if section.settings.alternate_item_background and article_modulo == 1
                       assign is_alternate = true
                     endif
-                    assign article_alt = article.image.alt | default: article.title
+                    assign article_fallback_asset = blank
+                    assign article_fallback_alt = blank
+                    case article.handle
+                      when 'a-necklace-for-the-lightest-hours'
+                        assign article_fallback_asset = 'blog-story-light-pendant-v1.jpg'
+                        assign article_fallback_alt = 'Model wearing a gold pendant in bright morning light'
+                      when 'the-everyday-ring-ritual'
+                        assign article_fallback_asset = 'blog-story-layering-rings-v1.jpg'
+                        assign article_fallback_alt = 'Hands styling slim gold rings on a sunlit stone table'
+                      when 'jewellery-that-moves-with-you'
+                        assign article_fallback_asset = 'blog-story-hoops-gallery-v1.jpg'
+                        assign article_fallback_alt = 'Model wearing gold hoops and a fine chain in a bright gallery'
+                      when 'a-bracelet-for-open-air'
+                        assign article_fallback_asset = 'blog-story-bracelet-ritual-v1.jpg'
+                        assign article_fallback_alt = 'Gold bracelet styled beside a linen journal and fresh flowers'
+                    endcase
+                    assign article_alt = article.image.alt | default: article_fallback_alt | default: article.title
+                    assign article_fallback_url = article_fallback_asset | asset_url
                     assign article_image_ratio = section.settings.image_ratio
                     if use_editorial_grid and rendered_article_index == 0
                       assign article_image_ratio = section.settings.feature_image_ratio
@@ -160,17 +177,41 @@
                   >
                     {% if section.settings.show_featured_image %}
                       <a class="blog-posts__media blog-posts__media--{{ article_image_ratio }}{% if use_editorial_grid and rendered_article_index == 0 %} blog-posts__media--mobile-{{ section.settings.image_ratio }}{% endif %}" href="{{ article.url | escape }}">
-                        {% render 'responsive-media',
-                          image: article.image,
-                          max_width: 1200,
-                          widths: '360, 480, 640, 800, 1000, 1200',
-                          sizes: '(min-width: 1150px) 33vw, (min-width: 768px) 50vw, calc(100vw - 32px)',
-                          class: 'blog-posts__image media-cover',
-                          loading: 'lazy',
-                          alt: article_alt,
-                          placeholder_asset: 'placeholder-image-default-1.svg',
-                          placeholder_class: 'blog-posts__image media-cover'
-                        %}
+                        {% if article.image != blank %}
+                          {% render 'responsive-media',
+                            image: article.image,
+                            max_width: 1200,
+                            widths: '360, 480, 640, 800, 1000, 1200',
+                            sizes: '(min-width: 1150px) 33vw, (min-width: 768px) 50vw, calc(100vw - 32px)',
+                            class: 'blog-posts__image media-cover',
+                            loading: 'lazy',
+                            alt: article_alt,
+                            placeholder_asset: 'placeholder-image-default-1.svg',
+                            placeholder_class: 'blog-posts__image media-cover'
+                          %}
+                        {% elsif article_fallback_asset != blank %}
+                          <img
+                            class="blog-posts__image media-cover"
+                            src="{{ article_fallback_url }}"
+                            alt="{{ article_alt | escape }}"
+                            width="1448"
+                            height="1086"
+                            loading="lazy"
+                            decoding="async"
+                          >
+                        {% else %}
+                          {% render 'responsive-media',
+                            image: article.image,
+                            max_width: 1200,
+                            widths: '360, 480, 640, 800, 1000, 1200',
+                            sizes: '(min-width: 1150px) 33vw, (min-width: 768px) 50vw, calc(100vw - 32px)',
+                            class: 'blog-posts__image media-cover',
+                            loading: 'lazy',
+                            alt: article_alt,
+                            placeholder_asset: 'placeholder-image-default-1.svg',
+                            placeholder_class: 'blog-posts__image media-cover'
+                          %}
+                        {% endif %}
                       </a>
                     {% endif %}
 

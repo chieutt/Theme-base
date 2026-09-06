@@ -2730,7 +2730,7 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>Notes from the house</h2>",
+            "heading": "<h2>Stories to wear slowly.</h2>",
             "type_preset": "h4",
             "font_size": 50,
             "font_size_mobile": 30,
@@ -2756,7 +2756,7 @@
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>Stories of stones, studio rituals and the objects that stay with us.</p>",
+            "text": "<p>Light, material and the rituals that make a jewel feel like yours.</p>",
             "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
@@ -2782,11 +2782,11 @@
           "type": "button",
           "static": true,
           "settings": {
-            "label": "",
-            "link": "",
-            "style": "primary",
+            "label": "Read the journal",
+            "link": "/blogs/news",
+            "style": "tertiary",
             "open_in_new_tab": false,
-            "icon": "none",
+            "icon": "arrow-right",
             "reveal_type": "none",
             "reveal_duration": 650,
             "reveal_delay": 0
@@ -2795,7 +2795,7 @@
         }
       },
       "settings": {
-        "blog": "",
+        "blog": "gid://shopify/Blog/119977804091",
         "blog_tags": "",
         "posts_to_show": 4,
         "show_view_all_button": true,
