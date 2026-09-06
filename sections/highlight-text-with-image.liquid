@@ -18,7 +18,30 @@
   for block in section.blocks
     assign placeholder = '[img' | append: forloop.index | append: ']'
     assign legacy_placeholder = '[image' | append: forloop.index | append: ']'
+    assign highlight_asset = blank
+    if block.settings.image == blank and request.page_type == 'index'
+      case forloop.index
+        when 1
+          assign highlight_asset = 'highlight-inline-necklace.png'
+        when 2
+          assign highlight_asset = 'highlight-inline-earring.png'
+        when 3
+          assign highlight_asset = 'highlight-inline-ring.png'
+      endcase
+    endif
     assign image_alt = block.settings.alt | default: block.settings.image.alt
+    if image_alt == blank
+      case forloop.index
+        when 1
+          assign image_alt = 'Gold pendant necklace in warm light'
+        when 2
+          assign image_alt = 'Sculptural gold drop earring'
+        when 3
+          assign image_alt = 'Gold garnet signet ring'
+      endcase
+    endif
+    assign image_alt_escaped = image_alt | escape
+    assign highlight_asset_url = highlight_asset | asset_url
     assign image_ratio = block.settings.image_ratio | default: 'adapt'
     assign image_aspect_ratio = image_ratio
     case image_ratio
@@ -41,7 +64,7 @@
     endcase
     assign link_label = block.settings.link_label | default: image_alt | default: 'View linked image'
     assign media_placeholder_modifier = ''
-    if block.settings.image == blank
+    if block.settings.image == blank and highlight_asset == blank
       assign media_placeholder_modifier = ' highlight-text-with-image__media--placeholder'
     endif
 
@@ -64,7 +87,13 @@
         echo '" ' | append: block.shopify_attributes | append: '>'
       endif
 
-      render 'responsive-media', image: block.settings.image, max_width: 480, widths: '32, 48, 64, 80, 120, 160, 240, 320, 480', sizes: '(min-width: 768px) 160px, 96px', class: 'highlight-text-with-image__image', alt: image_alt, decorative: false, loading: 'lazy', placeholder_asset: 'placeholder-image-default-1.svg', placeholder_class: 'highlight-text-with-image__image highlight-text-with-image__placeholder'
+      if block.settings.image != blank
+        render 'responsive-media', image: block.settings.image, max_width: 480, widths: '32, 48, 64, 80, 120, 160, 240, 320, 480', sizes: '(min-width: 768px) 160px, 96px', class: 'highlight-text-with-image__image', alt: image_alt, decorative: false, loading: 'lazy', placeholder_asset: 'placeholder-image-default-1.svg', placeholder_class: 'highlight-text-with-image__image highlight-text-with-image__placeholder'
+      elsif highlight_asset != blank
+        echo '<img class="highlight-text-with-image__image" src="' | append: highlight_asset_url | append: '" alt="' | append: image_alt_escaped | append: '" loading="lazy" decoding="async">'
+      else
+        render 'responsive-media', image: blank, max_width: 480, widths: '32, 48, 64, 80, 120, 160, 240, 320, 480', sizes: '(min-width: 768px) 160px, 96px', class: 'highlight-text-with-image__image', alt: image_alt, decorative: false, loading: 'lazy', placeholder_asset: 'placeholder-image-default-1.svg', placeholder_class: 'highlight-text-with-image__image highlight-text-with-image__placeholder'
+      endif
 
       if block.settings.link != blank
         echo '</a>'
