@@ -2795,7 +2795,7 @@
         }
       },
       "settings": {
-        "blog": "gid://shopify/Blog/119977804091",
+        "blog": "news",
         "blog_tags": "",
         "posts_to_show": 4,
         "show_view_all_button": true,
