@@ -3,6 +3,11 @@
 {% liquid
   assign image_column_position = section.settings.image_position
   assign gift_spinel_background = section.settings.background_color
+  assign gift_spinel_asset = blank
+  if section.settings.image == blank and request.page_type == 'index'
+    assign gift_spinel_asset = 'gift-finder-editorial-v2.jpg'
+  endif
+  assign gift_spinel_asset_url = gift_spinel_asset | asset_url
   if gift_spinel_background == blank
     assign gift_spinel_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
   endif
@@ -61,6 +66,16 @@
               loading: 'lazy',
               decorative: true
             %}
+          {% elsif gift_spinel_asset != blank %}
+            <img
+              class="gift-spinel__intro-image"
+              src="{{ gift_spinel_asset_url }}"
+              alt=""
+              width="1122"
+              height="1402"
+              loading="lazy"
+              decoding="async"
+            >
           {% else %}
             {% render 'media-placeholder', class_name: 'gift-spinel__intro-image gift-spinel__intro-placeholder', placeholder_name: 'lifestyle-1' %}
           {% endif %}
