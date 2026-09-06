@@ -9,6 +9,7 @@
   assign slide_image = block.settings.image | default: block.settings.mobile_image
   assign slide_mobile_image = block.settings.mobile_image
   assign slide_asset = blank
+  assign slide_mobile_asset = blank
   if slide_image == blank and request.page_type == 'index'
     assign slide_index = 0
     for slide_block in section.blocks
@@ -20,10 +21,13 @@
     case slide_index
       when 1
         assign slide_asset = 'editorial-slideshow-signature.png'
+        assign slide_mobile_asset = 'editorial-slideshow-signature-mobile.png'
       when 2
         assign slide_asset = 'editorial-slideshow-radiance.png'
+        assign slide_mobile_asset = 'editorial-slideshow-radiance-mobile.png'
       when 3
         assign slide_asset = 'editorial-slideshow-evening.png'
+        assign slide_mobile_asset = 'editorial-slideshow-evening-mobile.png'
     endcase
   endif
   assign slide_image_alt = block.settings.image_alt | default: slide_image.alt
@@ -72,16 +76,21 @@
         placeholder_class: 'slideshow__placeholder'
       %}
     {% elsif slide_asset != blank %}
-      <img
-        class="slideshow__image"
-        src="{{ slide_asset | asset_url }}"
-        alt="{{ slide_image_alt | escape }}"
-        width="1672"
-        height="941"
-        loading="{{ image_loading }}"
-        decoding="async"
-        fetchpriority="{{ image_priority }}"
-      >
+      <picture>
+        {% if slide_mobile_asset != blank %}
+          <source media="(max-width: 749px)" srcset="{{ slide_mobile_asset | asset_url }}">
+        {% endif %}
+        <img
+          class="slideshow__image"
+          src="{{ slide_asset | asset_url }}"
+          alt="{{ slide_image_alt | escape }}"
+          width="1672"
+          height="941"
+          loading="{{ image_loading }}"
+          decoding="async"
+          fetchpriority="{{ image_priority }}"
+        >
+      </picture>
     {% else %}
       {% render 'responsive-media',
         image: blank,
