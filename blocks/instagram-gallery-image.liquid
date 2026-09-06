@@ -4,7 +4,48 @@
 
 {% liquid
   assign gallery_image = block.settings.image
-  assign gallery_alt = block.settings.alt | default: gallery_image.alt
+  assign gallery_asset = blank
+  assign gallery_asset_alt = blank
+  assign gallery_index = 0
+
+  for sibling_block in section.blocks
+    if sibling_block.id == block.id
+      assign gallery_index = forloop.index
+      break
+    endif
+  endfor
+
+  if request.page_type == 'index' and gallery_image == blank
+    case gallery_index
+      when 1
+        assign gallery_asset = 'gallery-face-pendant-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing a pale-gold pendant in soft morning light'
+      when 2
+        assign gallery_asset = 'gallery-face-hoops-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing sculptural gold hoops and a fine chain'
+      when 3
+        assign gallery_asset = 'gallery-face-signet-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing a charcoal suit and a signet ring'
+      when 4
+        assign gallery_asset = 'gallery-face-terracotta-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing a pendant and ear cuff against a terracotta wall'
+      when 5
+        assign gallery_asset = 'gallery-face-garden-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing a bracelet and rings in a garden setting'
+      when 6
+        assign gallery_asset = 'gallery-face-pearl-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing a delicate gold chain with a pearl pendant'
+      when 7
+        assign gallery_asset = 'gallery-face-green-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing gold earrings and a chain against a forest-green background'
+      when 8
+        assign gallery_asset = 'gallery-face-studio-v2.jpg'
+        assign gallery_asset_alt = 'Full-face model wearing layered necklaces in warm studio light'
+    endcase
+  endif
+
+  assign gallery_alt = block.settings.alt | default: gallery_image.alt | default: gallery_asset_alt
+  assign gallery_asset_url = gallery_asset | asset_url
 %}
 
 <article class="gallery__item" data-reveal-item {{ block.shopify_attributes }}>
@@ -12,17 +53,41 @@
     <a class="gallery__item-link" href="{{ block.settings.link | escape }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} aria-label="{{ block.settings.accessibility_label | default: 'View on Instagram' | escape }}">
   {% endif %}
       <div class="gallery__media">
-        {% render 'responsive-media',
-          image: gallery_image,
-          max_width: 1000,
-          widths: '240, 360, 480, 600, 750, 1000',
-          sizes: '(min-width: 1150px) calc((100vw - (var(--page-margin) * 2) - 96px) / 5), (min-width: 768px) calc((100vw - (var(--page-margin) * 2) - 48px) / 3), calc((100vw - (var(--page-margin) * 2) - 24px) / 2)',
-          class: 'gallery__image',
-          loading: 'lazy',
-          alt: gallery_alt,
-          placeholder_asset: 'image',
-          placeholder_class: 'gallery__placeholder'
-        %}
+        {% if gallery_image != blank %}
+          {% render 'responsive-media',
+            image: gallery_image,
+            max_width: 1000,
+            widths: '240, 360, 480, 600, 750, 1000',
+            sizes: '(min-width: 1150px) calc((100vw - (var(--page-margin) * 2) - 96px) / 5), (min-width: 768px) calc((100vw - (var(--page-margin) * 2) - 48px) / 3), calc((100vw - (var(--page-margin) * 2) - 24px) / 2)',
+            class: 'gallery__image',
+            loading: 'lazy',
+            alt: gallery_alt,
+            placeholder_asset: 'image',
+            placeholder_class: 'gallery__placeholder'
+          %}
+        {% elsif gallery_asset != blank %}
+          <img
+            class="gallery__image"
+            src="{{ gallery_asset_url }}"
+            alt="{{ gallery_alt | escape }}"
+            width="1254"
+            height="1254"
+            loading="lazy"
+            decoding="async"
+          >
+        {% else %}
+          {% render 'responsive-media',
+            image: gallery_image,
+            max_width: 1000,
+            widths: '240, 360, 480, 600, 750, 1000',
+            sizes: '(min-width: 1150px) calc((100vw - (var(--page-margin) * 2) - 96px) / 5), (min-width: 768px) calc((100vw - (var(--page-margin) * 2) - 48px) / 3), calc((100vw - (var(--page-margin) * 2) - 24px) / 2)',
+            class: 'gallery__image',
+            loading: 'lazy',
+            alt: gallery_alt,
+            placeholder_asset: 'image',
+            placeholder_class: 'gallery__placeholder'
+          %}
+        {% endif %}
         <span class="gallery__item-overlay" aria-hidden="true">
           <span class="gallery__instagram-icon">{% render 'social-icon', name: 'instagram' %}</span>
           <span class="gallery__instagram-label">View on Instagram ↗</span>
