@@ -22,22 +22,22 @@
     if block.settings.image == blank and request.page_type == 'index'
       case forloop.index
         when 1
-          assign highlight_asset = 'highlight-inline-necklace.png'
+          assign highlight_asset = 'highlight-mark-the-moment.jpg'
         when 2
-          assign highlight_asset = 'highlight-inline-earring.png'
+          assign highlight_asset = 'highlight-private-memories.jpg'
         when 3
-          assign highlight_asset = 'highlight-inline-ring.png'
+          assign highlight_asset = 'highlight-your-own-story.jpg'
       endcase
     endif
     assign image_alt = block.settings.alt | default: block.settings.image.alt
     if image_alt == blank
       case forloop.index
         when 1
-          assign image_alt = 'Gold pendant necklace in warm light'
+          assign image_alt = 'Gold pendant arranged on an ivory keepsake card'
         when 2
-          assign image_alt = 'Sculptural gold drop earring'
+          assign image_alt = 'Gold jewelry preserved in an oxblood velvet keepsake box'
         when 3
-          assign image_alt = 'Gold garnet signet ring'
+          assign image_alt = 'Gold signet ring resting on a linen journal'
       endcase
     endif
     assign image_alt_escaped = image_alt | escape

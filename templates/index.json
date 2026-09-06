@@ -15,12 +15,12 @@
         "highlight_inline_image_1": {
           "type": "image",
           "settings": {
-            "alt": "Gold pendant necklace in warm light",
+            "alt": "Gold pendant arranged on an ivory keepsake card",
             "link": "",
             "link_label": "",
             "open_in_new_tab": false,
             "image_ratio": "16-9",
-            "corner_style": "square",
+            "corner_style": "round",
             "width": 124,
             "width_mobile": 60
           }
@@ -28,12 +28,12 @@
         "highlight_inline_image_2": {
           "type": "image",
           "settings": {
-            "alt": "Sculptural gold drop earring",
+            "alt": "Gold jewelry preserved in an oxblood velvet keepsake box",
             "link": "",
             "link_label": "",
             "open_in_new_tab": false,
             "image_ratio": "adapt",
-            "corner_style": "square",
+            "corner_style": "round",
             "width": 56,
             "width_mobile": 40
           }
@@ -41,12 +41,12 @@
         "highlight_inline_image_3": {
           "type": "image",
           "settings": {
-            "alt": "Gold garnet signet ring",
+            "alt": "Gold signet ring resting on a linen journal",
             "link": "",
             "link_label": "",
             "open_in_new_tab": false,
             "image_ratio": "adapt",
-            "corner_style": "square",
+            "corner_style": "round",
             "width": 56,
             "width_mobile": 40
           }
