@@ -9,6 +9,24 @@
 {% liquid
   assign slide_image = block.settings.image | default: block.settings.mobile_image
   assign slide_mobile_image = block.settings.mobile_image
+  assign slide_asset = blank
+  if slide_image == blank and request.page_type == 'index'
+    assign slide_index = 0
+    for slide_block in section.blocks
+      if slide_block.id == block.id
+        assign slide_index = forloop.index
+        break
+      endif
+    endfor
+    case slide_index
+      when 1
+        assign slide_asset = 'editorial-slideshow-signature.png'
+      when 2
+        assign slide_asset = 'editorial-slideshow-radiance.png'
+      when 3
+        assign slide_asset = 'editorial-slideshow-evening.png'
+    endcase
+  endif
   assign slide_image_alt = block.settings.image_alt | default: slide_image.alt
   assign slide_desktop_ratio = block.settings.image.aspect_ratio | default: block.settings.mobile_image.aspect_ratio | default: 1.7778
   assign slide_mobile_ratio = block.settings.mobile_image.aspect_ratio | default: block.settings.image.aspect_ratio | default: 0.75
@@ -63,6 +81,17 @@
         fetchpriority: image_priority,
         alt: slide_image_alt
       %}
+    {% elsif slide_asset != blank %}
+      <img
+        class="editorial-slideshow__image"
+        src="{{ slide_asset | asset_url }}"
+        alt="{{ slide_image_alt | escape }}"
+        width="1672"
+        height="941"
+        loading="{{ image_loading }}"
+        decoding="async"
+        fetchpriority="{{ image_priority }}"
+      >
     {% else %}
       {{ 'lifestyle-1' | placeholder_svg_tag: 'editorial-slideshow__placeholder' }}
     {% endif %}
