@@ -321,7 +321,8 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>Made for the years ahead.</h2>"
+            "heading": "<h2>Made for the years ahead.</h2>",
+            "type_preset": "h3"
           }
         },
         "highlight_heading": {
@@ -335,7 +336,7 @@
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>Each Orlune object begins with proportion, light and a material chosen to deepen with wear.</p><p>For a personal commission, our atelier works closely with you from stone selection to the final finish.</p>"
+            "text": "<p>Each Orlune object begins with proportion, light and a material chosen to deepen with wear.</p><p>From the first fitting to the final finish, our atelier makes space for the way you want to live in it.</p>"
           }
         },
         "button": {
@@ -366,7 +367,8 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Complete the composition</h2>"
+            "heading": "<h2>Complete the look</h2>",
+            "type_preset": "h3"
           }
         },
         "collection": {
@@ -400,7 +402,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Care &amp; assurances</h2>",
+            "heading": "<h2>The Orlune standard</h2>",
             "type_preset": "h4",
             "width": "100%",
             "width_mobile": "100%",
@@ -474,7 +476,8 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Explore our collections</h2>"
+            "heading": "<h2>Find your everyday signature.</h2>",
+            "type_preset": "h3"
           }
         },
         "collection-3": {

@@ -14,7 +14,13 @@
       "blocks": {
         "header": {
           "type": "article_header",
-          "settings": {}
+          "settings": {
+            "show_image": true,
+            "show_tag": true,
+            "show_excerpt": true,
+            "show_date": true,
+            "show_author": true
+          }
         },
         "content": {
           "type": "article_content",
@@ -22,19 +28,40 @@
         },
         "share": {
           "type": "share_links",
-          "settings": {}
+          "settings": {
+            "label": "Share the story",
+            "show_facebook": true,
+            "show_x": true,
+            "show_email": true
+          }
         },
         "related": {
           "type": "related_articles",
-          "settings": {}
+          "settings": {
+            "heading": "More from the journal",
+            "article_count": 3,
+            "show_date": true
+          }
         },
         "comments": {
           "type": "comments",
-          "settings": {}
+          "settings": {
+            "heading": "Join the conversation",
+            "show_form": true,
+            "submit_label": "Post comment",
+            "success_message": "Thanks for sharing your thoughts."
+          }
         }
       },
       "block_order": ["header", "content", "share", "related", "comments"],
-      "settings": {}
+      "settings": {
+        "section_width": "page",
+        "content_width": 760,
+        "hero_height": 560,
+        "padding_top": 24,
+        "padding_bottom": 96,
+        "color_scheme": "scheme-1"
+      }
     }
   },
   "order": [

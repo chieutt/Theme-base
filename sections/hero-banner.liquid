@@ -20,6 +20,10 @@
               {{ block.shopify_attributes }}
             >
               {% liquid
+                assign hero_fallback_asset = blank
+                if block.settings.image == blank and request.page_type == 'page' and section.id contains '__hero'
+                  assign hero_fallback_asset = 'page-faq-hero-v1.jpg'
+                endif
                 assign image_alt = block.settings.alt_text | default: block.settings.image.alt
                 assign image_loading = 'lazy'
                 assign image_priority = 'auto'
@@ -32,18 +36,31 @@
                   endif
                 endif
               %}
-              {% render 'responsive-media',
-                image: block.settings.image,
-                max_width: 2400,
-                widths: '375, 550, 750, 960, 1200, 1600, 1920, 2400',
-                sizes: '100vw',
-                class: 'hero-banner__image',
-                alt: image_alt,
-                loading: image_loading,
-                fetchpriority: image_priority,
-                placeholder_asset: hero_placeholder_asset,
-                placeholder_class: 'hero-banner__placeholder'
-              %}
+              {% if hero_fallback_asset != blank %}
+                <img
+                  class="hero-banner__image"
+                  src="{{ hero_fallback_asset | asset_url }}"
+                  alt="{{ image_alt | escape }}"
+                  width="1672"
+                  height="941"
+                  loading="{{ image_loading }}"
+                  fetchpriority="{{ image_priority }}"
+                  decoding="async"
+                >
+              {% else %}
+                {% render 'responsive-media',
+                  image: block.settings.image,
+                  max_width: 2400,
+                  widths: '375, 550, 750, 960, 1200, 1600, 1920, 2400',
+                  sizes: '100vw',
+                  class: 'hero-banner__image',
+                  alt: image_alt,
+                  loading: image_loading,
+                  fetchpriority: image_priority,
+                  placeholder_asset: hero_placeholder_asset,
+                  placeholder_class: 'hero-banner__placeholder'
+                %}
+              {% endif %}
             </div>
           {% endif %}
         {% endfor %}

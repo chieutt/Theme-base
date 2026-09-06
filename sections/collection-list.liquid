@@ -158,6 +158,9 @@
                   assign card_image = first_product.featured_image
                 endif
               endif
+              if block.settings.image == blank and card_collection != blank and card_collection.image == blank
+                assign card_image = blank
+              endif
 
               if card_title == blank
                 assign card_title = card_collection.title
@@ -165,6 +168,52 @@
               if card_title == blank
                 assign card_title = 'collection_list.collection' | t
               endif
+
+              assign collection_fallback_asset = blank
+              if card_image == blank and card_collection != blank
+                case card_collection.handle
+                  when 'puzzle-collection'
+                    assign collection_fallback_asset = 'collection-split-puzzle.jpg'
+                  when 'dome-collection'
+                    assign collection_fallback_asset = 'collection-split-dome.jpg'
+                  when 'charlotte-collection'
+                    assign collection_fallback_asset = 'collection-split-personal.jpg'
+                  when 'stevie-collection'
+                    assign collection_fallback_asset = 'collection-split-veil.jpg'
+                  when 'earrings'
+                    assign collection_fallback_asset = 'shoppable-video-look-earring-v2.jpg'
+                  when 'bracelets'
+                    assign collection_fallback_asset = 'image-stack-light-lifestyle-v2.jpg'
+                  when 'necklaces'
+                    assign collection_fallback_asset = 'blog-story-light-pendant-v1.jpg'
+                  when 'rings'
+                    assign collection_fallback_asset = 'product-atelier-v1.jpg'
+                endcase
+              endif
+              if collection_fallback_asset == blank and request.page_type == 'collection'
+                case split_card_index
+                  when 1
+                    assign collection_fallback_asset = 'collection-split-puzzle.jpg'
+                  when 2
+                    assign collection_fallback_asset = 'collection-split-dome.jpg'
+                  when 3
+                    assign collection_fallback_asset = 'collection-split-personal.jpg'
+                  when 4
+                    assign collection_fallback_asset = 'collection-split-veil.jpg'
+                endcase
+              elsif collection_fallback_asset == blank and request.page_type == 'product'
+                case split_card_index
+                  when 1
+                    assign collection_fallback_asset = 'shoppable-video-look-earring-v2.jpg'
+                  when 2
+                    assign collection_fallback_asset = 'image-stack-light-lifestyle-v2.jpg'
+                  when 3
+                    assign collection_fallback_asset = 'blog-story-light-pendant-v1.jpg'
+                  when 4
+                    assign collection_fallback_asset = 'product-atelier-v1.jpg'
+                endcase
+              endif
+              assign collection_fallback_asset_url = collection_fallback_asset | asset_url
 
               assign split_promotion_asset = blank
               if section.settings.layout == 'split-promotions' and card_image == blank and request.page_type == 'index'
@@ -256,6 +305,16 @@
                       placeholder_asset: card_placeholder_asset,
                       placeholder_class: 'collection-list__placeholder'
                     %}
+                  {% elsif collection_fallback_asset != blank %}
+                    <img
+                      class="collection-list__image"
+                      src="{{ collection_fallback_asset_url }}"
+                      alt="{{ card_alt | escape }}"
+                      width="1122"
+                      height="1402"
+                      loading="{{ card_loading }}"
+                      decoding="{{ card_decoding }}"
+                    >
                   {% elsif split_promotion_asset != blank %}
                     <img
                       class="collection-list__image"

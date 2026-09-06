@@ -23,13 +23,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h1>Care, delivery &amp; the details.</h1>"
+            "heading": "<h1>Care, delivery &amp; the details.</h1>",
+            "type_preset": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Everything you may want to know before choosing a piece or placing an order.</p>"
+            "text": "<p>Everything worth knowing before a piece finds its way to you.</p>"
           }
         }
       },
@@ -60,7 +61,7 @@
             "heading": "Ordering & delivery",
             "title": "Before your piece arrives",
             "anchor_id": "orders",
-            "text": "<p>What happens once your order is placed.</p>"
+            "text": "<p>What to expect once your order is placed.</p>"
           }
         },
         "category_returns": {
@@ -70,7 +71,7 @@
             "heading": "Returns & exchanges",
             "title": "A considered next step",
             "anchor_id": "",
-            "text": "<p>Clear guidance when a piece is not quite right.</p>"
+            "text": "<p>Clear guidance when a piece needs a second look.</p>"
           }
         },
         "category_products": {
@@ -80,7 +81,7 @@
             "heading": "Care & materials",
             "title": "For the years ahead",
             "anchor_id": "",
-            "text": "<p>How to keep your piece close and looking its best.</p>"
+            "text": "<p>How to keep your piece close and luminous.</p>"
           }
         },
         "category_gifts": {
@@ -90,7 +91,7 @@
             "heading": "Gifting & service",
             "title": "A more personal gesture",
             "anchor_id": "",
-            "text": "<p>Help with gifting, care and client services.</p>"
+            "text": "<p>Help with gifting, care and client service.</p>"
           }
         }
       },
@@ -110,7 +111,7 @@
         "item_style": "default",
         "icon_size": "small",
         "content_gap": 24,
-        "heading_size": "h5",
+        "heading_size": "h4",
         "heading_tag": "h3",
         "text_size": "medium",
         "color_scheme": "scheme-1",
@@ -126,7 +127,7 @@
           "type": "group_heading",
           "settings": {
             "heading": "Ordering & delivery",
-            "heading_size": "h2",
+            "heading_size": "h3",
             "heading_tag": "h2",
             "text": "<p>What to expect once you have chosen your piece.</p>",
             "text_size": "medium",
@@ -164,7 +165,7 @@
           "type": "group_heading",
           "settings": {
             "heading": "Returns & exchanges",
-            "heading_size": "h2",
+            "heading_size": "h3",
             "heading_tag": "h2",
             "text": "<p>Clear guidance when your order needs a second look.</p>",
             "text_size": "medium",

@@ -15,22 +15,22 @@
         "header": {
           "type": "header",
           "settings": {
-            "subheading": "Journal",
-            "heading": "Journal",
+            "subheading": "THE ORLUNE JOURNAL",
+            "heading": "Stories to wear slowly.",
             "heading_size": "h1",
             "heading_tag": "h1",
-            "intro": ""
+            "intro": "Notes on light, materials and the pieces that become personal."
           }
         },
         "featured_article": {
           "type": "featured_article",
           "settings": {
             "use_latest_article": true,
-            "hero_height": 480,
+            "hero_height": 520,
             "show_tag": true,
             "show_date": true,
             "show_button": true,
-            "button_label": "Read story"
+            "button_label": "Read the feature"
           }
         },
         "article_grid": {
@@ -45,7 +45,7 @@
             "show_author": false,
             "show_excerpt": true,
             "excerpt_words": 18,
-            "read_more_label": "Read more",
+            "read_more_label": "Open story",
             "show_pagination": true
           }
         }

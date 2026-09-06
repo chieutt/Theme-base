@@ -36,6 +36,11 @@
     assign promotion_image = promotion_block.settings.image
     assign promotion_link = promotion_block.settings.link
     assign promotion_alt = promotion_image.alt | default: promotion_block.settings.heading
+    assign promotion_fallback_asset = blank
+    if promotion_image == blank
+      assign promotion_fallback_asset = 'collection-split-nocturne.jpg'
+    endif
+    assign promotion_fallback_asset_url = promotion_fallback_asset | asset_url
   %}
   {% capture promotion_card %}
     <li
@@ -49,17 +54,29 @@
         <div class="main-collection__promotion-card">
       {% endif %}
         <div class="main-collection__promotion-media">
-          {% render 'responsive-media',
-            image: promotion_image,
-            max_width: 1800,
-            widths: '480, 640, 800, 1000, 1200, 1400, 1600, 1800',
-            sizes: '(min-width: 1150px) 50vw, 100vw',
-            class: 'main-collection__promotion-image',
-            loading: 'lazy',
-            alt: promotion_alt,
-            placeholder_asset: 'placeholder-image-collection-1.svg',
-            placeholder_class: 'main-collection__promotion-placeholder'
-          %}
+          {% if promotion_fallback_asset != blank %}
+            <img
+              class="main-collection__promotion-image"
+              src="{{ promotion_fallback_asset_url }}"
+              alt="{{ promotion_alt | escape }}"
+              width="1122"
+              height="1402"
+              loading="lazy"
+              decoding="async"
+            >
+          {% else %}
+            {% render 'responsive-media',
+              image: promotion_image,
+              max_width: 1800,
+              widths: '480, 640, 800, 1000, 1200, 1400, 1600, 1800',
+              sizes: '(min-width: 1150px) 50vw, 100vw',
+              class: 'main-collection__promotion-image',
+              loading: 'lazy',
+              alt: promotion_alt,
+              placeholder_asset: 'placeholder-image-collection-1.svg',
+              placeholder_class: 'main-collection__promotion-placeholder'
+            %}
+          {% endif %}
         </div>
         <span class="main-collection__promotion-overlay" aria-hidden="true"></span>
         <div class="main-collection__promotion-content main-collection__promotion-content--{{ promotion_block.settings.content_position }}">

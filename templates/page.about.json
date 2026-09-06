@@ -23,7 +23,8 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h1>Jewelry, made personal.</h1>"
+            "heading": "<h1>Jewelry, made personal.</h1>",
+            "type_preset": "h1"
           }
         },
         "highlight_heading": {
@@ -37,7 +38,7 @@
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>Orlune creates jewelry with presence: sculptural forms, luminous stones and details that become more personal with wear.</p><p>Every piece begins with a quiet study of proportion, material and light—then is finished for the life it will live with you.</p>"
+            "text": "<p>Orlune creates jewelry with presence: sculptural forms, luminous stones and details that become more personal with wear.</p><p>Every piece begins with a quiet study of proportion, material and light—then is finished for the life it will share with you.</p>"
           }
         },
         "button": {
@@ -100,7 +101,8 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Made with intention.</h2>"
+            "heading": "<h2>Made with intention.</h2>",
+            "type_preset": "h3"
           }
         },
         "button": {
@@ -162,7 +164,8 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>Form follows feeling.</h2>"
+            "heading": "<h2>Form follows feeling.</h2>",
+            "type_preset": "h3"
           }
         },
         "highlight_heading": {
@@ -214,7 +217,8 @@
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>Character, held in form.</h2>"
+            "heading": "<h2>Character, held in form.</h2>",
+            "type_preset": "h3"
           }
         },
         "highlight_heading": {
@@ -259,7 +263,8 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<h2>Private notes, from the house.</h2>"
+            "heading": "<h2>Private notes from the house.</h2>",
+            "type_preset": "h3"
           }
         },
         "text": {

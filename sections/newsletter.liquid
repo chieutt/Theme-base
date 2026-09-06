@@ -2,6 +2,10 @@
   assign desktop_image = section.settings.image
   assign mobile_image = section.settings.mobile_image
   assign desktop_image = desktop_image | default: mobile_image
+  assign newsletter_fallback_asset = blank
+  if desktop_image == blank and request.page_type == 'page' and section.id contains '__newsletter'
+    assign newsletter_fallback_asset = 'page-about-newsletter-v1.jpg'
+  endif
 %}
 
 <div
@@ -9,7 +13,19 @@
   style="--newsletter-height-percent: {{ section.settings.height_percent }}; --newsletter-height-desktop: {{ section.settings.height_desktop }}px; --newsletter-height-mobile: {{ section.settings.height_mobile }}px; --newsletter-container-width: {{ section.settings.container_width }}px; --newsletter-container-width-mobile: {{ section.settings.container_width_mobile }}px; --newsletter-content-width: {{ section.settings.content_width }}px; --newsletter-container-padding: {{ section.settings.container_padding }}px; --newsletter-container-padding-mobile: {{ section.settings.container_padding_mobile }}px; --newsletter-block-gap: {{ section.settings.block_gap }}px; --newsletter-padding-top: {{ section.settings.padding_top }}px; --newsletter-padding-bottom: {{ section.settings.padding_bottom }}px; --newsletter-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
 >
   <div class="newsletter-section__media" aria-hidden="true">
-    {% render 'responsive-media', image: desktop_image, mobile_image: mobile_image, max_width: 2400, mobile_max_width: 1400, widths: '640, 960, 1200, 1600, 2000, 2400', mobile_widths: '480, 640, 750, 960, 1200, 1400', sizes: '100vw', class: 'newsletter-section__image newsletter-section__image--desktop', loading: 'lazy', decorative: true, placeholder_asset: 'placeholder-image-default-2.svg', placeholder_class: 'newsletter-section__image newsletter-section__image--desktop' %}
+    {% if newsletter_fallback_asset != blank %}
+      <img
+        class="newsletter-section__image newsletter-section__image--desktop"
+        src="{{ newsletter_fallback_asset | asset_url }}"
+        alt=""
+        width="1536"
+        height="1024"
+        loading="lazy"
+        decoding="async"
+      >
+    {% else %}
+      {% render 'responsive-media', image: desktop_image, mobile_image: mobile_image, max_width: 2400, mobile_max_width: 1400, widths: '640, 960, 1200, 1600, 2000, 2400', mobile_widths: '480, 640, 750, 960, 1200, 1400', sizes: '100vw', class: 'newsletter-section__image newsletter-section__image--desktop', loading: 'lazy', decorative: true, placeholder_asset: 'placeholder-image-default-2.svg', placeholder_class: 'newsletter-section__image newsletter-section__image--desktop' %}
+    {% endif %}
     <span class="newsletter-section__overlay"></span>
   </div>
 
