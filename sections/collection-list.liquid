@@ -166,6 +166,23 @@
                 assign card_title = 'collection_list.collection' | t
               endif
 
+              assign split_promotion_asset = blank
+              if section.settings.layout == 'split-promotions' and card_image == blank and request.page_type == 'index'
+                case split_card_index
+                  when 1
+                    assign split_promotion_asset = 'collection-split-nocturne.jpg'
+                  when 2
+                    assign split_promotion_asset = 'collection-split-dome.jpg'
+                  when 3
+                    assign split_promotion_asset = 'collection-split-personal.jpg'
+                  when 4
+                    assign split_promotion_asset = 'collection-split-puzzle.jpg'
+                  when 5
+                    assign split_promotion_asset = 'collection-split-veil.jpg'
+                endcase
+              endif
+              assign split_promotion_asset_url = split_promotion_asset | asset_url
+
               assign card_color_scheme = section.settings.color_scheme
               if block.settings.color_scheme != blank
                 assign card_color_scheme = block.settings.color_scheme
@@ -224,20 +241,47 @@
               {% endif %}
 
                 <div class="collection-list__media collection-list__media--{{ section.settings.image_ratio }}">
-                  {% render 'responsive-media',
-                    image: card_image,
-                    max_width: 1400,
-                    widths: '320, 480, 640, 800, 1000, 1200, 1400',
-                    sizes: card_sizes,
-                    class: 'collection-list__image',
-                    loading: card_loading,
-                    fetchpriority: card_fetchpriority,
-                    preload: card_preload,
-                    decoding: card_decoding,
-                    alt: card_alt,
-                    placeholder_asset: card_placeholder_asset,
-                    placeholder_class: 'collection-list__placeholder'
-                  %}
+                  {% if card_image != blank %}
+                    {% render 'responsive-media',
+                      image: card_image,
+                      max_width: 1400,
+                      widths: '320, 480, 640, 800, 1000, 1200, 1400',
+                      sizes: card_sizes,
+                      class: 'collection-list__image',
+                      loading: card_loading,
+                      fetchpriority: card_fetchpriority,
+                      preload: card_preload,
+                      decoding: card_decoding,
+                      alt: card_alt,
+                      placeholder_asset: card_placeholder_asset,
+                      placeholder_class: 'collection-list__placeholder'
+                    %}
+                  {% elsif split_promotion_asset != blank %}
+                    <img
+                      class="collection-list__image"
+                      src="{{ split_promotion_asset_url }}"
+                      alt="{{ card_alt | escape }}"
+                      width="1122"
+                      height="1402"
+                      loading="{{ card_loading }}"
+                      decoding="{{ card_decoding }}"
+                    >
+                  {% else %}
+                    {% render 'responsive-media',
+                      image: blank,
+                      max_width: 1400,
+                      widths: '320, 480, 640, 800, 1000, 1200, 1400',
+                      sizes: card_sizes,
+                      class: 'collection-list__image',
+                      loading: card_loading,
+                      fetchpriority: card_fetchpriority,
+                      preload: card_preload,
+                      decoding: card_decoding,
+                      alt: card_alt,
+                      placeholder_asset: card_placeholder_asset,
+                      placeholder_class: 'collection-list__placeholder'
+                    %}
+                  {% endif %}
                 </div>
 
                 {% if section.settings.layout == 'split-promotions' %}
