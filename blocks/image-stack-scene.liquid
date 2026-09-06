@@ -54,6 +54,33 @@
     else
       assign card_ratio = card_ratio | replace: '-', ' / '
   endcase
+
+  comment
+    Homepage editorial imagery is intentionally section-specific so the
+    default Image stack has a complete composition without replacing a
+    merchant-selected image. A mobile or desktop picker always takes priority.
+  endcomment
+  assign image_stack_asset = blank
+  if request.page_type == 'index' and block.settings.image == blank and block.settings.mobile_image == blank
+    case panel_index
+      when 0
+        assign image_stack_asset = 'image-stack-light.jpg'
+        if panel_alt == blank
+          assign panel_alt = 'Pale-gold moonstone pendant suspended in morning light'
+        endif
+      when 1
+        assign image_stack_asset = 'image-stack-nocturne.jpg'
+        if panel_alt == blank
+          assign panel_alt = 'Garnet ring resting on dark stone in soft light'
+        endif
+      when 2
+        assign image_stack_asset = 'image-stack-atelier.jpg'
+        if panel_alt == blank
+          assign panel_alt = 'Gold ring and jeweler tools on an atelier workbench'
+        endif
+    endcase
+  endif
+  assign image_stack_asset_url = image_stack_asset | asset_url
 %}
 
 <article
@@ -80,7 +107,19 @@
     </div>
 
     <div class="image-stack__media">
-      {% render 'responsive-media', image: block.settings.image, mobile_image: block.settings.mobile_image, mobile_breakpoint: 767, max_width: 1200, mobile_max_width: 960, widths: '320, 480, 640, 800, 960, 1200', mobile_widths: '375, 550, 750, 960', sizes: '(min-width: 768px) 32vw, calc(100vw - 2 * var(--page-margin))', class: 'image-stack__media-image', loading: 'lazy', alt: panel_alt, placeholder_asset: media_placeholder_asset, placeholder_class: 'image-stack__media-placeholder' %}
+      {% if image_stack_asset != blank %}
+        <img
+          class="image-stack__media-image"
+          src="{{ image_stack_asset_url }}"
+          alt="{{ panel_alt | escape }}"
+          width="1122"
+          height="1402"
+          loading="lazy"
+          decoding="async"
+        >
+      {% else %}
+        {% render 'responsive-media', image: block.settings.image, mobile_image: block.settings.mobile_image, mobile_breakpoint: 767, max_width: 1200, mobile_max_width: 960, widths: '320, 480, 640, 800, 960, 1200', mobile_widths: '375, 550, 750, 960', sizes: '(min-width: 768px) 32vw, calc(100vw - 2 * var(--page-margin))', class: 'image-stack__media-image', loading: 'lazy', alt: panel_alt, placeholder_asset: media_placeholder_asset, placeholder_class: 'image-stack__media-placeholder' %}
+      {% endif %}
     </div>
   </div>
 
