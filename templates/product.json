@@ -307,7 +307,8 @@
           "settings": {
             "image": "shopify://shop_images/image-with-text-ring-hands.jpg",
             "alt": "",
-            "focal_point": "center center"
+            "focal_point": "center center",
+            "ratio": "4-5"
           }
         },
         "eyebrow": {
@@ -354,6 +355,7 @@
       "settings": {
         "media_position": "right",
         "content_alignment": "left",
+        "content_overlay_on_media": true,
         "section_width": "page",
         "column_gap": 40,
         "color_scheme": "scheme-1",

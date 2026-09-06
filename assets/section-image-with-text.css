@@ -140,6 +140,56 @@
     margin-top: 24px;
   }
 
+  .image-with-text--overlay-content .image-with-text__inner {
+    display: block;
+  }
+
+  .image-with-text--overlay-content .image-with-text__media-collage {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+
+  .image-with-text--overlay-content .image-with-text__media-collage::after {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(0 0 0 / 4%) 20%, rgb(0 0 0 / 60%) 100%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .image-with-text--overlay-content .image-with-text__media--base,
+  .image-with-text--overlay-content .image-with-text__media--base .content-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-with-text--overlay-content .image-with-text__content {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    display: flex;
+    width: 100%;
+    max-width: none;
+    justify-content: flex-end;
+    padding: clamp(28px, 5vw, 80px);
+    color: var(--color-background);
+  }
+
+  .image-with-text--overlay-content .image-with-text__content :is(.content-block, .content-block--heading, .content-block--text) {
+    color: inherit;
+  }
+
+  .image-with-text--overlay-content .image-with-text__button-block,
+  .image-with-text--overlay-content .image-with-text__button-block .content-button,
+  .image-with-text--overlay-content .image-with-text__button-block .btn-tertiary {
+    color: inherit;
+  }
+
   @media screen and (min-width: 1150px) {
     .image-with-text--media-count-2 .image-with-text__inner {
       display: flex;
@@ -338,6 +388,18 @@
     .image-with-text__content {
       width: 100%;
       padding-inline: 0;
+    }
+
+    .image-with-text--overlay-content .image-with-text__inner {
+      display: block;
+    }
+
+    .image-with-text--overlay-content .image-with-text__media-collage {
+      aspect-ratio: 4 / 5;
+    }
+
+    .image-with-text--overlay-content .image-with-text__content {
+      padding: 28px 24px;
     }
   }
 

@@ -7,6 +7,12 @@
     assign image_with_text_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
     assign image_with_text_collage_border = section.settings.color_scheme.settings.background
   endif
+  assign image_with_text_overlay = false
+  if section.settings.content_overlay_on_media
+    if section.settings.layout != 'story-collage'
+      assign image_with_text_overlay = true
+    endif
+  endif
 %}
 
 {% capture image_with_text_hero_block %}
@@ -15,6 +21,29 @@
 {% capture image_with_text_portrait_block %}
   {% content_for 'block', type: 'media', id: 'portrait_image' %}
 {% endcapture %}
+{% capture image_with_text_content %}
+  <div class="image-with-text__content image-with-text__content--{{ section.settings.content_alignment }}">
+    {% unless section.settings.layout == 'story-collage' %}
+      <div class="image-with-text__heading-block image-with-text__heading">
+        {% content_for 'block', type: 'label', id: 'eyebrow' %}
+      </div>
+    {% endunless %}
+    <div class="image-with-text__heading-block image-with-text__heading">
+      {% content_for 'block', type: 'heading', id: 'heading' %}
+    </div>
+    {% unless section.settings.layout == 'story-collage' %}
+      <div class="image-with-text__heading-block image-with-text__heading">
+        {% content_for 'block', type: 'heading', id: 'highlight_heading' %}
+      </div>
+    {% endunless %}
+    <div class="image-with-text__text">
+      {% content_for 'block', type: 'text', id: 'text' %}
+    </div>
+    <div class="image-with-text__button-block">
+      {% content_for 'block', type: 'button', id: 'button' %}
+    </div>
+  </div>
+{% endcapture %}
 
 {% style %}
   #shopify-section-{{ section.id }} { background: {{ image_with_text_background }}; }
@@ -22,7 +51,7 @@
 {% endstyle %}
 
 <div
-  class="image-with-text image-with-text--layout-{{ section.settings.layout | default: 'standard' }} image-with-text--media-{{ section.settings.media_position }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} image-with-text--full full-width{% endif %}"
+  class="image-with-text image-with-text--layout-{{ section.settings.layout | default: 'standard' }} image-with-text--media-{{ section.settings.media_position }}{% if image_with_text_overlay %} image-with-text--overlay-content{% endif %} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} image-with-text--full full-width{% endif %}"
   style="--image-with-text-column-gap: {{ section.settings.column_gap }}px; --image-with-text-story-height: {{ section.settings.story_collage_height | default: 580 }}px; --image-with-text-collage-border: {{ image_with_text_collage_border }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="image-with-text__inner section-spacing">
@@ -46,30 +75,15 @@
         <div class="image-with-text__media image-with-text__media--base">
           {{ image_with_text_hero_block }}
         </div>
+        {% if image_with_text_overlay %}
+          {{ image_with_text_content }}
+        {% endif %}
       </div>
     {% endif %}
 
-    <div class="image-with-text__content image-with-text__content--{{ section.settings.content_alignment }}">
-      {% unless section.settings.layout == 'story-collage' %}
-        <div class="image-with-text__heading-block image-with-text__heading">
-          {% content_for 'block', type: 'label', id: 'eyebrow' %}
-        </div>
-      {% endunless %}
-      <div class="image-with-text__heading-block image-with-text__heading">
-        {% content_for 'block', type: 'heading', id: 'heading' %}
-      </div>
-      {% unless section.settings.layout == 'story-collage' %}
-        <div class="image-with-text__heading-block image-with-text__heading">
-          {% content_for 'block', type: 'heading', id: 'highlight_heading' %}
-        </div>
-      {% endunless %}
-      <div class="image-with-text__text">
-        {% content_for 'block', type: 'text', id: 'text' %}
-      </div>
-      <div class="image-with-text__button-block">
-        {% content_for 'block', type: 'button', id: 'button' %}
-      </div>
-    </div>
+    {% unless image_with_text_overlay %}
+      {{ image_with_text_content }}
+    {% endunless %}
 
   </div>
 </div>
@@ -84,6 +98,7 @@
     { "type": "select", "id": "layout", "label": "Layout", "options": [{ "value": "standard", "label": "Image and text" }, { "value": "story-collage", "label": "Story collage" }], "default": "standard" },
     { "type": "select", "id": "media_position", "label": "Media position", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }], "default": "left" },
     { "type": "text_alignment", "id": "content_alignment", "label": "Content alignment", "default": "left" },
+    { "type": "checkbox", "id": "content_overlay_on_media", "label": "Place content over image", "default": false, "visible_if": "{{ section.settings.layout == 'standard' }}" },
     { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page", "label": "Page width" }, { "value": "full", "label": "Full width" }], "default": "page" },
     { "type": "range", "id": "column_gap", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Content column gap", "default": 40 },
     { "type": "range", "id": "story_collage_height", "min": 420, "max": 760, "step": 20, "unit": "px", "label": "Desktop collage height", "default": 580, "visible_if": "{{ section.settings.layout == 'story-collage' }}" },

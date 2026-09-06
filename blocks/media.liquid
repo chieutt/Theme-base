@@ -7,6 +7,8 @@
 
 {% liquid
   assign media_fallback_asset = blank
+  assign media_fallback_width = 1122
+  assign media_fallback_height = 1402
   if block.settings.image == blank
     if request.page_type == 'page' and section.id contains '__about_intro'
       assign media_fallback_asset = 'page-about-intro-v1.jpg'
@@ -16,6 +18,8 @@
       assign media_fallback_asset = 'page-about-process-v1.jpg'
     elsif request.page_type == 'product' and section.id contains '__image-with-text'
       assign media_fallback_asset = 'product-atelier-v1.jpg'
+      assign media_fallback_width = 1448
+      assign media_fallback_height = 1086
     endif
   endif
 %}
@@ -30,8 +34,8 @@
       class="content-media__image"
       src="{{ media_fallback_asset | asset_url }}"
       alt="{{ block.settings.alt | escape }}"
-      width="1122"
-      height="1402"
+      width="{{ media_fallback_width }}"
+      height="{{ media_fallback_height }}"
       loading="lazy"
       decoding="async"
     >
