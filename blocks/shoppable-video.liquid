@@ -13,6 +13,8 @@
   assign product_count = products.count | default: 0
   assign has_media = false
   assign has_product = false
+  assign shoppable_video_asset = blank
+  assign shoppable_video_asset_alt = blank
   if video != blank or poster != blank
     assign has_media = true
   endif
@@ -22,16 +24,43 @@
   assign product_placeholder_index = 1
   for sibling_block in section.blocks
     if sibling_block.id == block.id
+      assign shoppable_video_index = forloop.index
       assign product_placeholder_index = forloop.index | minus: 1 | modulo: 3 | plus: 1
+      if request.page_type == 'index' and video == blank and poster == blank
+        case shoppable_video_index
+          when 1
+            assign shoppable_video_asset = 'shoppable-video-look-model-v2.jpg'
+            assign shoppable_video_asset_alt = 'Model wearing a layered gold pendant in warm light'
+          when 2
+            assign shoppable_video_asset = 'shoppable-video-look-garnet-v2.jpg'
+            assign shoppable_video_asset_alt = 'Garnet ring resting on black silk and slate'
+          when 3
+            assign shoppable_video_asset = 'shoppable-video-look-bracelet-v2.jpg'
+            assign shoppable_video_asset_alt = 'Gold bracelet being styled on a wrist'
+          when 4
+            assign shoppable_video_asset = 'shoppable-video-look-earring-v2.jpg'
+            assign shoppable_video_asset_alt = 'Model wearing a sculptural gold hoop earring'
+          when 5
+            assign shoppable_video_asset = 'shoppable-video-look-atelier-v2.jpg'
+            assign shoppable_video_asset_alt = 'Jeweler lifting a gold pendant with tweezers'
+        endcase
+      endif
       break
     endif
   endfor
+  if shoppable_video_asset != blank
+    assign has_media = true
+  endif
   assign modal_image = block.settings.look_image | default: poster | default: featured_product.featured_image
   assign video_alt = block.settings.video_alt | default: poster.alt
+  if video_alt == blank and shoppable_video_asset_alt != blank
+    assign video_alt = shoppable_video_asset_alt
+  endif
   assign poster_url = blank
   if poster != blank
     assign poster_url = poster | image_url: width: 1200
   endif
+  assign shoppable_video_asset_url = shoppable_video_asset | asset_url
   if video_alt == blank
     assign video_alt = 'Shoppable video'
   endif
@@ -70,6 +99,16 @@
         loading: 'lazy',
         alt: video_alt
       %}
+    {% elsif shoppable_video_asset != blank %}
+      <img
+        class="shoppable-video-card__poster"
+        src="{{ shoppable_video_asset_url }}"
+        alt="{{ video_alt | escape }}"
+        width="1122"
+        height="1402"
+        loading="lazy"
+        decoding="async"
+      >
     {% else %}
       {% render 'media-placeholder', class_name: 'shoppable-video-card__placeholder', placeholder_name: 'image' %}
     {% endif %}
@@ -170,6 +209,16 @@
             loading: 'lazy',
             alt: modal_image.alt
           %}
+        {% elsif shoppable_video_asset != blank %}
+          <img
+            class="shoppable-video-dialog__look-image"
+            src="{{ shoppable_video_asset_url }}"
+            alt="{{ video_alt | escape }}"
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+          >
         {% else %}
           {% render 'media-placeholder', class_name: 'shoppable-video-dialog__look-placeholder', placeholder_name: 'image' %}
         {% endif %}
