@@ -84,13 +84,7 @@
                         <div class="article__comment" data-reveal-item style="--reveal-order: {{ forloop.index0 }};"><p>{{ comment.content }}</p><p class="article__meta">{{ comment.author | escape }} · {{ comment.created_at | time_tag: format: 'date' }}</p></div>
                       {% endfor %}
                     </div>
-                    {% render 'pagination',
-                      paginate: paginate,
-                      base_class: 'article__comment-pagination',
-                      aria_label: 'article.comment_pagination' | t,
-                      previous_label: 'article.previous_page' | t,
-                      next_label: 'article.next_page' | t
-                    %}
+                    {% render 'pagination', paginate: paginate, base_class: 'article__comment-pagination', aria_label: 'article.comment_pagination', previous_label: 'article.previous_page', next_label: 'article.next_page' %}
                   {% endif %}
                 {% endpaginate %}
                 {% if block.settings.show_form %}
@@ -255,3 +249,18 @@
   "presets": [{ "name": "Article", "category": "Blog and pages", "blocks": [{"type":"article_header"},{"type":"article_content"},{"type":"share_links"},{"type":"related_articles"},{"type":"comments"}] }]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'pagination',\r\n                      paginate: paginate,\r\n
+    \                     base_class: 'article__comment-pagination',\r\n                      aria_label:
+    'article.comment_pagination' | t,\r\n                      previous_label: 'article.previous_page'
+    | t,\r\n                      next_label: 'article.next_page' | t\r\n                    %}"
+  to: "{% render 'pagination', paginate: paginate, base_class: 'article__comment-pagination',
+    aria_label: 'article.comment_pagination', previous_label: 'article.previous_page',
+    next_label: 'article.next_page' %}"
+  position: 7224..7428
+{% endcomment %}
