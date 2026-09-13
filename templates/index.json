@@ -9,6 +9,325 @@
  */
 {
   "sections": {
+    "homepage_slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "homepage_slide_signature": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Gold necklace resting on a collarbone",
+            "image_position": "center center",
+            "content_width": 520,
+            "content_alignment": "left",
+            "content_position": "middle-left",
+            "content_position_mobile": "bottom-left",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30
+          },
+          "blocks": {
+            "homepage_signature_heading": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>Jewelry,<br/>held close.</h1>",
+                "type_preset": "h1",
+                "font_size": 50,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "homepage_signature_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Natural gemstones and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
+                "type_preset": "md",
+                "font_size": 16,
+                "font_size_mobile": 14,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "homepage_signature_buttons": {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 12
+              },
+              "blocks": {
+                "homepage_signature_button": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Explore signature pieces",
+                    "link": "/collections/all",
+                    "style": "primary",
+                    "open_in_new_tab": false,
+                    "icon": "arrow-right",
+                    "reveal_type": "none",
+                    "reveal_duration": 650,
+                    "reveal_delay": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "homepage_signature_button"
+              ]
+            }
+          },
+          "block_order": [
+            "homepage_signature_heading",
+            "homepage_signature_text",
+            "homepage_signature_buttons"
+          ]
+        },
+        "homepage_slide_radiance": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Sculptural gold earring in warm light",
+            "image_position": "center center",
+            "content_width": 520,
+            "content_alignment": "left",
+            "content_position": "middle-left",
+            "content_position_mobile": "bottom-left",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 25
+          },
+          "blocks": {
+            "homepage_radiance_heading": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>Light in its<br/>rarest form.</h1>",
+                "type_preset": "h1",
+                "font_size": 50,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "homepage_radiance_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Sculptural gold, luminous details, and a quiet radiance for every day.</p>",
+                "type_preset": "md",
+                "font_size": 16,
+                "font_size_mobile": 14,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "homepage_radiance_buttons": {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 12
+              },
+              "blocks": {
+                "homepage_radiance_button": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Discover the edit",
+                    "link": "/collections/all",
+                    "style": "primary",
+                    "open_in_new_tab": false,
+                    "icon": "arrow-right",
+                    "reveal_type": "none",
+                    "reveal_duration": 650,
+                    "reveal_delay": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "homepage_radiance_button"
+              ]
+            }
+          },
+          "block_order": [
+            "homepage_radiance_heading",
+            "homepage_radiance_text",
+            "homepage_radiance_buttons"
+          ]
+        },
+        "homepage_slide_evening": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Gold ring on a hand against velvet",
+            "image_position": "center center",
+            "content_width": 520,
+            "content_alignment": "left",
+            "content_position": "middle-left",
+            "content_position_mobile": "bottom-left",
+            "color_scheme": "scheme-4",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20
+          },
+          "blocks": {
+            "homepage_evening_heading": {
+              "type": "heading",
+              "settings": {
+                "heading": "<h1>An evening<br/>remembered.</h1>",
+                "type_preset": "h1",
+                "font_size": 50,
+                "font_size_mobile": 30,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "homepage_evening_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Refined silhouettes for celebrations, candlelight, and everything after dark.</p>",
+                "type_preset": "md",
+                "font_size": 16,
+                "font_size_mobile": 14,
+                "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "width_mobile": "fit-content",
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
+              },
+              "blocks": {}
+            },
+            "homepage_evening_buttons": {
+              "type": "button-group",
+              "settings": {
+                "layout_direction": "horizontal",
+                "alignment": "left",
+                "gap": 12
+              },
+              "blocks": {
+                "homepage_evening_button": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Shop occasion",
+                    "link": "/collections/all",
+                    "style": "primary",
+                    "open_in_new_tab": false,
+                    "icon": "arrow-right",
+                    "reveal_type": "none",
+                    "reveal_duration": 650,
+                    "reveal_delay": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "homepage_evening_button"
+              ]
+            }
+          },
+          "block_order": [
+            "homepage_evening_heading",
+            "homepage_evening_text",
+            "homepage_evening_buttons"
+          ]
+        }
+      },
+      "block_order": [
+        "homepage_slide_signature",
+        "homepage_slide_radiance",
+        "homepage_slide_evening"
+      ],
+      "settings": {
+        "slideshow_style": "single",
+        "height_desktop": "full",
+        "height_mobile": "full",
+        "slide_gap": 0,
+        "autoplay": true,
+        "autoplay_delay": 6,
+        "enable_image_zoom": true,
+        "arrow_color": "#000000",
+        "arrow_background": "#FFFFFF",
+        "progress_color": "#ffffff",
+        "progress_track_color": "#ffffff",
+        "section_width": "full",
+        "color_scheme": "scheme-4"
+      }
+    },
     "highlight_text_with_image": {
       "type": "highlight-text-with-image",
       "blocks": {
@@ -853,9 +1172,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -864,9 +1194,20 @@
               "settings": {
                 "text": "<p>ORLUNE</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -878,9 +1219,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -889,9 +1241,20 @@
               "settings": {
                 "text": "<p>PARIS</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -903,9 +1266,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -914,9 +1288,20 @@
               "settings": {
                 "text": "<p>HAND FINISHED</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -928,9 +1313,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -939,9 +1335,20 @@
               "settings": {
                 "text": "<p>18K GOLD</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -953,9 +1360,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -964,9 +1382,20 @@
               "settings": {
                 "text": "<p>NOCTURNE</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             }
@@ -1006,9 +1435,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1017,9 +1457,20 @@
               "settings": {
                 "text": "<p>DRAWING</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1031,9 +1482,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1042,9 +1504,20 @@
               "settings": {
                 "text": "<p>FORM</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1056,9 +1529,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1067,9 +1551,20 @@
               "settings": {
                 "text": "<p>LIGHT</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1081,9 +1576,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1092,9 +1598,20 @@
               "settings": {
                 "text": "<p>PARIS</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1106,9 +1623,20 @@
                 "font_size": 24,
                 "font_size_mobile": 20,
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             },
@@ -1117,9 +1645,20 @@
               "settings": {
                 "text": "<p>MATERIAL</p>",
                 "text_color": "",
+                "color": "text",
+                "disable_line_break_mobile": false,
                 "width": "fit-content",
                 "width_mobile": "fit-content",
-                "reveal_type": "none"
+                "alignment": "left",
+                "enable_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "reveal_type": "none",
+                "reveal_duration": 650,
+                "reveal_delay": 0
               },
               "blocks": {}
             }
@@ -1507,7 +2046,11 @@
           "settings": {
             "recipient": "mother",
             "recipient_label": "Mum",
-            "products": ["round-lab-grown-sapphire-necklace", "stevie-bracelet", "dome-cuff-bracelet"],
+            "products": [
+              "round-lab-grown-sapphire-necklace",
+              "stevie-bracelet",
+              "dome-cuff-bracelet"
+            ],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -1611,7 +2154,11 @@
           "settings": {
             "recipient": "partner",
             "recipient_label": "My partner",
-            "products": ["lucy-williams-medium-engraveable-necklace", "interconnected-wave-pave-diamond-ring", "charlotte-bold-hoops"],
+            "products": [
+              "lucy-williams-medium-engraveable-necklace",
+              "interconnected-wave-pave-diamond-ring",
+              "charlotte-bold-hoops"
+            ],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -1715,7 +2262,11 @@
           "settings": {
             "recipient": "friend",
             "recipient_label": "A friend",
-            "products": ["charlotte-bold-hoops", "charlotte-step-cut-ring", "dome-cuff-bracelet"],
+            "products": [
+              "charlotte-bold-hoops",
+              "charlotte-step-cut-ring",
+              "dome-cuff-bracelet"
+            ],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -1819,7 +2370,11 @@
           "settings": {
             "recipient": "myself",
             "recipient_label": "Myself",
-            "products": ["lucy-williams-medium-engraveable-necklace", "stevie-bracelet", "interconnected-wave-pave-diamond-ring"],
+            "products": [
+              "lucy-williams-medium-engraveable-necklace",
+              "stevie-bracelet",
+              "interconnected-wave-pave-diamond-ring"
+            ],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -2129,7 +2684,9 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": ["lucy-williams-medium-engraveable-necklace"],
+            "products": [
+              "lucy-williams-medium-engraveable-necklace"
+            ],
             "product_detail": "18K GOLD / ENGRAVABLE PENDANT",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
@@ -2143,7 +2700,10 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": ["charlotte-step-cut-ring", "interconnected-wave-pave-diamond-ring"],
+            "products": [
+              "charlotte-step-cut-ring",
+              "interconnected-wave-pave-diamond-ring"
+            ],
             "product_detail": "SCULPTURAL GOLD / RING EDIT",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
@@ -2157,7 +2717,10 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": ["stevie-bracelet", "dome-cuff-bracelet"],
+            "products": [
+              "stevie-bracelet",
+              "dome-cuff-bracelet"
+            ],
             "product_detail": "18K GOLD / BRACELET DUO",
             "button_label": "Shop the set",
             "modal_label": "Shop the film",
@@ -2171,7 +2734,9 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": ["charlotte-bold-hoops"],
+            "products": [
+              "charlotte-bold-hoops"
+            ],
             "product_detail": "18K GOLD / HOOP EARRINGS",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
@@ -2185,7 +2750,9 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": ["round-lab-grown-sapphire-necklace"],
+            "products": [
+              "round-lab-grown-sapphire-necklace"
+            ],
             "product_detail": "LAB-GROWN SAPPHIRE / NECKLACE",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
@@ -2507,8 +3074,8 @@
                   "type": "product-benefit-item",
                   "name": "Benefit item",
                   "settings": {
-                "icon": "truck",
-                "text": "<p>Shipping at checkout</p>",
+                    "icon": "truck",
+                    "text": "<p>Shipping at checkout</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -2518,8 +3085,8 @@
                 "product_benefit_item_6PeqhH": {
                   "type": "product-benefit-item",
                   "settings": {
-                "icon": "return",
-                "text": "<p>Easy returns</p>",
+                    "icon": "return",
+                    "text": "<p>Easy returns</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -2529,8 +3096,8 @@
                 "product_benefit_item_WTPAaj": {
                   "type": "product-benefit-item",
                   "settings": {
-                "icon": "shield",
-                "text": "<p>Lifetime warranty</p>",
+                    "icon": "shield",
+                    "text": "<p>Lifetime warranty</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -2540,8 +3107,8 @@
                 "product_benefit_item_BmCt3q": {
                   "type": "product-benefit-item",
                   "settings": {
-                "icon": "sparkles",
-                "text": "<p>Responsibly made</p>",
+                    "icon": "sparkles",
+                    "text": "<p>Responsibly made</p>",
                     "page": "",
                     "show_page_popup": false,
                     "page_popup_label": ""
@@ -3238,223 +3805,6 @@
         "background_color": "",
         "padding_top": 80,
         "padding_bottom": 40
-      }
-    },
-    "homepage_slideshow": {
-      "type": "slideshow",
-      "blocks": {
-        "homepage_slide_signature": {
-          "type": "slide",
-          "settings": {
-            "image": "",
-            "mobile_image": "",
-            "image_alt": "Gold necklace resting on a collarbone",
-            "image_position": "center center",
-            "content_width": 520,
-            "content_alignment": "left",
-            "content_position": "middle-left",
-            "content_position_mobile": "bottom-left",
-            "color_scheme": "scheme-4",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
-          },
-          "blocks": {
-            "homepage_signature_heading": {
-              "type": "heading",
-              "settings": {
-                "heading": "<h1>Jewelry,<br/>held close.</h1>",
-                "type_preset": "h1",
-                "alignment": "left"
-              },
-              "blocks": {}
-            },
-            "homepage_signature_text": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Natural gemstones and 18k gold, shaped into singular objects made to accompany a lifetime.</p>",
-                "type_preset": "md",
-                "alignment": "left"
-              },
-              "blocks": {}
-            },
-            "homepage_signature_buttons": {
-              "type": "button-group",
-              "settings": {
-                "layout_direction": "horizontal",
-                "alignment": "left",
-                "gap": 12
-              },
-              "blocks": {
-                "homepage_signature_button": {
-                  "type": "button",
-                  "settings": {
-                    "label": "Explore signature pieces",
-                    "link": "/collections/all",
-                    "style": "secondary",
-                    "icon": "arrow-right"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "homepage_signature_button"
-              ]
-            }
-          },
-          "block_order": [
-            "homepage_signature_heading",
-            "homepage_signature_text",
-            "homepage_signature_buttons"
-          ]
-        },
-        "homepage_slide_radiance": {
-          "type": "slide",
-          "settings": {
-            "image": "",
-            "mobile_image": "",
-            "image_alt": "Sculptural gold earring in warm light",
-            "image_position": "center center",
-            "content_width": 520,
-            "content_alignment": "left",
-            "content_position": "middle-left",
-            "content_position_mobile": "bottom-left",
-            "color_scheme": "scheme-4",
-            "overlay_color": "#000000",
-            "overlay_opacity": 25
-          },
-          "blocks": {
-            "homepage_radiance_heading": {
-              "type": "heading",
-              "settings": {
-                "heading": "<h1>Light in its<br/>rarest form.</h1>",
-                "type_preset": "h1",
-                "alignment": "left"
-              },
-              "blocks": {}
-            },
-            "homepage_radiance_text": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Sculptural gold, luminous details, and a quiet radiance for every day.</p>",
-                "type_preset": "md",
-                "alignment": "left"
-              },
-              "blocks": {}
-            },
-            "homepage_radiance_buttons": {
-              "type": "button-group",
-              "settings": {
-                "layout_direction": "horizontal",
-                "alignment": "left",
-                "gap": 12
-              },
-              "blocks": {
-                "homepage_radiance_button": {
-                  "type": "button",
-                  "settings": {
-                    "label": "Discover the edit",
-                    "link": "/collections/all",
-                    "style": "secondary",
-                    "icon": "arrow-right"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "homepage_radiance_button"
-              ]
-            }
-          },
-          "block_order": [
-            "homepage_radiance_heading",
-            "homepage_radiance_text",
-            "homepage_radiance_buttons"
-          ]
-        },
-        "homepage_slide_evening": {
-          "type": "slide",
-          "settings": {
-            "image": "",
-            "mobile_image": "",
-            "image_alt": "Gold ring on a hand against velvet",
-            "image_position": "center center",
-            "content_width": 520,
-            "content_alignment": "left",
-            "content_position": "middle-left",
-            "content_position_mobile": "bottom-left",
-            "color_scheme": "scheme-4",
-            "overlay_color": "#000000",
-            "overlay_opacity": 20
-          },
-          "blocks": {
-            "homepage_evening_heading": {
-              "type": "heading",
-              "settings": {
-                "heading": "<h1>An evening<br/>remembered.</h1>",
-                "type_preset": "h1",
-                "alignment": "left"
-              },
-              "blocks": {}
-            },
-            "homepage_evening_text": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Refined silhouettes for celebrations, candlelight, and everything after dark.</p>",
-                "type_preset": "md",
-                "alignment": "left"
-              },
-              "blocks": {}
-            },
-            "homepage_evening_buttons": {
-              "type": "button-group",
-              "settings": {
-                "layout_direction": "horizontal",
-                "alignment": "left",
-                "gap": 12
-              },
-              "blocks": {
-                "homepage_evening_button": {
-                  "type": "button",
-                  "settings": {
-                    "label": "Shop occasion",
-                    "link": "/collections/all",
-                    "style": "secondary",
-                    "icon": "arrow-right"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "homepage_evening_button"
-              ]
-            }
-          },
-          "block_order": [
-            "homepage_evening_heading",
-            "homepage_evening_text",
-            "homepage_evening_buttons"
-          ]
-        }
-      },
-      "block_order": [
-        "homepage_slide_signature",
-        "homepage_slide_radiance",
-        "homepage_slide_evening"
-      ],
-      "settings": {
-        "slideshow_style": "single",
-        "height_desktop": "full",
-        "height_mobile": "full",
-        "slide_gap": 0,
-        "autoplay": true,
-        "autoplay_delay": 6,
-        "enable_image_zoom": true,
-        "arrow_color": "#FFFFFF",
-        "arrow_background": "#000000",
-        "progress_color": "#FFFFFF",
-        "progress_track_color": "#FFFFFF",
-        "section_width": "full",
-        "color_scheme": "scheme-4"
       }
     }
   },
