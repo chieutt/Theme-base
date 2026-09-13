@@ -68,13 +68,7 @@
               {% endfor %}
             </div>
             {% if block.settings.show_pagination %}
-              {% render 'pagination',
-                paginate: paginate,
-                base_class: 'blog-index__pagination',
-                aria_label: 'blog.pagination' | t,
-                previous_label: 'blog.previous_page' | t,
-                next_label: 'blog.next_page' | t
-              %}
+              {% render 'pagination', paginate: paginate, base_class: 'blog-index__pagination', aria_label: 'blog.pagination', previous_label: 'blog.previous_page', next_label: 'blog.next_page' %}
             {% endif %}
           {% endpaginate %}
       {% endcase %}
@@ -300,3 +294,18 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'pagination',\r\n                paginate: paginate,\r\n                base_class:
+    'blog-index__pagination',\r\n                aria_label: 'blog.pagination' | t,\r\n
+    \               previous_label: 'blog.previous_page' | t,\r\n                next_label:
+    'blog.next_page' | t\r\n              %}"
+  to: "{% render 'pagination', paginate: paginate, base_class: 'blog-index__pagination',
+    aria_label: 'blog.pagination', previous_label: 'blog.previous_page', next_label:
+    'blog.next_page' %}"
+  position: 6339..6521
+{% endcomment %}
