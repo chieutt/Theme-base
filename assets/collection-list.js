@@ -46,7 +46,9 @@ class CollectionList extends HTMLElement {
     if (device === this.currentDevice) return;
     this.currentDevice = device;
 
-    const layout = this.dataset[`layout${this.capitalize(device)}`] || 'slider';
+    const layout = device !== 'mobile' && this.classList.contains('collection-list--collection-page')
+      ? 'grid'
+      : this.dataset[`layout${this.capitalize(device)}`] || 'slider';
     this.dataset.currentLayout = layout;
     this.destroySlider();
 

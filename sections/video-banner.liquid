@@ -14,6 +14,24 @@
   assign mobile_thumbnail = section.settings.mobile_thumbnail | default: mobile_video.preview_image | default: desktop_thumbnail
   assign desktop_thumbnail_alt = desktop_thumbnail.alt | default: section.settings.accessibility_label
   assign mobile_thumbnail_alt = mobile_thumbnail.alt | default: section.settings.accessibility_label
+  assign video_banner_asset = blank
+  assign video_banner_poster_asset = blank
+  assign use_demo_video = false
+  if request.page_type == 'index'
+    assign use_demo_video = true
+  elsif request.page_type == 'page' and template.suffix == 'about' and section.id contains '__sustainability'
+    assign use_demo_video = true
+  endif
+  if use_demo_video and desktop_video == blank and desktop_video_url == blank and mobile_video == blank and mobile_video_url == blank
+    assign video_banner_asset = 'video-banner-atelier-demo.mp4'
+    assign video_banner_poster_asset = 'video-banner-luxury-poster-v2.jpg'
+  endif
+  assign video_banner_asset_url = video_banner_asset | asset_url
+  assign video_banner_poster_asset_url = video_banner_poster_asset | asset_url
+  assign has_video_source = false
+  if desktop_video != blank or desktop_video_url != blank or mobile_video != blank or mobile_video_url != blank or video_banner_asset != blank
+    assign has_video_source = true
+  endif
   assign has_mobile_source = false
   if section.settings.mobile_video != blank or section.settings.mobile_video_url != blank
     assign has_mobile_source = true
@@ -78,6 +96,19 @@
                 muted: true,
                 controls: section.settings.show_sound_control
             }}
+          {% elsif video_banner_asset != blank %}
+            <video
+              class="video-banner__video media-cover"
+              width="1920"
+              height="760"
+              loop="{{ section.settings.loop }}"
+              muted
+              playsinline
+              preload="metadata"
+              poster="{{ video_banner_poster_asset_url | escape }}"
+            >
+              <source src="{{ video_banner_asset_url | escape }}" type="video/mp4">
+            </video>
           {% endif %}
 
           {% if desktop_thumbnail != blank %}
@@ -93,18 +124,30 @@
               placeholder_asset: 'placeholder-image-video.svg'
             %}
           {% elsif desktop_video == blank and desktop_video_url == blank %}
-            {% render 'responsive-media',
-              image: blank,
-              max_width: 2400,
-              widths: '480, 750, 1100, 1500, 1920, 2400',
-              sizes: '100vw',
-              class: 'video-banner__poster video-banner__thumbnail media-cover',
-              loading: poster_loading,
-              fetchpriority: poster_fetchpriority,
-              alt: section.settings.accessibility_label,
-              placeholder_asset: 'placeholder-image-video.svg',
-              placeholder_class: 'video-banner__placeholder media-cover'
-            %}
+            {% if video_banner_poster_asset != blank %}
+              <img
+                class="video-banner__poster video-banner__thumbnail media-cover"
+                src="{{ video_banner_poster_asset_url | escape }}"
+                alt="{{ section.settings.accessibility_label | escape }}"
+                width="1920"
+                height="760"
+                loading="{{ poster_loading }}"
+                decoding="async"
+              >
+            {% else %}
+              {% render 'responsive-media',
+                image: blank,
+                max_width: 2400,
+                widths: '480, 750, 1100, 1500, 1920, 2400',
+                sizes: '100vw',
+                class: 'video-banner__poster video-banner__thumbnail media-cover',
+                loading: poster_loading,
+                fetchpriority: poster_fetchpriority,
+                alt: section.settings.accessibility_label,
+                placeholder_asset: 'placeholder-image-video.svg',
+                placeholder_class: 'video-banner__placeholder media-cover'
+              %}
+            {% endif %}
           {% endif %}
         </div>
 
@@ -161,7 +204,7 @@
           </div>
         </div>
 
-        {% if desktop_video != blank or desktop_video_url != blank or mobile_video != blank or mobile_video_url != blank %}
+        {% if has_video_source %}
           <button
             class="video-banner__play"
             type="button"
@@ -178,7 +221,7 @@
         {% endif %}
       </div>
 
-      {% if desktop_video != blank or desktop_video_url != blank or mobile_video != blank or mobile_video_url != blank %}
+      {% if has_video_source %}
         <button
           class="video-banner__close modal-close-button close-icon"
           type="button"

@@ -3,8 +3,8 @@
   assign mobile_image = section.settings.mobile_image
   assign desktop_image = desktop_image | default: mobile_image
   assign newsletter_fallback_asset = blank
-  if desktop_image == blank and request.page_type == 'page' and section.id contains '__newsletter'
-    assign newsletter_fallback_asset = 'page-about-newsletter-v1.jpg'
+  if desktop_image == blank and request.page_type == 'page' and template.suffix == 'about' and section.id contains '__newsletter'
+    assign newsletter_fallback_asset = 'video-banner-luxury-poster-v2.jpg'
   endif
 %}
 
@@ -18,8 +18,8 @@
         class="newsletter-section__image newsletter-section__image--desktop"
         src="{{ newsletter_fallback_asset | asset_url }}"
         alt=""
-        width="1536"
-        height="1024"
+        width="1896"
+        height="830"
         loading="lazy"
         decoding="async"
       >

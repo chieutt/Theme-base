@@ -60,10 +60,10 @@
     }
 
     /* Reserve one final viewport so the last scene remains pinned while the
-       following Shopify section moves over it. */
+       following sections paint above it in document order. Do not raise only
+       the next sibling: a short section would expose this layer again. */
     #shopify-section-{{ section.id }} + .shopify-section {
       position: relative;
-      z-index: 1;
       margin-top: -100svh;
     }
   }

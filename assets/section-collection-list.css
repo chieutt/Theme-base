@@ -578,11 +578,26 @@
   }
 
   @media screen and (min-width: 1150px) {
-    .collection-list--grid.collection-list--layout-desktop-grid .collection-list__grid {
-      display: grid;
+    .collection-list--grid.collection-list--layout-desktop-grid .collection-list__grid,
+    .collection-list--collection-page.collection-list--grid .collection-list__grid,
+    .collection-list[data-section-id$="__collection_list_argTGR"] .collection-list__grid {
+      display: grid !important;
       height: auto;
       column-gap: var(--collection-list-column-gap);
       row-gap: var(--collection-list-column-gap);
+      grid-template-columns: repeat(var(--collection-list-columns-desktop), minmax(0, 1fr));
+      transform: none !important;
+    }
+
+    .collection-list--grid.collection-list--layout-desktop-grid .collection-list__grid > .collection-list__item.swiper-slide,
+    .collection-list--collection-page.collection-list--grid .collection-list__grid > .collection-list__item.swiper-slide,
+    .collection-list[data-section-id$="__collection_list_argTGR"] .collection-list__grid > .collection-list__item.swiper-slide {
+      width: auto !important;
+      max-width: 100%;
+      height: auto;
+      min-width: 0;
+      flex: none;
+      flex-shrink: 1;
     }
 
     .collection-list--grid.collection-list--layout-desktop-slider .collection-list__grid {
@@ -595,12 +610,25 @@
   }
 
   @media screen and (min-width: 768px) and (max-width: 1149.98px) {
-    .collection-list--grid.collection-list--layout-tablet-grid .collection-list__grid {
-      display: grid;
+    .collection-list--grid.collection-list--layout-tablet-grid .collection-list__grid,
+    .collection-list--collection-page.collection-list--grid .collection-list__grid,
+    .collection-list[data-section-id$="__collection_list_argTGR"] .collection-list__grid {
+      display: grid !important;
       height: auto;
       grid-template-columns: repeat(var(--collection-list-columns-tablet), minmax(0, 1fr));
       column-gap: var(--collection-list-column-gap);
       row-gap: var(--collection-list-column-gap);
+      transform: none !important;
+    }
+
+    .collection-list--grid.collection-list--layout-tablet-grid .collection-list__grid > .collection-list__item.swiper-slide,
+    .collection-list--collection-page.collection-list--grid .collection-list__grid > .collection-list__item.swiper-slide {
+      width: auto !important;
+      max-width: 100%;
+      height: auto;
+      min-width: 0;
+      flex: none;
+      flex-shrink: 1;
     }
 
     .collection-list--grid.collection-list--layout-tablet-slider .collection-list__grid {
@@ -655,12 +683,39 @@
       height: auto;
       column-gap: var(--collection-list-mobile-column-gap);
       row-gap: var(--collection-list-mobile-column-gap);
+      transform: none !important;
+    }
+
+    .collection-list--grid.collection-list--layout-mobile-grid .collection-list__grid > .collection-list__item.swiper-slide {
+      width: auto !important;
+      max-width: 100%;
+      height: auto;
+      min-width: 0;
+      flex: none;
+      flex-shrink: 1;
     }
 
     .collection-list--grid.collection-list--layout-mobile-slider .collection-list__grid {
       display: flex;
       column-gap: 0;
       row-gap: 0;
+    }
+
+    /* Collection pages render a static list on mobile (no swiper wrapper), so
+       keep the cards in a readable single column with the configured spacing. */
+    .collection-list--collection-page.collection-list--grid .collection-list__grid {
+      display: grid;
+      gap: var(--collection-list-mobile-column-gap);
+      grid-template-columns: minmax(0, 1fr);
+      transform: none !important;
+    }
+
+    .collection-list--collection-page.collection-list--grid .collection-list__item {
+      width: auto !important;
+      max-width: 100%;
+      min-width: 0;
+      height: auto;
+      flex: none;
     }
 
     .collection-list__grid--split-promotions {

@@ -355,6 +355,13 @@
       white-space: nowrap;
     }
 
+    /* A top-level item with children uses a direct destination link beside
+       its disclosure trigger. Keep that label the same size as ordinary
+       top-level links; nested menu links retain their own hierarchy. */
+    .header__mobile-drawer .header__navigation--mobile > .header__navigation-content > .header__menu > .header__menu-item--has-children > .header__mobile-menu-direct-link {
+      font-size: var(--p2-size-sm);
+    }
+
     .header__submenu-disclosure {
       position: static;
       min-width: 0;

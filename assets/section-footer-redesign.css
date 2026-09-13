@@ -786,3 +786,33 @@
   .footer__utility-end { grid-area: legal; justify-self: center; }
   .footer__utility-start { grid-area: region; justify-self: end; }
 }
+
+/* The placeholder wordmark gently expands as the footer enters the viewport.
+   Keep the reveal motion above the utility row and scale from the baseline so
+   the two rows never visually overlap while scrolling. */
+@media screen and (min-width: 1150px) {
+  .footer__signature.footer__signature--placeholder-mark {
+    --reveal-translate-y: -18px;
+    --footer-signature-parallax-progress: 0;
+  }
+
+  .footer__signature.footer__signature--placeholder-mark .footer__signature-main {
+    transform: translate3d(0, calc(var(--footer-signature-parallax-progress, 0) * -10px), 0)
+      scaleY(calc(1 + var(--footer-signature-parallax-progress, 0) * .06));
+    transform-origin: center bottom;
+    will-change: transform;
+  }
+
+  .footer__signature.footer__signature--placeholder-mark + .footer__utility {
+    position: relative;
+    z-index: 2;
+    background: var(--color-background);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__signature.footer__signature--placeholder-mark .footer__signature-main {
+    transform: none;
+    will-change: auto;
+  }
+}

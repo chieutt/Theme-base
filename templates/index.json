@@ -329,8 +329,8 @@
         }
       },
       "settings": {
-        "collection": "",
-        "collection_label": "",
+        "collection": "best-sellers",
+        "collection_label": "Nocturne edit",
         "view_all_label": "View all objects",
         "products_to_show": 6,
         "section_width": "full",
@@ -557,7 +557,7 @@
         "collection_card_MRtGJh": {
           "type": "collection_card",
           "settings": {
-            "collection": "",
+            "collection": "best-sellers",
             "title": "The Nocturne",
             "show_product_count": true,
             "subheading": "01 / HOUSE CODE",
@@ -572,7 +572,7 @@
         "collection_card_afEExX": {
           "type": "collection_card",
           "settings": {
-            "collection": "",
+            "collection": "dome-collection",
             "title": "The Dome",
             "show_product_count": true,
             "subheading": "02 / HOUSE CODE",
@@ -587,7 +587,7 @@
         "collection_card_BNJVQg": {
           "type": "collection_card",
           "settings": {
-            "collection": "",
+            "collection": "personalized",
             "title": "The Personal",
             "show_product_count": true,
             "subheading": "03 / HOUSE CODE",
@@ -602,7 +602,7 @@
         "collection_card_bAxcfh": {
           "type": "collection_card",
           "settings": {
-            "collection": "",
+            "collection": "puzzle-collection",
             "title": "The Puzzle",
             "show_product_count": true,
             "subheading": "04 / HOUSE CODE",
@@ -617,7 +617,7 @@
         "collection_card_RzMLqB": {
           "type": "collection_card",
           "settings": {
-            "collection": "",
+            "collection": "stevie-collection",
             "title": "The Veil",
             "show_product_count": true,
             "subheading": "05 / HOUSE CODE",
@@ -678,7 +678,7 @@
         "editorial_collection_tab_exr8CB": {
           "type": "editorial-collection-tab",
           "settings": {
-            "collection": "",
+            "collection": "new-arrivals",
             "label": "New arrivals",
             "show_product_count": true,
             "footer_label": "",
@@ -689,7 +689,7 @@
         "editorial_collection_tab_dCLJER": {
           "type": "editorial-collection-tab",
           "settings": {
-            "collection": "",
+            "collection": "best-sellers",
             "label": "Best sellers",
             "show_product_count": true,
             "footer_label": "",
@@ -700,7 +700,7 @@
         "editorial_collection_tab_WV8aqh": {
           "type": "editorial-collection-tab",
           "settings": {
-            "collection": "",
+            "collection": "rings",
             "label": "Rings",
             "show_product_count": true,
             "footer_label": "",
@@ -711,7 +711,7 @@
         "editorial_collection_tab_c8tXVW": {
           "type": "editorial-collection-tab",
           "settings": {
-            "collection": "",
+            "collection": "necklaces",
             "label": "Necklaces",
             "show_product_count": true,
             "footer_label": "",
@@ -722,7 +722,7 @@
         "editorial_collection_tab_wqtPXA": {
           "type": "editorial-collection-tab",
           "settings": {
-            "collection": "",
+            "collection": "gifts",
             "label": "Gifts",
             "show_product_count": true,
             "footer_label": "",
@@ -1507,7 +1507,7 @@
           "settings": {
             "recipient": "mother",
             "recipient_label": "Mum",
-            "products": [],
+            "products": ["round-lab-grown-sapphire-necklace", "stevie-bracelet", "dome-cuff-bracelet"],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -1611,7 +1611,7 @@
           "settings": {
             "recipient": "partner",
             "recipient_label": "My partner",
-            "products": [],
+            "products": ["lucy-williams-medium-engraveable-necklace", "interconnected-wave-pave-diamond-ring", "charlotte-bold-hoops"],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -1715,7 +1715,7 @@
           "settings": {
             "recipient": "friend",
             "recipient_label": "A friend",
-            "products": [],
+            "products": ["charlotte-bold-hoops", "charlotte-step-cut-ring", "dome-cuff-bracelet"],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -1819,7 +1819,7 @@
           "settings": {
             "recipient": "myself",
             "recipient_label": "Myself",
-            "products": [],
+            "products": ["lucy-williams-medium-engraveable-necklace", "stevie-bracelet", "interconnected-wave-pave-diamond-ring"],
             "bundle_discount_percentage": 15,
             "bundle_discount_message": "Add this complete gift edit to receive your bundle discount."
           },
@@ -2129,8 +2129,8 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": [],
-            "product_detail": "",
+            "products": ["lucy-williams-medium-engraveable-necklace"],
+            "product_detail": "18K GOLD / ENGRAVABLE PENDANT",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
             "modal_heading": "Objects in this look"
@@ -2143,8 +2143,8 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": [],
-            "product_detail": "",
+            "products": ["charlotte-step-cut-ring", "interconnected-wave-pave-diamond-ring"],
+            "product_detail": "SCULPTURAL GOLD / RING EDIT",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
             "modal_heading": "Objects in this look"
@@ -2157,8 +2157,8 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": [],
-            "product_detail": "",
+            "products": ["stevie-bracelet", "dome-cuff-bracelet"],
+            "product_detail": "18K GOLD / BRACELET DUO",
             "button_label": "Shop the set",
             "modal_label": "Shop the film",
             "modal_heading": "Objects in this look"
@@ -2171,8 +2171,8 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": [],
-            "product_detail": "",
+            "products": ["charlotte-bold-hoops"],
+            "product_detail": "18K GOLD / HOOP EARRINGS",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
             "modal_heading": "Objects in this look"
@@ -2185,8 +2185,8 @@
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
-            "products": [],
-            "product_detail": "",
+            "products": ["round-lab-grown-sapphire-necklace"],
+            "product_detail": "LAB-GROWN SAPPHIRE / NECKLACE",
             "button_label": "Shop the look",
             "modal_label": "Shop the film",
             "modal_heading": "Objects in this look"
@@ -2589,7 +2589,7 @@
         "details"
       ],
       "settings": {
-        "product": "",
+        "product": "lucy-williams-medium-engraveable-necklace",
         "section_width": "page",
         "desktop_gap": 64,
         "media_width": 58,
@@ -2646,34 +2646,34 @@
         "product_hotspot_tWniha": {
           "type": "product_hotspot",
           "settings": {
-            "product": "",
-            "horizontal_position": 60,
-            "vertical_position": 58,
-            "enable_mobile_position": false,
-            "mobile_horizontal_position": 60,
-            "mobile_vertical_position": 58
+            "product": "charlotte-bold-hoops",
+            "horizontal_position": 36,
+            "vertical_position": 35,
+            "enable_mobile_position": true,
+            "mobile_horizontal_position": 35,
+            "mobile_vertical_position": 34
           }
         },
         "product_hotspot_F9yrCF": {
           "type": "product_hotspot",
           "settings": {
-            "product": "",
-            "horizontal_position": 49,
-            "vertical_position": 52,
-            "enable_mobile_position": false,
-            "mobile_horizontal_position": 60,
-            "mobile_vertical_position": 58
+            "product": "charlotte-step-cut-ring",
+            "horizontal_position": 73,
+            "vertical_position": 43,
+            "enable_mobile_position": true,
+            "mobile_horizontal_position": 76,
+            "mobile_vertical_position": 43
           }
         },
         "product_hotspot_UYRkiA": {
           "type": "product_hotspot",
           "settings": {
-            "product": "",
-            "horizontal_position": 72,
-            "vertical_position": 63,
-            "enable_mobile_position": false,
+            "product": "dome-cuff-bracelet",
+            "horizontal_position": 73,
+            "vertical_position": 75,
+            "enable_mobile_position": true,
             "mobile_horizontal_position": 60,
-            "mobile_vertical_position": 58
+            "mobile_vertical_position": 75
           }
         }
       },
@@ -2844,7 +2844,7 @@
             "role": "",
             "location": "London",
             "piece": "The Nocturne Ruby Collar",
-            "product": "",
+            "product": "round-lab-grown-sapphire-necklace",
             "button_label": "View the piece",
             "button_link": "/collections/all"
           },
@@ -2858,7 +2858,7 @@
             "role": "",
             "location": "New York",
             "piece": "The Equinox",
-            "product": "",
+            "product": "interconnected-wave-pave-diamond-ring",
             "button_label": "View the piece",
             "button_link": "/collections/all"
           },
@@ -2872,7 +2872,7 @@
             "role": "",
             "location": "Paris",
             "piece": "The Vesper",
-            "product": "",
+            "product": "stevie-bracelet",
             "button_label": "View the piece",
             "button_link": "/collections/all"
           },
@@ -2886,7 +2886,7 @@
             "role": "",
             "location": "Sydney",
             "piece": "The House Signature",
-            "product": "",
+            "product": "dome-cuff-bracelet",
             "button_label": "View the piece",
             "button_link": "/collections/all"
           },

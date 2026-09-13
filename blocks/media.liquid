@@ -17,9 +17,23 @@
     elsif request.page_type == 'page' and section.id contains '__design_vision'
       assign media_fallback_asset = 'page-about-process-v1.jpg'
     elsif request.page_type == 'product' and section.id contains '__image-with-text'
-      assign media_fallback_asset = 'product-atelier-v1.jpg'
-      assign media_fallback_width = 1448
-      assign media_fallback_height = 1086
+      if block.settings.alt contains 'Hands arranging'
+        assign media_fallback_asset = 'product-story-collage-main.jpg'
+        assign media_fallback_width = 1024
+        assign media_fallback_height = 1536
+      elsif block.settings.alt contains 'Gold ring and fine chain'
+        assign media_fallback_asset = 'product-story-collage-detail.jpg'
+        assign media_fallback_width = 1536
+        assign media_fallback_height = 1024
+      elsif block.settings.alt contains 'Model wearing'
+        assign media_fallback_asset = 'product-story-collage-portrait.jpg'
+        assign media_fallback_width = 1122
+        assign media_fallback_height = 1402
+      else
+        assign media_fallback_asset = 'product-atelier-v1.jpg'
+        assign media_fallback_width = 1448
+        assign media_fallback_height = 1086
+      endif
     endif
   endif
 %}

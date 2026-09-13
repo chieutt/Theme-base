@@ -80,11 +80,8 @@
             <div class="editorial-collection-tabs__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
               {% render 'product-card',
                 product: product,
-                media_ratio: 'global',
-                show_badges: true,
-                show_variant_dots: false,
-                show_media_actions: false,
-                show_quick_add: true,
+                heading_tag: 'h3',
+                show_media_actions: true,
                 enable_quick_view: true,
                 loading: 'lazy',
                 sizes: '(min-width: 1150px) 25vw, (min-width: 768px) 50vw, 84vw'
@@ -97,12 +94,9 @@
           <li class="editorial-collection-tabs__product swiper-slide">
             <div class="editorial-collection-tabs__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
               {% render 'product-card',
-                media_ratio: 'global',
-                show_badges: true,
-                show_variant_dots: false,
-                show_media_actions: false,
-                show_quick_add: false,
-                enable_quick_view: false,
+                heading_tag: 'h3',
+                show_media_actions: true,
+                enable_quick_view: true,
                 placeholder_index: placeholder_index
               %}
             </div>

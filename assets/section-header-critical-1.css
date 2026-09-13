@@ -140,6 +140,12 @@ html.header-menu-scroll-locked {
   .header--sticky.header--desktop-hidden {
     transform: translate3d(0, -100%, 0);
   }
+
+  /* Let the header section leave normal flow while its desktop surface is hidden. */
+  .shopify-section:has(> .header--sticky.header--desktop-hidden) {
+    position: relative;
+    top: auto;
+  }
 }
 @media (min-width: 1024px) {
     .shopify-section:has(> .header--floating) {
@@ -1448,6 +1454,12 @@ html.header-menu-scroll-locked {
 
   .header--sticky.header--desktop-hidden {
     transform: translate3d(0, -100%, 0);
+  }
+
+  /* Let the header section leave normal flow while its desktop surface is hidden. */
+  .shopify-section:has(> .header--sticky.header--desktop-hidden) {
+    position: relative;
+    top: auto;
   }
 }
 @media (min-width: 1024px) {

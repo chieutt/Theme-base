@@ -305,39 +305,55 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "shopify://shop_images/image-with-text-ring-hands.jpg",
-            "alt": "",
+            "image": "",
+            "alt": "Hands arranging an Orlune jewelry piece in the atelier",
+            "focal_point": "center center",
+            "ratio": "2-3"
+          },
+          "blocks": {}
+        },
+        "detail_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "image": "",
+            "alt": "Gold ring and fine chain on travertine and silk",
+            "focal_point": "center center",
+            "ratio": "3-2"
+          },
+          "blocks": {}
+        },
+        "portrait_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "image": "",
+            "alt": "Model wearing an Orlune pendant necklace",
             "focal_point": "center center",
             "ratio": "4-5"
-          }
+          },
+          "blocks": {}
         },
-        "eyebrow": {
+        "location_label": {
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>THE ORLUNE ATELIER</p>"
+            "text": "<p>ORLUNE ATELIER · HAND FINISHED</p>"
           }
         },
         "heading": {
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": "<h2>Made for the years ahead.</h2>",
+            "heading": "<h2>Designed to become yours.</h2>",
             "type_preset": "h3"
-          }
-        },
-        "highlight_heading": {
-          "type": "heading",
-          "static": true,
-          "settings": {
-            "heading": ""
           }
         },
         "text": {
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>Each Orlune object begins with proportion, light and a material chosen to deepen with wear.</p><p>From the first fitting to the final finish, our atelier makes space for the way you want to live in it.</p>"
+            "text": "<p>Every Orlune piece begins with a quiet study of proportion, light and material.</p><p>Hand finished in small runs, it is made to gather meaning with every wear—and to feel unmistakably yours.</p>"
           }
         },
         "button": {
@@ -345,7 +361,7 @@
           "static": true,
           "settings": {
             "label": "Discover the house",
-            "link": "/collections/all",
+            "link": "/pages/about-us",
             "style": "tertiary",
             "icon": "arrow-right"
           }
@@ -353,14 +369,15 @@
       },
       "block_order": [],
       "settings": {
-        "media_position": "right",
+        "layout": "story-collage",
+        "media_position": "left",
         "content_alignment": "left",
-        "content_overlay_on_media": true,
         "section_width": "page",
-        "column_gap": 40,
+        "column_gap": 64,
+        "story_collage_height": 580,
         "color_scheme": "scheme-1",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "featured-collection-14": {
@@ -377,7 +394,7 @@
           "type": "collection",
           "settings": {
             "source": "complementary",
-            "collection": ""
+            "collection": "best-sellers"
           }
         }
       },

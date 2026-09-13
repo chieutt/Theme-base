@@ -304,8 +304,8 @@
         "container_padding_mobile": 24,
         "block_gap": 20,
         "show_password_message": true,
-        "image": "shopify://shop_images/about5.jpg",
-        "overlay_opacity": 0,
+        "image": "",
+        "overlay_opacity": 30,
         "height_mode": "fixed",
         "height_percent": 95,
         "height_desktop": 420,
@@ -314,7 +314,7 @@
         "padding_top": 0,
         "padding_bottom": 0,
         "content_color_scheme": "",
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-4"
       }
     }
   },

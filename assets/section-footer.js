@@ -18,10 +18,21 @@ if (!customElements.get('footer-house')) {
   class FooterHouse extends HTMLElement {
     connectedCallback() {
       this.mobileQuery = window.matchMedia('(max-width: 767.98px)');
+      this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
       this.menus = [...this.querySelectorAll('[data-footer-menu]')];
+      this.signature = this.querySelector('.footer__signature--placeholder-mark');
       this.section = this.closest('.shopify-section');
-      this.handleViewportChange = () => this.syncMenuState();
-      this.handleFooterViewportChange = () => this.scheduleStickyState();
+      this.handleViewportChange = () => {
+        this.syncMenuState();
+        this.scheduleStickyState();
+        this.scheduleSignatureParallax();
+      };
+      this.handleMotionChange = () => this.scheduleSignatureParallax();
+      this.handleFooterViewportChange = () => {
+        this.scheduleStickyState();
+        this.scheduleSignatureParallax();
+      };
+      this.handleSignatureScroll = () => this.scheduleSignatureParallax();
       this.handleBlockSelect = (event) => {
         const selectedMenu = event.target.closest?.('[data-footer-menu]');
         if (selectedMenu instanceof HTMLDetailsElement && this.contains(selectedMenu)) {
@@ -42,6 +53,7 @@ if (!customElements.get('footer-house')) {
       this.footerResizeObserver = new ResizeObserver(this.handleFooterViewportChange);
       this.footerResizeObserver.observe(this);
       window.addEventListener('resize', this.handleFooterViewportChange, { passive: true });
+      window.addEventListener('scroll', this.handleSignatureScroll, { passive: true });
 
       if (this.mobileQuery.addEventListener) {
         this.mobileQuery.addEventListener('change', this.handleViewportChange);
@@ -49,8 +61,15 @@ if (!customElements.get('footer-house')) {
         this.mobileQuery.addListener(this.handleViewportChange);
       }
 
+      if (this.motionQuery.addEventListener) {
+        this.motionQuery.addEventListener('change', this.handleMotionChange);
+      } else {
+        this.motionQuery.addListener(this.handleMotionChange);
+      }
+
       this.syncMenuState();
       this.scheduleStickyState();
+      this.scheduleSignatureParallax();
     }
 
     disconnectedCallback() {
@@ -58,14 +77,23 @@ if (!customElements.get('footer-house')) {
       this.removeEventListener('shopify:block:select', this.handleBlockSelect);
       this.footerResizeObserver?.disconnect();
       window.removeEventListener('resize', this.handleFooterViewportChange);
+      window.removeEventListener('scroll', this.handleSignatureScroll);
       if (this.stickyFrame) cancelAnimationFrame(this.stickyFrame);
+      if (this.signatureFrame) cancelAnimationFrame(this.signatureFrame);
       this.section?.classList.remove('section-footer--sticky-ready', 'section-footer--sticky-tall');
       this.section?.style.removeProperty('--footer-sticky-top');
+      this.signature?.style.removeProperty('--footer-signature-parallax-progress');
 
       if (this.mobileQuery?.removeEventListener) {
         this.mobileQuery.removeEventListener('change', this.handleViewportChange);
       } else {
         this.mobileQuery?.removeListener(this.handleViewportChange);
+      }
+
+      if (this.motionQuery?.removeEventListener) {
+        this.motionQuery.removeEventListener('change', this.handleMotionChange);
+      } else {
+        this.motionQuery?.removeListener(this.handleMotionChange);
       }
     }
 
@@ -104,6 +132,30 @@ if (!customElements.get('footer-house')) {
       } else {
         this.section.style.removeProperty('--footer-sticky-top');
       }
+    }
+
+    scheduleSignatureParallax() {
+      if (this.signatureFrame) cancelAnimationFrame(this.signatureFrame);
+      this.signatureFrame = requestAnimationFrame(() => this.syncSignatureParallax());
+    }
+
+    syncSignatureParallax() {
+      this.signatureFrame = null;
+      if (!this.signature) return;
+
+      const isDesktop = window.matchMedia('(min-width: 1150px)').matches;
+      if (!isDesktop || this.motionQuery?.matches) {
+        this.signature.style.setProperty('--footer-signature-parallax-progress', '0');
+        return;
+      }
+
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const signatureTop = this.signature.getBoundingClientRect().top;
+      const start = viewportHeight * 0.96;
+      const end = viewportHeight * 0.56;
+      const progress = Math.min(1, Math.max(0, (start - signatureTop) / Math.max(1, start - end)));
+
+      this.signature.style.setProperty('--footer-signature-parallax-progress', progress.toFixed(3));
     }
   }
 

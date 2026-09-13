@@ -82,7 +82,7 @@
         "column_gap": 20,
         "mobile_column_gap": 12,
         "header_gap": 48,
-        "layout_desktop": "slider",
+        "layout_desktop": "grid",
         "layout_mobile": "slider",
         "show_pagination": true,
         "columns_desktop": 4,

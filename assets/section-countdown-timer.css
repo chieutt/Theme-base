@@ -1,6 +1,6 @@
 .countdown-timer {
     display: block;
-    background: var(--gradient-background, var(--color-background));
+    background: transparent;
     color: var(--color-text);
   }
 

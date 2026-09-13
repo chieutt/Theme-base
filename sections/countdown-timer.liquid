@@ -12,6 +12,40 @@
 %}
 
 {% if section.blocks.size > 0 %}
+  {% style %}
+    #shopify-section-{{ section.id }} {
+      background-color: #090807;
+      {% if section.settings.background_image != blank %}
+        background-image: linear-gradient(90deg, rgba(9, 8, 7, 0.74), rgba(9, 8, 7, 0.42) 58%, rgba(9, 8, 7, 0.58)), url('{{ section.settings.background_image | image_url: width: 2400 }}');
+      {% else %}
+        background-image: linear-gradient(90deg, rgba(9, 8, 7, 0.74), rgba(9, 8, 7, 0.42) 58%, rgba(9, 8, 7, 0.58)), url('{{ 'editorial-slideshow-evening.png' | asset_url }}');
+      {% endif %}
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    #shopify-section-{{ section.id }} .countdown-timer {
+      background: transparent;
+      --color-heading: #faf8f4;
+      --color-text: #f3eee4;
+      --color-foreground: #f3eee4;
+    }
+
+    @media screen and (max-width: 767.98px) {
+      #shopify-section-{{ section.id }} {
+        background-position: 65% center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #shopify-section-{{ section.id }} {
+        background-attachment: scroll;
+      }
+    }
+  {% endstyle %}
+
   <div
     class="countdown-timer color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} countdown-timer--full full-width{% endif %}{% if has_button %} countdown-timer--has-button{% endif %} countdown-timer--mobile-{{ section.settings.mobile_alignment }}"
     style="--section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --countdown-timer-column-gap: {{ section.settings.column_gap }}px; --countdown-timer-mobile-row-gap: {{ section.settings.mobile_row_gap }}px;"
@@ -179,6 +213,12 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "A dark editorial image is used when none is selected."
     },
     {
       "type": "header",

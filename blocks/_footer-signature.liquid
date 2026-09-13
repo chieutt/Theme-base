@@ -15,6 +15,7 @@
 <section
   class="footer__signature{% if mark_image_url == blank %} footer__signature--placeholder-mark{% endif %}{% unless block.settings.show_image_mobile %} footer__signature--hide-image-mobile{% endunless %}"
   data-reveal
+  data-footer-signature
   style="{% if mark_image_url != blank %}--footer-house-mark-image: url('{{ mark_image_url }}');{% endif %} --footer-house-mark-opacity: {{ block.settings.image_opacity | divided_by: 100.0 }};"
   {{ block.shopify_attributes }}
 >

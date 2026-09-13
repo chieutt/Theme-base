@@ -1,4 +1,4 @@
-{% if request.page_type == 'collection' and request.design_mode == false %}
+{% if request.page_type == 'collection' %}
   <style>{{ 'section-collection-list.css' | inline_asset_content }}</style>
 {% else %}
   {% render 'section-stylesheet', asset: 'section-collection-list.css', defer_on_home: true %}
@@ -9,6 +9,11 @@
   assign collection_list_background = section.settings.background_color
   if collection_list_background == blank
     assign collection_list_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
+  endif
+
+  assign is_collection_page = false
+  if request.page_type == 'collection'
+    assign is_collection_page = true
   endif
 
   assign collection_card_count = 0
@@ -72,12 +77,147 @@
   #shopify-section-{{ section.id }} .collection-list {
     background: transparent;
   }
+
+  #shopify-section-{{ section.id }} .collection-list.full-width .collection-list__inner {
+    padding-inline: var(--page-margin);
+  }
+
+  {% if is_collection_page %}
+    #shopify-section-{{ section.id }} .collection-list__grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__item {
+      min-width: 0;
+      list-style: none;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__card {
+      position: relative;
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__media {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      aspect-ratio: var(--collection-list-image-ratio, 4 / 5);
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__image,
+    #shopify-section-{{ section.id }} .collection-list__placeholder {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__overlay,
+    #shopify-section-{{ section.id }} .collection-list__content {
+      position: absolute;
+      inset: 0;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__overlay {
+      z-index: 1;
+      background: linear-gradient(
+        to top,
+        var(--collection-list-overlay-color, rgb(0 0 0 / 42%)) 0%,
+        rgb(0 0 0 / 18%) 42%,
+        transparent 76%
+      );
+      pointer-events: none;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__content {
+      z-index: 2;
+      inset: auto 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 4px;
+      min-height: 34%;
+      padding: 34px 18px 20px;
+      background: linear-gradient(to top, rgb(0 0 0 / 52%), rgb(0 0 0 / 16%) 66%, transparent);
+      color: #fff;
+      text-shadow: 0 1px 2px rgb(0 0 0 / 42%);
+      text-align: left;
+    }
+
+    #shopify-section-{{ section.id }} .collection-list__title,
+    #shopify-section-{{ section.id }} .collection-list__count {
+      color: inherit;
+    }
+
+    @media screen and (min-width: 1150px) {
+      #shopify-section-{{ section.id }} .collection-list--grid .collection-list__grid {
+        display: grid !important;
+        width: 100%;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: var(--collection-list-column-gap) !important;
+        transform: none !important;
+      }
+
+      #shopify-section-{{ section.id }} .collection-list--grid .collection-list__item {
+        width: auto !important;
+        min-width: 0;
+        max-width: 100%;
+        flex: none;
+      }
+
+      #shopify-section-{{ section.id }} .collection-list__image {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1149.98px) {
+      #shopify-section-{{ section.id }} .collection-list--grid .collection-list__grid {
+        display: grid !important;
+        grid-template-columns: repeat(var(--collection-list-columns-tablet), minmax(0, 1fr)) !important;
+        gap: var(--collection-list-column-gap) !important;
+        transform: none !important;
+      }
+
+      #shopify-section-{{ section.id }} .collection-list--grid .collection-list__item {
+        width: auto !important;
+        max-width: 100%;
+        min-width: 0;
+        height: auto;
+        flex: none;
+      }
+    }
+
+    @media screen and (max-width: 767.98px) {
+      #shopify-section-{{ section.id }} .collection-list--grid .collection-list__grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: var(--collection-list-mobile-column-gap) !important;
+        transform: none !important;
+      }
+
+      #shopify-section-{{ section.id }} .collection-list--grid .collection-list__item {
+        width: auto !important;
+        max-width: 100%;
+        min-width: 0;
+        height: auto;
+        flex: none;
+      }
+    }
+  {% endif %}
 {% endstyle %}
 
 {% if collection_card_count > 0 %}
   <collection-list
-    {% if section.settings.layout == 'grid' %}data-deferred-module="{{ 'collection-list.js' | asset_url }}"{% endif %}
-    class="collection-list collection-list--{{ section.settings.layout }} collection-list--layout-desktop-{{ section.settings.layout_desktop | default: 'slider' }} collection-list--layout-tablet-{{ section.settings.layout_desktop | default: 'slider' }} collection-list--layout-mobile-{{ section.settings.layout_mobile | default: 'slider' }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
+    {% if section.settings.layout == 'grid' and is_collection_page == false %}data-deferred-module="{{ 'collection-list.js' | asset_url }}"{% endif %}
+    class="collection-list collection-list--{{ section.settings.layout }}{% if is_collection_page %} collection-list--collection-page{% endif %} collection-list--layout-desktop-{{ section.settings.layout_desktop | default: 'slider' }} collection-list--layout-tablet-{{ section.settings.layout_desktop | default: 'slider' }} collection-list--layout-mobile-{{ section.settings.layout_mobile | default: 'slider' }} color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %}"
     data-section-id="{{ section.id }}"
     data-layout-desktop="{{ section.settings.layout_desktop | default: 'slider' }}"
     data-layout-tablet="{{ section.settings.layout_desktop | default: 'slider' }}"
@@ -133,8 +273,8 @@
       {% endif %}
 
       <div class="collection-list__carousel">
-        <div class="collection-list__slider{% if section.settings.layout == 'grid' %} swiper{% endif %}"{% if section.settings.layout == 'grid' %} data-collection-list-slider{% endif %}>
-          <ul class="collection-list__grid collection-list__grid--{{ section.settings.layout }}{% if section.settings.layout == 'grid' %} swiper-wrapper{% endif %}" role="list"{% if section.settings.layout == 'split-promotions' %} data-reveal-group{% endif %}>
+        <div class="collection-list__slider{% if section.settings.layout == 'grid' and is_collection_page == false %} swiper{% endif %}"{% if section.settings.layout == 'grid' and is_collection_page == false %} data-collection-list-slider{% endif %}>
+          <ul class="collection-list__grid collection-list__grid--{{ section.settings.layout }}{% if section.settings.layout == 'grid' and is_collection_page == false %} swiper-wrapper{% endif %}" role="list"{% if section.settings.layout == 'split-promotions' %} data-reveal-group{% endif %}>
         {% assign split_card_index = 0 %}
         {% for block in section.blocks %}
           {% if block.type == 'collection_card' %}
@@ -275,7 +415,7 @@
               endif
             %}
 
-            <li class="collection-list__item{% if section.settings.layout == 'grid' %} swiper-slide{% else %} collection-list__item--split-{{ split_card_index }}{% endif %}" data-block-id="{{ block.id }}"{% if section.settings.layout == 'split-promotions' %} data-reveal-item style="--reveal-order: {{ split_card_index | minus: 1 }};"{% endif %} {{ block.shopify_attributes }}>
+            <li class="collection-list__item{% if section.settings.layout == 'grid' and is_collection_page == false %} swiper-slide{% elsif section.settings.layout != 'grid' %} collection-list__item--split-{{ split_card_index }}{% endif %}" data-block-id="{{ block.id }}"{% if section.settings.layout == 'split-promotions' %} data-reveal-item style="--reveal-order: {{ split_card_index | minus: 1 }};"{% endif %} {{ block.shopify_attributes }}>
               {% if card_link != blank %}
                 <a
                   class="collection-list__card collection-list__card--{{ section.settings.layout }} color-scheme color-{{ card_color_scheme.id }}"
@@ -387,7 +527,7 @@
           </ul>
         </div>
 
-        {% if section.settings.layout == 'grid' %}
+        {% if section.settings.layout == 'grid' and is_collection_page == false %}
           <button
             class="collection-list__navigation-button collection-list__navigation-button--previous"
             type="button"
@@ -407,7 +547,7 @@
         {% endif %}
       </div>
 
-      {% if section.settings.layout == 'grid' and section.settings.show_pagination %}
+      {% if section.settings.layout == 'grid' and is_collection_page == false and section.settings.show_pagination %}
         <div class="collection-list__pagination" data-collection-list-pagination aria-hidden="true">
           <span data-collection-list-progress></span>
         </div>

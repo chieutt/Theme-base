@@ -187,31 +187,7 @@
   }
 
   .shop-the-look__product-slide .product-card {
-    display: flex;
     width: min(100%, var(--shop-the-look-product-image-size));
-    height: 100%;
-    flex-direction: column;
-  }
-
-  .shop-the-look__product-slide .product-card__content {
-    flex: 1 1 auto;
-    padding-top: 20px;
-  }
-
-  .shop-the-look__product-slide .product-card__actions {
-    margin-top: auto;
-    padding-top: 28px;
-  }
-
-  .shop-the-look__product-slide .product-card__quick-add {
-    min-height: 52px;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border-radius: 0;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    text-align: left;
   }
 
   .shop-the-look__arrow {
@@ -322,11 +298,4 @@
       transform: translate(-50%, -50%) scale(1.15);
     }
 
-    .shop-the-look__product-slide .product-card__content {
-      padding-top: 16px;
-    }
-
-    .shop-the-look__product-slide .product-card__actions {
-      padding-top: 20px;
-    }
   }

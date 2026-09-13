@@ -91,11 +91,8 @@
                 <div class="editorial-featured-collection__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
                   {% render 'product-card',
                   product: product,
-                  media_ratio: 'global',
-                  show_badges: true,
-                  show_variant_dots: false,
-                  show_media_actions: false,
-                  show_quick_add: true,
+                  heading_tag: 'h3',
+                  show_media_actions: true,
                   enable_quick_view: true,
                   loading: card_loading,
                   fetchpriority: card_fetchpriority,
@@ -110,12 +107,9 @@
               <li class="editorial-featured-collection__product featured-collection__product swiper-slide">
                 <div class="editorial-featured-collection__product-reveal" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
                   {% render 'product-card',
-                  media_ratio: 'global',
-                  show_badges: true,
-                  show_variant_dots: false,
-                  show_media_actions: false,
-                  show_quick_add: false,
-                  enable_quick_view: false,
+                  heading_tag: 'h3',
+                  show_media_actions: true,
+                  enable_quick_view: true,
                   placeholder_index: placeholder_index
                   %}
                 </div>

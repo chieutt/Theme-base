@@ -4,7 +4,7 @@
 
 {% liquid
   assign product_block_count = 0
-  assign mobile_media_aspect_ratio = section.settings.mobile_image.aspect_ratio | default: section.settings.image.aspect_ratio | default: 1
+  assign mobile_media_aspect_ratio = section.settings.mobile_image.aspect_ratio | default: section.settings.image.aspect_ratio | default: 0.64
   assign shop_the_look_background = section.settings.background_color
   if shop_the_look_background == blank
     assign shop_the_look_background = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background
@@ -52,22 +52,37 @@
             endif
           %}
           <div class="shop-the-look__media">
-            {% render 'responsive-media',
-              image: editorial_image,
-              mobile_image: section.settings.mobile_image,
-              mobile_breakpoint: 989,
-              max_width: 1920,
-              mobile_max_width: 1200,
-              widths: '480, 720, 960, 1200, 1440, 1920',
-              mobile_widths: '360, 480, 640, 750, 960, 1200',
-              sizes: '(min-width: 1150px) 50vw, 100vw',
-              class: 'shop-the-look__editorial-image',
-              loading: 'lazy',
-              alt: editorial_image_alt,
-              style: editorial_image_style,
-              placeholder_asset: 'placeholder-image-default-2.svg',
-              placeholder_class: 'shop-the-look__placeholder'
-            %}
+            {% if editorial_image != blank %}
+              {% render 'responsive-media',
+                image: editorial_image,
+                mobile_image: section.settings.mobile_image,
+                mobile_breakpoint: 989,
+                max_width: 1920,
+                mobile_max_width: 1200,
+                widths: '480, 720, 960, 1200, 1440, 1920',
+                mobile_widths: '360, 480, 640, 750, 960, 1200',
+                sizes: '(min-width: 1150px) 50vw, 100vw',
+                class: 'shop-the-look__editorial-image',
+                loading: 'lazy',
+                alt: editorial_image_alt,
+                style: editorial_image_style,
+                placeholder_asset: 'placeholder-image-default-2.svg',
+                placeholder_class: 'shop-the-look__placeholder'
+              %}
+            {% else %}
+              <picture>
+                <source media="(max-width: 1149.98px)" srcset="{{ 'shop-the-look-nocturne-mobile-v2.png' | asset_url }}">
+                <img
+                  class="shop-the-look__editorial-image"
+                  src="{{ 'shop-the-look-nocturne-desktop-v2.png' | asset_url }}"
+                  width="1086"
+                  height="1448"
+                  loading="lazy"
+                  alt="{{ editorial_image_alt | escape }}"
+                  style="{{ editorial_image_style }}"
+                >
+              </picture>
+            {% endif %}
           </div>
 
           <div class="shop-the-look__hotspots" role="tablist" aria-label="{{ 'shop_the_look.products' | t | escape }}">
@@ -176,24 +191,22 @@
                     {% if block.settings.product != blank %}
                       {% render 'product-card',
                         product: block.settings.product,
-                        media_ratio: 'global',
+                        heading_tag: 'h3',
                         sizes: '(max-width: 767.98px) min(72vw, 320px), (min-width: 1150px) 360px, 44vw',
-                        show_badges: true,
-                        show_compare_at_price: true,
-                        show_variant_dots: false,
-                        show_media_actions: false,
-                        show_quick_add: true,
+                        loading: 'lazy',
+                        fetchpriority: 'auto',
+                        show_media_actions: true,
                         enable_quick_view: true
                       %}
                     {% else %}
                       {% render 'product-card',
                         placeholder_index: product_placeholder_index,
-                        media_ratio: 'global',
-                        show_badges: true,
-                        show_variant_dots: false,
-                        show_media_actions: false,
-                        show_quick_add: false,
-                        enable_quick_view: false
+                        heading_tag: 'h3',
+                        sizes: '(max-width: 767.98px) min(72vw, 320px), (min-width: 1150px) 360px, 44vw',
+                        loading: 'lazy',
+                        fetchpriority: 'auto',
+                        show_media_actions: true,
+                        enable_quick_view: true
                       %}
                     {% endif %}
                   </div>
