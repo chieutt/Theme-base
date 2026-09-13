@@ -5,66 +5,21 @@
   {% content_for 'block', type: 'media', id: 'media' %}
 {% enddoc %}
 
-{% liquid
-  assign media_fallback_asset = blank
-  assign media_fallback_width = 1122
-  assign media_fallback_height = 1402
-  if block.settings.image == blank
-    if request.page_type == 'page' and section.id contains '__about_intro'
-      assign media_fallback_asset = 'page-about-intro-v1.jpg'
-    elsif request.page_type == 'page' and section.id contains '__founder_story'
-      assign media_fallback_asset = 'page-about-founder-v1.jpg'
-    elsif request.page_type == 'page' and section.id contains '__design_vision'
-      assign media_fallback_asset = 'page-about-process-v1.jpg'
-    elsif request.page_type == 'product' and section.id contains '__image-with-text'
-      if block.settings.alt contains 'Hands arranging'
-        assign media_fallback_asset = 'product-story-collage-main.jpg'
-        assign media_fallback_width = 1024
-        assign media_fallback_height = 1536
-      elsif block.settings.alt contains 'Gold ring and fine chain'
-        assign media_fallback_asset = 'product-story-collage-detail.jpg'
-        assign media_fallback_width = 1536
-        assign media_fallback_height = 1024
-      elsif block.settings.alt contains 'Model wearing'
-        assign media_fallback_asset = 'product-story-collage-portrait.jpg'
-        assign media_fallback_width = 1122
-        assign media_fallback_height = 1402
-      else
-        assign media_fallback_asset = 'product-atelier-v1.jpg'
-        assign media_fallback_width = 1448
-        assign media_fallback_height = 1086
-      endif
-    endif
-  endif
-%}
-
 <div
   class="content-media content-media--{{ block.settings.ratio }}{% if block.settings.enable_custom_width %} content-media--custom-width{% endif %}"
   style="--content-media-position: {{ block.settings.focal_point }}; --content-media-width: {{ block.settings.image_width }}px; --content-media-width-mobile: {{ block.settings.image_width_mobile }}px;"
   {{ block.shopify_attributes }}
 >
-  {% if media_fallback_asset != blank %}
-    <img
-      class="content-media__image"
-      src="{{ media_fallback_asset | asset_url }}"
-      alt="{{ block.settings.alt | escape }}"
-      width="{{ media_fallback_width }}"
-      height="{{ media_fallback_height }}"
-      loading="lazy"
-      decoding="async"
-    >
-  {% else %}
-    {% render 'responsive-media',
-      image: block.settings.image,
-      max_width: 2000,
-      widths: '160, 240, 320, 480, 750, 960, 1200, 1600, 2000',
-      sizes: '(max-width: 767px) 50vw, (min-width: 1600px) 1600px, 100vw',
-      class: 'content-media__image',
-      alt: block.settings.alt,
-      placeholder_asset: 'placeholder-image-default-1.svg',
-      placeholder_class: 'content-media__placeholder'
-    %}
-  {% endif %}
+  {% render 'responsive-media',
+    image: block.settings.image,
+    max_width: 2000,
+    widths: '160, 240, 320, 480, 750, 960, 1200, 1600, 2000',
+    sizes: '(max-width: 767px) 50vw, (min-width: 1600px) 1600px, 100vw',
+    class: 'content-media__image',
+    alt: block.settings.alt,
+    placeholder_asset: 'placeholder-image-default-1.svg',
+    placeholder_class: 'content-media__placeholder'
+  %}
 </div>
 
 {% stylesheet %}

@@ -4,15 +4,8 @@
       {{ block.settings.custom_icon | image_url: width: 96 | image_tag: widths: '48, 96', loading: 'lazy', alt: '' }}
     </span>
   {% elsif block.settings.icon != 'none' %}
-    {% assign benefit_icon_asset = blank %}
-    {% case block.settings.icon %}
-      {% when 'truck' %}{% assign benefit_icon_asset = 'product-benefit-shipped.png' %}
-      {% when 'return' %}{% assign benefit_icon_asset = 'product-benefit-return.png' %}
-      {% when 'shield' %}{% assign benefit_icon_asset = 'product-benefit-guarantee.png' %}
-      {% when 'sparkles' %}{% assign benefit_icon_asset = 'product-benefit-clean.png' %}
-    {% endcase %}
     <span class="product-usp-list__icon">
-      {% if benefit_icon_asset != blank %}<img src="{{ benefit_icon_asset | asset_url }}" alt="" width="48" height="48" loading="lazy">{% else %}{% render 'icon', name: block.settings.icon %}{% endif %}
+      {% render 'icon', name: block.settings.icon %}
     </span>
   {% else %}
     <div class="product-usp-list__image" aria-hidden="true">

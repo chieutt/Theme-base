@@ -21,7 +21,7 @@
       {% assign network_label = network | capitalize %}
       <li>
         <a class="product-share__icon" href="{{ share_link | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ 'product_share.network' | t: network: network_label | escape }}">
-          <img src="{{ 'social-' | append: network | append: '.png' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+        {% render 'social-icon', name: network %}
         </a>
       </li>
     {% endfor %}

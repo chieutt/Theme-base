@@ -52,37 +52,22 @@
             endif
           %}
           <div class="shop-the-look__media">
-            {% if editorial_image != blank %}
-              {% render 'responsive-media',
-                image: editorial_image,
-                mobile_image: section.settings.mobile_image,
-                mobile_breakpoint: 989,
-                max_width: 1920,
-                mobile_max_width: 1200,
-                widths: '480, 720, 960, 1200, 1440, 1920',
-                mobile_widths: '360, 480, 640, 750, 960, 1200',
-                sizes: '(min-width: 1150px) 50vw, 100vw',
-                class: 'shop-the-look__editorial-image',
-                loading: 'lazy',
-                alt: editorial_image_alt,
-                style: editorial_image_style,
-                placeholder_asset: 'placeholder-image-default-2.svg',
-                placeholder_class: 'shop-the-look__placeholder'
-              %}
-            {% else %}
-              <picture>
-                <source media="(max-width: 1149.98px)" srcset="{{ 'shop-the-look-nocturne-mobile-v2.png' | asset_url }}">
-                <img
-                  class="shop-the-look__editorial-image"
-                  src="{{ 'shop-the-look-nocturne-desktop-v2.png' | asset_url }}"
-                  width="1086"
-                  height="1448"
-                  loading="lazy"
-                  alt="{{ editorial_image_alt | escape }}"
-                  style="{{ editorial_image_style }}"
-                >
-              </picture>
-            {% endif %}
+            {% render 'responsive-media',
+              image: editorial_image,
+              mobile_image: section.settings.mobile_image,
+              mobile_breakpoint: 989,
+              max_width: 1920,
+              mobile_max_width: 1200,
+              widths: '480, 720, 960, 1200, 1440, 1920',
+              mobile_widths: '360, 480, 640, 750, 960, 1200',
+              sizes: '(min-width: 1150px) 50vw, 100vw',
+              class: 'shop-the-look__editorial-image',
+              loading: 'lazy',
+              alt: editorial_image_alt,
+              style: editorial_image_style,
+              placeholder_asset: 'placeholder-image-default-2.svg',
+              placeholder_class: 'shop-the-look__placeholder'
+            %}
           </div>
 
           <div class="shop-the-look__hotspots" role="tablist" aria-label="{{ 'shop_the_look.products' | t | escape }}">
