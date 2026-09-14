@@ -2925,7 +2925,7 @@
         "countdown_d3b3Pj": {
           "type": "countdown",
           "settings": {
-            "end_at": "",
+            "end_at": "2026-12-31T23:59:59+07:00",
             "show_completion_message": true,
             "completion_message": "This offer has ended",
             "days_label": "Days",
