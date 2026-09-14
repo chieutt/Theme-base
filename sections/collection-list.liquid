@@ -911,7 +911,7 @@
       "settings": [
         { "type": "header", "content": "Typography" },
         { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Five signatures shaped by stone and light.<br>Choose the one that feels like yours.</p>" },
-        { "type": "select", "id": "type_preset", "label": "Text size", "options": [{ "value": "lg", "label": "Body large" }, { "value": "md", "label": "Body medium" }, { "value": "sm", "label": "Body small" }, { "value": "xs", "label": "Body extra small" }, { "value": "label", "label": "Label" }, { "value": "custom", "label": "Custom" }], "default": "sm" },
+        { "type": "select", "id": "type_preset", "label": "Text size", "options": [{ "value": "lg", "label": "Body large" }, { "value": "md", "label": "Body medium" }, { "value": "sm", "label": "Body small" }, { "value": "xs", "label": "Body extra small" }, { "value": "label", "label": "Label" }, { "value": "custom", "label": "Custom" }], "default": "md" },
         { "type": "range", "id": "font_size", "label": "Size", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 16, "visible_if": "{{ block.settings.type_preset == 'custom' }}" },
         { "type": "range", "id": "font_size_mobile", "label": "Size mobile", "min": 8, "max": 100, "step": 2, "unit": "px", "default": 14, "visible_if": "{{ block.settings.type_preset == 'custom' }}" },
         { "type": "color", "id": "text_color", "label": "Text color" },

@@ -110,7 +110,7 @@
               "settings": {
                 "columns_desktop": "4",
                 "columns_mobile": "2",
-                "text_size": "small",
+                "text_size": "medium",
                 "icon_size": "small"
               },
               "blocks": {
@@ -252,7 +252,7 @@
                 "heading": "Pay With",
                 "heading_size": "h7",
                 "html_tag": "h2",
-                "text_size": "small",
+                "text_size": "medium",
                 "note": "Your transaction is protected with advanced security measures to keep your information confidential."
               },
               "blocks": {}

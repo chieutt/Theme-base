@@ -1269,8 +1269,8 @@ body {
   gap: 6px;
   margin-top: 2px;
   color: var(--color-text);
-  font-size: var(--label-size);
-  line-height: 1.4;
+  font-size: var(--p2-size-sm);
+  line-height: 1.45;
 }
 
 .product-card__price--sale > span {
@@ -1572,7 +1572,7 @@ body.shopify-design-mode main [data-shopify-editor-section] [data-shopify-editor
   }
 
   .product-card__price {
-    font-size: max(10px, calc(var(--label-size) - 1px));
+    font-size: var(--p2-size-sm);
   }
 
   .product-card__actions {

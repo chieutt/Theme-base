@@ -10,7 +10,7 @@
     </ul>
   {% endif %}
   {% if block.settings.note != blank %}
-    <p class="product-payment__note spinel-text--{{ block.settings.text_size | default: 'small' }} content-text--{{ block.settings.text_size | default: 'small' }}">{{ block.settings.note | escape }}</p>
+    <p class="product-payment__note spinel-text--{{ block.settings.text_size | default: 'medium' }} content-text--{{ block.settings.text_size | default: 'medium' }}">{{ block.settings.note | escape }}</p>
   {% endif %}
 </section>
 
@@ -130,7 +130,7 @@
           "label": "X-small"
         }
       ],
-      "default": "small"
+      "default": "medium"
     },
     {
       "type": "text",

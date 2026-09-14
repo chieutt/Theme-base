@@ -8,7 +8,7 @@
   endif
 %}
 
-<div class="product-usp-list product-usp-list--icon-{{ block.settings.icon_size | default: 'small' }} spinel-text--{{ block.settings.text_size | default: 'small' }}" style="--product-benefits-columns-desktop: {{ block.settings.columns_desktop }}; --product-benefits-columns-mobile: {{ block.settings.columns_mobile }}; --product-benefits-content-alignment: {{ content_alignment }}; --product-benefits-content-justify: {{ content_justify }};" {{ block.shopify_attributes }}>
+<div class="product-usp-list product-usp-list--icon-{{ block.settings.icon_size | default: 'small' }} spinel-text--{{ block.settings.text_size | default: 'medium' }}" style="--product-benefits-columns-desktop: {{ block.settings.columns_desktop }}; --product-benefits-columns-mobile: {{ block.settings.columns_mobile }}; --product-benefits-content-alignment: {{ content_alignment }}; --product-benefits-content-justify: {{ content_justify }};" {{ block.shopify_attributes }}>
   {% content_for 'blocks' %}
 </div>
 
@@ -97,7 +97,7 @@
           "label": "X-small"
         }
       ],
-      "default": "small"
+      "default": "medium"
     },
     {
       "type": "select",

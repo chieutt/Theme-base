@@ -466,7 +466,7 @@
             "columns_mobile": "1",
             "item_gap": 40,
             "heading_size": "h2",
-            "text_size": "xs",
+            "text_size": "md",
             "accessibility_label": "Why choose Orlune statistics"
           },
           "blocks": {
@@ -512,7 +512,7 @@
             "image_ratio": "4-3",
             "label_size": "label",
             "heading_size": "h6",
-            "text_size": "sm",
+            "text_size": "md",
             "button_style": "tertiary",
             "button_size": "small",
             "accessibility_label": "Explore the collection"
@@ -634,7 +634,7 @@
           "static": true,
           "settings": {
             "text": "<p>Four sculptural forms in gold and stone, composed to stay close long after dark.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -726,7 +726,7 @@
           "type": "text",
           "settings": {
             "text": "<p>A quiet study of skin, stone and shadow.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -850,7 +850,7 @@
           "type": "split_text",
           "settings": {
             "text": "<p>Five signatures, each shaped by a different expression of stone, light and form.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -1118,7 +1118,7 @@
           "static": true,
           "settings": {
             "text": "<p>A considered edit of forms made for everyday rituals and lasting occasions.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -1777,7 +1777,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>Sculptural silhouettes that let the stone lead, from first light to evening.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -1885,7 +1885,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>Considered proportions and luminous stones, designed to become part of your rhythm.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -1993,7 +1993,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>Every finish is considered, so each object carries a character entirely its own.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -2125,7 +2125,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>Thoughtful forms with quiet symbolism, chosen to become part of her everyday ritual.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -2233,7 +2233,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>A meaningful piece for the person who makes the ordinary feel memorable.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -2341,7 +2341,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>Easy to wear and personal in spirit, for marking a friendship that matters.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -2449,7 +2449,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>An object of your own—made to mark a moment, a milestone or simply a feeling.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
@@ -2592,7 +2592,7 @@
           "static": true,
           "settings": {
             "text": "<p>Choose who you are shopping for and we will show you a ready-to-gift jewelry edit.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -2644,7 +2644,7 @@
           "static": true,
           "settings": {
             "text": "<p>Choose one option to see the edit instantly.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -2839,7 +2839,7 @@
           "static": true,
           "settings": {
             "text": "<p>Three gestures in gold and light, revealing the movement within every form.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -3092,7 +3092,7 @@
                 "columns_desktop": "4",
                 "columns_mobile": "2",
                 "content_alignment": "center",
-                "text_size": "small",
+                "text_size": "medium",
                 "icon_size": "small"
               },
               "blocks": {
@@ -3684,7 +3684,7 @@
           "static": true,
           "settings": {
             "text": "<p>Everyday styling from our circle, where each piece takes on a life of its own.</p>",
-            "type_preset": "sm",
+            "type_preset": "md",
             "font_size": 16,
             "font_size_mobile": 14,
             "text_color": "",
@@ -3782,7 +3782,7 @@
               "type": "text",
               "settings": {
                 "text": "<p>Jewels in motion.<br>Shared by our circle.</p>",
-                "type_preset": "sm",
+                "type_preset": "md",
                 "font_size": 16,
                 "font_size_mobile": 14,
                 "text_color": "",
