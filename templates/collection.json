@@ -15,13 +15,14 @@
         "collection_card_Bem9Hi": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/collection-split-puzzle.jpg",
             "collection": "puzzle-collection",
             "title": "Puzzle Collection",
             "show_product_count": true,
             "subheading": "",
+            "description": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/collection-split-puzzle.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 20
@@ -30,13 +31,14 @@
         "collection_card_cmVa8G": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/collection-split-dome.jpg",
             "collection": "dome-collection",
             "title": "Dôme Collection",
             "show_product_count": true,
             "subheading": "",
+            "description": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/collection-split-dome.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 20
@@ -45,13 +47,14 @@
         "collection_card_TXYgm4": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/collection-split-personal.jpg",
             "collection": "charlotte-collection",
             "title": "Charlotte Collection",
             "show_product_count": true,
             "subheading": "",
+            "description": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/collection-split-personal.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 20
@@ -60,13 +63,14 @@
         "collection_card_hFAJVc": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/collection-split-veil.jpg",
             "collection": "stevie-collection",
             "title": "Stevie Collection",
             "show_product_count": true,
             "subheading": "",
+            "description": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/collection-split-veil.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 20
@@ -86,6 +90,12 @@
         "column_gap": 20,
         "mobile_column_gap": 12,
         "header_gap": 48,
+        "split_label": "COLLECTIONS / 05 HOUSE CODES",
+        "split_heading": "Shop the\nhouse collections.",
+        "split_heading_size": "h2",
+        "split_text": "<p>Five signatures shaped by stone and light.<br>Choose the one that feels like yours.</p>",
+        "split_button_label": "Explore all 05 house codes",
+        "split_button_link": "",
         "layout_desktop": "grid",
         "layout_mobile": "slider",
         "show_pagination": true,
@@ -94,11 +104,12 @@
         "image_ratio": "4-5",
         "card_alignment": "center",
         "card_gap": 20,
-        "card_heading_size": "h5",
+        "card_heading_size": "h6",
         "card_heading_tag": "h3",
         "height_desktop": "medium",
         "height_mobile": "medium",
         "color_scheme": "",
+        "background_color": "",
         "padding_top": 12,
         "padding_bottom": 48
       }
@@ -164,6 +175,7 @@
         "columns_mobile": "2",
         "mobile_column_gap": 12,
         "mobile_row_gap": 8,
+        "padding_top": 0,
         "padding_bottom": 56,
         "color_scheme": "scheme-1"
       }

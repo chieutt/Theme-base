@@ -114,10 +114,10 @@
                 "icon_size": "small"
               },
               "blocks": {
-               "benefit_1": {
-                 "type": "product-benefit-item",
-                 "settings": {
-                   "icon": "truck",
+                "benefit_1": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "truck",
                     "custom_icon": "shopify://shop_images/product-benefit-shipped.png",
                     "text": "<p>Shipping at checkout</p>",
                     "page": "",
@@ -125,10 +125,10 @@
                   },
                   "blocks": {}
                 },
-               "benefit_2": {
-                 "type": "product-benefit-item",
-                 "settings": {
-                   "icon": "return",
+                "benefit_2": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "return",
                     "custom_icon": "shopify://shop_images/product-benefit-return.png",
                     "text": "<p>Easy returns</p>",
                     "page": "",
@@ -136,10 +136,10 @@
                   },
                   "blocks": {}
                 },
-               "benefit_3": {
-                 "type": "product-benefit-item",
-                 "settings": {
-                   "icon": "shield",
+                "benefit_3": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "shield",
                     "custom_icon": "shopify://shop_images/product-benefit-guarantee.png",
                     "text": "<p>Lifetime warranty</p>",
                     "page": "",
@@ -147,10 +147,10 @@
                   },
                   "blocks": {}
                 },
-               "benefit_4": {
-                 "type": "product-benefit-item",
-                 "settings": {
-                   "icon": "sparkles",
+                "benefit_4": {
+                  "type": "product-benefit-item",
+                  "settings": {
+                    "icon": "sparkles",
                     "custom_icon": "shopify://shop_images/product-benefit-clean.png",
                     "text": "<p>Responsibly made</p>",
                     "page": "",
@@ -311,8 +311,8 @@
           "settings": {
             "image": "shopify://shop_images/product-story-collage-main.jpg",
             "alt": "Hands arranging an Orlune jewelry piece in the atelier",
-            "focal_point": "center center",
-            "ratio": "2-3"
+            "ratio": "2-3",
+            "focal_point": "center center"
           },
           "blocks": {}
         },
@@ -322,8 +322,8 @@
           "settings": {
             "image": "shopify://shop_images/product-story-collage-detail.jpg",
             "alt": "Gold ring and fine chain on travertine and silk",
-            "focal_point": "center center",
-            "ratio": "3-2"
+            "ratio": "3-2",
+            "focal_point": "center center"
           },
           "blocks": {}
         },
@@ -333,8 +333,8 @@
           "settings": {
             "image": "shopify://shop_images/product-story-collage-portrait.jpg",
             "alt": "Model wearing an Orlune pendant necklace",
-            "focal_point": "center center",
-            "ratio": "4-5"
+            "ratio": "4-5",
+            "focal_point": "center center"
           },
           "blocks": {}
         },
@@ -371,7 +371,6 @@
           }
         }
       },
-      "block_order": [],
       "settings": {
         "layout": "story-collage",
         "media_position": "left",
@@ -506,13 +505,13 @@
         "collection-3": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/shoppable-video-look-earring-v2.jpg",
             "collection": "earrings",
             "title": "Earrings",
             "show_product_count": true,
             "subheading": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/shoppable-video-look-earring-v2.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 30
@@ -521,13 +520,13 @@
         "collection-4": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/image-stack-light-lifestyle-v2.jpg",
             "collection": "bracelets",
             "title": "Bracelets",
             "show_product_count": true,
             "subheading": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/image-stack-light-lifestyle-v2.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 30
@@ -536,13 +535,13 @@
         "collection-1": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/blog-story-light-pendant-v1.jpg",
             "collection": "necklaces",
             "title": "Necklaces",
             "show_product_count": true,
             "subheading": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/blog-story-light-pendant-v1.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 30
@@ -551,13 +550,13 @@
         "collection-2": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/product-atelier-v1.jpg",
             "collection": "rings",
             "title": "Rings",
             "show_product_count": true,
             "subheading": "",
             "button_label": "",
             "content_position": "bottom",
+            "image": "shopify://shop_images/product-atelier-v1.jpg",
             "focal_point": "center center",
             "color_scheme": "scheme-3",
             "overlay_opacity": 30

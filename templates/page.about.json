@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "about_intro": {
@@ -9,37 +18,127 @@
           "settings": {
             "image": "shopify://shop_images/page-about-intro-v1.jpg",
             "alt": "Jewellery collection",
-            "focal_point": "center"
-          }
+            "ratio": "adapt",
+            "focal_point": "center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
+        },
+        "portrait_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "alt": "",
+            "ratio": "adapt",
+            "focal_point": "center center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
         },
         "eyebrow": {
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>THE HOUSE OF ORLUNE</p>"
-          }
+            "text": "<p>THE HOUSE OF ORLUNE</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "heading": {
           "type": "heading",
           "static": true,
           "settings": {
             "heading": "<h1>Jewelry, made personal.</h1>",
-            "type_preset": "h1"
-          }
+            "type_preset": "h1",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "highlight_heading": {
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": ""
-          }
+            "heading": "",
+            "type_preset": "h2",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "text": {
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>Orlune creates jewelry with presence: sculptural forms, luminous stones and details that become more personal with wear.</p><p>Every piece begins with a quiet study of proportion, material and light—then is finished for the life it will share with you.</p>"
-          }
+            "text": "<p>Orlune creates jewelry with presence: sculptural forms, luminous stones and details that become more personal with wear.</p><p>Every piece begins with a quiet study of proportion, material and light—then is finished for the life it will share with you.</p>",
+            "type_preset": "md",
+            "font_size": 16,
+            "font_size_mobile": 14,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "button": {
           "type": "button",
@@ -47,17 +146,62 @@
           "settings": {
             "label": "Explore the collection",
             "link": "/collections/all",
-            "style": "tertiary"
-          }
+            "style": "tertiary",
+            "open_in_new_tab": false,
+            "icon": "none",
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
+        },
+        "detail_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "alt": "",
+            "ratio": "adapt",
+            "focal_point": "center center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
+        },
+        "location_label": {
+          "type": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>Label</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         }
       },
-      "block_order": [],
       "settings": {
+        "layout": "standard",
         "media_position": "left",
         "content_alignment": "left",
+        "content_overlay_on_media": false,
         "section_width": "page",
         "column_gap": 96,
+        "story_collage_height": 580,
         "color_scheme": "scheme-1",
+        "background_color": "",
         "padding_top": 48,
         "padding_bottom": 96
       }
@@ -68,14 +212,39 @@
         "quote": {
           "type": "testimonial",
           "settings": {
-            "icon": "shopify://shop_images/trust-icon-material-v1.png",
-            "icon_size": "small",
             "quote": "We believe the pieces you keep closest should ask to be noticed slowly—and reward a lifetime of looking.",
-            "quote_size": "h3",
             "author": "Orlune",
             "role": "Creative direction",
-            "attribution_size": "small"
-          }
+            "location": "",
+            "piece": "",
+            "product": "",
+            "button_label": "View the piece",
+            "button_link": ""
+          },
+          "blocks": {}
+        },
+        "label": {
+          "type": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>Testimonials</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -83,8 +252,18 @@
       ],
       "settings": {
         "section_width": "custom",
-        "container_width": 980,
+        "content_width": "medium",
+        "label_alignment": "center",
+        "content_width_custom": 760,
+        "item_gap": 16,
+        "heading_size": 52,
+        "content_padding": 88,
+        "author_size": 10,
+        "location_size": 9,
+        "button_size": 10,
+        "item_alignment": "center",
         "color_scheme": "scheme-2",
+        "background_color": "",
         "padding_top": 96,
         "padding_bottom": 96
       }
@@ -95,23 +274,63 @@
         "subheading": {
           "type": "label",
           "settings": {
-            "text": "<p>MATERIAL, CONSIDERED</p>"
-          }
+            "text": "<p>MATERIAL, CONSIDERED</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "heading": {
           "type": "heading",
           "settings": {
             "heading": "<h2>Made with intention.</h2>",
-            "type_preset": "h3"
-          }
+            "type_preset": "h3",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "button": {
           "type": "button",
           "settings": {
             "label": "Explore the collection",
             "link": "/collections/all",
-            "style": "secondary"
-          }
+            "style": "primary",
+            "open_in_new_tab": false,
+            "icon": "none",
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -122,9 +341,14 @@
       "settings": {
         "desktop_thumbnail": "shopify://shop_images/image-stack-atelier-hands-v2.jpg",
         "show_sound_control": true,
+        "desktop_video_url": "",
+        "mobile_video_url": "",
         "autoplay": true,
         "loop": true,
         "play_label": "Play sustainability video",
+        "close_label": "Close video",
+        "unmute_label": "Turn sound on",
+        "mute_label": "Turn sound off",
         "accessibility_label": "Jewellery craft process",
         "desktop_video_width": 100,
         "desktop_video_height": 560,
@@ -137,6 +361,7 @@
         "content_width": 680,
         "section_width": "full",
         "color_scheme": "scheme-3",
+        "background_color": "",
         "overlay_opacity": 30,
         "padding_top": 0,
         "padding_bottom": 0
@@ -151,46 +376,190 @@
           "settings": {
             "image": "shopify://shop_images/page-about-founder-v1.jpg",
             "alt": "Founder portrait",
-            "focal_point": "center"
-          }
+            "ratio": "adapt",
+            "focal_point": "center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
+        },
+        "portrait_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "alt": "",
+            "ratio": "adapt",
+            "focal_point": "center center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
         },
         "eyebrow": {
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>OUR POINT OF VIEW</p>"
-          }
+            "text": "<p>OUR POINT OF VIEW</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "heading": {
           "type": "heading",
           "static": true,
           "settings": {
             "heading": "<h2>Form follows feeling.</h2>",
-            "type_preset": "h3"
-          }
+            "type_preset": "h3",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "highlight_heading": {
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": ""
-          }
+            "heading": "",
+            "type_preset": "h2",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "text": {
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>We begin with the way a piece should feel: the weight against the skin, the turn of a setting, the flash of a stone in motion.</p><p><strong>ORLUNE / CREATIVE DIRECTION</strong></p>"
-          }
+            "text": "<p>We begin with the way a piece should feel: the weight against the skin, the turn of a setting, the flash of a stone in motion.</p><p><strong>ORLUNE / CREATIVE DIRECTION</strong></p>",
+            "type_preset": "md",
+            "font_size": 16,
+            "font_size_mobile": 14,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
+        },
+        "button": {
+          "type": "button",
+          "static": true,
+          "settings": {
+            "label": "Learn more",
+            "link": "",
+            "style": "primary",
+            "open_in_new_tab": false,
+            "icon": "none",
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
+        },
+        "detail_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "alt": "",
+            "ratio": "adapt",
+            "focal_point": "center center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
+        },
+        "location_label": {
+          "type": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>Label</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         }
       },
-      "block_order": [],
       "settings": {
+        "layout": "standard",
         "media_position": "right",
         "content_alignment": "left",
+        "content_overlay_on_media": false,
         "section_width": "page",
         "column_gap": 96,
+        "story_collage_height": 580,
         "color_scheme": "scheme-1",
+        "background_color": "",
         "padding_top": 96,
         "padding_bottom": 48
       }
@@ -204,37 +573,127 @@
           "settings": {
             "image": "shopify://shop_images/page-about-process-v1.jpg",
             "alt": "Jewellery craft detail",
-            "focal_point": "center"
-          }
+            "ratio": "adapt",
+            "focal_point": "center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
+        },
+        "portrait_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "alt": "",
+            "ratio": "adapt",
+            "focal_point": "center center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
         },
         "eyebrow": {
           "type": "label",
           "static": true,
           "settings": {
-            "text": "<p>THE PROCESS</p>"
-          }
+            "text": "<p>THE PROCESS</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "heading": {
           "type": "heading",
           "static": true,
           "settings": {
             "heading": "<h2>Character, held in form.</h2>",
-            "type_preset": "h3"
-          }
+            "type_preset": "h3",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "highlight_heading": {
           "type": "heading",
           "static": true,
           "settings": {
-            "heading": ""
-          }
+            "heading": "",
+            "type_preset": "h2",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "text": {
           "type": "text",
           "static": true,
           "settings": {
-            "text": "<p>From the first line to the final polish, we refine every element until the piece feels inevitable: expressive, enduring and unmistakably yours.</p>"
-          }
+            "text": "<p>From the first line to the final polish, we refine every element until the piece feels inevitable: expressive, enduring and unmistakably yours.</p>",
+            "type_preset": "md",
+            "font_size": 16,
+            "font_size_mobile": 14,
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         },
         "button": {
           "type": "button",
@@ -243,17 +702,61 @@
             "label": "Discover the house",
             "link": "/collections/all",
             "style": "tertiary",
-            "icon": "arrow-right"
-          }
+            "open_in_new_tab": false,
+            "icon": "arrow-right",
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
+        },
+        "detail_image": {
+          "type": "media",
+          "static": true,
+          "settings": {
+            "alt": "",
+            "ratio": "adapt",
+            "focal_point": "center center",
+            "enable_custom_width": false,
+            "image_width": 96,
+            "image_width_mobile": 72
+          },
+          "blocks": {}
+        },
+        "location_label": {
+          "type": "label",
+          "static": true,
+          "settings": {
+            "text": "<p>Label</p>",
+            "text_color": "",
+            "color": "text",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "enable_mobile_alignment": false,
+            "alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "reveal_type": "none",
+            "reveal_duration": 650,
+            "reveal_delay": 0
+          },
+          "blocks": {}
         }
       },
-      "block_order": [],
       "settings": {
+        "layout": "standard",
         "media_position": "left",
         "content_alignment": "left",
+        "content_overlay_on_media": false,
         "section_width": "page",
         "column_gap": 96,
+        "story_collage_height": 580,
         "color_scheme": "scheme-1",
+        "background_color": "",
         "padding_top": 48,
         "padding_bottom": 48
       }
@@ -265,13 +768,36 @@
           "type": "heading",
           "settings": {
             "heading": "<h2>Private notes from the house.</h2>",
-            "type_preset": "h3"
+            "type_preset": "h3",
+            "font_size": 50,
+            "font_size_mobile": 30,
+            "text_color": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>New collections, atelier stories and occasional invitations—delivered with restraint.</p>"
+            "text": "<p>New collections, atelier stories and occasional invitations—delivered with restraint.</p>",
+            "type_preset": "md",
+            "font_size": 16,
+            "font_size_mobile": 14,
+            "text_color": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "width_mobile": "fit-content",
+            "alignment": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           }
         },
         "form": {
@@ -283,6 +809,7 @@
             "show_required_marker": false,
             "button_label": "JOIN THE LIST",
             "button_style": "primary",
+            "icon": "none",
             "form_layout": "inline",
             "success_message": "Thank you. You are now on the list."
           }
