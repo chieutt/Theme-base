@@ -94,10 +94,10 @@
         <li class="header__menu-item{% if has_submenu %} header__menu-item--has-children{% endif %}{% if mega_menu_block != nil and has_submenu %} header__menu-item--mega{% endif %}">
           {% if has_submenu %}
             {% if is_mobile_navigation and link_has_destination %}
-              <a class="header__mobile-menu-direct-link{% if link.current or link.child_active %} header__menu-link--active{% endif %}" href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}><span class="{{ navigation_label_class }}">{{ link.title | escape }}</span></a>
+              <a class="header__mobile-menu-direct-link{% if link.current %} header__menu-link--active{% endif %}" href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}><span class="{{ navigation_label_class }}">{{ link.title | escape }}</span></a>
             {% endif %}
             <details class="header__submenu-disclosure{% unless link_has_destination %} header__submenu-disclosure--no-direct-link{% endunless %}{% if mega_menu_block != nil %} header__submenu-disclosure--mega{% endif %}{% if section.settings.dropdown_trigger == 'hover' %} header__submenu-disclosure--hover{% endif %}{% if section.settings.underline_active_link %} header__submenu-disclosure--underline-active{% endif %}">
-              <summary class="header__menu-link{% if link.current or link.child_active %} header__menu-link--active{% endif %}" data-open-label="{{ 'header.open_submenu' | t: item: link.title | escape }}" data-close-label="{{ 'header.close_submenu' | t: item: link.title | escape }}" aria-controls="{{ submenu_id }}">
+              <summary class="header__menu-link{% if link.current %} header__menu-link--active{% endif %}" data-open-label="{{ 'header.open_submenu' | t: item: link.title | escape }}" data-close-label="{{ 'header.close_submenu' | t: item: link.title | escape }}" aria-controls="{{ submenu_id }}">
                 <span class="header__menu-link-title hover-underline" title="{{ link.title | escape }}">{{ link.title | escape }}</span>
                 <span class="header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'chevron-down' %}</span>
               </summary>
