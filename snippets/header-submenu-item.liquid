@@ -1,0 +1,37 @@
+<li{% if child_link.links != blank %} class="header__submenu-item--has-children"{% endif %}>
+  {% if child_link.links != blank %}
+    {% assign nested_submenu_id = submenu_id | append: '-' | append: child_index %}
+    {% if is_mobile_navigation and child_link.url != blank and child_link.url != '#' %}
+      <a class="header__mobile-menu-direct-link{% if child_link.current or child_link.child_active %} header__menu-link--active{% endif %}" href="{{ child_link.url | escape }}"{% if child_link.current %} aria-current="page"{% endif %}><span class="{{ navigation_label_class }}">{{ child_link.title | escape }}</span></a>
+    {% endif %}
+    <details class="header__submenu-nested-disclosure">
+      <summary class="header__submenu-link header__mega-category-title{% if child_link.current or child_link.child_active %} header__submenu-link--active{% endif %}" aria-controls="{{ nested_submenu_id }}">
+        <span class="header__submenu-link-text">{{ child_link.title | escape }}</span>
+        <span class="header__submenu-caret header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'caret-right' %}</span>
+      </summary>
+      <ul id="{{ nested_submenu_id }}" class="header__submenu-nested" role="list">
+        {% if is_mobile_navigation %}
+          <li class="header__mobile-submenu-back-item">
+            <button class="header__mobile-submenu-back" type="button" aria-label="{{ 'header.back_to' | t: item: child_link.title | escape }}" data-header-mobile-back>
+              <span class="header__mobile-submenu-back-icon" aria-hidden="true">{% render 'icon', name: 'caret-right' %}</span>
+              <span class="{{ navigation_label_class }}">{{ child_link.title | escape }}</span>
+            </button>
+          </li>
+        {% endif %}
+        {% for grandchild_link in child_link.links %}
+          <li>
+            {% if grandchild_link.url != blank and grandchild_link.url != '#' %}
+              <a class="header__submenu-link{% if grandchild_link.current %} header__submenu-link--active{% endif %}" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text hover-underline">{{ grandchild_link.title | escape }}</span></a>
+            {% else %}
+              <span class="header__submenu-link"><span class="header__submenu-link-text hover-underline">{{ grandchild_link.title | escape }}</span></span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </details>
+  {% elsif child_link.url != blank and child_link.url != '#' %}
+    <a class="header__submenu-link{% if child_link.current %} header__submenu-link--active{% endif %}" href="{{ child_link.url | escape }}"{% if child_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text">{{ child_link.title | escape }}</span></a>
+  {% else %}
+    <span class="header__submenu-link"><span class="header__submenu-link-text">{{ child_link.title | escape }}</span></span>
+  {% endif %}
+</li>

@@ -2,16 +2,20 @@
 
 {% liquid
   assign has_button = false
+  assign has_live_countdown = false
 
   for block in section.blocks
     if block.type == 'button' and block.settings.label != blank and block.settings.link != blank
       assign has_button = true
-      break
+    endif
+    if block.type == 'countdown' and block.settings.end_at != blank
+      assign has_live_countdown = true
     endif
   endfor
 %}
 
 {% if section.blocks.size > 0 %}
+{% if has_live_countdown or request.design_mode %}
   {% style %}
     #shopify-section-{{ section.id }} {
       background-color: #090807;
@@ -75,20 +79,21 @@
 
               if block.settings.end_at != blank
                 assign countdown_is_configured = true
-              else
+              elsif request.design_mode
                 assign countdown_is_preview = true
               endif
             %}
-            <countdown-timer
-              class="countdown-timer__timer"
-              {% if countdown_is_configured %}
-                data-end-at="{{ block.settings.end_at | escape }}"
-                data-show-completion-message="{{ block.settings.show_completion_message }}"
-              {% elsif countdown_is_preview %}
-                data-countdown-preview
-              {% endif %}
-              {{ block.shopify_attributes }}
-            >
+            {% if countdown_is_configured or countdown_is_preview %}
+              <countdown-timer
+                class="countdown-timer__timer"
+                {% if countdown_is_configured %}
+                  data-end-at="{{ block.settings.end_at | escape }}"
+                  data-show-completion-message="{{ block.settings.show_completion_message }}"
+                {% elsif countdown_is_preview %}
+                  data-countdown-preview
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
                 <time
                   class="countdown-timer__units"
                   {% if countdown_is_configured %}datetime="{{ block.settings.end_at | escape }}"{% endif %}
@@ -115,7 +120,8 @@
                 <p class="countdown-timer__complete" data-countdown-complete hidden aria-live="polite">
                   {{ block.settings.completion_message | escape }}
                 </p>
-            </countdown-timer>
+              </countdown-timer>
+            {% endif %}
 
           {% when 'button' %}
             {% if block.settings.label != blank and block.settings.link != blank %}
@@ -127,6 +133,7 @@
       {% endfor %}
     </div>
   </div>
+{% endif %}
 {% endif %}
 
 

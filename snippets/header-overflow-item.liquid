@@ -1,0 +1,26 @@
+<li{% if overflow_link.links != blank %} class="header__submenu-item--has-children"{% endif %}>
+  {% if overflow_link.links != blank %}
+    {% assign overflow_nested_submenu_id = more_submenu_id | append: '-' | append: child_index %}
+    <details class="header__submenu-nested-disclosure">
+      <summary class="header__submenu-link header__mega-category-title{% if overflow_link.current or overflow_link.child_active %} header__submenu-link--active{% endif %}" aria-controls="{{ overflow_nested_submenu_id }}">
+        <span class="header__submenu-link-text hover-underline">{{ overflow_link.title | escape }}</span>
+        <span class="header__submenu-caret header__dropdown-icon header__dropdown-icon--chevron" aria-hidden="true">{% render 'icon', name: 'caret-right' %}</span>
+      </summary>
+      <ul id="{{ overflow_nested_submenu_id }}" class="header__submenu-nested" role="list">
+        {% for overflow_child in overflow_link.links %}
+          <li>
+            {% if overflow_child.url != blank and overflow_child.url != '#' %}
+              <a class="header__submenu-link{% if overflow_child.current or overflow_child.child_active %} header__submenu-link--active{% endif %}" href="{{ overflow_child.url | escape }}"{% if overflow_child.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text hover-underline">{{ overflow_child.title | escape }}</span></a>
+            {% else %}
+              <span class="header__submenu-link"><span class="header__submenu-link-text hover-underline">{{ overflow_child.title | escape }}</span></span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </details>
+  {% elsif overflow_link.url != blank and overflow_link.url != '#' %}
+    <a class="header__submenu-link{% if overflow_link.current %} header__submenu-link--active{% endif %}" href="{{ overflow_link.url | escape }}"{% if overflow_link.current %} aria-current="page"{% endif %}><span class="header__submenu-link-text hover-underline">{{ overflow_link.title | escape }}</span></a>
+  {% else %}
+    <span class="header__submenu-link"><span class="header__submenu-link-text hover-underline">{{ overflow_link.title | escape }}</span></span>
+  {% endif %}
+</li>

@@ -1,0 +1,6 @@
+extends: theme-check:recommended
+ignore:
+  - node_modules/**
+  - dist/**
+  - video-hero-banner/**
+  - __pycache__/**

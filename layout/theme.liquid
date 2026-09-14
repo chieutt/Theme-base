@@ -12,9 +12,6 @@
 <html
   class="no-js"
   lang="{{ request.locale.iso_code }}"
-  data-desktop-smooth-scroll="all"
-  data-desktop-smooth-scroll-speed="0.9"
-  data-desktop-smooth-scroll-lerp="0.08"
 >
   <head>
     <script>
@@ -224,7 +221,6 @@
     ></script>
     <script src="{{ 'section-color-scheme.js' | asset_url }}" defer></script>
     <script src="{{ 'scroll-lock.js' | asset_url }}" defer></script>
-    <script type="module" src="{{ 'smooth-scroll.js' | asset_url }}"></script>
     {% if page_transition_enabled %}
       <script src="{{ 'page-transition.js' | asset_url }}" defer></script>
     {% endif %}
