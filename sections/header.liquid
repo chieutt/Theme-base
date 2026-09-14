@@ -15,6 +15,8 @@
   assign logo_block_type = 'image'
   assign logo_block_image = blank
   assign logo_block_mobile_image = blank
+  assign logo_block_transparent_image = blank
+  assign logo_block_transparent_mobile_image = blank
   assign logo_block_text = blank
   assign logo_alignment = 'center'
   assign render_logo = false
@@ -24,6 +26,8 @@
     assign logo_block_type = logo_block.settings.logo_type | default: 'image'
     assign logo_block_image = logo_block.settings.image
     assign logo_block_mobile_image = logo_block.settings.mobile_image
+    assign logo_block_transparent_image = logo_block.settings.transparent_image
+    assign logo_block_transparent_mobile_image = logo_block.settings.transparent_mobile_image
     assign logo_block_text = logo_block.settings.logo_text
     assign logo_alignment = logo_block.settings.alignment | default: 'center'
     assign logo_width_desktop = logo_block.settings.width_desktop | default: 170
@@ -49,10 +53,10 @@
     assign logo_image_transparent_mobile = blank
     assign logo_text = logo_block_text | default: shop.name
   else
-    assign logo_image = logo_block_image | default: settings.logo | default: settings.logo_mobile
+    assign logo_image = logo_block_image | default: settings.logo | default: settings.logo_mobile | default: logo_block_mobile_image | default: logo_block_transparent_image | default: logo_block_transparent_mobile_image
     assign logo_image_mobile = logo_block_mobile_image | default: settings.logo_mobile | default: logo_image
-    assign logo_image_transparent = logo_image
-    assign logo_image_transparent_mobile = logo_image_mobile
+    assign logo_image_transparent = logo_block_transparent_image | default: logo_image
+    assign logo_image_transparent_mobile = logo_block_transparent_mobile_image | default: logo_block_transparent_image | default: logo_image_mobile
     assign logo_text = shop.name
   endif
 
@@ -612,21 +616,40 @@
         },
         {
           "type": "header",
-          "content": "Image logo",
+          "content": "Default logo",
           "visible_if": "{{ block.settings.logo_type == 'image' }}"
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image",
-          "info": "Shown in the Header on desktop. Used on mobile when no mobile image is selected.",
+          "label": "Desktop image",
+          "info": "Shown on desktop when the header has a background. Used on mobile when no mobile image is selected.",
           "visible_if": "{{ block.settings.logo_type == 'image' }}"
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Image mobile",
-          "info": "Optional. Shown in the Header on mobile and falls back to Image when empty.",
+          "label": "Mobile image",
+          "info": "Optional. Falls back to the desktop image when empty.",
+          "visible_if": "{{ block.settings.logo_type == 'image' }}"
+        },
+        {
+          "type": "header",
+          "content": "Transparent header logo",
+          "visible_if": "{{ block.settings.logo_type == 'image' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "transparent_image",
+          "label": "Desktop image",
+          "info": "Optional. Shown while the homepage header is transparent. Falls back to the default logo when empty.",
+          "visible_if": "{{ block.settings.logo_type == 'image' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "transparent_mobile_image",
+          "label": "Mobile image",
+          "info": "Optional. Falls back to the transparent desktop image, then the default mobile image.",
           "visible_if": "{{ block.settings.logo_type == 'image' }}"
         },
         {

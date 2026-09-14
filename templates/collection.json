@@ -15,6 +15,7 @@
         "collection_card_Bem9Hi": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-puzzle.jpg",
             "collection": "puzzle-collection",
             "title": "Puzzle Collection",
             "show_product_count": true,
@@ -29,6 +30,7 @@
         "collection_card_cmVa8G": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-dome.jpg",
             "collection": "dome-collection",
             "title": "Dôme Collection",
             "show_product_count": true,
@@ -43,6 +45,7 @@
         "collection_card_TXYgm4": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-personal.jpg",
             "collection": "charlotte-collection",
             "title": "Charlotte Collection",
             "show_product_count": true,
@@ -57,6 +60,7 @@
         "collection_card_hFAJVc": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-veil.jpg",
             "collection": "stevie-collection",
             "title": "Stevie Collection",
             "show_product_count": true,
@@ -124,6 +128,7 @@
         "promotion": {
           "type": "promotion",
           "settings": {
+            "image": "shopify://shop_images/collection-split-nocturne.jpg",
             "subheading": "THE ORLUNE EDIT",
             "heading": "Pieces to return to.",
             "heading_size": "h3",

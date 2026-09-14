@@ -7,7 +7,7 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "shopify://shop_images/about1.jpg",
+            "image": "shopify://shop_images/page-about-intro-v1.jpg",
             "alt": "Jewellery collection",
             "focal_point": "center"
           }
@@ -68,7 +68,7 @@
         "quote": {
           "type": "testimonial",
           "settings": {
-            "icon": "shopify://shop_images/about-icon1.png",
+            "icon": "shopify://shop_images/trust-icon-material-v1.png",
             "icon_size": "small",
             "quote": "We believe the pieces you keep closest should ask to be noticed slowly—and reward a lifetime of looking.",
             "quote_size": "h3",
@@ -120,6 +120,7 @@
         "button"
       ],
       "settings": {
+        "desktop_thumbnail": "shopify://shop_images/image-stack-atelier-hands-v2.jpg",
         "show_sound_control": true,
         "autoplay": true,
         "loop": true,
@@ -148,7 +149,7 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "shopify://shop_images/about3.jpg",
+            "image": "shopify://shop_images/page-about-founder-v1.jpg",
             "alt": "Founder portrait",
             "focal_point": "center"
           }
@@ -201,7 +202,7 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "shopify://shop_images/about4.jpg",
+            "image": "shopify://shop_images/page-about-process-v1.jpg",
             "alt": "Jewellery craft detail",
             "focal_point": "center"
           }
@@ -304,7 +305,7 @@
         "container_padding_mobile": 24,
         "block_gap": 20,
         "show_password_message": true,
-        "image": "",
+        "image": "shopify://shop_images/page-about-newsletter-v1.jpg",
         "overlay_opacity": 30,
         "height_mode": "fixed",
         "height_percent": 95,

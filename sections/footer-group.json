@@ -17,6 +17,7 @@
         "delivery": {
           "type": "item",
           "settings": {
+            "icon": "shopify://shop_images/trust-icon-delivery-v1.png",
             "heading": "Delivery, clearly stated",
             "title": "",
             "anchor_id": "",
@@ -26,6 +27,7 @@
         "returns": {
           "type": "item",
           "settings": {
+            "icon": "shopify://shop_images/trust-icon-returns-v1.png",
             "heading": "Returns, without surprises",
             "title": "",
             "anchor_id": "",
@@ -35,6 +37,7 @@
         "care": {
           "type": "item",
           "settings": {
+            "icon": "shopify://shop_images/trust-icon-care-v1.png",
             "heading": "Care after purchase",
             "title": "",
             "anchor_id": "",
@@ -44,6 +47,7 @@
         "materials": {
           "type": "item",
           "settings": {
+            "icon": "shopify://shop_images/trust-icon-material-v1.png",
             "heading": "Material transparency",
             "title": "",
             "anchor_id": "",
@@ -399,6 +403,7 @@
           "type": "_footer-signature",
           "static": true,
           "settings": {
+            "mark_image": "shopify://shop_images/footer-house-mark.png",
             "image_opacity": 100,
             "show_image_mobile": true
           },

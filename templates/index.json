@@ -15,6 +15,8 @@
         "homepage_slide_signature": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/editorial-slideshow-signature.png",
+            "mobile_image": "shopify://shop_images/editorial-slideshow-signature-mobile.png",
             "image_alt": "Gold necklace resting on a collarbone",
             "image_position": "center center",
             "content_width": 520,
@@ -113,6 +115,8 @@
         "homepage_slide_radiance": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/editorial-slideshow-radiance.png",
+            "mobile_image": "shopify://shop_images/editorial-slideshow-radiance-mobile.png",
             "image_alt": "Sculptural gold earring in warm light",
             "image_position": "center center",
             "content_width": 520,
@@ -211,6 +215,8 @@
         "homepage_slide_evening": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/editorial-slideshow-evening.png",
+            "mobile_image": "shopify://shop_images/editorial-slideshow-evening-mobile.png",
             "image_alt": "Gold ring on a hand against velvet",
             "image_position": "center center",
             "content_width": 520,
@@ -334,6 +340,7 @@
         "highlight_inline_image_1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/highlight-mark-the-moment.jpg",
             "alt": "Gold pendant arranged on an ivory keepsake card",
             "link": "",
             "link_label": "",
@@ -347,6 +354,7 @@
         "highlight_inline_image_2": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/highlight-private-memories.jpg",
             "alt": "Gold jewelry preserved in an oxblood velvet keepsake box",
             "link": "",
             "link_label": "",
@@ -360,6 +368,7 @@
         "highlight_inline_image_3": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/highlight-your-own-story.jpg",
             "alt": "Gold signet ring resting on a linen journal",
             "link": "",
             "link_label": "",
@@ -761,6 +770,7 @@
       ],
       "name": "Video banner",
       "settings": {
+        "desktop_thumbnail": "shopify://shop_images/video-banner-luxury-poster-v2.jpg",
         "show_sound_control": true,
         "desktop_video_url": "",
         "mobile_video_url": "",
@@ -876,6 +886,7 @@
         "collection_card_MRtGJh": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-nocturne.jpg",
             "collection": "best-sellers",
             "title": "The Nocturne",
             "show_product_count": true,
@@ -891,6 +902,7 @@
         "collection_card_afEExX": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-dome.jpg",
             "collection": "dome-collection",
             "title": "The Dome",
             "show_product_count": true,
@@ -906,6 +918,7 @@
         "collection_card_BNJVQg": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-personal.jpg",
             "collection": "personalized",
             "title": "The Personal",
             "show_product_count": true,
@@ -921,6 +934,7 @@
         "collection_card_bAxcfh": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-puzzle.jpg",
             "collection": "puzzle-collection",
             "title": "The Puzzle",
             "show_product_count": true,
@@ -936,6 +950,7 @@
         "collection_card_RzMLqB": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/collection-split-veil.jpg",
             "collection": "stevie-collection",
             "title": "The Veil",
             "show_product_count": true,
@@ -1700,6 +1715,7 @@
           "type": "image-stack-scene",
           "name": "Image stack scene",
           "settings": {
+            "image": "shopify://shop_images/image-stack-light-lifestyle-v2.jpg",
             "background_alt": "",
             "alt": "",
             "image_ratio": "4-5",
@@ -1807,6 +1823,7 @@
         "image_stack_scene_one": {
           "type": "image-stack-scene",
           "settings": {
+            "image": "shopify://shop_images/image-stack-nocturne.jpg",
             "background_alt": "",
             "alt": "",
             "image_ratio": "4-5",
@@ -1914,6 +1931,7 @@
         "image_stack_scene_two": {
           "type": "image-stack-scene",
           "settings": {
+            "image": "shopify://shop_images/image-stack-atelier-hands-v2.jpg",
             "background_alt": "",
             "alt": "",
             "image_ratio": "4-5",
@@ -2033,6 +2051,7 @@
         "color_scheme": "scheme-4",
         "background_color": "",
         "use_custom_background_image": true,
+        "background_image": "shopify://shop_images/image-stack-background-v2.jpg",
         "accessibility_label": "Image stack",
         "padding_top": 80,
         "padding_bottom": 80
@@ -2664,6 +2683,7 @@
         "bundle_adding_label": "Adding to cart",
         "bundle_added_label": "Added to cart",
         "bundle_error_label": "This gift edit could not be added. Please try again.",
+        "image": "shopify://shop_images/gift-finder-editorial-v2.jpg",
         "image_position": "left",
         "enable_intro_card": true,
         "image_overlay_color": "#f3f1ee",
@@ -2681,6 +2701,7 @@
         "video_one": {
           "type": "shoppable-video",
           "settings": {
+            "poster": "shopify://shop_images/shoppable-video-look-model-v2.jpg",
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
@@ -2697,6 +2718,7 @@
         "video_two": {
           "type": "shoppable-video",
           "settings": {
+            "poster": "shopify://shop_images/shoppable-video-look-garnet-v2.jpg",
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
@@ -2714,6 +2736,7 @@
         "video_three": {
           "type": "shoppable-video",
           "settings": {
+            "poster": "shopify://shop_images/shoppable-video-look-bracelet-v2.jpg",
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
@@ -2731,6 +2754,7 @@
         "video_four": {
           "type": "shoppable-video",
           "settings": {
+            "poster": "shopify://shop_images/shoppable-video-look-earring-v2.jpg",
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
@@ -2747,6 +2771,7 @@
         "video_five": {
           "type": "shoppable-video",
           "settings": {
+            "poster": "shopify://shop_images/shoppable-video-look-atelier-v2.jpg",
             "video_alt": "",
             "play_label": "Play video",
             "pause_label": "Pause video",
@@ -2929,6 +2954,7 @@
       ],
       "name": "Countdown timer",
       "settings": {
+        "background_image": "shopify://shop_images/editorial-slideshow-evening.png",
         "section_width": "full",
         "column_gap": 64,
         "mobile_alignment": "center",
@@ -3070,11 +3096,12 @@
                 "icon_size": "small"
               },
               "blocks": {
-                "product_benefit_item_FkrgfQ": {
-                  "type": "product-benefit-item",
-                  "name": "Benefit item",
-                  "settings": {
-                    "icon": "truck",
+               "product_benefit_item_FkrgfQ": {
+                 "type": "product-benefit-item",
+                 "name": "Benefit item",
+                 "settings": {
+                   "icon": "truck",
+                    "custom_icon": "shopify://shop_images/product-benefit-shipped.png",
                     "text": "<p>Shipping at checkout</p>",
                     "page": "",
                     "show_page_popup": false,
@@ -3082,10 +3109,11 @@
                   },
                   "blocks": {}
                 },
-                "product_benefit_item_6PeqhH": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "return",
+               "product_benefit_item_6PeqhH": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "return",
+                    "custom_icon": "shopify://shop_images/product-benefit-return.png",
                     "text": "<p>Easy returns</p>",
                     "page": "",
                     "show_page_popup": false,
@@ -3093,10 +3121,11 @@
                   },
                   "blocks": {}
                 },
-                "product_benefit_item_WTPAaj": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "shield",
+               "product_benefit_item_WTPAaj": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "shield",
+                    "custom_icon": "shopify://shop_images/product-benefit-guarantee.png",
                     "text": "<p>Lifetime warranty</p>",
                     "page": "",
                     "show_page_popup": false,
@@ -3104,10 +3133,11 @@
                   },
                   "blocks": {}
                 },
-                "product_benefit_item_BmCt3q": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "sparkles",
+               "product_benefit_item_BmCt3q": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "sparkles",
+                    "custom_icon": "shopify://shop_images/product-benefit-clean.png",
                     "text": "<p>Responsibly made</p>",
                     "page": "",
                     "show_page_popup": false,
@@ -3253,6 +3283,8 @@
       ],
       "name": "Shop the look",
       "settings": {
+        "image": "shopify://shop_images/shop-the-look-nocturne-desktop-v2.png",
+        "mobile_image": "shopify://shop_images/shop-the-look-nocturne-mobile-v2.png",
         "section_width": "full",
         "media_position": "left",
         "product_image_size": 320,
@@ -3513,6 +3545,7 @@
         "instagram_image_1": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-pendant-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3523,6 +3556,7 @@
         "instagram_image_2": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-hoops-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3533,6 +3567,7 @@
         "instagram_image_3": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-signet-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3543,6 +3578,7 @@
         "instagram_image_4": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-terracotta-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3553,6 +3589,7 @@
         "instagram_image_5": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-garden-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3563,6 +3600,7 @@
         "instagram_image_6": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-pearl-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3573,6 +3611,7 @@
         "instagram_image_7": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-green-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,
@@ -3583,6 +3622,7 @@
         "instagram_image_8": {
           "type": "instagram-gallery-image",
           "settings": {
+            "image": "shopify://shop_images/gallery-face-studio-v2.jpg",
             "alt": "",
             "link": "",
             "open_in_new_tab": true,

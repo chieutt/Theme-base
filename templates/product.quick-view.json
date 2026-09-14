@@ -89,40 +89,44 @@
                 "icon_size": "small"
               },
               "blocks": {
-                "benefit_1": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "truck",
+               "benefit_1": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "truck",
+                    "custom_icon": "shopify://shop_images/product-benefit-shipped.png",
                     "text": "<p>Shipping options and pricing are calculated at checkout.</p>",
                     "page": "",
                     "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "benefit_2": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "return",
+               "benefit_2": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "return",
+                    "custom_icon": "shopify://shop_images/product-benefit-return.png",
                     "text": "<p>See our returns policy for eligibility and details.</p>",
                     "page": "",
                     "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "benefit_3": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "shield",
+               "benefit_3": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "shield",
+                    "custom_icon": "shopify://shop_images/product-benefit-guarantee.png",
                     "text": "<p>Lifetime Warranty</p>",
                     "page": "",
                     "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "benefit_4": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "sparkles",
+               "benefit_4": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "sparkles",
+                    "custom_icon": "shopify://shop_images/product-benefit-clean.png",
                     "text": "<p>Sustainably Made</p>",
                     "page": "",
                     "show_page_popup": false

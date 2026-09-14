@@ -114,40 +114,44 @@
                 "icon_size": "small"
               },
               "blocks": {
-                "benefit_1": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "truck",
+               "benefit_1": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "truck",
+                    "custom_icon": "shopify://shop_images/product-benefit-shipped.png",
                     "text": "<p>Shipping at checkout</p>",
                     "page": "",
                     "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "benefit_2": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "return",
+               "benefit_2": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "return",
+                    "custom_icon": "shopify://shop_images/product-benefit-return.png",
                     "text": "<p>Easy returns</p>",
                     "page": "",
                     "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "benefit_3": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "shield",
+               "benefit_3": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "shield",
+                    "custom_icon": "shopify://shop_images/product-benefit-guarantee.png",
                     "text": "<p>Lifetime warranty</p>",
                     "page": "",
                     "show_page_popup": false
                   },
                   "blocks": {}
                 },
-                "benefit_4": {
-                  "type": "product-benefit-item",
-                  "settings": {
-                    "icon": "sparkles",
+               "benefit_4": {
+                 "type": "product-benefit-item",
+                 "settings": {
+                   "icon": "sparkles",
+                    "custom_icon": "shopify://shop_images/product-benefit-clean.png",
                     "text": "<p>Responsibly made</p>",
                     "page": "",
                     "show_page_popup": false
@@ -305,7 +309,7 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/product-story-collage-main.jpg",
             "alt": "Hands arranging an Orlune jewelry piece in the atelier",
             "focal_point": "center center",
             "ratio": "2-3"
@@ -316,7 +320,7 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/product-story-collage-detail.jpg",
             "alt": "Gold ring and fine chain on travertine and silk",
             "focal_point": "center center",
             "ratio": "3-2"
@@ -327,7 +331,7 @@
           "type": "media",
           "static": true,
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/product-story-collage-portrait.jpg",
             "alt": "Model wearing an Orlune pendant necklace",
             "focal_point": "center center",
             "ratio": "4-5"
@@ -502,6 +506,7 @@
         "collection-3": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/shoppable-video-look-earring-v2.jpg",
             "collection": "earrings",
             "title": "Earrings",
             "show_product_count": true,
@@ -516,6 +521,7 @@
         "collection-4": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/image-stack-light-lifestyle-v2.jpg",
             "collection": "bracelets",
             "title": "Bracelets",
             "show_product_count": true,
@@ -530,6 +536,7 @@
         "collection-1": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/blog-story-light-pendant-v1.jpg",
             "collection": "necklaces",
             "title": "Necklaces",
             "show_product_count": true,
@@ -544,6 +551,7 @@
         "collection-2": {
           "type": "collection_card",
           "settings": {
+            "image": "shopify://shop_images/product-atelier-v1.jpg",
             "collection": "rings",
             "title": "Rings",
             "show_product_count": true,

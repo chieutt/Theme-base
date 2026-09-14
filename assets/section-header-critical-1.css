@@ -2653,3 +2653,14 @@ shopify-account.header__action--account::part(signed-out-avatar) {
     transform: none;
   }
 }
+
+@media (min-width: 1024px) and (max-width: 1399.98px) {
+  .header--logo-center .header__navigation--desktop .header__menu {
+    flex-wrap: nowrap;
+    column-gap: 10px;
+  }
+
+  .header--logo-center .header__navigation--desktop .header__menu-link {
+    font-size: 12px;
+  }
+}

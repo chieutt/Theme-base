@@ -15,7 +15,7 @@
         "media_hinwXk": {
           "type": "media",
           "settings": {
-            "image": "shopify://shop_images/image_11zon_1.webp",
+            "image": "shopify://shop_images/page-faq-hero-v1.jpg",
             "alt_text": "",
             "focal_point": "center center"
           }
@@ -47,7 +47,7 @@
         "height_tablet": 360,
         "height_mobile": 320,
         "overlay_color": "#181818",
-        "overlay_opacity": 0,
+        "overlay_opacity": 55,
         "color_scheme": "scheme-3"
       }
     },
@@ -57,7 +57,7 @@
         "category_orders": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/faq-icon1.png",
+            "icon": "shopify://shop_images/trust-icon-delivery-v1.png",
             "heading": "Ordering & delivery",
             "title": "Before your piece arrives",
             "anchor_id": "orders",
@@ -67,7 +67,7 @@
         "category_returns": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/faq-icon2.png",
+            "icon": "shopify://shop_images/trust-icon-returns-v1.png",
             "heading": "Returns & exchanges",
             "title": "A considered next step",
             "anchor_id": "",
@@ -77,7 +77,7 @@
         "category_products": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/faq-icon3.png",
+            "icon": "shopify://shop_images/trust-icon-care-v1.png",
             "heading": "Care & materials",
             "title": "For the years ahead",
             "anchor_id": "",
@@ -87,7 +87,7 @@
         "category_gifts": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/faq-icon4.png",
+            "icon": "shopify://shop_images/product-benefit-guarantee.png",
             "heading": "Gifting & service",
             "title": "A more personal gesture",
             "anchor_id": "",
