@@ -60,6 +60,9 @@
     assign logo_text = shop.name
   endif
 
+  assign logo_image_alt = logo_image.alt | default: shop.name
+  assign logo_image_transparent_alt = logo_image_transparent.alt | default: shop.name
+
   assign logo_text_size_desktop = logo_width_desktop | times: 16.0 | divided_by: 170.0 | round: 2
   assign logo_text_size_mobile = logo_width_mobile | times: 14.0 | divided_by: 120.0 | round: 2
   assign navigation_menu = section.settings.menu
@@ -290,11 +293,11 @@
             {% if logo_image != blank %}
               <picture class="header__logo-image header__logo-image--dark">
                 {% if logo_image_mobile != blank %}<source media="(max-width: 1023.98px)" srcset="{{ logo_image_mobile | image_url: width: 360 }}">{% endif %}
-                {{ logo_image | image_url: width: 600 | image_tag: widths: '120, 180, 240, 360, 480, 600', sizes: '(max-width: 1023.98px) var(--header-logo-width-mobile), var(--header-logo-width)', alt: logo_image.alt | default: shop.name, loading: default_logo_loading }}
+                {{ logo_image | image_url: width: 600 | image_tag: widths: '120, 180, 240, 360, 480, 600', sizes: '(max-width: 1023.98px) var(--header-logo-width-mobile), var(--header-logo-width)', alt: logo_image_alt, loading: default_logo_loading }}
               </picture>
               <picture class="header__logo-image header__logo-image--light">
                 {% if logo_image_transparent_mobile != blank %}<source media="(max-width: 1023.98px)" srcset="{{ logo_image_transparent_mobile | image_url: width: 360 }}">{% endif %}
-                {{ logo_image_transparent | image_url: width: 600 | image_tag: widths: '120, 180, 240, 360, 480, 600', sizes: '(max-width: 1023.98px) var(--header-logo-width-mobile), var(--header-logo-width)', alt: logo_image_transparent.alt | default: shop.name, loading: transparent_logo_loading }}
+                {{ logo_image_transparent | image_url: width: 600 | image_tag: widths: '120, 180, 240, 360, 480, 600', sizes: '(max-width: 1023.98px) var(--header-logo-width-mobile), var(--header-logo-width)', alt: logo_image_transparent_alt, loading: transparent_logo_loading }}
               </picture>
             {% else %}
               <span class="header__logo-text">{{ logo_text | escape }}</span>

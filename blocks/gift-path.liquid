@@ -73,11 +73,12 @@
       <ul class="gift-spinel__products" role="list" data-reveal-group>
         {% for product in path_products limit: 4 %}
           {% assign product_variant = product.selected_or_first_available_variant %}
+          {% assign product_image_alt = product.featured_image.alt | default: product.title %}
           <li class="gift-spinel__product" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
             <article class="gift-spinel__product-row">
               <a class="gift-spinel__product-media" href="{{ product.url | escape }}" aria-label="{{ product.title | escape }}">
                 {% if product.featured_image %}
-                  {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', sizes: '72px', alt: product.featured_image.alt | default: product.title | escape }}
+                  {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', sizes: '72px', alt: product_image_alt }}
                 {% else %}
                   {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'gift-spinel__product-placeholder' }}
                 {% endif %}

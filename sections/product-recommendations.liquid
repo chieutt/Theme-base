@@ -6,10 +6,11 @@
     <ul role="list" data-reveal-group>
       {% for recommendation in recommendations.products limit: 5 %}
         {% assign recommendation_variant = recommendation.selected_or_first_available_variant %}
+        {% assign recommendation_image_alt = recommendation.featured_image.alt | default: recommendation.title %}
         <li class="product-recommendations__item" data-reveal-item style="--reveal-order: {{ forloop.index0 }};">
           <a class="product-recommendations__image" href="{{ recommendation.url | escape }}" aria-label="{{ recommendation.title | escape }}">
             {% if recommendation.featured_image %}
-              {{ recommendation.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '96px', alt: recommendation.featured_image.alt | default: recommendation.title | escape }}
+              {{ recommendation.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '96px', alt: recommendation_image_alt }}
             {% endif %}
           </a>
           <div class="product-recommendations__details">
