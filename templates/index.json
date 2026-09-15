@@ -2677,7 +2677,6 @@
         "section_width": "full",
         "layout_ratio": "balanced",
         "choice_style": "outline",
-        "sticky_on_scroll": true,
         "bundle_name": "Gift finder edit",
         "bundle_add_label": "Add all to cart",
         "bundle_adding_label": "Adding to cart",

@@ -28,15 +28,9 @@ class GiftSpinel extends HTMLElement {
       this.onClick = this.handleClick.bind(this);
       this.onBlockSelect = this.handleBlockSelect.bind(this);
       this.onSectionLoad = this.handleSectionLoad.bind(this);
-      this.onWindowScroll = this.handleWindowScroll.bind(this);
-      this.onWindowResize = this.handleWindowResize.bind(this);
-      this.onProductsLoaded = this.handleProductsLoaded.bind(this);
       this.addEventListener('click', this.onClick);
       document.addEventListener('shopify:block:select', this.onBlockSelect);
       document.addEventListener('shopify:section:load', this.onSectionLoad);
-      window.addEventListener('scroll', this.onWindowScroll, { passive: true });
-      window.addEventListener('resize', this.onWindowResize);
-      this.addEventListener('gift-spinel:products-loaded', this.onProductsLoaded);
       giftSpinelInstances.add(this);
       if (giftSpinelInstances.size === 1) document.addEventListener('click', handleGiftSpinelDocumentClick);
       this.editorObserver = new MutationObserver((records) => {
@@ -52,14 +46,10 @@ class GiftSpinel extends HTMLElement {
   }
 
   disconnectedCallback() {
-    this.clearStickyResultScrollState();
     this.restoreActiveResultSource();
     this.removeEventListener('click', this.onClick);
     document.removeEventListener('shopify:block:select', this.onBlockSelect);
     document.removeEventListener('shopify:section:load', this.onSectionLoad);
-    window.removeEventListener('scroll', this.onWindowScroll);
-    window.removeEventListener('resize', this.onWindowResize);
-    this.removeEventListener('gift-spinel:products-loaded', this.onProductsLoaded);
     giftSpinelInstances.delete(this);
     if (giftSpinelInstances.size === 0) document.removeEventListener('click', handleGiftSpinelDocumentClick);
     this.editorObserver?.disconnect();
@@ -69,9 +59,6 @@ class GiftSpinel extends HTMLElement {
     window.cancelAnimationFrame(this.initializeFrame);
     window.cancelAnimationFrame(this.anchorScrollFrame);
     window.cancelAnimationFrame(this.scrollAnchorReleaseFrame);
-    window.cancelAnimationFrame(this.stickyResultScrollFrame);
-    this.stickyResultResizeObserver?.disconnect();
-    this.stickyResultResizeObserver = null;
     giftSpinelLayoutOwners.delete(this);
     syncGiftSpinelLayoutState();
     this.isBound = false;
@@ -108,7 +95,6 @@ class GiftSpinel extends HTMLElement {
 
   initialize() {
     this.cancelPanelTransition();
-    this.clearStickyResultScrollState();
     this.restoreActiveResultSource();
     this.finder = this.querySelector('.gift-spinel__finder');
     this.intro = this.querySelector('.gift-spinel__intro');
@@ -141,97 +127,6 @@ class GiftSpinel extends HTMLElement {
 
   waitForLayoutFrame() {
     return new Promise((resolve) => window.requestAnimationFrame(resolve));
-  }
-
-  handleWindowScroll() {
-    if (!this.classList.contains('gift-spinel--sticky') || !this.hasActiveGiftResult()) return;
-    this.scheduleStickyResultScroll();
-  }
-
-  handleWindowResize() {
-    if (!this.hasActiveGiftResult()) return;
-    this.scheduleStickyResultScroll();
-  }
-
-  handleProductsLoaded() {
-    this.scheduleStickyResultScroll();
-  }
-
-  hasActiveGiftResult() {
-    return Boolean(this.result?.querySelector('.gift-spinel__path.is-active-path'));
-  }
-
-  clearStickyResultScrollState() {
-    window.cancelAnimationFrame(this.stickyResultScrollFrame);
-    this.stickyResultScrollFrame = null;
-    this.stickyResultResizeObserver?.disconnect();
-    this.stickyResultResizeObserver = null;
-    this.stickyResultScrollStart = undefined;
-    this.finder?.classList.remove('is-result-scrollable');
-    this.finder?.style.removeProperty('--gift-spinel-result-scroll-progress');
-    if (this.finder) this.finder.scrollTop = 0;
-  }
-
-  scheduleStickyResultScroll() {
-    if (this.stickyResultScrollFrame) return;
-    this.stickyResultScrollFrame = window.requestAnimationFrame(() => {
-      this.stickyResultScrollFrame = null;
-      this.syncStickyResultScroll();
-    });
-  }
-
-  getStickyResultScrollStart() {
-    const spacing = this.querySelector('.gift-spinel__spacing');
-    const rootTop = this.getBoundingClientRect().top + window.scrollY;
-    const stickyHeight = spacing?.getBoundingClientRect().height || 0;
-    const scrollEnd = rootTop + Math.max(0, this.offsetHeight - stickyHeight);
-    return Math.min(Math.max(window.scrollY, rootTop), scrollEnd);
-  }
-
-  observeStickyResultContent(content) {
-    this.stickyResultResizeObserver?.disconnect();
-    this.stickyResultResizeObserver = null;
-    if (!content || typeof ResizeObserver === 'undefined') return;
-
-    this.stickyResultResizeObserver = new ResizeObserver(() => this.scheduleStickyResultScroll());
-    this.stickyResultResizeObserver.observe(content);
-  }
-
-  syncStickyResultScroll() {
-    const finder = this.finder;
-    const activePath = this.result?.querySelector('.gift-spinel__path.is-active-path');
-    if (!finder || !activePath || !this.classList.contains('gift-spinel--sticky') || this.isPanelTransitioning) return;
-
-    if (!window.matchMedia('(min-width: 768px)').matches) {
-      finder.classList.remove('is-result-scrollable');
-      finder.style.removeProperty('--gift-spinel-result-scroll-progress');
-      return;
-    }
-
-    const spacing = this.querySelector('.gift-spinel__spacing');
-    if (!spacing) return;
-
-    const maxScroll = Math.max(0, finder.scrollHeight - finder.clientHeight);
-    finder.classList.toggle('is-result-scrollable', maxScroll > 1);
-    if (maxScroll <= 1) {
-      finder.scrollTop = 0;
-      finder.style.setProperty('--gift-spinel-result-scroll-progress', '0');
-      return;
-    }
-
-    const rootTop = this.getBoundingClientRect().top + window.scrollY;
-    const stickyHeight = spacing.getBoundingClientRect().height;
-    const scrollEnd = rootTop + Math.max(1, this.offsetHeight - stickyHeight);
-    const scrollStart = Math.min(
-      Number.isFinite(this.stickyResultScrollStart) ? this.stickyResultScrollStart : rootTop,
-      scrollEnd,
-    );
-    const scrollDistance = Math.max(1, scrollEnd - scrollStart);
-    const progress = Math.min(1, Math.max(0, (window.scrollY - scrollStart) / scrollDistance));
-    const targetScrollTop = maxScroll * progress;
-
-    if (Math.abs(finder.scrollTop - targetScrollTop) > 1) finder.scrollTop = targetScrollTop;
-    finder.style.setProperty('--gift-spinel-result-scroll-progress', progress.toFixed(4));
   }
 
   handleSectionLoad(event) {
@@ -406,14 +301,12 @@ class GiftSpinel extends HTMLElement {
   showResult(preferredPath, shouldFocus = true) {
     const path = preferredPath || this.findMatchingPath();
     if (!path || !this.result) {
-      this.clearStickyResultScrollState();
       this.questions.hidden = false;
       this.result.hidden = true;
       if (this.status) this.status.textContent = '';
       return;
     }
 
-    this.clearStickyResultScrollState();
     this.restoreActiveResultSource();
 
     const isGiftPath = path.matches('[data-gift-spinel-path-root]');
@@ -445,9 +338,6 @@ class GiftSpinel extends HTMLElement {
     this.questions.hidden = true;
     if (!isGiftPath) this.result.replaceChildren(content);
     this.result.hidden = false;
-    if (isGiftPath) this.stickyResultScrollStart = this.getStickyResultScrollStart();
-    this.observeStickyResultContent(isGiftPath ? path : content);
-    this.scheduleStickyResultScroll();
     window.ThemeAnimations?.init(this.result);
     if (this.status) this.status.textContent = this.result.querySelector('.content-block--heading')?.textContent?.trim() || '';
     this.result.dispatchEvent(
@@ -461,7 +351,6 @@ class GiftSpinel extends HTMLElement {
 
   resetRecipientView(shouldFocus = true) {
     this.recipient = undefined;
-    this.clearStickyResultScrollState();
     this.restoreActiveResultSource();
     this.finder?.classList.remove('is-showing-path');
     this.result.hidden = true;
@@ -569,7 +458,6 @@ class GiftSpinel extends HTMLElement {
       this.finder.style.removeProperty('overflow');
       this.finder.style.removeProperty('will-change');
       this.isPanelTransitioning = false;
-      this.scheduleStickyResultScroll();
       this.result.querySelector('.content-block--heading')?.focus({ preventScroll: true });
       this.releaseScrollAnchoring();
     });
