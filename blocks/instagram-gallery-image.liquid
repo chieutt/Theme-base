@@ -16,7 +16,7 @@
           image: gallery_image,
           max_width: 1000,
           widths: '240, 360, 480, 600, 750, 1000',
-          sizes: '(min-width: 1150px) calc((100vw - (var(--page-margin) * 2) - 96px) / 5), (min-width: 768px) calc((100vw - (var(--page-margin) * 2) - 48px) / 3), calc((100vw - (var(--page-margin) * 2) - 24px) / 2)',
+          sizes: '(min-width: 1150px) calc((100vw - (var(--page-margin) * 2) - (var(--gallery-grid-gap) * 4)) / 5), (min-width: 768px) calc((100vw - (var(--page-margin) * 2) - (var(--gallery-grid-gap) * 3)) / 4), calc((100vw - (var(--page-margin) * 2) - (var(--gallery-mobile-grid-gap) * 1)) / 2)',
           class: 'gallery__image',
           loading: 'lazy',
           alt: gallery_alt,

@@ -68,16 +68,16 @@
 
 @media screen and (min-width: 768px) and (max-width: 1149.98px) {
   .gallery__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-areas:
-      'image-1 content image-2'
-      'image-3 content image-4'
-      'image-5 image-6 image-7'
-      '. image-8 .';
-    grid-auto-rows: clamp(190px, 27vw, 300px);
+      'image-1 content content image-2'
+      'image-3 content content image-4'
+      'image-5 image-6 image-7 image-8';
+    grid-template-rows: repeat(2, clamp(150px, 20vw, 240px)) clamp(100px, 14vw, 180px);
+    grid-auto-rows: clamp(100px, 14vw, 180px);
   }
 
-  /* Keep the editorial card in the centre of the first two rows. The
+  /* Keep the editorial card wide and centred across the first two rows. The
      content block is rendered after the image blocks, so relying on Grid's
      auto-placement leaves it on a separate row at tablet widths. */
   .gallery__grid > .shopify-block:nth-child(1) > .gallery__item { grid-area: image-1; }
