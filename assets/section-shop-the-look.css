@@ -252,6 +252,31 @@
       aspect-ratio: var(--shop-the-look-mobile-media-ratio, 1);
     }
 
+    .shop-the-look__content-column {
+      min-height: 0;
+      padding: min(var(--shop-the-look-content-padding), 48px) var(--page-margin);
+    }
+  }
+
+  /* The mobile image source ends at 989px. Keep its focal point and hotspot
+     coordinates in lockstep with that source; wider tablets use the desktop
+     image and its coordinates instead. */
+  @media screen and (min-width: 990px) and (max-width: 1149.98px) {
+    .shop-the-look__visual {
+      aspect-ratio: var(--shop-the-look-desktop-media-ratio, 1);
+    }
+
+    .shop-the-look__editorial-image {
+      object-position: var(--shop-the-look-desktop-focal-point, center);
+    }
+
+    .shop-the-look__hotspot {
+      top: var(--hotspot-y);
+      left: var(--hotspot-x);
+    }
+  }
+
+  @media screen and (max-width: 989px) {
     .shop-the-look__editorial-image {
       object-position: var(--shop-the-look-mobile-focal-point, center);
     }
@@ -259,11 +284,6 @@
     .shop-the-look__hotspot {
       top: var(--hotspot-mobile-y);
       left: var(--hotspot-mobile-x);
-    }
-
-    .shop-the-look__content-column {
-      min-height: 0;
-      padding: min(var(--shop-the-look-content-padding), 48px) var(--page-margin);
     }
   }
 

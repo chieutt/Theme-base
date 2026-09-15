@@ -4,6 +4,7 @@
 
 {% liquid
   assign product_block_count = 0
+  assign desktop_media_aspect_ratio = section.settings.image.aspect_ratio | default: section.settings.mobile_image.aspect_ratio | default: 1
   assign mobile_media_aspect_ratio = section.settings.mobile_image.aspect_ratio | default: section.settings.image.aspect_ratio | default: 0.64
   assign shop_the_look_background = section.settings.background_color
   if shop_the_look_background == blank
@@ -30,7 +31,7 @@
   <shop-the-look
     data-deferred-module="{{ 'shop-the-look.js' | asset_url }}"
     class="shop-the-look color-scheme color-{{ section.settings.color_scheme.id }}{% if section.settings.section_width == 'full' %} full-width{% endif %} shop-the-look--media-{{ section.settings.media_position }}"
-    style="--shop-the-look-height: {{ section.settings.height_desktop }}px; --shop-the-look-height-mobile: {{ section.settings.height_mobile }}px; --shop-the-look-content-padding: {{ section.settings.content_padding }}px; --shop-the-look-product-image-size: {{ section.settings.product_image_size }}px; --shop-the-look-mobile-media-ratio: {{ mobile_media_aspect_ratio }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
+    style="--shop-the-look-height: {{ section.settings.height_desktop }}px; --shop-the-look-height-mobile: {{ section.settings.height_mobile }}px; --shop-the-look-content-padding: {{ section.settings.content_padding }}px; --shop-the-look-product-image-size: {{ section.settings.product_image_size }}px; --shop-the-look-desktop-media-ratio: {{ desktop_media_aspect_ratio }}; --shop-the-look-mobile-media-ratio: {{ mobile_media_aspect_ratio }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px;"
   >
     <div class="shop-the-look__inner section-spacing">
       <div class="shop-the-look__layout">

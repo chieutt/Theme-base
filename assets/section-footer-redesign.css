@@ -391,6 +391,14 @@
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 1149.98px) {
+  /* The lead becomes a single tablet column, so let the signup controls use
+     the full available page width instead of retaining the desktop cap. */
+  .footer__newsletter-form {
+    max-width: none;
+  }
+}
+
 @media screen and (max-width: 767.98px) {
   .footer__newsletter,
   .footer__appointment {
