@@ -98,9 +98,9 @@
 .blog-posts__media--portrait { aspect-ratio: 4 / 5; }
 .blog-posts__media--tall { aspect-ratio: 2 / 3; }
 
-/* The feature ratio belongs to the desktop editorial grid only. Below its
+/* The feature ratio belongs to the tablet/desktop editorial grid. Below its
    breakpoint the feature card returns to the section-wide image ratio. */
-@media screen and (max-width: 899.98px) {
+@media screen and (max-width: 767.98px) {
   .blog-posts__media--mobile-adapt { aspect-ratio: auto; }
   .blog-posts__media--mobile-square { aspect-ratio: 1 / 1; }
   .blog-posts__media--mobile-2-3 { aspect-ratio: 2 / 3; }
@@ -213,7 +213,7 @@
 
 .blog-posts__arrow { --carousel-navigator-top: var(--blog-posts-media-center, 42%); }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
   .blog-posts--editorial-grid:not(.is-carousel-scrollable) .blog-posts__carousel {
     overflow: visible;
   }

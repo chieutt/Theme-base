@@ -11,10 +11,10 @@ class BlogPostsCarousel extends HTMLElement {
     this.next = this.querySelector('[data-blog-posts-next]');
     this.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Keep the JS lifecycle aligned with the editorial-grid CSS breakpoint.
-    // At 900px the first post becomes the sticky feature and the remaining
-    // posts form the compact column; initializing Swiper below that boundary
-    // made the feature collapse into an unintended two-column carousel.
-    this.desktopQuery = window.matchMedia('(min-width: 900px)');
+    // From tablet width onward the first post is the sticky feature and the
+    // remaining posts form the compact column; initializing Swiper below that
+    // boundary leaves the nested compact list as a broken second slide.
+    this.desktopQuery = window.matchMedia('(min-width: 768px)');
     this.mobileQuery = window.matchMedia('(max-width: 767.98px)');
     this.header = document.querySelector('.header');
     this.updateStickyOffset = this.updateStickyOffset.bind(this);
