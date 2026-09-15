@@ -68,7 +68,18 @@
 
 @media screen and (min-width: 768px) and (max-width: 1149.98px) {
   .gallery__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: clamp(190px, 27vw, 300px); }
-  .gallery__grid > .instagram-gallery-content { grid-column: 2; grid-row: span 2; }
+  /* Keep the editorial card in the centre of the first two rows. Without
+     explicit coordinates, the card is rendered after the image blocks and
+     CSS Grid's auto-placement can push it into a later row or overlap tiles. */
+  .gallery__grid > .shopify-block:nth-child(1) > .gallery__item { grid-column: 1; grid-row: 1; }
+  .gallery__grid > .shopify-block:nth-child(2) > .gallery__item { grid-column: 3; grid-row: 1; }
+  .gallery__grid > .instagram-gallery-content { grid-column: 2; grid-row: 1 / span 2; }
+  .gallery__grid > .shopify-block:nth-child(3) > .gallery__item { grid-column: 1; grid-row: 2; }
+  .gallery__grid > .shopify-block:nth-child(4) > .gallery__item { grid-column: 3; grid-row: 2; }
+  .gallery__grid > .shopify-block:nth-child(5) > .gallery__item { grid-column: 1; grid-row: 3; }
+  .gallery__grid > .shopify-block:nth-child(6) > .gallery__item { grid-column: 2; grid-row: 3; }
+  .gallery__grid > .shopify-block:nth-child(7) > .gallery__item { grid-column: 3; grid-row: 3; }
+  .gallery__grid > .shopify-block:nth-child(8) > .gallery__item { grid-column: 2; grid-row: 4; }
 }
 
 /* The editorial card is a fixed visual role, not a ninth image. Keep the
