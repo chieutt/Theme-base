@@ -3,6 +3,11 @@
 {% liquid
   assign has_button = false
   assign has_live_countdown = false
+  assign countdown_preview = false
+
+  if request.design_mode or request.visual_preview_mode
+    assign countdown_preview = true
+  endif
 
   for block in section.blocks
     if block.type == 'button' and block.settings.label != blank and block.settings.link != blank
@@ -15,7 +20,7 @@
 %}
 
 {% if section.blocks.size > 0 %}
-{% if has_live_countdown or request.design_mode %}
+{% if has_live_countdown or countdown_preview %}
   {% style %}
     #shopify-section-{{ section.id }} {
       background-color: #090807;
@@ -79,7 +84,7 @@
 
               if block.settings.end_at != blank
                 assign countdown_is_configured = true
-              elsif request.design_mode
+              elsif countdown_preview
                 assign countdown_is_preview = true
               endif
             %}
@@ -612,7 +617,7 @@
           "type": "text",
           "id": "end_at",
           "label": "End date and time",
-          "info": "Use ISO 8601 format, for example 2027-12-31T23:59:59+07:00"
+          "info": "Use a real event end time in ISO 8601 format, for example 2027-12-31T23:59:59+07:00. Leave blank while setting up; blank values show sample digits only in the Theme Editor."
         },
         {
           "type": "checkbox",
@@ -624,7 +629,7 @@
           "type": "text",
           "id": "completion_message",
           "label": "Completion message",
-          "default": "This offer has ended",
+          "default": "This event has ended",
           "visible_if": "{{ block.settings.show_completion_message }}"
         },
         {
@@ -659,7 +664,7 @@
           "type": "text",
           "id": "aria_label",
           "label": "Accessibility label",
-          "default": "Promotion countdown"
+          "default": "Event countdown"
         }
       ]
     },

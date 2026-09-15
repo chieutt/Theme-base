@@ -51,6 +51,16 @@ current.
 5. Package the theme with Shopify CLI and confirm that `config/settings_data.json`
    and `config/settings_schema.json` are present in the archive.
 
+### Shopify Theme Store testing note
+
+The Countdown timer section has an editor-only preview state. When the
+`End date and time` setting is blank, sample digits render only in the Shopify
+Theme Editor or visual preview; the storefront does not show a live countdown.
+For live testing, enter a real event end time in ISO 8601 format, verify that
+the values decrease, and verify the completion message or hidden state after
+the event ends. The preview digits are not a promotion, scarcity, or urgency
+claim.
+
 ## License and assets
 
 Every image, video, font, and third-party library included in a distributed

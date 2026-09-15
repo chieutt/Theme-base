@@ -2926,12 +2926,12 @@
           "settings": {
             "end_at": "",
             "show_completion_message": true,
-            "completion_message": "This offer has ended",
+            "completion_message": "This event has ended",
             "days_label": "Days",
             "hours_label": "Hours",
             "minutes_label": "Minutes",
             "seconds_label": "Seconds",
-            "aria_label": "Promotion countdown"
+            "aria_label": "Event countdown"
           }
         },
         "button_mjVNCA": {
