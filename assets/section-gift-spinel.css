@@ -39,7 +39,18 @@
   }
 
   .gift-spinel--sticky .gift-spinel__inner {
-    min-height: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* A selected gift path can contain several products, copy blocks and the
+     bundle CTA. Keep the sticky canvas at viewport height, but let the finder
+     become its own scroll surface instead of clipping the CTA below the fold. */
+  .gift-spinel--sticky .gift-spinel__finder {
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
   }
 }
 
